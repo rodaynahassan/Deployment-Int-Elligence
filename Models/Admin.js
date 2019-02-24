@@ -20,8 +20,4 @@ var Admin = mongoose.model('Admin', Admin);
 
 module.exports = Admin;
 
-Admin.methods.updname = function(updname) {
-    
-    this.name += updname; 
-  
-  };
+

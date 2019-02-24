@@ -1,6 +1,6 @@
 var mongoose = require('mongoose')
 var Schema = mongoose.Schema;
-var userSchema = new Schema({
+var SPCForm= new Schema({
     CompanyID:ObjectId,
     CompanyGovernorate :{ type: String, required: true },
     CompanyCity :{type: String, required:true},

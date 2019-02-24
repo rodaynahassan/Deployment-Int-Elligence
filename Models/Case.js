@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 
 var Case = new Schema({
       FormID : ObjectId,     //forgein key
-      CaseID : mongoose.Schema.Types.Number,
+      CaseID : mongoose.Schema.Types.ObjectId,
       CreationDate : {type:Date , required:true},
       LawyerSeen : Boolean ,
       LawyerApprove : Boolean ,

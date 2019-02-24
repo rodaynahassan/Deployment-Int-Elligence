@@ -1,9 +1,10 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+
 //mongoose.connect('mongodb://localhost/myappdatabase');
 
 var Lawyer = new Schema({
-    ID: ObjectId,
+    LawyerID: ObjectId,
     FirstName: {firstName: String, type: String, required: true},
     LastName:{String,lastName: String, type: String, required: true},
     Gender:{type: String,required: true},
@@ -16,7 +17,9 @@ var Lawyer = new Schema({
     Mobile:{type:Number,required:true, unique:true},
     Fax:{type:String,unique:true},
     Email:{type:String,unique:true,required:true},
-    Case:Array });
+    Case:Array  /* [{type: Schema.ObjectId, ref: 'Case'}*/ });
+
+
 
     var Lawyer = mongoose.model('Lawyer', Lawyer);
     module.exports=Lawyer

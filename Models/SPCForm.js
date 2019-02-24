@@ -12,3 +12,5 @@ var userSchema = new Schema({
     Currency:{type:String,required:true},
     EquityCapital:{type:String,required:true}
 });
+var SPCForm = mongoose.model('SPCForm',SPCForm);
+module.exports = SPCForm;

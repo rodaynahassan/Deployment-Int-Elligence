@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var InvestorSchema = new Schema({
+var SSCForm = new Schema({
     CompanyID:ObjectId,
     CompanyGovernate: { type: String, required: true, unique: false},
     CompanyCity: { type: String, required: true},
@@ -13,22 +13,9 @@ var InvestorSchema = new Schema({
     EquityCapital:{ type: String, required: true },
     SSCManagers:Array
 });
-
-var SSCManagersSchema = new Schema({
-    ManagerID:ObjectId,
-    Name: { type: String, required: true},
-    Gender:{ type: String, required: true },
-    Nationality :{ type: String, required: true },
-    IdentificationType:{ type: String, required: true },
-    IdentificationNumber :{type: String, required: true ,unique:true},
-    birthdate:{type: Date, required: true },
-    Address:{ type: String, required: true },
-    TypeOfManagers:{ type: String, required: true },
-    Type:Array
-}
-);
 var SSCForm=mongoose.model('SSCForm',SSCForm);
 module.exports=SSCForm;
+
 
 
 

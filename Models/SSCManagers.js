@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var SSCManagersSchema = new Schema({
+var SSCManagers = new Schema({
     ManagerID:ObjectId,
     Name: { type: String, required: true},
     Gender:{ type: String, required: true },

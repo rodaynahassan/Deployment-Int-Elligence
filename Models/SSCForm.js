@@ -27,7 +27,8 @@ var SSCManagersSchema = new Schema({
     Type:Array
 }
 );
-
+var SSCForm=mongoose.model('SSCForm',SSCForm);
+module.exports=SSCForm;
 
 
 

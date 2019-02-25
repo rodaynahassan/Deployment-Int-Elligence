@@ -99,33 +99,33 @@ router.put('/:id', (req, res) => {
 
     const investor = investors.find(investor => investor.investorId === investorId)
 
-    if(updatedName!==undefined)
+    if(updatedName)
         investor.name = updatedName
-    if(updatedGender!==undefined)
+    if(updatedGender)
         investor.gender = updatedGender
-    if(updatedType!==undefined)
+    if(updatedType)
         investor.type.push(updatedType)
-    if(updatedNationally!==undefined)
+    if(updatedNationally)
         investor.nationality = updatedNationally        
-    if(updatedIdentificationNumber!==undefined)
+    if(updatedIdentificationNumber)
         investor.identificationNumber = updatedIdentificationNumber
-    if(updatedIdentificationType!==undefined)
+    if(updatedIdentificationType)
         investor.identificationType = updatedIdentificationType
-    if(updatedBirthDate!==undefined)
+    if(updatedBirthDate)
         investor.birthDate = updatedBirthDate
-    if(updatedAddress!==undefined)
+    if(updatedAddress)
         investor.address = updatedAddress
-    if(updatedTelephone!==undefined)
+    if(updatedTelephone)
         investor.telephone = updatedTelephone
-    if(updatedFax!==undefined)
+    if(updatedFax)
         investor.fax = updatedFax
-    if(updatedEmail!==undefined)
+    if(updatedEmail)
         investor.email = updatedEmail
-    if(updatedCurrency!==undefined)
+    if(updatedCurrency)
         investor.currency = updatedCurrency
-    if(updatedLawyerID!==undefined)
+    if(updatedLawyerID)
         investor.lawyerID = updatedLawyerID
-    if(updatedCompanyNames!==undefined)
+    if(updatedCompanyNames)
         investor.companyNames.push(updatedCompanyNames)
    
     res.send(investors)

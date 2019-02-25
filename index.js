@@ -1,6 +1,7 @@
 const express = require('express')
 
 const investors = require('./routes/api/investors')
+const sscForms = require('./routes/api/sscforms')
 
 
 const app = express()
@@ -12,6 +13,7 @@ app.get('/', (req, res) => {
 
 // Direct routes to appropriate files 
 app.use('/routes/api/investors', investors)
+app.use('/routes/api/sscforms',sscForms)
 
 // Handling 404
 app.use((req, res) => {

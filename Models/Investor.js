@@ -1,22 +1,24 @@
-var mongoose = require('mongoose')
-var Schema = mongoose.Schema
+const uuid = require('uuid')
 
-var investorSchema= new Schema({
-    InvestorID:ObjectId,
-    InvestorName:{type:String,required:true},
-    Type:Array,
-    Gender:{type:String,required:true},
-    Nationality:{type:String,required:true},
-    IdentificationType:{type:String,required:true},
-    IdentificationNumber:{type:String,required:true},
-    Birthdate:{type:Date,required:true},
-    Address:{type:String,required:true},
-    Telephone:{type:String,required:false},
-    Fax:{type:String,required:false},
-    Email:{type:String,required:false},
-    Currency:{type:String,required:true},
-    LawyerID:ObjectId,
-    CompanyName:Array
-});
-var Investor=mongoose.model('Investor',investorSchema);
-module.exports = Investor;
+
+class Investor {
+    constructor(name,type,gender,nationality,identificationType,identificationNumber,birthDate,address,telephone,fax,email,currency,lawyerID,companyNames) {
+        this.name = name;
+        this.investorId = uuid.v4();
+        this.gender=gender;
+        this.type=type; //array
+        this.nationality=nationality;
+        this.identificationType=identificationType;
+        this.identificationNumber=identificationNumber;
+        this.birthDate=birthDate;
+        this.address=address;
+        this.telephone=telephone;
+        this.fax=fax;
+        this.email=email;
+        this.currency=currency;
+        this.lawyerID=lawyerID;
+        this.companyNames=companyNames; //array
+    };
+};
+
+module.exports = Investor

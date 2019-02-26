@@ -2,6 +2,7 @@ const express = require('express')
 
 const investors = require('./routes/api/investors')
 const sscForms = require('./routes/api/sscforms')
+const admins = require('./routes/api/admins')
 
 
 const app = express()
@@ -14,6 +15,7 @@ app.get('/', (req, res) => {
 // Direct routes to appropriate files 
 app.use('/routes/api/investors', investors)
 app.use('/routes/api/sscforms',sscForms)
+app.use('/routes/api/admins',admins)
 
 // Handling 404
 app.use((req, res) => {

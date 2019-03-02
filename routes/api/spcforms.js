@@ -24,7 +24,7 @@ router.post('/', (req, res) => {
 
 	const schema = {
         companyName: Joi.string().min(3).required(),
-        companyNameInEnglish: Joi.string().min(3),
+        companyNameInEnglish: Joi.string(),
         companyGovernorate: Joi.string().required(),
         companyCity: Joi.string().required(),
         companyAddress: Joi.string().required(),
@@ -108,8 +108,8 @@ router.put('/:id', (req, res) => {
 })
 
 //Delete SPCForm
-router.delete('/:SPCFormID', (req, res) => {
-    const spcformID = req.params.SPCFormID 
+router.delete('/:id', (req, res) => {
+    const spcformID = req.params.id
     const spcformConst = spcforms.find(spcformConst => spcformConst.SPCFormID === spcformID)
     const index = spcforms.indexOf(spcformConst)
     spcforms.splice(index,1)

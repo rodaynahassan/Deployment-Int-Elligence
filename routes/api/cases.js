@@ -20,18 +20,19 @@ router.get('/', (req, res) => res.json({ data: cases }))
 // Get a certain case
 router.get('/:id', (req, res) => {
     const CaseID = req.params.id
-    const Case = cases.find(Case => Case.CaseID === CaseID)
+    const Case = cases.find(Case => Case.caseID === CaseID)
     return res.json({ data: Case });
 
 })
 
 //Create a new case
 router.post('/', (req, res) => {
-	const Form = req.body.Form
-    const CreationDate = req.body.CreationDate
+	const Form = req.body.form
+    const CreationDate = req.body.creationDate
 
 	const schema = {
-        CreationDate: Joi.date().iso().required()
+            creationDate: Joi.date().required(),
+            form: Joi.object() //must insert an object , syntax -> {} , it doesn't accept null
     	}
 
 	const result = Joi.validate(req.body, schema);
@@ -48,43 +49,43 @@ router.post('/', (req, res) => {
 
 // Update a Case
 router.put('/:id', (req, res) => {
-    const CaseID = req.params.Caseid 
-    const UpdatedCreationDate = req.body.CreationDate
-    const UpdatedLawyerSeen = req.body.LawyerSeen
-    const UpdatedLawyerApprove = req.body.LawyerApprove
-    const UpdatedLawyerComments = req.body.LawyerComments
-    const UpdatedReviewerSeen = req.body.ReviewerSeen
-    const UpdatedReviewerComments = req.body.ReviewerComments
-    const UpdatedReviewerApprove = req.body.ReviewerApprove 
+    const CaseID = req.params.id 
+    const UpdatedCreationDate = req.body.creationDate
+    const UpdatedLawyerSeen = req.body.lawyerSeen
+    const UpdatedLawyerApprove = req.body.lawyerApprove
+    const UpdatedLawyerComments = req.body.lawyerComments
+    const UpdatedReviewerSeen = req.body.reviewerSeen
+    const UpdatedReviewerComments = req.body.reviewerComments
+    const UpdatedReviewerApprove = req.body.reviewerApprove 
 
-    const Case = cases.find(Case => Case.CaseID === CaseID)
+    const Case = cases.find(Case => Case.caseID === CaseID)
     if(UpdatedCreationDate)
     {
-        Case.CreationDate=UpdatedCreationDate
+        Case.creationDate=UpdatedCreationDate
     }
     if(UpdatedLawyerSeen)
     {
-        Case.LawyerSeen=UpdatedLawyerSeen
+        Case.lawyerSeen=UpdatedLawyerSeen
     }
     if(UpdatedLawyerApprove)
     {
-        Case.LawyerApprove=UpdatedLawyerApprove
+        Case.lawyerApprove=UpdatedLawyerApprove
     }
     if(UpdatedLawyerComments)
     {
-        Case.LawyerComments.push(UpdatedLawyerComments) //in the update we will only push the new comment
+        Case.lawyerComments.push(UpdatedLawyerComments) //in the update we will only push the new comment
     }
     if(UpdatedReviewerSeen)
     {
-        Case.ReviewerSeen=UpdatedReviewerSeen
+        Case.reviewerSeen=UpdatedReviewerSeen
     }
     if(UpdatedReviewerComments)
     {
-        Case.ReviewerComments.push(UpdatedReviewerComments) // same as lawyer comments
+        Case.reviewerComments.push(UpdatedReviewerComments) // same as lawyer comments
     }
     if(UpdatedReviewerApprove)
     {
-        Case.ReviewerApprove=UpdatedReviewerApprove
+        Case.reviewerApprove=UpdatedReviewerApprove
     }
     return res.json({ data: cases });
 })
@@ -92,7 +93,7 @@ router.put('/:id', (req, res) => {
 //Delete a Case
 router.delete('/:id', (req, res) => {
     const CaseID = req.params.id 
-    const Case = cases.find(Case => Case.CaseID === CaseID)
+    const Case = cases.find(Case => Case.caseID === CaseID)
     const index = cases.indexOf(Case)
     cases.splice(index,1)
     return res.json({ data: cases });

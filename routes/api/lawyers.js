@@ -23,7 +23,7 @@ router.get('/', (req, res) => res.json({ data: Lawyers }));   //view all lawyers
                                                             // view a certain lawyer
 router.get('/:id', (req, res) => {
     const lawyerid=req.params.id
-    const lawyer= Lawyers.find(Lawyer=> Lawyer.LawyerID===lawyerid)
+    const lawyer= Lawyers.find(Lawyer=> Lawyer.lawyerID===lawyerid)
     return res.json({ data: lawyer });
 })
 
@@ -54,11 +54,11 @@ router.post('/', (req, res) => {                           //create a lawyer
         gender:   Joi.string().max(6).required(),
         nationality: Joi.string().max(10).required(),
         identificationType:  Joi.string().max(10).required(), 
-        identificationNum:   Joi.number().max(14).required(),
-        birthDate:  Joi.date().iso(),
+        identificationNum:   Joi.string().max(14).required(),
+        birthDate:  Joi.date(),
         address: Joi.string().max(20).required(),
-        telephone: Joi.number().max(8).required(),
-        mobile:  Joi.number().max(11).required(),
+        telephone: Joi.string().max(8).required(),
+        mobile:  Joi.string().max(11).required(),
         fax:  Joi.string().max(14).required(),
         email:  Joi.string().email().required(),
         password : Joi.string().required()
@@ -159,8 +159,9 @@ router.put('/:id', (req, res) => {
     if(UpdatedEmail )
         lawyer.email=UpdatedEmail 
      
-    if(UpdatedPassword)
-        lawyer.password=UpdatedPassword  
+
+     if(UpdatedPassword)
+        lawyer.password=UpdatedPassword   
 
     if(UpdatedCases)
         lawyer.cases.push(UpdatedCases)
@@ -177,7 +178,7 @@ router.put('/:id', (req, res) => {
 // Delete a lawyer
 router.delete('/:id', (req, res) => {
     const lawyerid=req.params.LawyerID 
-    const lawyer= Lawyers.find(Lawyer=> Lawyer.LawyerID===lawyerid)
+    const lawyer= Lawyers.find(Lawyer=> Lawyer.lawyerID===lawyerid)
     const index = Lawyers.indexOf(lawyer)
     Lawyers.splice(index,1)
     return res.json({ data: Lawyers });

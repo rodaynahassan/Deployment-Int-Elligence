@@ -46,10 +46,10 @@ router.post('/', (req, res) => { //Create
         nationality: Joi.string().required(),
         identificationType: Joi.string().required(),
         identificationNumber: Joi.string().required(),
-        birthdate: Joi.date().iso().required(),
+        birthdate: Joi.date().required(),
         address: Joi.string().required(),
-        telephone: Joi.number(),
-        fax: Joi.number(),
+        telephone: Joi.string(),
+        fax: Joi.string(),
         email: Joi.string().email(),
         password: Joi.string().required(),
 

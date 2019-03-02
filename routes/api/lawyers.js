@@ -91,7 +91,7 @@ router.post('/', (req, res) => {                           //create a lawyer
     Lawyers.push(newLawyer)
     return res.json({ data: Lawyers });
 
-	//return res.json({ data: newLawyer });
+	
 });
 
 
@@ -159,8 +159,10 @@ router.put('/:id', (req, res) => {
     if(UpdatedEmail )
         lawyer.email=UpdatedEmail 
      
+
      if(UpdatedPassword)
         lawyer.password=UpdatedPassword   
+
     if(UpdatedCases)
         lawyer.cases.push(UpdatedCases)
 
@@ -174,7 +176,7 @@ router.put('/:id', (req, res) => {
 
 
 // Delete a lawyer
-router.delete('/:LawyerID', (req, res) => {
+router.delete('/:id', (req, res) => {
     const lawyerid=req.params.LawyerID 
     const lawyer= Lawyers.find(Lawyer=> Lawyer.lawyerID===lawyerid)
     const index = Lawyers.indexOf(lawyer)

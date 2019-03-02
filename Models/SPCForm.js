@@ -1,17 +1,18 @@
 const uuid = require('uuid')
 class SPCForm {
-    constructor(CompanyName, CompanyNameInEnglish, CompanyGovernorate, CompanyCity, CompanyAddress, CompanyTelephone, CompanyFax, Currency, EquityCapital) {
+    constructor(companyName, companyNameInEnglish, companyGovernorate, companyCity, companyAddress, companyTelephone, companyFax, currency, equityCapital) {
         this.SPCFormID = uuid.v4();
-        this.CompanyName=CompanyName;
-        this.CompanyNameInEnglish=CompanyNameInEnglish;
-        this.CompanyGovernorate = CompanyGovernorate;
-        this.CompanyCity = CompanyCity;
-        this.CompanyAddress = CompanyAddress;
-        this.CompanyTelephone=CompanyTelephone;
-        this.CompanyFax=CompanyFax;
-        this.Currency=Currency;
-        this.EquityCapital=EquityCapital;
+        this.companyName=companyName;                           //String
+        this.companyNameInEnglish=companyNameInEnglish;         //String
+        this.companyGovernorate = companyGovernorate;           //String
+        this.companyCity = companyCity;                         //String
+        this.companyAddress = companyAddress;                   //String
+        this.companyTelephone=companyTelephone;                 //String
+        this.companyFax=companyFax;                             //String
+        this.currency=currency;                                 //String
+        this.equityCapital=equityCapital;                       //String
     };
 }
 
 module.exports = SPCForm
+//export the SPCForm class in mongo

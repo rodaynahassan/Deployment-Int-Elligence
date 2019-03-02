@@ -9,9 +9,9 @@ const Investor = require('../../models/Investor');
 
 // temporary data created as if it was pulled out of the database ...
 const investors = [
-	new Investor('Omar', 'Male', ['Person'], 'Egyptian' ,'National ID', '12345678912345','10/22/1998','street 1','01001234567','123-4567','omar@summerge.com','Dollars',null,[] ),
-	new Investor('Sia', 'Female', ['Person'], 'Australia' ,'National ID', '9876543219876','11/22/1990','street 2','01006754321','123-9876','sia@summerge.com','Dollars',null,[] ),
-	new Investor('Ted', 'Male', ['Person'], 'English' ,'National ID', '92374782974822','9/19/1987','street 3','010078324120','987-6543','Ted@summerge.com','Euros',null,[] ),
+	new Investor('Omar', 'Male', ['Person'], 'Egyptian' ,'National ID', '12345678912345','1998-10-22','street 1','01001234567','123-4567','omar@summerge.com','Dollars',null,[] ),
+	new Investor('Sia', 'Female', ['Person'], 'Australia' ,'National ID', '9876543219876','1990-11-22','street 2','01006754321','123-9876','sia@summerge.com','Dollars',null,[] ),
+	new Investor('Ted', 'Male', ['Person'], 'English' ,'National ID', '92374782974822','2000-5-19','street 3','010078324120','987-6543','Ted@summerge.com','Euros',null,[] ),
 ];
 
 // Instead of app use route

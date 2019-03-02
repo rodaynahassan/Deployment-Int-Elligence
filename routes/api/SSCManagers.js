@@ -27,7 +27,7 @@ router.get('/', (req, res) => res.json({ data: SSCManagers }));
 
 router.get('/:id', (req, res) => {
   const SSCManagerID= req.params.id
-  const SSCManager= sscforms.find(SSCForm=> SSCForm.ID === SSCManagerID)
+  const SSCManager= SSCManagers.find(SSCManager=> SSCManager.ID === SSCManagerID)
   res.json({ data: SSCManager })
 })
 
@@ -54,9 +54,9 @@ router.post('/', (req, res) => {
         type: Joi.string().required(),
         gender: Joi.string().required(),
         nationality: Joi.string().required(),
-        nationalityType: Joi.string().required(),
-        nationalityNumber: Joi.string().required(),
-        birthdate: Joi.date().iso().required(),
+        identificationType: Joi.string().required(),
+        identificationNumber: Joi.string().required(),
+        birthdate: Joi.date().required(),
         address: Joi.string().required(),
         typeOfManagers: Joi.string().required(),
     }

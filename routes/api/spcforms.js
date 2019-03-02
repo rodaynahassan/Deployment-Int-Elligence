@@ -11,46 +11,48 @@ const spcforms = [
     new SPCForm('Foodie Lovers','', 'Cairo', 'Heliopolis', 'Thawra Street', '01197465032','+1 938 774-8264', 'Egyptian Pound', '20000'),
 ];
 //Create SPCForm
-router.post('/', (req, res) => {
-    const companyName = req.body.companyName
-    const companyNameInEnglish = req.body.companyNameInEnglish
-	const companyGovernorate = req.body.companyGovernorate
-	const companyCity = req.body.companyCity
-    const companyAddress = req.body.companyAddress
-    const companyTelephone = req.body.companyTelephone
-    const companyFax = req.body.companyFax
-    const currency = req.body.currency
-    const equityCapital = req.body.equityCapital
+router.post('/joi', (req, res) => {
+    const CompanyName = req.body.CompanyName
+    const CompanyNameInEnglish = req.body.CompanyNameInEnglish
+	const CompanyGovernorate = req.body.CompanyGovernorate
+	const CompanyCity = req.body.CompanyCity
+    const CompanyAddress = req.body.CompanyAddress
+    const CompanyTelephone = req.body.CompanyTelephone
+    const CompanyFax = req.body.CompanyFax
+    const Currency = req.body.Currency
+    const EquityCapital = req.body.EquityCapital
 
 	const schema = {
-        companyName: Joi.string().min(3).required(),
-        companyNameInEnglish: Joi.string().min(3),
-        companyGovernorate: Joi.string().required(),
-        companyCity: Joi.string().required(),
-        companyAddress: Joi.string().required(),
-        companyTelephone: Joi.string(),
-        companyFax: Joi.string(),
-        currency: Joi.string().required(),
-        equityCapital: Joi.string().required()
+        CompanyName: Joi.string().min(3).required(),
+        CompanyNameInEnglish: Joi.string().min(3),
+        CompanyGovernorate: Joi.string().required(),
+        CompanyCity: Joi.string().required(),
+        CompanyAddress: Joi.string().required(),
+        CompanyTelephone: Joi.string(),
+        CompanyFax: Joi.string(),
+        Currency: Joi.string().required(),
+        EquityCapital: Joi.string().required(),
 	}
 
 	const result = Joi.validate(req.body, schema);
     
     if (result.error) return res.status(400).send({ error: result.error.details[0].message });
     
-    const newSPCForm = new SPCForm(
-        companyName,
-        companyNameInEnglish,
-        companyGovernorate,
-        companyCity,
-        companyAddress,
-        companyTelephone,
-        companyFax,
-        currency,
-        equityCapital
-    );
+    const newSPCForm = {
+        SPCFormID: uuid.v4(),
+        CompanyName,
+        CompanyNameInEnglish,
+        CompanyGovernorate,
+        CompanyCity,
+        CompanyAddress,
+        CompanyTelephone,
+        CompanyFax,
+        Currency,
+        EquityCapital,
+	};
+    //return res.json({ data: newSPCForm });
     spcforms.push(newSPCForm)
-    return res.json({ data: spcforms });
+    res.json(spcforms)
 });
 //module.exports = router;
 
@@ -58,53 +60,53 @@ router.post('/', (req, res) => {
 router.get('/', (req, res) => res.json({ data: spcforms }));
 
 //Read a Certain SPCForm
-router.get('/:id', (req, res) => {
-    const spcformID = req.params.id
+router.get('/:SPCFormID', (req, res) => {
+    const spcformID = req.params.SPCFormID
     const spcformConst = spcforms.find(spcformConst => spcformConst.SPCFormID === spcformID)
-    return res.json({ data: spcformConst });
+    res.send(spcformConst)
 })
 
 //Update SPCForm
-router.put('/:id', (req, res) => {
-    const spcformID = req.params.id 
-    const updatedCompanyName = req.body.companyName
-    const updatedCompanyNameInEnglish = req.body.companyNameInEnglish
-    const updatedCompanyGovernorate = req.body.companyGovernorate
-    const updatedCompanyCity = req.body.companyCity
-    const updatedCompanyAddress = req.body.companyAddress
-    const updatedCompanyTelephone = req.body.companyTelephone
-    const updatedCompanyFax = req.body.companyFax
-    const updatedCurrency = req.body.currency
-    const updatedEquityCapital = req.body.equityCapital
+router.put('/:SPCFormID', (req, res) => {
+    const spcformID = req.params.SPCFormID 
+    const updatedCompanyName = req.body.CompanyName
+    const updatedCompanyNameInEnglish = req.body.CompanyNameInEnglish
+    const updatedCompanyGovernorate = req.body.CompanyGovernorate
+    const updatedCompanyCity = req.body.CompanyCity
+    const updatedCompanyAddress = req.body.CompanyAddress
+    const updatedCompanyTelephone = req.body.CompanyTelephone
+    const updatedCompanyFax = req.body.CompanyFax
+    const updatedCurrency = req.body.Currency
+    const updatedEquityCapital = req.body.EquityCapital
     const spcformConst = spcforms.find(spcformConst => spcformConst.SPCFormID === spcformID)
     if(updatedCompanyName){
-        spcformConst.companyName = updatedCompanyName
+        spcformConst.CompanyName = updatedCompanyName
     }
     if(updatedCompanyNameInEnglish){
-        spcformConst.companyNameInEnglish = updatedCompanyNameInEnglish
+        spcformConst.CompanyNameInEnglish = updatedCompanyNameInEnglish
     }
     if(updatedCompanyGovernorate){
-        spcformConst.companyGovernorate = updatedCompanyGovernorate
+        spcformConst.CompanyGovernorate = updatedCompanyGovernorate
     }
     if(updatedCompanyCity){
-        spcformConst.companyCity = updatedCompanyCity
+        spcformConst.CompanyCity = updatedCompanyCity
     }
     if(updatedCompanyAddress){
-        spcformConst.companyAddress = updatedCompanyAddress
+        spcformConst.CompanyAddress = updatedCompanyAddress
     }
     if(updatedCompanyTelephone){
-        spcformConst.companyTelephone = updatedCompanyTelephone
+        spcformConst.CompanyTelephone = updatedCompanyTelephone
     }
     if(updatedCompanyFax){
-        spcformConst.companyFax = updatedCompanyFax
+        spcformConst.CompanyFax = updatedCompanyFax
     }
     if(updatedCurrency){
-        spcformConst.currency = updatedCurrency
+        spcformConst.Currency = updatedCurrency
     }
     if(updatedEquityCapital){
-        spcformConst.equityCapital = updatedEquityCapital
+        spcformConst.EquityCapital = updatedEquityCapital
     }
-    return res.json({ data: spcforms });
+    res.send(spcforms)
 })
 
 //Delete SPCForm
@@ -113,6 +115,6 @@ router.delete('/:SPCFormID', (req, res) => {
     const spcformConst = spcforms.find(spcformConst => spcformConst.SPCFormID === spcformID)
     const index = spcforms.indexOf(spcformConst)
     spcforms.splice(index,1)
-    return res.json({ data: spcforms });
+    res.send(spcforms)
 })
 module.exports = router;

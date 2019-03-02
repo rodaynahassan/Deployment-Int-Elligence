@@ -2,6 +2,9 @@ const express = require('express')
 
 const investors = require('./routes/api/investors')
 const sscForms = require('./routes/api/sscforms')
+
+const reviewers = require('./routes/api/reviewers')
+
 const SSCManager = require('./routes/api/SSCManagers')
 
 const spcForms = require('./routes/api/spcforms')
@@ -19,6 +22,7 @@ const cases=require('./routes/api/cases')
 
 
 
+
 const app = express()
 app.use(express.json())
 
@@ -29,6 +33,9 @@ app.get('/', (req, res) => {
 // Direct routes to appropriate files 
 app.use('/routes/api/investors', investors)
 app.use('/routes/api/sscforms',sscForms)
+
+app.use('/routes/api/reviewers',reviewers)
+
 app.use('/routes/api/SSCManagers',SSCManager)
 
 app.use('/routes/api/spcforms',spcForms)

@@ -7,27 +7,29 @@ const router = express.Router();
 // Models
 const Investor = require('../../models/Investor');
 
-// temporary data created as if it was pulled out of the database ...
+
 const investors = [
-	new Investor('Omar', 'Male', ['Person'], 'Egyptian' ,'National ID', '12345678912345','1998-10-22','street 1','01001234567','123-4567','omar@summerge.com','Dollars',null,[] ),
-	new Investor('Sia', 'Female', ['Person'], 'Australia' ,'National ID', '9876543219876','1990-11-22','street 2','01006754321','123-9876','sia@summerge.com','Dollars',null,[] ),
-	new Investor('Ted', 'Male', ['Person'], 'English' ,'National ID', '92374782974822','2000-5-19','street 3','010078324120','987-6543','Ted@summerge.com','Euros',null,[] ),
+	new Investor('Omar', 'Male', 'Egyptian' ,'National ID', '12345678912345','1998-10-22','street 1','01001234567','123-4567','omar@summerge.com','pass','Dollars',null),
+	new Investor('Sia', 'Female', 'Australia' ,'National ID', '9876543219876','1990-11-22','street 2','01006754321','123-9876','sia@summerge.com','pass','Dollars',null ),
+	new Investor('Ted', 'Male', 'English' ,'National ID', '92374782974822','2000-5-19','street 3','010078324120','987-6543','Ted@summerge.com','pass','Euros',null),
 ];
 
-// Instead of app use route
-// No need to write the full route
-// res.json() Automatically sends a status of 200
+
 
 // Get all Investors
 router.get('/', (req, res) => res.json({ data: investors }));
-
+//Search by ID
+router.get('/:id', (req, res) => {
+    const Id = req.params.id 
+    const investor = investors.find(investor => investor.investorId === Id)
+    return res.json({ data: investor });
+})
 // Create a new Investor
 
 
-router.post('/joi', (req, res) => {
+router.post('/', (req, res) => {
 	const name = req.body.name
 	const gender=req.body.gender;
-    const type=req.body.type;
     const nationality= req.body.nationality;
     const identificationType=req.body.identificationType;
     const identificationNumber=req.body.identificationNumber;
@@ -36,14 +38,12 @@ router.post('/joi', (req, res) => {
     const telephone=req.body.telephone;
     const fax=req.body.fax;
     const email=req.body.email;
+    const password= req.body.password;
     const currency=req.body.currency;
-    const lawyerID=req.body.lawyerID;
-    const companyNames=req.body.companyNames;
 
 	const schema = {
 		name: Joi.string().min(3).required(),
         gender: Joi.string().required(),
-        type: Joi.string().required(),
         nationality: Joi.string().required(),
         identificationType: Joi.string().required(),
         identificationNumber: Joi.string().required(),
@@ -52,6 +52,7 @@ router.post('/joi', (req, res) => {
         telephone: Joi.string().required(),
         fax: Joi.string().required(),
         email: Joi.string().email().required(),
+        password: Joi.string().required(),
         currency: Joi.string().required(),
 	}
 
@@ -59,11 +60,9 @@ router.post('/joi', (req, res) => {
 
 	if (result.error) return res.status(400).send({ error: result.error.details[0].message });
 
-	const newInvestor = {
+	const newInvestor = new Investor(
 		name,
-        id: uuid.v4(),
         gender,
-        type,
         nationality,
         identificationType,
         identificationNumber,
@@ -72,10 +71,9 @@ router.post('/joi', (req, res) => {
         telephone,
         fax,
         email,
+        password,
         currency,
-        lawyerID:null,
-        companyNames:[],
-    };
+        null)
     investors.push(newInvestor);
 	return res.json({ data: investors });
 });
@@ -94,8 +92,10 @@ router.put('/:id', (req, res) => {
     const updatedFax = req.body.fax
     const updatedEmail = req.body.email
     const updatedCurrency = req.body.currency
-    const updatedLawyerID = req.body.lawyerID
-    const updatedCompanyNames = req.body.companyNames
+    const updatedLawyer = req.body.lawyer
+    const updatedCompanies = req.body.companies
+    const updatedForms = req.body.forms
+    const updatedPassword = req.body.password
 
     const investor = investors.find(investor => investor.investorId === investorId)
 
@@ -123,20 +123,24 @@ router.put('/:id', (req, res) => {
         investor.email = updatedEmail
     if(updatedCurrency)
         investor.currency = updatedCurrency
-    if(updatedLawyerID)
-        investor.lawyerID = updatedLawyerID
-    if(updatedCompanyNames)
-        investor.companyNames.push(updatedCompanyNames)
+    if(updatedLawyer)
+        investor.lawyer = updatedLawyer
+    if(updatedCompanies)
+        investor.companies.push(updatedCompanies)
+    if(updatedForms)
+        investor.forms.push(updatedForms)
+    if(updatedPassword)
+        investor.password=updatedPassword
    
-    res.send(investors)
+    return res.json({ data: investors });
 })
 
 router.delete('/:id', (req, res) => {
     const investorId = req.params.id 
-    const investor = investors.find(investor => investor.id === investorId)
+    const investor = investors.find(investor => investor.investorId === investorId)
     const index = investors.indexOf(investor)
     investors.splice(index,1)
-    res.send(investors)
+    return res.json({ data: investors });
 })
 
 module.exports = router;

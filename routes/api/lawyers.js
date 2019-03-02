@@ -8,8 +8,8 @@ const Lawyer = require('../../Models/Lawyer')
 
 
 const Lawyers = [                       //my database
-	new Lawyer('Mohamed','Amr','male','Egyptian','NationalID',11111111111111,'1998-8-26','Zahraa El Maadi',12345678,01002550047,'+1 666 222-999','mohamed.shenif@gmail.com',[]),
-	new Lawyer('Abdelrahman','Adel','male','Egyptian','NationalID',22222222222222,'1998-2-9','Maadi',12344567,01007776660,'+2 333 444-555','abdlrahman@hotmail.com',[])
+	new Lawyer('Mohamed','Amr','male','Egyptian','NationalID','11111111111111','1998-8-26','Zahraa El Maadi','12345678','01002550047','+1 666 222-999','mohamed.shenif@gmail.com','pass'),
+	new Lawyer('Abdelrahman','Adel','male','Egyptian','NationalID','22222222222222','1998-2-9','Maadi','12344567','01007776660','+2 333 444-555','abdlrahman@hotmail.com','pass')
 ];
 
 
@@ -21,77 +21,77 @@ router.get('/', (req, res) => res.json({ data: Lawyers }));   //view all lawyers
 
 
                                                             // view a certain lawyer
-router.get('/:LawyerID', (req, res) => {
-    const lawyerid=req.params.LawyerID
-    const lawyer= Lawyers.find(Lawyer=> Lawyer.LawyerID===lawyerid)
-    res.send(lawyer)
+router.get('/:id', (req, res) => {
+    const lawyerid=req.params.id
+    const lawyer= Lawyers.find(Lawyer=> Lawyer.lawyerID===lawyerid)
+    return res.json({ data: lawyer });
 })
 
 
 
-router.post('/joi', (req, res) => {                           //create a lawyer
+router.post('/', (req, res) => {                           //create a lawyer
 	
-    const FirstName=req.body.FirstName;
-    const LastName=req.body.LastName;
-    const Gender=req.body.Gender;
-    const Nationality=req.body.Nationality;
-    const IdentificationType=req.body.IdentificationType;
-    const IdentificationNum=req.body.IdentificationNum;
-    const BirthDate=req.body.BirthDate;
-    const Address=req.body.Address;
-    const Telephone=req.body.Telephone;
-    const Mobile=req.body.Mobile;
-    const Fax=req.body.Fax;
-    const Email=req.body.Email;
-    const Case=req.body.Case;
+    const firstName=req.body.firstName;
+    const lastName=req.body.lastName;
+    const gender=req.body.gender;
+    const nationality=req.body.nationality;
+    const identificationType=req.body.identificationType;
+    const identificationNum=req.body.identificationNum;
+    const birthDate=req.body.birthDate;
+    const address=req.body.address;
+    const telephone=req.body.telephone;
+    const mobile=req.body.mobile;
+    const fax=req.body.fax;
+    const email=req.body.email;
+    const password = req.body.password;
 
 
-	//const schema = {
+
+	const schema = {
 		
-        // FirstName: Joi.string().max(10).required(),
-        // LastName:  Joi.string().max(10).required(),
-        // Gender:   Joi.string().max(6).required(),
-        // Nationality: Joi.string().max(10).required(),
-        // IdentificationType:  Joi.string().max(10).required(), 
-        // IdentificationNum:   Joi.number().max(14).required(),
-        // BirthDate:  Joi.date().iso(),
-        // Address: Joi.string().max(20).required(),
-        // Telephone: Joi.number().max(8).required(),
-        // Mobile:  Joi.number().max(11).required(),
-        // Fax:  Joi.string().max(14).required(),
-        // Email:  Joi.string().email().required(),
-        // Case:   Joi.array()
+        firstName: Joi.string().max(10).required(),
+        lastName:  Joi.string().max(10).required(),
+        gender:   Joi.string().max(6).required(),
+        nationality: Joi.string().max(10).required(),
+        identificationType:  Joi.string().max(10).required(), 
+        identificationNum:   Joi.string().max(14).required(),
+        birthDate:  Joi.date(),
+        address: Joi.string().max(20).required(),
+        telephone: Joi.string().max(8).required(),
+        mobile:  Joi.string().max(11).required(),
+        fax:  Joi.string().max(14).required(),
+        email:  Joi.string().email().required(),
+        password : Joi.string().required()
         
 
 
-//	}
+	}
 
-	//const result = Joi.validate(req.body, schema);
+	const result = Joi.validate(req.body, schema);
 
-//	if (result.error) return res.status(400).send({ error: result.error.details[0].message });
+	if (result.error) return res.status(400).send({ error: result.error.details[0].message });
 
-	const newLawyer = {
+	const newLawyer = new Lawyer(
 
-        LawyerID : uuid.v4(),
-        FirstName,
-        LastName ,
-        Gender ,
-        Nationality ,
-        IdentificationType ,
-        IdentificationNum ,
-        BirthDate ,
-        Address ,
-        Telephone ,
-        Mobile ,
-        Fax ,
-        Email ,
-        Case ,
+        firstName,
+        lastName ,
+        gender ,
+        nationality ,
+        identificationType ,
+        identificationNum ,
+        birthDate ,
+        address ,
+        telephone ,
+        mobile ,
+        fax ,
+        email ,
+        password 
 
-    };
+    );
     Lawyers.push(newLawyer)
-    res.send(Lawyers)
+    return res.json({ data: Lawyers });
 
-	//return res.json({ data: newLawyer });
+	
 });
 
 
@@ -101,66 +101,73 @@ router.post('/joi', (req, res) => {                           //create a lawyer
 
 
 // Update Lawyer info
-router.put('/:LawyerID', (req, res) => {
+router.put('/:id', (req, res) => {
 
     
-    const lawyerid=req.params.LawyerID
-    const UpdatedFirstName = req.body.FirstName
-    const UpdatedLastName = req.body.LastName
-    const UpdatedGender = req.body.Gender
-    const UpdatedNationality=req.body.Nationality
-    const UpdatedIdentificationType=req.body.IdentificationType
-    const UpdatedIdentificationNum=req.body.IdentificationNum
-    const UpdatedBirthDate=req.body.BirthDate
-    const UpdatedAddress=req.body.Address
-    const UpdatedTelephone=req.body.Telephone
-    const UpdatedMobile=req.body.Fax
-    const UpdatedFax=req.body.Fax
-    const UpdatedEmail=req.body.Email
-    //const UpdatedCase=Case.find(book => book.CaseID === bookId)
+    const lawyerid=req.params.id
+    const UpdatedFirstName = req.body.firstName
+    const UpdatedLastName = req.body.lastName
+    const UpdatedGender = req.body.gender
+    const UpdatedNationality=req.body.nationality
+    const UpdatedIdentificationType=req.body.identificationType
+    const UpdatedIdentificationNum=req.body.identificationNum
+    const UpdatedBirthDate=req.body.birthDate
+    const UpdatedAddress=req.body.address
+    const UpdatedTelephone=req.body.telephone
+    const UpdatedMobile=req.body.mobile
+    const UpdatedFax=req.body.fax
+    const UpdatedEmail=req.body.email
+    const UpdatedPassword = req.body.password
+    const UpdatedCases = req.body.cases
 
-    const lawyer= Lawyers.find(Lawyer=> Lawyer.LawyerID===lawyerid)
+    const lawyer= Lawyers.find(Lawyer=> Lawyer.lawyerID===lawyerid)
 
 
     if(UpdatedFirstName )
-        lawyer.FirstName=UpdatedFirstName
+        lawyer.firstName=UpdatedFirstName
 
     if(UpdatedLastName )
-        lawyer.LastName=UpdatedLastName
+        lawyer.lastName=UpdatedLastName
     
     if(UpdatedGender )
-        lawyer.Gender=UpdatedGender
+        lawyer.gender=UpdatedGender
     
     if(UpdatedNationality )
-        lawyer.Nationality=UpdatedNationality
+        lawyer.nationality=UpdatedNationality
     
     if(UpdatedIdentificationType )
-        lawyer.IdentificationType=UpdatedIdentificationType  
+        lawyer.identificationType=UpdatedIdentificationType  
      
     if(UpdatedIdentificationNum )
-        lawyer.IdentificationNum=UpdatedIdentificationNum 
+        lawyer.identificationNum=UpdatedIdentificationNum 
       
     if(UpdatedBirthDate )
-        lawyer.BirthDate=UpdatedBirthDate 
+        lawyer.birthDate=UpdatedBirthDate 
     
     if(UpdatedAddress )
-        lawyer.Address=UpdatedAddress
+        lawyer.address=UpdatedAddress
     
     if(UpdatedTelephone )
-        lawyer.Telephone=UpdatedTelephone
+        lawyer.telephone=UpdatedTelephone
 
     if(UpdatedMobile )
-        lawyer.Mobile=UpdatedMobile   
+        lawyer.mobile=UpdatedMobile   
      
     if(UpdatedFax )
-        lawyer.Fax=UpdatedFax    
+        lawyer.fax=UpdatedFax    
 
     if(UpdatedEmail )
-        lawyer.Email=UpdatedEmail 
+        lawyer.email=UpdatedEmail 
+     
+
+     if(UpdatedPassword)
+        lawyer.password=UpdatedPassword   
+
+    if(UpdatedCases)
+        lawyer.cases.push(UpdatedCases)
 
 
-
-    res.send(Lawyers)
+    return res.json({ data: Lawyers });
 })
 
 
@@ -169,12 +176,12 @@ router.put('/:LawyerID', (req, res) => {
 
 
 // Delete a lawyer
-router.delete('/:LawyerID', (req, res) => {
+router.delete('/:id', (req, res) => {
     const lawyerid=req.params.LawyerID 
-    const lawyer= Lawyers.find(Lawyer=> Lawyer.LawyerID===lawyerid)
+    const lawyer= Lawyers.find(Lawyer=> Lawyer.lawyerID===lawyerid)
     const index = Lawyers.indexOf(lawyer)
     Lawyers.splice(index,1)
-    res.send(Lawyers)
+    return res.json({ data: Lawyers });
 })
 
 

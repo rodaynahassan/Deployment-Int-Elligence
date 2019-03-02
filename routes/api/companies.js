@@ -7,21 +7,20 @@ const uuid = require('uuid');
 
 const Company = require('../../Models/Company')
 const companies = [
-    new Company('Lenovo', 'New company', 'Cairo','New cairo', '64-b street',897943,'+1 567 563-873',null),
-    new Company('HP', 'Laptops','Giza' ,'Mohndseen','64-c street',671,'+1 567 563-873',null),
-    new Company('Dell', 'Hardware', 'Alexandria','Ma3moora','64-d street',1392,'+1 567 563-873',null),
-    new Company('Google', 'Search Engine','Sharkia','abo kbeer','64-e street', 349,'+1 567 563-873',null)
+    new Company('Lenovo', 'New company', 'Cairo','New cairo', '64-b street','897943','+1 567 563-873',''),
+    new Company('HP', 'Laptops','Giza' ,'Mohndseen','64-c street','671','+1 567 563-873',''),
+    new Company('Dell', 'Hardware', 'Alexandria','Ma3moora','64-d street','1392','+1 567 563-873',''),
+    new Company('Google', 'Search Engine','Sharkia','abo kbeer','64-e street', '349','+1 567 563-873','')
 ]
-router.post('/joi', (req, res) => {
-	const CompanyName = req.body.CompanyName
-    const CompanyInfo = req.body.CompanyInfo
-    const CompanyGovernorate = req.body.CompanyGovernorate
-    const CompanyCity = req.body.CompanyCity
-    const CompanyAddress = req.body.CompanyAddress
-    const CompanyTelephone = req.body.CompanyTelephone
-    const CompanyFax = req.body.CompanyFax
-    const CompanyNameEnglishCompanyInfo = req.body.CompanyNameEnglish
-    const InvestorID = req.body.InvestorID
+router.post('/', (req, res) => {
+	const companyName = req.body.companyName
+    const companyInfo = req.body.companyInfo
+    const companyGovernorate = req.body.companyGovernorate
+    const companyCity = req.body.companyCity
+    const companyAddress = req.body.companyAddress
+    const companyTelephone = req.body.companyTelephone
+    const companyFax = req.body.companyFax
+    const companyNameEnglishCompanyInfo = req.body.companyNameEnglish
 
     ///////Read a certain company
    
@@ -29,96 +28,95 @@ router.post('/joi', (req, res) => {
    
     //Create Company
 	const schema = {
-		CompanyName: Joi.string().min(4).required(),
-        CompanyInfo: Joi.string().required(),
-        CompanyGovernorate: Joi.string().required(),
-        CompanyAddress: Joi.string().required(),
-        CompanyCity: Joi.string().required(),
-        CompanyTelephone: Joi.string(),
-        CompanyFax: Joi.string(),
-        CompanyNameEnglishCompanyInfo: Joi.string().min(4),
+		companyName: Joi.string().min(4).required(),
+        companyInfo: Joi.string().required(),
+        companyGovernorate: Joi.string().required(),
+        companyAddress: Joi.string().required(),
+        companyCity: Joi.string().required(),
+        companyTelephone: Joi.string(),
+        companyFax: Joi.string(),
+        companyNameEnglish: Joi.string(),
 	}
 
 	const result = Joi.validate(req.body, schema);
 
 	if (result.error) return res.status(400).send({ error: result.error.details[0].message });
 
-	const newCompany = {
-		CompanyName,
-        CompanyInfo,
-        CompanyGovernorate,
-        CompanyAddress,
-        CompanyCity,
-        CompanyTelephone,
-        CompanyFax,
-        CompanyNameEnglishCompanyInfo,
-		CompanyID: uuid.v4(),
-    };
+	const newCompany = new Company(
+		companyName,
+        companyInfo,
+        companyGovernorate,
+        companyCity,
+        companyAddress,
+        companyTelephone,
+        companyFax,
+        companyNameEnglishCompanyInfo
+    );
     companies.push(newCompany);
     return res.json({ data: companies });
     
 });
 router.get('/', (req, res) => {
-    res.send(companies)
+    return res.json({ data: companies });
 })
 
 
 
-router.get('/:CompanyID', (req, res) => {
-    const Id = req.params.CompanyID 
-    const company = companies.find(company => company.CompanyID === Id)
-    res.send(company)
+router.get('/:id', (req, res) => {
+    const Id = req.params.id 
+    const company = companies.find(company => company.companyID === Id)
+    return res.json({ data: company });
 })
 
 
 
 ////Update Company
-router.put('/:CompanyID', (req, res) => {
-    const Id = req.params.CompanyID 
-    const updatedName = req.body.CompanyName
-    const updatedInfo = req.body.CompanyInfo
-    const updatedGovernorate = req.body.CompanyGovernorate
-    const updatedAddress = req.body.CompanyAddress
-    const updatedCity = req.body.CompanyCity
-    const updatedTelephone = req.body.CompanyTelephone
-    const updatedFax = req.body.CompanyFax
-    const updatedNameEnglishCompanyInfo = req.body.CompanyNameEnglishCompanyInfo
-    const Company = companies.find(Company => Company.CompanyID === Id)
+router.put('/:id', (req, res) => {
+    const Id = req.params.id 
+    const updatedName = req.body.companyName
+    const updatedInfo = req.body.companyInfo
+    const updatedGovernorate = req.body.companyGovernorate
+    const updatedAddress = req.body.companyAddress
+    const updatedCity = req.body.companyCity
+    const updatedTelephone = req.body.companyTelephone
+    const updatedFax = req.body.companyFax
+    const updatedNameEnglishCompanyInfo = req.body.companyNameEnglishCompanyInfo
+    const Company = companies.find(Company => Company.companyID === Id)
     if(updatedName){
-        Company.CompanyName = updatedName
+        Company.companyName = updatedName
     }
     if(updatedInfo ){
-        Company.CompanyInfo = updatedInfo
+        Company.companyInfo = updatedInfo
     }
     if(updatedGovernorate){
-        Company.CompanyGovernorate = updatedGovernorate
+        Company.companyGovernorate = updatedGovernorate
     }
     if(updatedAddress){
-        Company.CompanyAddress = updatedName
+        Company.companyAddress = updatedName
     }
     if(updatedCity){
-        Company.CompanyCity = updatedCity
+        Company.companyCity = updatedCity
     }
+
     if(updatedTelephone ){
-        Company.CompanyTelephone = updatedTelephone
+        Company.companyTelephone = updatedTelephone
     }
     if(updatedFax){
-        Company.CompanyFax = updatedFax
+        Company.companyFax = updatedFax
     }
     if(updatedNameEnglishCompanyInfo){
-        Company.CompanyNameEnglishCompanyInfo = updatedNameEnglishCompanyInfo
+        Company.companyNameEnglishCompanyInfo = updatedNameEnglishCompanyInfo
     }
     
-    res.send(companies)
+    return res.json({ data: companies });
 })
 /////Delete a book
-router.delete('/:CompanyID', (req, res) => {
-    const Id = req.params.CompanyID  
-    const Company = companies.find(Company => Company.CompanyID === Id)
+router.delete('/:id', (req, res) => {
+    const Id = req.params.id 
+    const Company = companies.find(Company => Company.companyID === Id)
     const index = companies.indexOf(Company)
     companies.splice(index,1)
-    res.send(companies)
+    return res.json({ data: companies });
 })
-
 
 module.exports = router;

@@ -9,33 +9,30 @@ const router = express.Router();
 // Models
 const Admin = require('../../Models/Admin');
 
-// temporary data created as if it was pulled out of the database ...
+
 const admins = [
-	new Admin('Barney', 'Male','Egyptian','National ID','123456789','password1','1995-8-9','Maadi'),
-	new Admin('Lilly', 'Female','American','Passport','a1b2n33ii','password2','1993-1-1','Tagamoa',1,1,'a@b.com'),
-	new Admin('Ted', 'Male','German','Passport','uimn827ee','password3','1990-4-11','Nasr City',1,1,'a@b.com'),
-	new Admin('Marshal', 'Male','Tunisian','Passport','hdyf7w82j','password4','1991-11-19','Maadi',1,1,'a@b.com'),
-	new Admin('Robin', 'Male','French','Passport','nd762behe','password5','1997-8-20','Maadi')
+	new Admin('Barney', 'Male','Egyptian','National ID','123456789','password1','1995-8-9','Maadi','1','1','a@b.com'),
+	new Admin('Lilly', 'Female','American','Passport','a1b2n33ii','password2','1993-1-1','Tagamoa','1','1','a@b.com'),
+	new Admin('Ted', 'Male','German','Passport','uimn827ee','password3','1990-4-11','Nasr City','1','1','a@b.com'),
+	new Admin('Marshal', 'Male','Tunisian','Passport','hdyf7w82j','password4','1991-11-19','Maadi','1','1','a@b.com'),
+	new Admin('Robin', 'Male','French','Passport','nd762behe','password5','1997-8-20','Maadi','1','1','a@b.com')
 ];
 
-// Instead of app use route
-// No need to write the full route
-// res.json() Automatically sends a status of 200
 
 
-router.get('/api/admins/:id', (req, res) => {
+router.get('/:id', (req, res) => {
     const adminId = req.params.id
     const admin = admins.find(admin => admin.id === adminId)
-    res.send(admin)
+    return res.json({ data: admin })
 })
 
 
-// Get all users
+// Get all admins
 router.get('/', (req, res) => res.json({ data: admins }))
 
-// Create a new user
+// Create a new admin
 
-router.post('/joi', (req, res) => {
+router.post('/', (req, res) => {
 	const name = req.body.name;
     const gender = req.body.gender;
     const nationality = req.body.nationality;
@@ -68,7 +65,7 @@ router.post('/joi', (req, res) => {
 
 	if (result.error) return res.status(400).send({ error: result.error.details[0].message });
 
-    const newAdmin = {
+    const newAdmin = new Admin(
 		name,
         gender,
         nationality,
@@ -80,8 +77,7 @@ router.post('/joi', (req, res) => {
         telephone,
         fax,
         email,
-		id: uuid.v4(),
-    };
+    )
     admins.push(newAdmin)
     res.send(admins)
 	return res.json({ data: newAdmin });
@@ -134,7 +130,7 @@ router.put('/:id', (req, res) => {
     if(updatedEmail){
         admin.email = updatedEmail
     }
-    res.send(admins)
+    return res.json({ data: admins })
 })
 
 router.delete('/:id', (req, res) => {
@@ -142,7 +138,7 @@ router.delete('/:id', (req, res) => {
     const admin = admins.find(admin => admin.id === adminId)
     const index = admins.indexOf(admin)
     admins.splice(index,1)
-    res.send(admins)
+    return res.json({ data: admins })
 })
 
 

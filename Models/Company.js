@@ -1,16 +1,16 @@
 const uuid = require('uuid')
 class Company {
-    constructor(CompanyName, CompanyInfo,CompanyGovernorate,CompanyCity,CompanyAddress,CompanyTelephone,CompanyFax,CompanyNameEnglish,InvestorID) {
-        this.CompanyName = CompanyName;
-        this.CompanyInfo = CompanyInfo;
-        this.CompanyID = uuid.v4();
-        this.CompanyGovernorate = CompanyGovernorate;
-        this.CompanyCity = CompanyCity;
-        this.CompanyAddress = CompanyAddress;
-        this.CompanyTelephone = CompanyTelephone;
-        this.CompanyFax = CompanyFax;
-        this.CompanyNameEnglish = CompanyNameEnglish;
-        //this.InvestorID = InvestorID; //Foreign
+    constructor(companyName, companyInfo,companyGovernorate,companyCity,companyAddress,companyTelephone,companyFax,companyNameEnglish) {
+        this.companyName = companyName;                 //String
+        this.companyInfo = companyInfo;                 //String
+        this.companyID = uuid.v4();                    
+        this.companyGovernorate = companyGovernorate;   //String
+        this.companyCity = companyCity;                 //String
+        this.companyAddress = companyAddress;           //String
+        this.companyTelephone = companyTelephone;       //String
+        this.companyFax = companyFax;                   //String
+        this.companyNameEnglish = companyNameEnglish;   //String
    };
 }
 module.exports = Company
+//export company class in mongo

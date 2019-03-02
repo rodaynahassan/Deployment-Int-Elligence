@@ -7,7 +7,7 @@ const router = express.Router();
 // Models
 const SSCManager = require('../../models/SSCManager');
 
-// temporary data created as if it was pulled out of the database ...
+
 const SSCManagers = [
     new SSCManager('Farida', 'person' , 'female', 'Egyptian', 'NationalID','12345678123456','1990-6-12'
     ,'32 Hegaz st', 'COO' ),
@@ -20,51 +20,53 @@ const SSCManagers = [
 	
 ];
 
-// Instead of app use route
-// No need to write the full route
-// res.json() Automatically sends a status of 200
+
 
 // Get all users
 router.get('/', (req, res) => res.json({ data: SSCManagers }));
 
+router.get('/:id', (req, res) => {
+  const SSCManagerID= req.params.id
+  const SSCManager= sscforms.find(SSCForm=> SSCForm.ID === SSCManagerID)
+  res.json({ data: SSCManager })
+})
+
 //create new 
 
-router.post('/joi', (req, res) => {
+router.post('/', (req, res) => {
 	const name = req.body.name
     const type = req.body.type
     const gender = req.body.gender
     const nationality = req.body.nationality
     const nationalityType = req.body.nationalityType
-	const nationalityNumber = req.body.nationalityNumber
+  	const nationalityNumber = req.body.nationalityNumber
     const birthdate = req.body.birthdate
-	const address = req.body.address
-    const typeOfManager = req.body.typeOfManager
+	  const address = req.body.address
+    const typeOfManagers = req.body.typeOfManagers
     
     
     
 
     
 
-	// const schema = {
-	// 	name: Joi.string().min(3).required(),
-  //       type: Joi.string().required(),
-  //       gender: Joi.string().required(),
-  //       nationality: Joi.string().required(),
-  //       nationalityType: Joi.string().required(),
-  //       nationalityNumber: Joi.string().required(),
-  //       birthdate: Joi.date().iso().required(),
-  //       address: Joi.string().required(),
-  //       typeOfManager: Joi.string().required(),
-  //   }
-  //   newSSCManager.push(SSCManagers)
-  //   res.send(newSSCManager)
+	const schema = {
+		name: Joi.string().min(3).required(),
+        type: Joi.string().required(),
+        gender: Joi.string().required(),
+        nationality: Joi.string().required(),
+        nationalityType: Joi.string().required(),
+        nationalityNumber: Joi.string().required(),
+        birthdate: Joi.date().iso().required(),
+        address: Joi.string().required(),
+        typeOfManagers: Joi.string().required(),
+    }
 
-	// const result = Joi.validate(req.body, schema);
+	const result = Joi.validate(req.body, schema);
 
-	// if (result.error) return res.status(400).send({ error: result.error.details[0].message });
+	if (result.error) return res.status(400).send({ error: result.error.details[0].message });
 
-	const newSSCManager = {
-		name,
+	const newSSCManager = new SSCManager(
+		    name,
         type,
         gender,
         nationality,
@@ -72,20 +74,19 @@ router.post('/joi', (req, res) => {
         nationalityNumber,
         birthdate,
         address,
-        typeOfManager,
-		id: uuid.v4(),
-    }
+        typeOfManagers
+		
+  )
     
-    ;
+  
     SSCManagers.push(newSSCManager)
-    res.send(SSCManagers)
-    //return res.json({ data: newSSCManager });
+    return res.json({ data: SSCManagers });
     
 });
 
 // Update 
-router.put('/:ID', (req, res) => {
-    const SSCManagerID = req.params.ID 
+router.put('/:id', (req, res) => {
+    const SSCManagerID = req.params.id
     const updatedName = req.body.name
     const updatedType = req.body.type
     const updatedGender = req.body.gender
@@ -134,21 +135,17 @@ router.put('/:ID', (req, res) => {
     }
 
 
-    res.send(SSCManagers)
+    res.json({ data: SSCManagers })
 })
 
 // Delete a Manager
-router.delete('/:ID', (req, res) => {
-    const SSCManagerID = req.params.ID 
+router.delete('/:id', (req, res) => {
+    const SSCManagerID = req.params.id 
     const SSCManager = SSCManagers.find(SSCManager=> SSCManager.ID === SSCManagerID)
     const index = SSCManagers.indexOf(SSCManager)
     SSCManagers.splice(index,1)
-    res.send(SSCManagers)
+    res.json({ data: SSCManagers })
 })
 
-// Define the port, get it from the enviroment (used in production)
-// Or just use 3000
-//const port = process.env.PORT | 3000
-//.listen(port, () => console.log(`Server up and running on port ${port}`))
 
 module.exports = router;

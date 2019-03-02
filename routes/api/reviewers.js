@@ -8,20 +8,26 @@ const Reviewer = require('../../models/Reviewer');
 
 const Reviewers = [
     new Reviewer('Ali Ibrahim Elsebaie','male','Egyptian','00121225454126','NationalID',
-    '1998-18-12','Maadi','+201145144451','+1 227 536-923',[],'','Ali.elsebaie@yahoo.com','seba3y'),
+    '1998-18-12','Maadi','+201145144451','+1 227 536-923','Ali.elsebaie@yahoo.com','seba3y'),
     new Reviewer('Mohamed Amr Aboushnef','male','Egyptian','00121225454129','NationalID',
-    '1998-8-26','Maadi','+201002777876','+1 227 577-923',[],'','mohamed.shenif@yahoo.com','shenfo'),	
+    '1998-8-26','Maadi','+201002777876','+1 227 577-923','mohamed.shenif@yahoo.com','shenfo'),	
     new Reviewer('Abdelrahman Adel Saleh','male','Egyptian','00121225454121','NationalID',
-    '1998-5-25','Maadi','+201006591115','+1 227 776-923',[],'','Bibo.adel@yahoo.com','amin'),	
+    '1998-5-25','Maadi','+201006591115','+1 227 776-923','Bibo.adel@yahoo.com','amin'),	
     new Reviewer('Tarek Ashraf Habashy','male','Egyptian','A6789665','PassportID',
-    '1998-1-1','Maadi','+201145144333','+1 227 536-944',[],'','Tarek.habashy@yahoo.com','habashy'),
+    '1998-1-1','Maadi','+201145144333','+1 227 536-944','Tarek.habashy@yahoo.com','habashy'),
 ];
 
 
 router.get('/', (req, res) => res.json({ data: Reviewers })); //view
 
+router.get('/:id', (req, res) => {
+    const reviewerid=req.params.id
+    const reviewer= Reviewers.find(reviewer=> reviewer.id===reviewerid)
+    return res.json({ data: reviewer });
+})
 
-router.post('/joi', (req, res) => { //Create
+
+router.post('/', (req, res) => { //Create
 	const name = req.body.name
     const gender = req.body.gender
     const nationality = req.body.nationality
@@ -31,49 +37,45 @@ router.post('/joi', (req, res) => { //Create
     const address = req.body.address
     const telephone = req.body.telephone
     const fax = req.body.cases
-    const cases = req.body.cases
     const email = req.body.email
     const password = req.body.password
 
-	//const schema = {
-		// name: Joi.string().min(3).required(),
-        // gender: Joi.string().required(),
-        // nationality: Joi.string().required(),
-        // identificationType: Joi.string().required(),
-        // identificationNumber: Joi.string().required(),
-        // birthdate: Joi.date().iso().required(),
-        // address: Joi.string().required(),
-        // telephone: Joi.number(),
-        // fax: Joi.number(),
-        // cases: Joi.array().required(),
-        // email: Joi.string().email(),
-        // password: Joi.string().required(),
+	const schema = {
+		name: Joi.string().min(3).required(),
+        gender: Joi.string().required(),
+        nationality: Joi.string().required(),
+        identificationType: Joi.string().required(),
+        identificationNumber: Joi.string().required(),
+        birthdate: Joi.date().iso().required(),
+        address: Joi.string().required(),
+        telephone: Joi.number(),
+        fax: Joi.number(),
+        email: Joi.string().email(),
+        password: Joi.string().required(),
 
-	//}
+	}
 
-	// const result = Joi.validate(req.body,schema);
+	const result = Joi.validate(req.body,schema);
 
-	// if (result.error) return res.status(400).send({ error: result.error.details[0].message });
+	if (result.error) return res.status(400).send({ error: result.error.details[0].message });
 
-	const newReviewer = {
-        id: uuid.v4(),
+	const newReviewer = new Reviewer (
+        
 		name,
         gender,
         nationality,
-        identificationType,
         identificationNumber,
+        identificationType,
         birthdate,
         address,
         telephone,
         fax,
-        cases,
         email,
         password
-
-    };
+    );
 
     Reviewers.push(newReviewer)
-    res.send(Reviewers)
+    res.json({ data: Reviewers })
 });
     
 // Update
@@ -130,7 +132,7 @@ if(updatedpassword ){
     Reviewer.password = updatedpassword
 }
 
-    res.send(Reviewers)
+res.json({ data: Reviewers })
 })
 
 
@@ -141,10 +143,9 @@ router.delete('/:id', (req, res) => {
     const Reviewer = Reviewers.find(Reviewer => Reviewer.id === ReviewerID)
     const index = Reviewers.indexOf(Reviewer)
     Reviewers.splice(index,1)
-    res.send(Reviewers)
+    res.json({ data: Reviewers })
 })
 
     module.exports = router
 
-	// return res.json({ data: newReviewer});
 

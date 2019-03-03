@@ -7,7 +7,7 @@ class Company {
         this.companyGovernorate = companyGovernorate;   //String
         this.companyCity = companyCity;                 //String
         this.companyAddress = companyAddress;           //String
-        this.cmpanyTelephone = companyTelephone;       //String
+        this.companyTelephone = companyTelephone;       //String
         this.companyFax = companyFax;                   //String
         this.companyNameEnglish = companyNameEnglish;   //String
    };

@@ -23,6 +23,7 @@ router.post('/joi', (req, res) => {
     const EquityCapital = req.body.EquityCapital
 
 	const schema = {
+<<<<<<< HEAD
         CompanyName: Joi.string().min(3).required(),
         CompanyNameInEnglish: Joi.string().min(3),
         CompanyGovernorate: Joi.string().required(),
@@ -32,6 +33,17 @@ router.post('/joi', (req, res) => {
         CompanyFax: Joi.string(),
         Currency: Joi.string().required(),
         EquityCapital: Joi.string().required(),
+=======
+        companyName: Joi.string().min(3).required(),
+        companyNameInEnglish: Joi.string(),
+        companyGovernorate: Joi.string().required(),
+        companyCity: Joi.string().required(),
+        companyAddress: Joi.string().required(),
+        companyTelephone: Joi.string(),
+        companyFax: Joi.string(),
+        currency: Joi.string().required(),
+        equityCapital: Joi.string().required()
+>>>>>>> 43135f00a05be49f2c3e3ee5d5560a385078ebfe
 	}
 
 	const result = Joi.validate(req.body, schema);
@@ -110,8 +122,8 @@ router.put('/:SPCFormID', (req, res) => {
 })
 
 //Delete SPCForm
-router.delete('/:SPCFormID', (req, res) => {
-    const spcformID = req.params.SPCFormID 
+router.delete('/:id', (req, res) => {
+    const spcformID = req.params.id
     const spcformConst = spcforms.find(spcformConst => spcformConst.SPCFormID === spcformID)
     const index = spcforms.indexOf(spcformConst)
     spcforms.splice(index,1)

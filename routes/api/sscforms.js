@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-
+const Joi = require('joi')
 
 const SSCForm = require('../../Models/SSCForm')
 
@@ -37,7 +37,7 @@ router.post('/', (req, res) => {
 	const schema = {
         companyName: Joi.string().required(),
 		companyGovernate: Joi.string().required(),
-        companyCity: Joi.number().required(),
+        companyCity: Joi.string().required(),
         companyAddress: Joi.string().required(),
         companyTelephone: Joi.string(),
         companyFax: Joi.string(),

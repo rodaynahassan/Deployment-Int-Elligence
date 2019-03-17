@@ -15,174 +15,87 @@ const Lawyers = [                       //my database
 
 
 
-router.get('/', (req, res) => res.json({ data: Lawyers }));   //view all lawyers
 
 
 
 
-                                                            // view a certain lawyer
-router.get('/:id', (req, res) => {
+
+// view a certain lawyer
+router.get('/:id', async(req, res) => {
     const lawyerid=req.params.id
-    const lawyer= Lawyers.find(Lawyer=> Lawyer.lawyerID===lawyerid)
+    const lawyer= await Lawyer.findOne({lawyerid})
     return res.json({ data: lawyer });
 })
 
 
-
-router.post('/', (req, res) => {                           //create a lawyer
-	
-    const firstName=req.body.firstName;
-    const lastName=req.body.lastName;
-    const gender=req.body.gender;
-    const nationality=req.body.nationality;
-    const identificationType=req.body.identificationType;
-    const identificationNum=req.body.identificationNum;
-    const birthDate=req.body.birthDate;
-    const address=req.body.address;
-    const telephone=req.body.telephone;
-    const mobile=req.body.mobile;
-    const fax=req.body.fax;
-    const email=req.body.email;
-    const password = req.body.password;
-
-
-
-	const schema = {
-		
-        firstName: Joi.string().max(10).required(),
-        lastName:  Joi.string().max(10).required(),
-        gender:   Joi.string().max(6).required(),
-        nationality: Joi.string().max(10).required(),
-        identificationType:  Joi.string().max(10).required(), 
-        identificationNum:   Joi.string().max(14).required(),
-        birthDate:  Joi.date(),
-        address: Joi.string().max(20).required(),
-        telephone: Joi.string().max(8).required(),
-        mobile:  Joi.string().max(11).required(),
-        fax:  Joi.string().max(14).required(),
-        email:  Joi.string().email().required(),
-        password : Joi.string().required()
-        
-
-
-	}
-
-	const result = Joi.validate(req.body, schema);
-
-	if (result.error) return res.status(400).send({ error: result.error.details[0].message });
-
-	const newLawyer = new Lawyer(
-
-        firstName,
-        lastName ,
-        gender ,
-        nationality ,
-        identificationType ,
-        identificationNum ,
-        birthDate ,
-        address ,
-        telephone ,
-        mobile ,
-        fax ,
-        email ,
-        password 
-
-    );
-    Lawyers.push(newLawyer)
-    return res.json({ data: Lawyers });
-
-	
-});
-
-
-
-
-
-
-
-// Update Lawyer info
-router.put('/:id', (req, res) => {
-
-    
-    const lawyerid=req.params.id
-    const UpdatedFirstName = req.body.firstName
-    const UpdatedLastName = req.body.lastName
-    const UpdatedGender = req.body.gender
-    const UpdatedNationality=req.body.nationality
-    const UpdatedIdentificationType=req.body.identificationType
-    const UpdatedIdentificationNum=req.body.identificationNum
-    const UpdatedBirthDate=req.body.birthDate
-    const UpdatedAddress=req.body.address
-    const UpdatedTelephone=req.body.telephone
-    const UpdatedMobile=req.body.mobile
-    const UpdatedFax=req.body.fax
-    const UpdatedEmail=req.body.email
-    const UpdatedPassword = req.body.password
-    const UpdatedCases = req.body.cases
-
-    const lawyer= Lawyers.find(Lawyer=> Lawyer.lawyerID===lawyerid)
-
-
-    if(UpdatedFirstName )
-        lawyer.firstName=UpdatedFirstName
-
-    if(UpdatedLastName )
-        lawyer.lastName=UpdatedLastName
-    
-    if(UpdatedGender )
-        lawyer.gender=UpdatedGender
-    
-    if(UpdatedNationality )
-        lawyer.nationality=UpdatedNationality
-    
-    if(UpdatedIdentificationType )
-        lawyer.identificationType=UpdatedIdentificationType  
-     
-    if(UpdatedIdentificationNum )
-        lawyer.identificationNum=UpdatedIdentificationNum 
-      
-    if(UpdatedBirthDate )
-        lawyer.birthDate=UpdatedBirthDate 
-    
-    if(UpdatedAddress )
-        lawyer.address=UpdatedAddress
-    
-    if(UpdatedTelephone )
-        lawyer.telephone=UpdatedTelephone
-
-    if(UpdatedMobile )
-        lawyer.mobile=UpdatedMobile   
-     
-    if(UpdatedFax )
-        lawyer.fax=UpdatedFax    
-
-    if(UpdatedEmail )
-        lawyer.email=UpdatedEmail 
-     
-
-     if(UpdatedPassword)
-        lawyer.password=UpdatedPassword   
-
-    if(UpdatedCases)
-        lawyer.cases.push(UpdatedCases)
-
-
-    return res.json({ data: Lawyers });
+//get all lawyers
+router.get('/', async (req,res) => {
+    const Lawyers = await Lawyer.find()
+    res.json({data: Lawyers})
 })
 
 
 
 
+//create a lawyer
+router.post('/', async (req,res) => {
+    try {
+     const isValidated = validator.createValidation(req.body)
+     if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+     const newLawyer = await Lawyer.create(req.body)
+     res.json({msg:'Lawyer was created successfully', data: newLawyer})
+    }
+    catch(error) {
+        // We will be handling the error later
+        console.log(error)
+    }  
+ })
 
 
-// Delete a lawyer
-router.delete('/:id', (req, res) => {
-    const lawyerid=req.params.LawyerID 
-    const lawyer= Lawyers.find(Lawyer=> Lawyer.lawyerID===lawyerid)
-    const index = Lawyers.indexOf(lawyer)
-    Lawyers.splice(index,1)
-    return res.json({ data: Lawyers });
-})
+//update a lawyer
+ router.put('/:id', async (req,res) => {
+    try {
+     const id = req.params.id
+     const lawyer = await Lawyer.findOne({id})
+     if(!lawyer) return res.status(404).send({error: 'Lawyer does not exist'})
+     const isValidated = validator.updateValidation(req.body)
+     if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+     const updatedLawyer = await Lawyer.updateOne(req.body)
+     res.json({msg: 'Lawyer updated successfully'})
+    }
+    catch(error) {
+        // We will be handling the error later
+        console.log(error)
+    }  
+ })
+
+
+
+
+
+//delete a lawyer
+ router.delete('/:id', async (req,res) => {
+    try {
+     const id = req.params.id
+     const deletedLawyer = await Lawyer.findByIdAndRemove(id)
+     res.json({msg:'Lawyer was deleted successfully', data: deletedLawyer})
+    }
+    catch(error) {
+        // We will be handling the error later
+        console.log(error)
+    }  
+ })
+
+
+
+
+
+
+
+
+
+
+
 
 
 

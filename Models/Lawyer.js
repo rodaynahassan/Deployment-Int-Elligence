@@ -1,26 +1,26 @@
-const uuid = require('uuid')
+const mongoose = require('mongoose');
+const schema = mongoose.Schema;
+const Case= require('../../models/Case')
 //require case class in mongo 
-class Lawyer{
+const LawyerSchema= new Schema({
 
-constructor(firstName,lastName,gender,nationality,identificationType,identificationNum,birthDate,address,telephone,mobile,fax,email,password){
 
-    this.lawyerID = uuid.v4();
-    this.firstName=firstName;                       //String
-    this.lastName=lastName;                         //String
-    this.gender=gender;                             //String
-    this.nationality=nationality;                   //String
-    this.identificationType=identificationType;     //String
-    this.identificationNum=identificationNum;       //String
-    this.birthDate=birthDate;                       //Date
-    this.address=address;                           //String
-    this.telephone=telephone;                       //String
-    this.mobile=mobile;                             //String
-    this.fax=fax;                                   //String
-    this.email=email;                               //Email Format
-    this.cases=[];                                  //Array of cases
-    this.password=password                          //String
-    }
-}
+    firstName: {type: String ,required: true},                       //String
+    lastName: {type: String ,required: true},                       //String
+    gender: {type: String ,required: true},                         //String
+    nationality: {type: String ,required: true},                    //String
+    identificationType: {type: String ,required: true},            //String
+    identificationNum: {type: Number ,required: true},             //String
+    birthDate: {type: Date ,required: true},                      //Date
+    address: {type: String ,required: true},                      //String
+    telephone: {type: Number ,required: false},                   //String
+    fax: {type: String ,required: false},                                    //String
+    email: {type: String ,required: false},                            //Email Format
+    cases:{type:[Case], required:true},                                                      //Array of cases
+    password: {type: String ,required: true}                       //String
+    
+});
 
+const Lawyer = mongoose.model('Lawyer',Lawyer);
 module.exports=Lawyer
 //export lawyer class in mongo 

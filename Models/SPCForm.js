@@ -1,18 +1,41 @@
-const uuid = require('uuid')
-class SPCForm {
-    constructor(companyName, companyNameInEnglish, companyGovernorate, companyCity, companyAddress, companyTelephone, companyFax, currency, equityCapital) {
-        this.SPCFormID = uuid.v4();
-        this.companyName=companyName;                           //String
-        this.companyNameInEnglish=companyNameInEnglish;         //String
-        this.companyGovernorate = companyGovernorate;           //String
-        this.companyCity = companyCity;                         //String
-        this.companyAddress = companyAddress;                   //String
-        this.companyTelephone=companyTelephone;                 //String
-        this.companyFax=companyFax;                             //String
-        this.currency=currency;                                 //String
-        this.equityCapital=equityCapital;                       //String
-    };
-}
-
-module.exports = SPCForm
-//export the SPCForm class in mongo
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+const SPCFormSchema = new Schema({
+    companyName: {
+        type: String,
+        required: true
+    },
+    companyNameInEnglish: {
+        type: String,
+        required: false
+    },
+    companyGovernorate: {
+        type: String,
+        required: true
+    },
+    companyCity: {
+        type: String,
+        required: true
+    },
+    companyAddress: {
+        type: String,
+        required: true
+    },
+    companyTelephone: {
+        type: String,
+        required: false
+    },
+    companyFax: {
+        type: String,
+        required: false
+    },
+    currency: {
+        type: String,
+        required: true
+    },
+    equityCapital: {
+        type: Number,
+        required: true
+    }
+})
+module.exports = SPCForm = mongoose.model('spcforms', SPCFormSchema)

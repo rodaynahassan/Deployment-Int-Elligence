@@ -1,122 +1,67 @@
 const express = require('express')
 const router = express.Router()
-const Joi = require('joi');
-const uuid = require('uuid');
+const mongoose = require('mongoose')
 
 
 
 const Company = require('../../Models/Company')
-const companies = [
-    new Company('Lenovo', 'New company', 'Cairo','New cairo', '64-b street','897943','+1 567 563-873',''),
-    new Company('HP', 'Laptops','Giza' ,'Mohndseen','64-c street','671','+1 567 563-873',''),
-    new Company('Dell', 'Hardware', 'Alexandria','Ma3moora','64-d street','1392','+1 567 563-873',''),
-    new Company('Google', 'Search Engine','Sharkia','abo kbeer','64-e street', '349','+1 567 563-873','')
-]
-router.post('/', (req, res) => {
-	const companyName = req.body.companyName
-    const companyInfo = req.body.companyInfo
-    const companyGovernorate = req.body.companyGovernorate
-    const companyCity = req.body.companyCity
-    const companyAddress = req.body.companyAddress
-    const companyTelephone = req.body.companyTelephone
-    const companyFax = req.body.companyFax
-    const companyNameEnglishCompanyInfo = req.body.companyNameEnglish
+const validator = require('../../validations/bookValidations')
 
-    ///////Read a certain company
-   
-    /////// Read all companies
-   
-    //Create Company
-	const schema = {
-		companyName: Joi.string().min(4).required(),
-        companyInfo: Joi.string().required(),
-        companyGovernorate: Joi.string().required(),
-        companyAddress: Joi.string().required(),
-        companyCity: Joi.string().required(),
-        companyTelephone: Joi.string(),
-        companyFax: Joi.string(),
-        companyNameEnglish: Joi.string(),
-	}
-
-	const result = Joi.validate(req.body, schema);
-
-	if (result.error) return res.status(400).send({ error: result.error.details[0].message });
-
-	const newCompany = new Company(
-		companyName,
-        companyInfo,
-        companyGovernorate,
-        companyCity,
-        companyAddress,
-        companyTelephone,
-        companyFax,
-        companyNameEnglishCompanyInfo
-    );
-    companies.push(newCompany);
-    return res.json({ data: companies });
-    
-});
-router.get('/', (req, res) => {
-    return res.json({ data: companies });
+//get all companies
+router.get('/', async (req,res) => {
+    const companies = await Company.find()
+    res.json({data: companies})
 })
-
-
-
-router.get('/:id', (req, res) => {
-    const Id = req.params.id 
-    const company = companies.find(company => company.companyID === Id)
-    return res.json({ data: company });
+//get a company by id
+router.get('/', async (req,res) => {
+        const id = req.params.id
+        const company = await Company.findOne({id})
+        res.json({data: company})
 })
+//create a company
+router.post('/', async (req,res) => {
+    try {
+     const isValidated = validator.createValidation(req.body)
+     if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+     const newCompany = await Company.create(req.body)
+     res.json({msg:'Company was created successfully', data: Company})
+    }
+    catch(error) {
+        // We will be handling the error later
+        console.log(error)
+    }  
+ })
 
 
+//update a company
+ router.put('/:id', async (req,res) => {
+    try {
+     const id = req.params.id
+     const company = await Company.findOne({id})
+     if(!company) return res.status(404).send({error: 'Company does not exist'})
+     const isValidated = validator.updateValidation(req.body)
+     if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+     const updatedBook = await Book.updateOne(req.body)
+     res.json({msg: 'Company updated successfully'})
+    }
+    catch(error) {
+        // We will be handling the error later
+        console.log(error)
+    }  
+ })
 
-////Update Company
-router.put('/:id', (req, res) => {
-    const Id = req.params.id 
-    const updatedName = req.body.companyName
-    const updatedInfo = req.body.companyInfo
-    const updatedGovernorate = req.body.companyGovernorate
-    const updatedAddress = req.body.companyAddress
-    const updatedCity = req.body.companyCity
-    const updatedTelephone = req.body.companyTelephone
-    const updatedFax = req.body.companyFax
-    const updatedNameEnglishCompanyInfo = req.body.companyNameEnglishCompanyInfo
-    const Company = companies.find(Company => Company.companyID === Id)
-    if(updatedName){
-        Company.companyName = updatedName
+ 
+//delete a company
+ router.delete('/:id', async (req,res) => {
+    try {
+     const id = req.params.id
+     const deletedCompany= await Company.findByIdAndRemove(id)
+     res.json({msg:'Company was deleted successfully', data: deletedCompany})
     }
-    if(updatedInfo ){
-        Company.companyInfo = updatedInfo
-    }
-    if(updatedGovernorate){
-        Company.companyGovernorate = updatedGovernorate
-    }
-    if(updatedAddress){
-        Company.companyAddress = updatedName
-    }
-    if(updatedCity){
-        Company.companyCity = updatedCity
-    }
+    catch(error) {
+        // We will be handling the error later
+        console.log(error)
+    }  
+ })
 
-    if(updatedTelephone ){
-        Company.companyTelephone = updatedTelephone
-    }
-    if(updatedFax){
-        Company.companyFax = updatedFax
-    }
-    if(updatedNameEnglishCompanyInfo){
-        Company.companyNameEnglishCompanyInfo = updatedNameEnglishCompanyInfo
-    }
-    
-    return res.json({ data: companies });
-})
-/////Delete a book
-router.delete('/:id', (req, res) => {
-    const Id = req.params.id 
-    const Company = companies.find(Company => Company.companyID === Id)
-    const index = companies.indexOf(Company)
-    companies.splice(index,1)
-    return res.json({ data: companies });
-})
-
-module.exports = router;
+module.exports = router

@@ -1,16 +1,38 @@
-const uuid = require('uuid')
-class Company {
-    constructor(companyName, companyInfo,companyGovernorate,companyCity,companyAddress,companyTelephone,companyFax,companyNameEnglish) {
-        this.companyName = companyName;                 //String
-        this.companyInfo = companyInfo;                 //String
-        this.companyID = uuid.v4();                    
-        this.companyGovernorate = companyGovernorate;   //String
-        this.companyCity = companyCity;                 //String
-        this.companyAddress = companyAddress;           //String
-        this.companyTelephone = companyTelephone;       //String
-        this.companyFax = companyFax;                   //String
-        this.companyNameEnglish = companyNameEnglish;   //String
-   };
-}
-module.exports = Company
-//export company class in mongo
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+
+const CompanySchema= new Schema({
+        companyName:{
+                    type:string,
+                    required: true
+        },
+        companyInfo:{
+                    type:string,
+                    required:true
+        },
+        companyGovernorate:{
+                    type: string,
+                    required:true
+        },
+        companyAddress:{
+                    type: string,
+                    required:true
+        },
+        companyCity:{
+                    type: string,
+                    required:true
+        },
+        companyTelephone:{
+                    type: string,
+                    required:false
+        },
+        companyFax:{
+                    type: string,
+                    required:true
+        },
+        companyNameEnglish:{
+                    type: string,
+                    required:true
+        }
+})
+module.exports = Company = mongoose.model('companies', CompanySchema)

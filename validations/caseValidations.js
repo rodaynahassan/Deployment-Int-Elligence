@@ -1,13 +1,18 @@
 const Joi = require('joi')
+const Form = require('Form')
 
 module.exports = {
     createValidation: request => {
         const createSchema = {
             creationDate: Joi.date().required(),
-            form: Joi.object().required() //must insert an object , syntax -> {} , it doesn't accept null
-            //reviewer comments
-            //lawyer comments 
-            //booleans
+            companyName: Joi.string().required().unique(),
+            form: Joi.array().items(Joi.object(Form)).required(), //must insert an object , syntax -> {} , it doesn't accept null
+            lawyerComments: Joi.array().items(Joi.string()),
+            lawyerSeen: Joi.boolean(),
+            lawyerApprove: Joi.boolean(),
+            reviewerComments: Joi.array().items(Joi.string()),
+            reviewerSeen: Joi.boolean(),
+            reviewerApprove: Joi.boolean(),
         }
 
         return Joi.validate(request, createSchema)
@@ -16,9 +21,12 @@ module.exports = {
     updateValidation: request => {
         const updateSchema = {
             creationDate: Joi.date(),
-            form: Joi.object(), //must insert an object , syntax -> {} , it doesn't accept null
+            companyName: Joi.string(),
+            form: Joi.array().items(Joi.object(Form)),
+            lawyerComments: Joi.array().items(Joi.string()), //must insert an object , syntax -> {} , it doesn't accept null
             lawyerSeen: Joi.boolean(),
             lawyerApprove: Joi.boolean(),
+            reviewerComments: Joi.array().items(Joi.string()),
             reviewerSeen: Joi.boolean(),
             reviewerApprove: Joi.boolean()
         }

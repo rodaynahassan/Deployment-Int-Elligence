@@ -19,10 +19,10 @@ var User = new Schema({
   cases: {type: [String], required: true },
   email: { type: String, unique: true} ,
   password: { type: String, required: true },
-  forms: {type: [Object],required: true},
-  companies: {type: Company,required: true},
-  lawyer: {type: User,required: true},
-  investorType: {type: [String], required: true}
+  forms: {type: [Object]},
+  companies: {type: Company},
+  lawyer: {type: User},
+  investorType: {type: [String]}
   
 });
 

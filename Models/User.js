@@ -15,7 +15,7 @@ var User = new Schema({
   birthdate: {type:date,required:true},
   address: {type:String,required:true,unique:true},
   telephone:{type:Number,unique:true},
-  fax: Number,
+  fax: {type:Number},
   cases: {type: [String], required: true },
   email: { type: String, unique: true} ,
   password: { type: String, required: true },

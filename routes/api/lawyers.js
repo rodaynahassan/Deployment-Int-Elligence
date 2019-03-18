@@ -7,10 +7,7 @@ const router = express.Router();
 const Lawyer = require('../../Models/Lawyer')
 
 
-const Lawyers = [                       //my database
-	new Lawyer('Mohamed','Amr','male','Egyptian','NationalID','11111111111111','1998-8-26','Zahraa El Maadi','12345678','01002550047','+1 666 222-999','mohamed.shenif@gmail.com','pass'),
-	new Lawyer('Abdelrahman','Adel','male','Egyptian','NationalID','22222222222222','1998-2-9','Maadi','12344567','01007776660','+2 333 444-555','abdlrahman@hotmail.com','pass')
-];
+
 
 
 

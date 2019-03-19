@@ -2,31 +2,36 @@ const Joi = require('joi')
 module.exports = {
     createValidationSSC: request => {
         const SSCFormSchema = {
+<<<<<<< HEAD
             companyName: Joi.string().required(),
             companyGovernorate: Joi.string().required(),
             companyAddress: Joi.string().required(),
             companyCity: Joi.string().required(),
+=======
+            companyName: Joi.string().required().max(50),
+            companyGovernorate: Joi.string().required().min(3).max(20),
+            companyAddress: Joi.string().required().min(5).max(50),
+            companyCity: Joi.string().required().min(3).max(20),
+>>>>>>> be4dec00e31e25325eefa7c1c640ddfd104aa6f9
             companyTelephone: Joi.string().min(8).max(15),
-            companyFax: Joi.string(),
-            companyNameEnglish: Joi.string(),
-            currency: Joi.string().required(),
-            equityCapital: Joi.number().required(),
-            SSCManager: Joi.array().items(Joi.object(SSCManager)).required()
+            companyFax: Joi.string().min(5).max(20),
+            companyNameEnglish: Joi.string().max(50),
+            currency: Joi.string().required().min(2).max(10),
+            equityCapital: Joi.number().required()
         }
 
         return Joi.validate(request, SSCFormSchema)
     },
     updateValidationSSC: request => {
         const updateSSCFormSchema = {
-            companyName: Joi.string(),
-            companyInfo: Joi.string(),
-            companyGovernorate: Joi.string(),
-            companyAddress: Joi.string(),
-            companyCity: Joi.string(),
+            companyName: Joi.string().max(50),
+            companyGovernorate: Joi.string().min(3).max(20),
+            companyAddress: Joi.string().min(5).max(50),
+            companyCity: Joi.string().min(3).max(20),
             companyTelephone: Joi.string().min(8).max(15),
-            companyFax: Joi.string(),
-            companyNameEnglish: Joi.string(),
-            currency: Joi.string(),
+            companyFax: Joi.string().min(5).max(20),
+            companyNameEnglish: Joi.string().max(50),
+            currency: Joi.string().min(2).max(10),
             equityCapital: Joi.number(),
             SSCManager: Joi.array().items(Joi.object(SSCManager))
         }
@@ -35,14 +40,14 @@ module.exports = {
     }, 
     createValidationSPC: request => {
         const SPCSchema = {
-            companyName: Joi.string().required(),
-            companyGovernorate: Joi.string().required(),
-            companyAddress: Joi.string().required(),
-            companyCity: Joi.string().required(),
+            companyName: Joi.string().required().max(50),
+            companyGovernorate: Joi.string().required().min(3).max(20),
+            companyAddress: Joi.string().required().min(5).max(50),
+            companyCity: Joi.string().required().min(3).max(20),
             companyTelephone: Joi.string().min(8).max(15),
-            companyFax: Joi.string(),
-            companyNameEnglish: Joi.string(),
-            currency: Joi.string().required(),
+            companyFax: Joi.string().min(5).max(20),
+            companyNameEnglish: Joi.string().max(50),
+            currency: Joi.string().required().min(2).max(10),
             equityCapital: Joi.number().required()
         }
 
@@ -50,30 +55,31 @@ module.exports = {
     },
     updateValidationSPC: request => {
         const updateSPCFormSchema = {
-            companyName: Joi.string(),
-            companyInfo: Joi.string(),
-            companyGovernorate: Joi.string(),
-            companyAddress: Joi.string(),
-            companyCity: Joi.string(),
+            companyName: Joi.string().max(50),
+            companyGovernorate: Joi.string().min(3).max(20),
+            companyAddress: Joi.string().min(5).max(50),
+            companyCity: Joi.string().min(3).max(20),
             companyTelephone: Joi.string().min(8).max(15),
-            companyFax: Joi.string(),
-            companyNameEnglish: Joi.string(),
-            currency: Joi.string(),
-            equityCapital: Joi.number(),
+            companyFax: Joi.string().min(5).max(20),
+            companyNameEnglish: Joi.string().max(50),
+            currency: Joi.string().min(2).max(10),
+            equityCapital: Joi.number()
         }
 
         return Joi.validate(request, updateSPCFormSchema)
-    }, 
+    },
+        
+    
     createValidationSSCManagers: request => {
         const SSCManagerSchema={
-        name: Joi.string().min(3).required(),
+        name: Joi.string().min(3).max(50).required(),
         type: Joi.string().required(),
         gender: Joi.string().min(4).max(6).required(),
-        nationality: Joi.string().required(),
-        nationalityType: Joi.string().required(),
-        nationalityNumber: Joi.string().max(14).required(),
+        nationality: Joi.string().max(50).required(),
+        nationalityType: Joi.string().required().min(8).max(20),
+        nationalityNumber: Joi.string().min(8).max(50).required(),
         birthdate: Joi.date().required(),
-        address: Joi.string().required(),
+        address: Joi.string().required().min(5).max(50),
         typeOfManager: Joi.string().required()
         }
         return Joi.validate(request, SSCManagerSchema)
@@ -81,14 +87,14 @@ module.exports = {
 
     updateValidationSSCManagers: request => {
         const updateSSCManagerSchema = {
-            name: Joi.string().min(3).max(500),
-            type: Joi.string().min(3).max(100),
+            name: Joi.string().min(3).max(50),
+            type: Joi.string(),
             gender: Joi.string().min(4).max(6),
-            nationality: Joi.string(),
-            nationalityType: Joi.string(),
+            nationality: Joi.string().max(50),
+            nationalityType: Joi.string().min(8).max(20),
             nationalityNumber: Joi.string(),
             birthdate: Joi.date(),
-            address: Joi.string(),
+            address: Joi.string().min(5).max(50),
             typeOfManager: Joi.string()
 
         }

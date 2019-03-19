@@ -2,7 +2,7 @@ const Joi = require('joi')
 module.exports = {
     createValidationSSC: request => {
         const SSCFormSchema = {
-            companyName: Joi.string().required().,
+            companyName: Joi.string().required(),
             companyGovernorate: Joi.string().required(),
             companyAddress: Joi.string().required(),
             companyCity: Joi.string().required(),
@@ -66,14 +66,14 @@ module.exports = {
     }, 
     createValidationSSCManagers: request => {
         const SSCManagerSchema={
-        name: Joi.string().min(3).required(),
+        name: Joi.string().min(3).max(50).required(),
         type: Joi.string().required(),
         gender: Joi.string().min(4).max(6).required(),
-        nationality: Joi.string().required(),
-        nationalityType: Joi.string().required(),
-        nationalityNumber: Joi.string().max(14).required(),
+        nationality: Joi.string().max(50).required(),
+        nationalityType: Joi.string().required().min(8).max(20),
+        nationalityNumber: Joi.string().min(8).max(50).required(),
         birthdate: Joi.date().required(),
-        address: Joi.string().required(),
+        address: Joi.string().required().min(5).max(50),
         typeOfManager: Joi.string().required()
         }
         return Joi.validate(request, SSCManagerSchema)

@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Company = require('../../models/Company')
-const Case= require('../../models/Case')
+
 
 
 var User = new Schema({

@@ -5,6 +5,7 @@ const FormSchema= new Schema({
     companyGovernate:{
         type:String,
         required:true
+
     },
     companyCity:{
         type:String,
@@ -15,17 +16,21 @@ const FormSchema= new Schema({
         required:true
     },
     companyTelephone:{
-        type:String
+        type:String,
+        unique:true
     },
     companyFax:{
-        type:String
+        type:String,
+        unique:true
     },
     companyName:{
         type:String,
-        required:true
+        required:true,
+        unique:true
     },
     companyNameInEnglish:{
-        type:String
+        type:String,
+        unique:true
     },
     currency:{
         type:String,
@@ -73,7 +78,8 @@ const SSCManager= new Schema({
     },
      identificationNumber:{
         type: String,
-        required: true
+        required: true,
+        unique:true
     },
     birthdate: {
         type: Date,

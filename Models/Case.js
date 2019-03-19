@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const Form = require('Form')
+const Form = require('../Models/form').schema
 
 //When using mongo require the Form class
 
@@ -35,7 +35,7 @@ const CaseSchema = new Schema({
          required:true
      },
      reviewerComments:{
-         type=[String],
+         type:[String],
          required:true
      },
      reviewerApprove:{

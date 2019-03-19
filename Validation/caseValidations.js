@@ -5,7 +5,7 @@ module.exports = {
     createValidation: request => {
         const createSchema = {
             creationDate: Joi.date().required(),
-            companyName: Joi.string().required().unique(),
+            companyName: Joi.string().required().max(50),
             form: Joi.array().items(Joi.object(Form)).required(), //must insert an object , syntax -> {} , it doesn't accept null
             lawyerComments: Joi.array().items(Joi.string()),
             lawyerSeen: Joi.boolean(),

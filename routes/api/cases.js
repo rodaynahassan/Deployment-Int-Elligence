@@ -76,5 +76,12 @@ router.delete('/:id', async (req,res) => {
         console.log(error)
     }  
  })
+  //Get the form of the Lawyer/Reviewer case
+router.get('/:id', async(req, res) => {
+    const caseid = req.params.id
+    const cases = await Case.findOne({caseid})
+    var arrayOfForms = cases.form
+    res.json({ data: arrayOfForms });
+})
 
 module.exports = router;

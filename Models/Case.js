@@ -1,4 +1,3 @@
-//const uuid = require('uuid')
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const Form = require('../Models/form').schema
@@ -12,7 +11,8 @@ const CaseSchema = new Schema({
     },
     companyName:{
         type:String,
-        required:true
+        required:true,
+        unique:true
     },
     creationDate: {
         type: Date,

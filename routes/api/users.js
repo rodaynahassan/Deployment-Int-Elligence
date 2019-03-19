@@ -87,10 +87,6 @@ router.post('/', async (req,res) => {
     }  
  })
 
-
-
-
-
 //delete a user
  router.delete('/:id', async (req,res) => {
     try {
@@ -104,19 +100,13 @@ router.post('/', async (req,res) => {
     }  
  })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+//get the case of the lawyer/Reviewer 
+router.get('/:id',async(req,res) => {
+    const userid = req.params.id
+    const user = await User.findOne({userid})
+    var arrayOfCases = user.cases 
+    res.json({data: arrayOfCases})
+});
 
 module.exports = router;
 

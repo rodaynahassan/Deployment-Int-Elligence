@@ -15,6 +15,19 @@ router.get('/:id', async(req, res) => {
     return res.json({ data: user });
 })
 
+//View the sorted cases by date
+router.get('/sortByCreationDate/:id', async(req, res) => {
+    const userid=req.params.id
+    const user= await User.findOne({userid})
+    user.cases.sort(compare)
+    return res.json({ data: user.cases });
+})
+
+function compare(a,b){
+    if(Date.parse(a.creationDate)>Date.parse(b.creationDate)) return 1
+    if(Date.parse(a.creationDate)>Date.parse(b.creationDate)) return -1
+    return 0
+}
 
 //get all users
 router.get('/', async (req,res) => {
@@ -44,7 +57,7 @@ function compare(a,b){
 //create a user
 router.post('/', async (req,res) => {
     try {
-        const isValidated
+        var isValidated = undefined
         if(req.body.userType==='Lawyer'){
              isValidated = validator.createValidationL(req.body)
         }
@@ -71,7 +84,7 @@ router.post('/', async (req,res) => {
      const id = req.params.id
      const user = await User.findOne({id})
      if(!user) return res.status(404).send({error: 'User does not exist'})
-     const isValidated
+     var isValidated = undefined
      if(req.body.userType==='Lawyer'){
           isValidated = validator.updateValidationL(req.body)
      }

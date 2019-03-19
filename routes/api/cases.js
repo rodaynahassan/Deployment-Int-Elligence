@@ -1,14 +1,10 @@
 const express = require('express');
 const router = express.Router();
-<<<<<<< HEAD
 //const Joi = require('joi');
 //const uuid = require('uuid');
 const validator = require('../../Validation/caseValidations')
-=======
-const validator = require('../../validations/caseValidations')
->>>>>>> be4dec00e31e25325eefa7c1c640ddfd104aa6f9
 const mongoose = require('mongoose')
-const Case = require('../../models/Case')
+const Case = require('../../Models/Case')
 
 
 //get all cases
@@ -32,7 +28,7 @@ router.post('/', async (req,res) => {
      const isValidated = validator.createValidation(req.body)
      if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
      const newCase = await Case.create(req.body)
-     res.json({msg:'Book was created successfully', data: newCase})
+     res.json({msg:'Case was created successfully', data: newCase})
     }
     catch(error) {
         // We will be handling the error later

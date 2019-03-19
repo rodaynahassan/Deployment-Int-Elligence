@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const Case= require('../Models/Case').schema
 const Form = require('../Models/form').schema
 
-var User = new Schema({
+const User = new Schema({
 
   userType:{type:String,required: true},
   name: {type:String,required:true},
@@ -21,11 +21,11 @@ var User = new Schema({
   password: { type: String, required: true,unique:true },
   forms: {type: [Form],required: true},
   companies: {type: Form,required: true},
-  //lawyer: {type: User,required: true},
+  lawyer: { type: Schema.Types.ObjectId, ref: 'users' ,required: true},
   investorType: {type: [String], required: true}
   
 });
 
 
 
-module.exports = User = mongoose.model('users', User)
+module.exports = user = mongoose.model('users', User)

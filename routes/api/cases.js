@@ -1,7 +1,5 @@
 const express = require('express');
 const router = express.Router();
-//const Joi = require('joi');
-//const uuid = require('uuid');
 const validator = require('../../validations/caseValidations')
 const mongoose = require('mongoose')
 const Case = require('../../models/Case')
@@ -13,9 +11,10 @@ router.get('/', async (req,res) => {
     res.json({data: cases})
 })
 
+
 //get a case
 router.get('/:id', async (req,res) => {
-    const id = req.params.id
+    const id=req.params.id
     const cases = await Case.findOne({id})
     res.json({data: cases})
 })
@@ -36,6 +35,7 @@ router.post('/', async (req,res) => {
  })
 
 
+
 //update a case
 router.put('/:id', async (req,res) => {
     try {
@@ -44,7 +44,7 @@ router.put('/:id', async (req,res) => {
      if(!newCase) return res.status(404).send({error: 'Case does not exist'})
      const isValidated = validator.updateValidation(req.body)
      if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-     const updatedBook = await Book.updateOne(req.body)
+     const updatedCase = await Case.updateOne(req.body)
      res.json({msg: 'Case updated successfully'})
     }
     catch(error) {
@@ -53,12 +53,13 @@ router.put('/:id', async (req,res) => {
     }  
  })
 
+
 //delete a case
 router.delete('/:id', async (req,res) => {
     try {
      const id = req.params.id
      const deletedCase = await Case.findByIdAndRemove(id)
-     res.json({msg:'Case was deleted successfully', data: deletedBook})
+     res.json({msg:'case was deleted successfully', data: deletedCase})
     }
     catch(error) {
         // We will be handling the error later

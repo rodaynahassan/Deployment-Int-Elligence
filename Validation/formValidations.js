@@ -2,7 +2,7 @@ const Joi = require('joi')
 module.exports = {
     createValidationSSC: request => {
         const SSCFormSchema = {
-            companyName: Joi.string().required().,
+            companyName: Joi.string().required(),
             companyGovernorate: Joi.string().required(),
             companyAddress: Joi.string().required(),
             companyCity: Joi.string().required(),

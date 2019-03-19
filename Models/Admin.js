@@ -15,5 +15,5 @@ const Admin = new Schema({
   email: { type: String, unique: true }
 });
 
-module.exports = Admin = mongoose.model('admins', Admin);
+module.exports = admin = mongoose.model('admins', Admin);
 

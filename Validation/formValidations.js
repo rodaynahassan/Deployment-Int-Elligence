@@ -2,13 +2,13 @@ const Joi = require('joi')
 module.exports = {
     createValidationSSC: request => {
         const SSCFormSchema = {
-            companyName: Joi.string().required().unique().max(50),
+            companyName: Joi.string().required().max(50),
             companyGovernorate: Joi.string().required().min(3).max(20),
             companyAddress: Joi.string().required().min(5).max(50),
             companyCity: Joi.string().required().min(3).max(20),
             companyTelephone: Joi.string().min(8).max(15),
             companyFax: Joi.string().min(5).max(20),
-            companyNameEnglish: Joi.string().unique().max(50),
+            companyNameEnglish: Joi.string().max(50),
             currency: Joi.string().required().min(2).max(10),
             equityCapital: Joi.number().required()
         }
@@ -17,7 +17,7 @@ module.exports = {
     },
     updateValidationSSC: request => {
         const updateSSCFormSchema = {
-            companyName: Joi.string().unique().max(50),
+            companyName: Joi.string().max(50),
             companyGovernorate: Joi.string().min(3).max(20),
             companyAddress: Joi.string().min(5).max(20),
             companyCity: Joi.string().min(3).max(20),
@@ -48,7 +48,7 @@ module.exports = {
     },
     updateValidationSPC: request => {
         const updateSPCFormSchema = {
-            companyName: Joi.string().unique().max(50),
+            companyName: Joi.string().max(50),
             companyGovernorate: Joi.string().min(3).max(20),
             companyAddress: Joi.string().min(5).max(20),
             companyCity: Joi.string().min(3).max(20),

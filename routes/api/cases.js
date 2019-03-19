@@ -11,6 +11,7 @@ router.get('/', async (req,res) => {
     res.json({data: cases})
 })
 
+
 //get a case
 router.get('/:id', async (req,res) => {
     const id=req.params.id
@@ -43,7 +44,7 @@ router.put('/:id', async (req,res) => {
      if(!newCase) return res.status(404).send({error: 'Case does not exist'})
      const isValidated = validator.updateValidation(req.body)
      if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-     const updatedBook = await Book.updateOne(req.body)
+     const updatedCase = await Case.updateOne(req.body)
      res.json({msg: 'Case updated successfully'})
     }
     catch(error) {
@@ -58,7 +59,7 @@ router.delete('/:id', async (req,res) => {
     try {
      const id = req.params.id
      const deletedCase = await Case.findByIdAndRemove(id)
-     res.json({msg:' was deleted successfully', data: deletedBook})
+     res.json({msg:'case was deleted successfully', data: deletedCase})
     }
     catch(error) {
         // We will be handling the error later

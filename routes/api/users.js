@@ -4,6 +4,7 @@ const uuid = require('uuid');
 const router = express.Router();
 
 
+
 const User = require('../../Models/User')
 
 
@@ -33,9 +34,6 @@ router.get('/', async (req,res) => {
     const users = await User.find()
     res.json({data: users})
 })
-
-
-
 
 //create a user
 router.post('/', async (req,res) => {

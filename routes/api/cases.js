@@ -21,6 +21,14 @@ router.get('/:id', async (req,res) => {
     res.json({data: cases})
 })
 
+//View Reviewer's comments
+router.get('/:id', async(req, res)=>{
+    const caseId = req.params.id
+    const caseComment = await Case.findOne({caseId})
+    var arrayReviewerComments = caseComment.reviewerComments
+    return res.json({ data: arrayReviewerComments});
+
+})
 
 //create new case
 router.post('/', async (req,res) => {

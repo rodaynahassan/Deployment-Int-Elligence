@@ -2,6 +2,7 @@
 const express = require('express');
 const uuid = require('uuid');
 const router = express.Router();
+const Case =require ('../../Models/Case');
 
 // Models
 const Admin = require('../../Models/Admin');
@@ -12,6 +13,14 @@ router.get('/', async (req,res) => {
 	const admins = await Admin.find()
 	res.json({data: admins})
 })
+
+//view case by company Name
+router.get('/:companyName', async (req,res) => {
+	const casesRequested = await Case.find({companyName})
+	res.json({data: casesRequested})
+})
+
+
 // Create a new admin
 
 router.post('/', async (req,res) => {
@@ -53,5 +62,7 @@ router.delete('/:id', async (req, res) => {
 		console.log(error)
 	}
 })
+
+
 
 module.exports = router;

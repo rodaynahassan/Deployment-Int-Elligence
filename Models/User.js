@@ -15,14 +15,22 @@ var User = new Schema({
   birthdate: {type:date,required:true},
   address: {type:String,required:true},
   telephone:{type:Number,unique:true},
-  fax: Number,
+  fax: {type:Number, unique: true},
   cases: {type: [String], required: true },
   email: { type: String, unique: true} ,
+<<<<<<< HEAD
+  password: { type: String, required: true,unique:true },
+  forms: {type: [Object]},
+  companies: {type: Company},
+  lawyer: {type: User},
+  investorType: {type: [String]}
+=======
   password: { type: String, required: true },
   forms: {type: [Object],required: true},
   companies: {type: Company,required: true},
   lawyer: {type: User,required: true},
   investorType: {type: [String], required: true}
+>>>>>>> ad8170461811f23d21fad6dc7b7ac135cdadf294
   
 });
 

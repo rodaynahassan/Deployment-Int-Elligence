@@ -13,16 +13,16 @@ var User = new Schema({
   identificationType: {type:String,required:true},
   identificationNumber: {type:String,required:true,unique:true},
   birthdate: {type:date,required:true},
-  address: {type:String,required:true,unique:true},
+  address: {type:String,required:true},
   telephone:{type:Number,unique:true},
-  fax: {type:Number},
+  fax: Number,
   cases: {type: [String], required: true },
   email: { type: String, unique: true} ,
   password: { type: String, required: true },
-  forms: {type: [Object]},
-  companies: {type: Company},
-  lawyer: {type: User},
-  investorType: {type: [String]}
+  forms: {type: [Object],required: true},
+  companies: {type: Company,required: true},
+  lawyer: {type: User,required: true},
+  investorType: {type: [String], required: true}
   
 });
 

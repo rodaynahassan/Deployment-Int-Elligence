@@ -39,9 +39,6 @@ function compare(a,b){
     return 0;
 }
 
-
-
-
 //create a user
 router.post('/', async (req,res) => {
     try {

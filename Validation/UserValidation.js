@@ -84,7 +84,7 @@ module.exports = {
         const updateSchema = {
             name: Joi.string().required().max(50).min(3),
             gender:   Joi.string().required().max(6).min(4),
-            nationality: Joi.string().required().max(50).,
+            nationality: Joi.string().required().max(50),
             identificationType: Joi.string().required().max(20).min(8), 
             identificationNum: Joi.string().required().max(50).min(8),
             birthDate:  Joi.date().required(),
@@ -106,7 +106,7 @@ module.exports = {
         const updateSchema = {
             name: Joi.string().required().max(50).min(3),
             gender:   Joi.string().required().max(6).min(4),
-            nationality: Joi.string().required().max(50).,
+            nationality: Joi.string().required().max(50),
             identificationType: Joi.string().required().max(20).min(8), 
             identificationNum: Joi.string().required().max(50).min(8),
             birthDate:  Joi.date().required(),
@@ -133,7 +133,7 @@ module.exports = {
         const updateSchema = {
         name: Joi.string().required().max(50).min(3),
         gender:   Joi.string().required().max(6).min(4),
-        nationality: Joi.string().required().max(50).,
+        nationality: Joi.string().required().max(50),
         identificationType: Joi.string().required().max(20).min(8), 
         identificationNum: Joi.string().required().max(50).min(8),
         birthDate:  Joi.date().required(),

@@ -12,6 +12,24 @@ router.get('/', async (req,res) => {
 	const admins = await Admin.find()
 	res.json({data: admins})
 })
+
+
+//View the sorted cases by date
+router.get('/sortByCreationDate/:id', async(req, res) => {
+    const userid=req.params.id
+    const user= await User.findOne({userid})
+    user.cases.sort(compare)
+    return res.json({ data: user.cases });
+})
+
+function compare(a,b){
+    if(Date.parse(a.creationDate)>Date.parse(b.creationDate)) return 1
+    if(Date.parse(a.creationDate)>Date.parse(b.creationDate)) return -1
+    return 0
+}
+
+
+
 // Create a new admin
 
 router.post('/', async (req,res) => {

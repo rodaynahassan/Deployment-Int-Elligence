@@ -15,19 +15,7 @@ router.get('/:id', async(req, res) => {
     return res.json({ data: user });
 })
 
-//View the sorted cases by date
-router.get('/sortByCreationDate/:id', async(req, res) => {
-    const userid=req.params.id
-    const user= await User.findOne({userid})
-    user.cases.sort(compare)
-    return res.json({ data: user.cases });
-})
 
-function compare(a,b){
-    if(Date.parse(a.creationDate)>Date.parse(b.creationDate)) return 1
-    if(Date.parse(a.creationDate)>Date.parse(b.creationDate)) return -1
-    return 0
-}
 
 //get all users
 router.get('/', async (req,res) => {
@@ -36,7 +24,7 @@ router.get('/', async (req,res) => {
 })
 
 
-router.get('/:sortByCreationDate', async(req, res) => {                     //sort by case creation date
+router.get('/sortByCreationDate/:id', async(req, res) => {                     //sort by case creation date
     const userid=req.params.id
     const user= await User.findOne({userid})
     user.cases.sort(compare)

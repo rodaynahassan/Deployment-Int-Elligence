@@ -103,7 +103,7 @@ router.post('/', async (req,res) => {
  })
 
 //get the case of the lawyer/Reviewer 
-router.get('/:id',async(req,res) => {
+router.get('/getCases/:id',async(req,res) => {
     const userid = req.params.id
     const user = await User.findOne({userid})
     var arrayOfCases = user.cases 

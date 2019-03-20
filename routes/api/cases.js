@@ -77,7 +77,7 @@ router.delete('/:id', async (req,res) => {
     }  
  })
   //Get the form of the Lawyer/Reviewer case
-router.get('/:id', async(req, res) => {
+router.get('/getForms/:id', async(req, res) => {
     const caseid = req.params.id
     const cases = await Case.findOne({caseid})
     var arrayOfForms = cases.form

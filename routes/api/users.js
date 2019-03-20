@@ -113,7 +113,25 @@ router.get('/getCases/:id',async(req,res) => {
 module.exports = router;
 
 
+//sort cases by id as a lawyer 
+router.get('/sortByCaseId/:id', async (req,res) => { // sort cases by case id
+    const userid=req.params.id
+    const user= await User.findOne({userid})
+    user.cases.sort(compareById)
+    return res.json({data: user.cases})
+})
 
+
+function compareById(a , b){
+if(a._id > b._id )
+return 1;
+
+if(b._id > a._id )
+return -1;
+
+return 0;
+
+}
 
 
 

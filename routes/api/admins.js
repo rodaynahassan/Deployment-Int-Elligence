@@ -2,7 +2,7 @@
 const express = require('express');
 const uuid = require('uuid');
 const router = express.Router();
-const Case =require ('../../Models/Case');
+
 
 // Models
 const Admin = require('../../Models/Admin');
@@ -49,11 +49,6 @@ function compare(a,b){
 }
 
 
-//view case by company Name
-router.get('/:companyName', async (req,res) => {
-	const casesRequested = await Case.find({companyName})
-	res.json({data: casesRequested})
-})
 
 
 // Create a new admin

@@ -15,8 +15,16 @@ router.get('/:id', async(req, res) => {
     return res.json({ data: user });
 })
 
-//View the sorted cases by date
-router.get('/sortByCreationDate/:id', async(req, res) => {
+
+
+//get all users
+router.get('/', async (req,res) => {
+    const users = await User.find()
+    res.json({data: users})
+})
+
+
+router.get('/sortByCreationDate/:id', async(req, res) => {                     //sort by case creation date
     const userid=req.params.id
     const user= await User.findOne({userid})
     user.cases.sort(compare)
@@ -24,16 +32,12 @@ router.get('/sortByCreationDate/:id', async(req, res) => {
 })
 
 function compare(a,b){
-    if(Date.parse(a.creationDate)>Date.parse(b.creationDate)) return 1
-    if(Date.parse(a.creationDate)>Date.parse(b.creationDate)) return -1
-    return 0
-}
+    if(Date.parse(a.creationDate)>Date.parse(b.creationDate)) return 1;
+    
+    if(Date.parse(a.creationDate)<Date.parse(b.creationDate)) return -1;
 
-//get all users
-router.get('/', async (req,res) => {
-    const users = await User.find()
-    res.json({data: users})
-})
+    return 0;
+}
 
 //create a user
 router.post('/', async (req,res) => {
@@ -99,7 +103,7 @@ router.post('/', async (req,res) => {
  })
 
 //get the case of the lawyer/Reviewer 
-router.get('/:id',async(req,res) => {
+router.get('/getCases/:id',async(req,res) => {
     const userid = req.params.id
     const user = await User.findOne({userid})
     var arrayOfCases = user.cases 

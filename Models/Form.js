@@ -42,7 +42,7 @@ const SSCManager= new Schema({
 })
 
 const FormSchema= new Schema({
-    companyGovernate:{
+    companyGovernorate:{
         type:String,
         required:true
 
@@ -88,8 +88,7 @@ const FormSchema= new Schema({
             required:true
         },
     status:{
-            type: String,
-            required:true
+            type: String
     
         } 
 })

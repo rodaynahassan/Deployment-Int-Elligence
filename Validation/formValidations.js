@@ -10,7 +10,8 @@ module.exports = {
             companyFax: Joi.string().min(5).max(20),
             companyNameEnglish: Joi.string().max(50),
             currency: Joi.string().required().min(2).max(10),
-            equityCapital: Joi.number().required()
+            equityCapital: Joi.number().required(),
+            type:Joi.string().required()
         }
 
         return Joi.validate(request, SSCFormSchema)
@@ -41,7 +42,8 @@ module.exports = {
             companyFax: Joi.string().min(5).max(20),
             companyNameEnglish: Joi.string().max(50),
             currency: Joi.string().required().min(2).max(10),
-            equityCapital: Joi.number().required()
+            equityCapital: Joi.number().required(),
+            type:Joi.string().required()
         }
 
         return Joi.validate(request, SPCSchema)

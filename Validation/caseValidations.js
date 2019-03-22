@@ -1,12 +1,13 @@
 const Joi = require('joi')
 const Form = require('../Models/Form')
+const validator = require('../../Validation/formValidations') 
 
 module.exports = {
     createValidation: request => {
         const createSchema = {
             creationDate: Joi.date().required(),
             companyName: Joi.string().required().max(50),
-            form: Form.required(), //must insert an object , syntax -> {} , it doesn't accept null
+            form: validator.createSchema.required(), //must insert an object , syntax -> {} , it doesn't accept null
             lawyerComments: Joi.array().items(Joi.string()),
             lawyerSeen: Joi.boolean(),
             lawyerApprove: Joi.boolean(),

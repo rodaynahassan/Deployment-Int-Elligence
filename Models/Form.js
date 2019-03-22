@@ -42,58 +42,18 @@ const SSCManager= new Schema({
 })
 
 const FormSchema= new Schema({
-    companyGovernate:{
-        type:String,
-        required:true
-
-    },
-    companyCity:{
-        type:String,
-        required:true
-    },
-    companyAddress:{
-        type:String,
-        required:true
-    },
-    companyTelephone:{
-        type:String,
-        unique:true
-    },
-    companyFax:{
-        type:String,
-        unique:true
-    },
-    companyName:{
-        type:String,
-        required:true,
-        unique:true
-    },
-    companyNameInEnglish:{
-        type:String,
-        unique:true
-    },
-    currency:{
-        type:String,
-        required:true
-    },
-    equityCapital:{
-        type:Number,
-        required:true
-    },
-    SSCManagers:{
-        type:[SSCManager]
-        },
-    type:
-        {
-            type:String,
-            required:true,
-            enum: ['SSCForm', 'SPCForm']
-        },
-    status:{
-            type: String,
-            required:true,
-            enum:['Rejected','In progress','Approved']
-        } 
+    companyGovernorate:{type:String,required:true},
+    companyCity:{type:String,required:true},
+    companyAddress:{type:String,required:true},
+    companyTelephone:{type:String,unique:true},
+    companyFax:{type:String,unique:true},
+    companyName:{ type:String,required:true,unique:true},
+    companyNameInEnglish:{type:String,unique:true},
+    currency:{type:String,required:true},
+    equityCapital:{type:Number,required:true},
+    SSCManagers:{type:[SSCManager]},
+    type:{type:String,required:true},
+    status:{type: String,enum:['Rejected','In progress','Approved']} 
 })
 
 

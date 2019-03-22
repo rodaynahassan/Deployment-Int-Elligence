@@ -19,28 +19,23 @@ const CaseSchema = new Schema({
         required: true
     },
      lawyerSeen: {
-         type:Boolean,
-         required:true
+         type:Boolean
      },
      lawyerComments:{
-         type:[String],
-         required:true
+         type:[String]
+        
      },
      lawyerApprove:{
-         type:Boolean,
-         required:true
+         type:Boolean
      },
      reviewerSeen:{
-         type:Boolean,
-         required:true
+         type:Boolean
      },
      reviewerComments:{
-         type:[String],
-         required:true
+         type:[String]
      },
      reviewerApprove:{
-         type:Boolean,
-         required:true
+         type:Boolean
      }
 
 })

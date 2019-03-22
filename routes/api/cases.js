@@ -17,14 +17,14 @@ router.get('/', async (req,res) => {
 //get a case
 router.get('/:id', async (req,res) => {
     const id=req.params.id
-    const cases = await Case.findOne({id})
+    const cases = await Case.findById({id})
     res.json({data: cases})
 })
 
 //View Reviewer's comments
-router.get('/:id', async(req, res)=>{
+router.get('/getReviewerComments/:id', async(req, res)=>{
     const caseId = req.params.id
-    const caseComment = await Case.findOne({caseId})
+    const caseComment = await Case.findById({caseId})
     var arrayReviewerComments = caseComment.reviewerComments
     return res.json({ data: arrayReviewerComments});
 
@@ -50,7 +50,7 @@ router.post('/', async (req,res) => {
 router.put('/:id', async (req,res) => {
     try {
      const id = req.params.id
-     const newCase = await Case.findOne({id})
+     const newCase = await Case.findById({id})
      if(!newCase) return res.status(404).send({error: 'Case does not exist'})
      const isValidated = validator.updateValidation(req.body)
      if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
@@ -79,7 +79,7 @@ router.delete('/:id', async (req,res) => {
   //Get the form of the Lawyer/Reviewer case
 router.get('/getForms/:id', async(req, res) => {
     const caseid = req.params.id
-    const cases = await Case.findOne({caseid})
+    const cases = await Case.findById({caseid})
     var arrayOfForms = cases.form
     res.json({ data: arrayOfForms });
 })

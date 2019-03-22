@@ -6,7 +6,18 @@ const admins = require('./routes/api/admins')
 const cases=require('./routes/api/cases')
 
 
+// DB Config
+const db = require('./config/keys').mongoURI
 
+// Connect to mongo
+mongoose
+    .connect(db)
+    .then(() => console.log('Connected to MongoDB'))
+    .catch(err => console.log(err))
+
+// Init middleware
+app.use(express.json())
+app.use(express.urlencoded({extended: false}))
 
 const app = express()
 app.use(express.json())

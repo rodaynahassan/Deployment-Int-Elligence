@@ -16,17 +16,17 @@ router.get('/', async (req,res) => {
 })
 
 router.get('/:id', async(req, res) => {
-    const userid=req.params.id
-    const users= await User.findById(userid)
-    return res.json({ data: users});
+    const id=req.params.id
+    const admins= await Admin.findById(id)
+    return res.json({ data: admins});
 })
 
 //sort cases by ID
 router.get('/CasesSortedById/:id', async(req, res) => {
-    const userid=req.params.id
-    const user= await User.findById(userid)
-    user.cases.sort(compareById)
-    return res.json({ data: user.cases });
+    const id=req.params.id
+    const admin= await Admin.findById(id)
+    admin.cases.sort(compareById)
+    return res.json({ data: admin.cases });
 })
 
 
@@ -43,10 +43,10 @@ function compareById(a,b){
 
 //View the sorted cases by date
 router.get('/CasesSortedByCreationDate/:id', async(req, res) => {
-    const userid=req.params.id
-    const user= await User.findById(userid)
-    user.cases.sort(compare)
-    return res.json({ data: user.cases });
+    const id=req.params.id
+    const admin= await Admin.findById(id)
+    admin.cases.sort(compare)
+    return res.json({ data: admin.cases });
 })
 
 function compare(a,b){

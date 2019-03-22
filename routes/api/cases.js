@@ -3,7 +3,6 @@ const router = express.Router();
 const validator = require('../../Validation/caseValidations')
 const mongoose = require('mongoose')
 const Case = require('../../Models/Case')
-const formValid=require('../../Validation/formValidations')
 
 
 //get all cases
@@ -39,7 +38,6 @@ router.get('/:companyName', async (req,res) => {
 //create new case
 router.post('/', async (req,res) => {
     try {
-
      const isValidated = validator.createValidation(req.body)
      if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
      const newCase = await Case.create(req.body)

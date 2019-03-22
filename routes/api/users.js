@@ -6,7 +6,7 @@ const router = express.Router();
 
 
 const User = require('../../Models/User')
-
+const validator = require('../../Validation/UserValidations')
 
 // view a certain user
 router.get('/:id', async(req, res) => {

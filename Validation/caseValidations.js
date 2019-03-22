@@ -6,7 +6,7 @@ module.exports = {
         const createSchema = {
             creationDate: Joi.date().required(),
             companyName: Joi.string().required().max(50),
-            form: Joi.object(Form).required(), //must insert an object , syntax -> {} , it doesn't accept null
+            form: Form.required(), //must insert an object , syntax -> {} , it doesn't accept null
             lawyerComments: Joi.array().items(Joi.string()),
             lawyerSeen: Joi.boolean(),
             lawyerApprove: Joi.boolean(),
@@ -22,7 +22,7 @@ module.exports = {
         const updateSchema = {
             creationDate: Joi.date(),
             companyName: Joi.string(),
-            form: Joi.object(Form),
+            form: Form,
             lawyerComments: Joi.array().items(Joi.string()), //must insert an object , syntax -> {} , it doesn't accept null
             lawyerSeen: Joi.boolean(),
             lawyerApprove: Joi.boolean(),

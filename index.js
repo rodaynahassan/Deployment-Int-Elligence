@@ -11,15 +11,14 @@ const db = require('./config/keys').mongoURI
 
 // Connect to mongo
 mongoose
-    .connect('mongodb+srv://ScrumMaster:26312215@int-elligence-s1doh.mongodb.net/test?retryWrites=true')
+    .connect(db)
     .then(() => console.log('Connected to MongoDB'))
     .catch(err => console.log(err))
 
-// Init middleware
-app.use(express.json())
-app.use(express.urlencoded({extended: false}))
-
 const app = express()
+// Init middleware
+
+app.use(express.urlencoded({extended: false}))
 app.use(express.json())
 
 app.get('/', (req, res) => {

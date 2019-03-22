@@ -14,14 +14,12 @@ router.get('/', async (req,res) => {
 	res.json({data: admins})
 })
 
-<<<<<<< HEAD
 router.get('/:id', async(req, res) => {
     const userid=req.params.id
     const users= await User.findById({userid})
     return res.json({ data: users});
 })
 
-=======
 //sort cases by ID
 router.get('/sortById/:id', async(req, res) => {
     const userid=req.params.id
@@ -41,7 +39,6 @@ function compareById(a,b){
 
 
 
->>>>>>> 59d8db82271b323a663a635adb86eaf09a9e163d
 
 //View the sorted cases by date
 router.get('/CasesByCreationDate/:id', async(req, res) => {

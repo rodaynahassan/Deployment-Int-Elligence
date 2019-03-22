@@ -11,7 +11,7 @@ const db = require('./config/keys').mongoURI
 
 // Connect to mongo
 mongoose
-    .connect(db)
+    .connect('mongodb+srv://ScrumMaster:26312215@int-elligence-s1doh.mongodb.net/test?retryWrites=true')
     .then(() => console.log('Connected to MongoDB'))
     .catch(err => console.log(err))
 

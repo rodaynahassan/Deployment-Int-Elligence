@@ -86,12 +86,13 @@ const FormSchema= new Schema({
     type:
         {
             type:String,
-            required:true
+            required:true,
+            enum: ['SSCForm', 'SPCForm']
         },
     status:{
             type: String,
-            required:true 
-    
+            required:true,
+            enum:['Rejected','In progress','Approved']
         } 
 })
 

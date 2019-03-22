@@ -69,8 +69,7 @@ const FormSchema= new Schema({
         unique:true
     },
     companyNameInEnglish:{
-        type:String,
-        unique:true
+        type:String
     },
     currency:{
         type:String,
@@ -90,7 +89,7 @@ const FormSchema= new Schema({
         },
     status:{
             type: String,
-            required:true 
+            required:true
     
         } 
 })

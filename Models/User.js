@@ -15,7 +15,7 @@ const User = new Schema({
   birthdate: {type:Date,required:true},
   address: {type:String,required:true},
   telephone:{type:Number,unique:true},
-  fax:{type:Number,unique:true},
+  fax:{type:String,unique:true},
   cases: {type: [Case], required: true },
   email: { type: String, unique: true} ,
   password: { type: String, required: true,unique:true },

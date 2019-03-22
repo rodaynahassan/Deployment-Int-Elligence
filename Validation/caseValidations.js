@@ -1,5 +1,5 @@
 const Joi = require('joi')
-const Form = require('../Models/form')
+const Form = require('../Models/Form')
 
 module.exports = {
     createValidation: request => {

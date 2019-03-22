@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const Form = require('../Models/form').schema
+const Form = require('../Models/Form').schema
 
 //When using mongo require the Form class
 

@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
-const Form = require('../../Models/form')
+const Form = require('../../Models/Form')
 const validator = require('../../Validation/formValidations')
 
 //get all companies
@@ -13,7 +13,7 @@ router.get('/', async (req,res) => {
 //get a company by id
 router.get('/:id', async (req,res) => {
         const id = req.params.id
-        const form = await Form.findOne({id})
+        const form = await Form.findById(id)
         res.json({data: form})
 })
 //create a company
@@ -43,20 +43,20 @@ router.post('/', async (req,res) => {
     try {
         if(req.body.type==='SSC'){
      const id = req.params.id
-     const ssc = await Form.findOne({id})
+     const ssc = await Form.findById(id)
      if(!ssc) return res.status(404).send({error: 'SSC Form does not exist'})
      const isValidated = validator. updateValidationSSC(req.body)
      if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-     const updatedSSC = await Form.updateOne(req.body)
+     const updatedSSC = await Form.findByIdAndUpdate(id,req.body)
      res.json({msg: 'SSCForm updated successfully'})
         }
         if(req.body.type==='SPC'){
             const id = req.params.id
-            const spc = await Form.findOne({id})
+            const spc = await Form.findById(id)
             if(!spc) return res.status(404).send({error: 'SPC Form does not exist'})
             const isValidated = validator. updateValidationSPC(req.body)
             if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-            const updatedSPC = await Form.updateOne(req.body)
+            const updatedSPC = await Form.findByIdAndUpdate(id,req.body)
             res.json({msg: 'SPCForm updated successfully'})
                }
     }

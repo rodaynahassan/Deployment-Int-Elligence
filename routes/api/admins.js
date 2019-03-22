@@ -2,6 +2,7 @@
 const express = require('express');
 const uuid = require('uuid');
 const router = express.Router();
+const validator = require('../../Validation/adminValidations')
 
 
 // Models
@@ -14,12 +15,18 @@ router.get('/', async (req,res) => {
 	res.json({data: admins})
 })
 
+router.get('/:id', async(req, res) => {
+    const id=req.params.id
+    const admins= await Admin.findById(id)
+    return res.json({ data: admins});
+})
+
 //sort cases by ID
-router.get('/sortById/:id', async(req, res) => {
-    const userid=req.params.id
-    const user= await User.findOne({userid})
-    user.cases.sort(compareById)
-    return res.json({ data: user.cases });
+router.get('/CasesSortedById/:id', async(req, res) => {
+    const id=req.params.id
+    const admin= await Admin.findById(id)
+    admin.cases.sort(compareById)
+    return res.json({ data: admin.cases });
 })
 
 
@@ -35,11 +42,11 @@ function compareById(a,b){
 
 
 //View the sorted cases by date
-router.get('/sortByCreationDate/:id', async(req, res) => {
-    const userid=req.params.id
-    const user= await User.findOne({userid})
-    user.cases.sort(compare)
-    return res.json({ data: user.cases });
+router.get('/CasesSortedByCreationDate/:id', async(req, res) => {
+    const id=req.params.id
+    const admin= await Admin.findById(id)
+    admin.cases.sort(compare)
+    return res.json({ data: admin.cases });
 })
 
 function compare(a,b){
@@ -57,7 +64,7 @@ router.post('/', async (req,res) => {
    try {
     const isValidated = validator.createValidation(req.body)
     if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-    const newAdmin = await Admin.create(req.body)
+    const newAdmin = await Admin(req.body).save()
     res.json({msg:'Admin was created successfully', data: newAdmin})
    }
    catch(error) {
@@ -69,11 +76,11 @@ router.post('/', async (req,res) => {
 router.put('/:id', async (req,res) => {
     try {
      const id = req.params.id
-     const admin = await Admin.findOne({id})
+     const admin = await Admin.findById(id)
      if(!admin) return res.status(404).send({error: 'Admin does not exist'})
      const isValidated = validator.updateValidation(req.body)
      if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-     const updatedAdmin = await Admin.updateOne(req.body)
+     const updatedAdmin = await Admin.findByIdAndUpdate(id,req.body)
      res.json({msg: 'Admin updated successfully'})
     }
     catch(error) {

@@ -27,7 +27,7 @@ router.post('/', async (req,res) => {
     try {
         if(req.body.type==='SSCForm'){
             const isSSCManagersValidated = validator.createValidationSSCManagers(req.body.SSCManagers)
-            if (!isSSCManagersValidated) return res.status(400).send({ error: isValidated.error.details[0].message })
+            if (!isSSCManagersValidated) return res.status(400).send({ error: isSSCManagersValidated.error.details[0].message })
             else{
                 router.post('/', async (req,res) => {
                     try {

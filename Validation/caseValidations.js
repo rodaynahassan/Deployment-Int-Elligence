@@ -1,5 +1,5 @@
 const Joi = require('joi')
-const Form = require('../Models/Form')
+const Form = require('../Models/Form').model
 const validator = require('../Validation/formValidations') 
 
 module.exports = {

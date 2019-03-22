@@ -13,7 +13,7 @@ router.get('/', async (req,res) => {
 //get a company by id
 router.get('/:id', async (req,res) => {
         const id = req.params.id
-        const form = await Form.findById({id})
+        const form = await Form.findById(id)
         res.json({data: form})
 })
 //create a company
@@ -43,7 +43,7 @@ router.post('/', async (req,res) => {
     try {
         if(req.body.type==='SSC'){
      const id = req.params.id
-     const ssc = await Form.findById({id})
+     const ssc = await Form.findById(id)
      if(!ssc) return res.status(404).send({error: 'SSC Form does not exist'})
      const isValidated = validator. updateValidationSSC(req.body)
      if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
@@ -52,7 +52,7 @@ router.post('/', async (req,res) => {
         }
         if(req.body.type==='SPC'){
             const id = req.params.id
-            const spc = await Form.findById({id})
+            const spc = await Form.findById(id)
             if(!spc) return res.status(404).send({error: 'SPC Form does not exist'})
             const isValidated = validator. updateValidationSPC(req.body)
             if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })

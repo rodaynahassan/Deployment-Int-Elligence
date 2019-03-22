@@ -11,7 +11,7 @@ const User = require('../../Models/User')
 // view a certain user
 router.get('/:id', async(req, res) => {
     const userid=req.params.id
-    const user= await User.findById({userid})
+    const user= await User.findById(userid)
     return res.json({ data: user });
 })
 
@@ -26,7 +26,7 @@ router.get('/', async (req,res) => {
 
 router.get('/CasesSortedByCreationDate/:id', async(req, res) => {                     //sort by case creation date
     const userid=req.params.id
-    const user= await User.findById({userid})
+    const user= await User.findById(userid)
     user.cases.sort(compare)
     return res.json({ data: user.cases });
 })
@@ -67,7 +67,7 @@ router.post('/', async (req,res) => {
  router.put('/:id', async (req,res) => {
     try {
      const id = req.params.id
-     const user = await User.findById({id})
+     const user = await User.findById(id)
      if(!user) return res.status(404).send({error: 'User does not exist'})
      var isValidated = undefined
      if(req.body.userType==='Lawyer'){
@@ -93,7 +93,7 @@ router.post('/', async (req,res) => {
  router.delete('/:id', async (req,res) => {
     try {
      const id = req.params.id
-     const deletedUser = await User.findByIdAndRemove({id})
+     const deletedUser = await User.findByIdAndRemove(id)
      res.json({msg:'User was deleted successfully', data: deletedUser})
     }
     catch(error) {
@@ -105,7 +105,7 @@ router.post('/', async (req,res) => {
 //get the case of the lawyer/Reviewer 
 router.get('/getCases/:id',async(req,res) => {
     const userid = req.params.id
-    const user = await User.findById({userid})
+    const user = await User.findById(userid)
     var arrayOfCases = user.cases 
     res.json({data: arrayOfCases})
 });
@@ -114,9 +114,9 @@ module.exports = router;
 
 
 //sort cases by id as a lawyer 
-router.get('/sortByCaseId/:id', async (req,res) => { // sort cases by case id
+router.get('/CaseSortedByCaseId/:id', async (req,res) => { // sort cases by case id
     const userid=req.params.id
-    const user= await User.findOne({userid})
+    const user= await User.findById(userid)
     user.cases.sort(compareById)
     return res.json({data: user.cases})
 })

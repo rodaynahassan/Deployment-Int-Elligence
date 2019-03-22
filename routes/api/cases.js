@@ -17,14 +17,14 @@ router.get('/', async (req,res) => {
 //get a case
 router.get('/:id', async (req,res) => {
     const id=req.params.id
-    const cases = await Case.findById({id})
+    const cases = await Case.findById(id)
     res.json({data: cases})
 })
 
 //View Reviewer's comments
 router.get('/getReviewerComments/:id', async(req, res)=>{
     const caseId = req.params.id
-    const caseComment = await Case.findById({caseId})
+    const caseComment = await Case.findById(caseId)
     var arrayReviewerComments = caseComment.reviewerComments
     return res.json({ data: arrayReviewerComments});
 
@@ -32,7 +32,7 @@ router.get('/getReviewerComments/:id', async(req, res)=>{
 //As an Admin I should be able to view case by company Name
 router.get('/:companyName', async (req,res) => {
     const companyName = req.param.companyName
-	const casesRequested = await Case.find({companyName})
+	const casesRequested = await Case.find({companyName : companyName})
 	res.json({data: casesRequested})
 })
 
@@ -57,7 +57,7 @@ router.post('/', async (req,res) => {
 router.put('/:id', async (req,res) => {
     try {
      const id = req.params.id
-     const newCase = await Case.findById({id})
+     const newCase = await Case.findById(id)
      if(!newCase) return res.status(404).send({error: 'Case does not exist'})
      const isValidated = validator.updateValidation(req.body)
      if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
@@ -86,7 +86,7 @@ router.delete('/:id', async (req,res) => {
   //Get the form of the Lawyer/Reviewer case
 router.get('/getForms/:id', async(req, res) => {
     const caseid = req.params.id
-    const cases = await Case.findById({caseid})
+    const cases = await Case.findById(caseid)
     var arrayOfForms = cases.form
     res.json({ data: arrayOfForms });
 })

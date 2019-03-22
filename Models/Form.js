@@ -1,6 +1,5 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-
 const SSCManager= new Schema({
     name: {
         type: String,
@@ -18,7 +17,6 @@ const SSCManager= new Schema({
         type:String,
         required: true
     },
-
      identificationType: {
         type: String,
         required: true

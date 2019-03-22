@@ -7,7 +7,7 @@ module.exports = {
         const createSchema = Joi.object({
             creationDate: Joi.date().required(),
             companyName: Joi.string().required().max(50),
-            form: validator.createSchema.required(), //must insert an object , syntax -> {} , it doesn't accept null
+            form: validator.SPCSchema.required(), //must insert an object , syntax -> {} , it doesn't accept null
             lawyerComments: Joi.array().items(Joi.string()),
             lawyerSeen: Joi.boolean(),
             lawyerApprove: Joi.boolean(),

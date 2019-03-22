@@ -33,7 +33,7 @@ module.exports = {
         return Joi.validate(request, updateSSCFormSchema)
     }, 
     createValidationSPC: request => {
-        const SPCSchema = {
+        const SPCSchema = joi.object({
             companyName: Joi.string().required().max(50),
             companyGovernorate: Joi.string().required().min(3).max(20),
             companyAddress: Joi.string().required().min(5).max(50),
@@ -45,7 +45,7 @@ module.exports = {
             equityCapital: Joi.number().required(),
             type: Joi.string().required()
 
-        }
+        })
 
         return Joi.validate(request, SPCSchema)
     },

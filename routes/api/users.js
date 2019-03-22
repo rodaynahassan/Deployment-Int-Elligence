@@ -24,7 +24,7 @@ router.get('/', async (req,res) => {
 })
 
 
-router.get('/CasesByCreationDate/:id', async(req, res) => {                     //sort by case creation date
+router.get('/CasesSortedByCreationDate/:id', async(req, res) => {                     //sort by case creation date
     const userid=req.params.id
     const user= await User.findById({userid})
     user.cases.sort(compare)

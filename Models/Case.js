@@ -6,7 +6,7 @@ const Form = require('../Models/Form').schema
 
 const CaseSchema = new Schema({
     form:{
-       type:[Form],
+       type:Form,
        required:true
     },
     companyName:{

@@ -2,7 +2,7 @@
 const express = require('express');
 const uuid = require('uuid');
 const router = express.Router();
-const Case =require ('../../Models/Case');
+
 
 // Models
 const Admin = require('../../Models/Admin');
@@ -14,12 +14,34 @@ router.get('/', async (req,res) => {
 	res.json({data: admins})
 })
 
+<<<<<<< HEAD
 router.get('/:id', async(req, res) => {
     const userid=req.params.id
     const users= await User.findById({userid})
     return res.json({ data: users});
 })
 
+=======
+//sort cases by ID
+router.get('/sortById/:id', async(req, res) => {
+    const userid=req.params.id
+    const user= await User.findOne({userid})
+    user.cases.sort(compareById)
+    return res.json({ data: user.cases });
+})
+
+
+
+function compareById(a,b){
+    if(a._id < b._id) return -1
+    if(b._id < a._id) return 1
+    
+    return 0
+}
+
+
+
+>>>>>>> 59d8db82271b323a663a635adb86eaf09a9e163d
 
 //View the sorted cases by date
 router.get('/CasesByCreationDate/:id', async(req, res) => {
@@ -36,11 +58,6 @@ function compare(a,b){
 }
 
 
-//view case by company Name
-router.get('/:companyName', async (req,res) => {
-	const casesRequested = await Case.find({companyName})
-	res.json({data: casesRequested})
-})
 
 
 // Create a new admin

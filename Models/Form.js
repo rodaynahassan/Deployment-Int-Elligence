@@ -2,27 +2,11 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const SSCManager= new Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    type: {
-        type: String,
-        required: true
-    },
-    gender:{
-        type: String,
-        required: true
-    },
-    nationality: {
-        type:String,
-        required: true
-    },
-
-     identificationType: {
-        type: String,
-        required: true
-    },
+    name: {type: String,required: true},
+    type: {type: String,required: true},
+    gender:{type: String,required: true},
+    nationality: {type:String,required: true},
+   identificationType: {type: String,required: true},
      identificationNumber:{
         type: String,
         required: true

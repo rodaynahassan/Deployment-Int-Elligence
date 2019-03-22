@@ -42,7 +42,6 @@ module.exports = {
         companies: Joi.array.items(Joi.object()).required(),            //not sure yet
         lawyer: Joi.object().required(),                                //not sure yet
         investorType: Joi.string().required()
-
         }
 
 

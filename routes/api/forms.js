@@ -26,11 +26,10 @@ router.get('/:id', async (req,res) => {
 router.post('/', async (req,res) => {
     try {
         if(req.body.type==='SSCForm'){
-            const isSSCManagersValidated = validator.createValidationSSCManagers(req.body.SSCManagers)
-            if (!isSSCManagersValidated) return res.status(400).send({ error: isSSCManagersValidated.error.details[0].message })
-            else{
-                router.post('/', async (req,res) => {
+            router.post('/', async (req,res) => {
                     try {
+                        const isSSCManagersValidated = validator.createValidationSSCManagers(req.body.SSCManagers)
+                       if (!isSSCManagersValidated) return res.status(400).send({ error: isSSCManagersValidated.error.details[0].message })
                      const newSSCManager = await Form(req.body.SSCManagers).save()
                      res.json({msg:'SSCManager was created successfully', data: newSSCManager})
                     }
@@ -44,7 +43,7 @@ router.post('/', async (req,res) => {
             const newSSCForm = await Form.create(req.body)
             res.json({msg:'SSC Form was created successfully', data:newSSCForm})
 
-}}
+}
     if(req.body.type==='SPCForm'){
         const isValidated = validator. createValidationSPC(req.body)
         if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })

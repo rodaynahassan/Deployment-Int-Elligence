@@ -54,7 +54,7 @@ router.put('/:id', async (req,res) => {
      if(!newCase) return res.status(404).send({error: 'Case does not exist'})
      const isValidated = validator.updateValidation(req.body)
      if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-     const updatedCase = await Case.updateOne(req.body)
+     const updatedCase = await Case.findByIdAndUpdate(id,req.body)
      res.json({msg: 'Case updated successfully'})
     }
     catch(error) {

@@ -14,9 +14,15 @@ router.get('/', async (req,res) => {
 	res.json({data: admins})
 })
 
+router.get('/:id', async(req, res) => {
+    const userid=req.params.id
+    const users= await User.findById({userid})
+    return res.json({ data: users});
+})
+
 
 //View the sorted cases by date
-router.get('/sortByCreationDate/:id', async(req, res) => {
+router.get('/CasesByCreationDate/:id', async(req, res) => {
     const userid=req.params.id
     const user= await User.findById({userid})
     user.cases.sort(compare)
@@ -59,7 +65,7 @@ router.put('/:id', async (req,res) => {
      if(!admin) return res.status(404).send({error: 'Admin does not exist'})
      const isValidated = validator.updateValidation(req.body)
      if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-     const updatedAdmin = await Admin.updateOne(req.body)
+     const updatedAdmin = await Admin.findByIdAndUpdate(id,req.body)
      res.json({msg: 'Admin updated successfully'})
     }
     catch(error) {

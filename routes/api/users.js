@@ -24,7 +24,7 @@ router.get('/', async (req,res) => {
 })
 
 
-router.get('/sortByCreationDate/:id', async(req, res) => {                     //sort by case creation date
+router.get('/CasesByCreationDate/:id', async(req, res) => {                     //sort by case creation date
     const userid=req.params.id
     const user= await User.findById({userid})
     user.cases.sort(compare)
@@ -80,7 +80,7 @@ router.post('/', async (req,res) => {
          isValidated = validator.updateValidationR(req.body)
     }
      if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-     const updatedUser = await User.updateOne(req.body)
+     const updatedUser = await User.findByIdAndUpdate(id,req.body)
      res.json({msg: 'User updated successfully'})
     }
     catch(error) {

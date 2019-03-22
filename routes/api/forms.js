@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
-const Form = require('../../Models/form')
+const Form = require('../../Models/Form')
 const validator = require('../../Validation/formValidations')
 
 //get all companies

@@ -6,6 +6,11 @@ const validator = require('../../Validation/formValidations')
 
 //get all companies
 //el moshkela hena f get all 
+router.get('/', async (req,res) => {
+    const form = await Form.find()
+    res.json({data: form})
+})
+
 router.get('/getRejectedSSCForms', async (req,res) => {
     const forms  = await Form.find().where('type').equals('SSCForm').where('status').equals('Rejected')
     res.json({data: forms})

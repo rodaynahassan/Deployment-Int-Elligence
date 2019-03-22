@@ -1,15 +1,25 @@
 const express = require('express')
+const mongoose = require('mongoose')
 
 const users = require('./routes/api/users')
 const forms = require('./routes/api/forms')
 const admins = require('./routes/api/admins')
 const cases=require('./routes/api/cases')
 
-
-
-
 const app = express()
+// DB Config
+const db = require('./config/keys').mongoURI
+
+// Connect to mongo
+mongoose
+    .connect('mongodb+srv://ScrumMaster:26312215@int-elligence-s1doh.mongodb.net/local_library?retryWrites=true')
+    .then(() => console.log('Connected to MongoDB'))
+    .catch(err => console.log(err))
+
+// Init middleware
+
 app.use(express.json())
+app.use(express.urlencoded({extended: false}))
 
 app.get('/', (req, res) => {
     res.send(`<h1>Welcome</h1>`);
@@ -29,5 +39,5 @@ app.use((req, res) => {
     res.status(404).send({err: 'We can not find what you are looking for'});
  })
 
-const port = 3000
+const port = process.env.PORT || 3000
 app.listen(port, () => console.log(`Server up and running on port ${port}`))

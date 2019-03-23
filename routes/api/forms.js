@@ -17,19 +17,24 @@ router.get('/:id', async (req,res) => {
         const form = await Form.findById(id)
         res.json({data: form})
 })
-//create a company
+//create a form
 router.post('/', async (req,res) => {
     try {
         if(req.body.type==='SSCForm'){
-        const SSCMValidated=validator.createValidationSSCManagers(req.body)
-        if(SSCMValidated){
-            
+            for(i=0;i<req.body.SSCManagers.length;i++)
+            {
+            const SSCMValidated=validator.createValidationSSCManagers(req.body.SSCManagers[i])
+                if(!SSCMValidated)
+            {    
+                 return res.status(400).send({ error: SSCMValidated.error.details[0].message })
+            }
         }
-     const isValidated = validator. createValidationSSC(req.body)
-     if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-     const newSSCForm = await Form.create(req.body)
-     res.json({msg:'SSC Form was created successfully', data:newSSCForm})
-    }
+                const isValidated = validator. createValidationSSC(req.body)
+                 if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+                const newSSCForm = await Form.create(req.body)
+                res.json({msg:'SSC Form was created successfully', data:newSSCForm})
+            }
+             
     if(req.body.type==='SPCForm'){
         const isValidated = validator. createValidationSPC(req.body)
         if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })

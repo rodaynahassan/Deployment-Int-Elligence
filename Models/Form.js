@@ -6,8 +6,8 @@ const SSCManager= new Schema({
     type: {type: String,required: true},
     gender:{type: String,required: true},
     nationality: {type:String,required: true},
-   identificationType: {type: String,required: true},
-     identificationNumber:{
+    identificationType: {type: String,required: true},
+    identificationNumber:{
         type: String,
         required: true
     },
@@ -29,10 +29,10 @@ const FormSchema= new Schema({
     companyGovernorate:{type:String,required:true},
     companyCity:{type:String,required:true},
     companyAddress:{type:String,required:true},
-    companyTelephone:{type:String,unique:true},
-    companyFax:{type:String,unique:true},
+    companyTelephone:{type:String},
+    companyFax:{type:String},
     companyName:{ type:String,required:true,unique:true},
-    companyNameInEnglish:{type:String,unique:true},
+    companyNameInEnglish:{type:String},
     currency:{type:String,required:true},
     equityCapital:{type:Number,required:true},
     SSCManagers:{type:Array,rquired:true},

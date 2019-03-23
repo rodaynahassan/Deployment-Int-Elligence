@@ -5,6 +5,7 @@ const router = express.Router();
 
 
 const User = require('../../Models/User')
+const Cases = require('../../Models/Case')
 const validator = require('../../Validation/UserValidation')
 
 //sort by case creation date

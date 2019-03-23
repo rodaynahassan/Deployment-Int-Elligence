@@ -60,15 +60,17 @@ router.post('/', async (req,res) => {
      if(!form) return res.status(404).send({error: 'SSC Form does not exist'})
      const isValidated = validator. updateValidationSSC(req.body)
      if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-     const updatedSSC = await Form.findByIdAndUpdate(id,req.body)
-     return res.json({msg: 'SSCForm updated successfully'})
+     const x = await Form.findByIdAndUpdate(id,req.body)
+     const updatedSSC = await Form.findById(id)
+     return res.json({msg: 'SSCForm updated successfully',data:updatedSSC})
         }
         if(form.type==='SPCForm'){
             if(!form) return res.status(404).send({error: 'SPC Form does not exist'})
-            const isValidated = validator. updateValidationSPC(req.body)
+            const isValidated = validator.updateValidationSPC(req.body)
             if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-            const updatedSPC = await Form.findByIdAndUpdate(id,req.body)
-            return res.json({msg: 'SPCForm updated successfully',data:updatedSPC})
+            const x = await Form.findByIdAndUpdate(id,req.body)
+            const updatedSPC = await Form.findById(id)
+            return res.json({msg: 'SPCForm updated successfully', data:updatedSPC})
                }
                return res.status(404).send({error: 'Form does not exist'})
     }

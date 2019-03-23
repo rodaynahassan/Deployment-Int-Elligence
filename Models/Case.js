@@ -6,10 +6,14 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 //When using mongo require the Form class
 
 const CaseSchema = new Schema({
+<<<<<<< HEAD
     form:{
         type:Form,
         required:true
     },
+=======
+    form:{type:Object,required:true},
+>>>>>>> 1c2bea08ad53fea6a1fc9888fc5986c5e58cba55
     companyName:{
         type:String,
         required:true,

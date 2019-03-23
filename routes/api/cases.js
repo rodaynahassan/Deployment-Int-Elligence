@@ -13,7 +13,12 @@ router.get('/', async (req,res) => {
     const cases = await Case.find()
     res.json({data: cases})
 })
-
+//As an Admin I should be able to view case by company Name
+router.get('/getByCompanyName/:companyName', async (req,res) => {
+    const companyname = req.params.companyName
+    const casesRequested = await Case.find({companyName : companyname})
+    res.json({data: casesRequested})
+})
 
 //get a case
 router.get('/:id', async (req,res) => {
@@ -30,12 +35,7 @@ router.get('/getReviewerComments/:id', async(req, res)=>{
     return res.json({ data: arrayReviewerComments});
 
 })
-//As an Admin I should be able to view case by company Name
-router.get('/:companyName', async (req,res) => {
-    const companyName = req.param.companyName
-	const casesRequested = await Case.find({companyName : companyName})
-	res.json({data: casesRequested})
-})
+
 
 
 //create new case
@@ -62,7 +62,8 @@ router.put('/:id', async (req,res) => {
      if(!newCase) return res.status(404).send({error: 'Case does not exist'})
      const isValidated = validator.updateValidation(req.body)
      if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-     const updatedCase = await Case.findByIdAndUpdate(id,req.body)
+     const x = await Case.findByIdAndUpdate(id,req.body)
+    const updatedCase = await Case.findById(id)
      res.json({msg: 'Case updated successfully', data:updatedCase})
     }
     catch(error) {

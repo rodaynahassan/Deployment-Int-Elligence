@@ -7,6 +7,7 @@ const validator = require('../../Validation/adminValidations')
 
 // Models
 const Admin = require('../../Models/Admin');
+const Cases = require('../../Models/Case');
 
 
 // Get admins
@@ -22,11 +23,10 @@ router.get('/:id', async(req, res) => {
 })
 
 //sort cases by ID
-router.get('/CasesSortedById/:id', async(req, res) => {
-    const id=req.params.id
-    const admin= await Admin.findById(id)
-    admin.cases.sort(compareById)
-    return res.json({ data: admin.cases });
+router.get('/CasesSortedById/', async(req, res) => {
+    const cases= await Cases.find()
+    cases.sort(compareById)
+    return res.json({ data: cases });
 })
 
 
@@ -42,11 +42,10 @@ function compareById(a,b){
 
 
 //View the sorted cases by date
-router.get('/CasesSortedByCreationDate/:id', async(req, res) => {
-    const id=req.params.id
-    const admin= await Admin.findById(id)
-    admin.cases.sort(compare)
-    return res.json({ data: admin.cases });
+router.get('/CasesSortedByCreationDate/', async(req, res) => {
+    const cases= await Cases.find()
+    cases.sort(compare)
+    return res.json({ data: cases });
 })
 
 function compare(a,b){

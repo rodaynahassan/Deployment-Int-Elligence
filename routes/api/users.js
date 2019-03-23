@@ -31,17 +31,6 @@ router.get('/CasesSortedByCreationDate/:id', async(req, res) => {               
     return res.json({ data: user.cases });
 })
 
-// get the case comments of the reviewer
-router.get('/getReviewerComments/:id',async(req,res) => {
-    const userid = req.params.userid
-    const caseid = req.body.caseid
-    const user = await User.findOne({userid})
-    var arrayOfCases = user.cases
-    const certainCase= await arrayOfCases.findOne({caseid})
-    var arrayOfCasesComments = certainCase.reviewerComments
-    res.json({data: arrayOfCasesComments})
-});
-
 function compare(a,b){
     if(Date.parse(a.creationDate)>Date.parse(b.creationDate)) return 1;
     

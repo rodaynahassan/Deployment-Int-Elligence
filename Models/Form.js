@@ -35,7 +35,7 @@ const FormSchema= new Schema({
     companyNameInEnglish:{type:String,unique:true},
     currency:{type:String,required:true},
     equityCapital:{type:Number,required:true},
-    SSCManagers:{type:[SSCManager]},
+    SSCManagers:{type:Array,rquired:true},
     type:{type:String,required:true},
     status:{type: String,enum:['Rejected','In progress','Approved']} 
 })

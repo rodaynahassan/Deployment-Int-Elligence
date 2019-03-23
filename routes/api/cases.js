@@ -32,8 +32,8 @@ router.get('/getReviewerComments/:id', async(req, res)=>{
 })
 //As an Admin I should be able to view case by company Name
 router.get('/:companyName', async (req,res) => {
-    const companyName = req.params.companyName
-	const casesRequested = await Case.find({companyName : companyName})
+    const companyname = req.params.companyName
+	const casesRequested = await Case.find({companyName : companyname})
 	res.json({data: casesRequested})
 })
 

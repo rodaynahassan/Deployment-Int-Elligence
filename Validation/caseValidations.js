@@ -4,7 +4,7 @@ const validator = require('../Validation/formValidations')
 
 module.exports = {
     createValidation: request => {
-        const createSchema = Joi.object({
+        const createSchema = {
             creationDate: Joi.date().required(),
             companyName: Joi.string().required().max(50),
             lawyerComments: Joi.array().items(Joi.string()),
@@ -13,7 +13,8 @@ module.exports = {
             reviewerComments: Joi.array().items(Joi.string()),
             reviewerSeen: Joi.boolean(),
             reviewerApprove: Joi.boolean(),
-        })
+            form:Joi.object()
+        }
 
         return Joi.validate(request, createSchema)
     },

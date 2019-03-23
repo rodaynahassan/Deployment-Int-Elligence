@@ -12,7 +12,7 @@ const Admin = new Schema({
   address: { type: String, required: true},
   telephone: String,
   fax: String,
-  email: { type: String, unique: true }
+  email: { type: String}
 });
 
 module.exports = admin = mongoose.model('admins', Admin);

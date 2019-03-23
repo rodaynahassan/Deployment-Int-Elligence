@@ -38,8 +38,10 @@ router.post('/', async (req,res) => {
     if(req.body.type==='SPCForm'){
         const isValidated = validator. createValidationSPC(req.body)
         if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-        const newSPCForm = await Form.create(req.body)
+        const newSPCForm = await Form.create(req.body)   
         res.json({msg:'SPC Form was created successfully', data:newSPCForm})
+
+        
        }
     }
     catch(error) {
@@ -67,7 +69,7 @@ router.post('/', async (req,res) => {
             const isValidated = validator. updateValidationSPC(req.body)
             if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
             const updatedSPC = await Form.findByIdAndUpdate(id,req.body)
-            res.json({msg: 'SPCForm updated successfully'})
+            res.json({msg: 'SPCForm updated successfully',data:updatedSPC})
                }
     }
     catch(error) {

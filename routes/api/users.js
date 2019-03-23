@@ -55,6 +55,9 @@ router.post('/', async (req,res) => {
      if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
      const newUser = await User.create(req.body)
      res.json({msg:'User was created successfully', data: newUser})
+
+
+     //db.User.createIndex( { "email": 1 }, { sparse: true } )                //for creating sparse index to solve null duplicate values
     }
     catch(error) {
         // We will be handling the error later
@@ -81,7 +84,7 @@ router.post('/', async (req,res) => {
     }
      if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
      const updatedUser = await User.findByIdAndUpdate(id,req.body)
-     res.json({msg: 'User updated successfully'})
+     res.json({msg: 'User updated successfully',data:updatedUser})
     }
     catch(error) {
         // We will be handling the error later

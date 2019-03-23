@@ -5,10 +5,7 @@ const Form = require('../Models/Form').schema
 //When using mongo require the Form class
 
 const CaseSchema = new Schema({
-    form:{
-         type:Form,
-         required:true
-     },
+    form:{type:Object,required:true},
     companyName:{
         type:String,
         required:true,

@@ -24,7 +24,7 @@ router.get('/:id', async(req, res) => {
 
 //sort cases by ID
 router.get('/CasesSortedById/', async(req, res) => {
-    const cases= await Cases.find().data
+    var cases= await Cases.find()
     cases.sort(compareById)
     return res.json({ data: cases });
 })
@@ -43,8 +43,8 @@ function compareById(a,b){
 
 //View the sorted cases by date
 router.get('/CasesSortedByCreationDate/', async(req, res) => {
-    const cases= await Cases.find().data
-    cases.sort(compare)
+    var cases= await Cases.find()
+    await cases.sort(compare)
     return res.json({ data: cases });
 })
 

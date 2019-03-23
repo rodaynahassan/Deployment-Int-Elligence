@@ -13,7 +13,7 @@ router.get('/', async (req,res) => {
     const cases = await Case.find()
     res.json({data: cases})
 })
-
+//As an Admin I should be able to view case by company Name
 router.get('/getByCompanyName/:companyName', async (req,res) => {
     const companyname = req.params.companyName
     const casesRequested = await Case.find({companyName : companyname})
@@ -35,7 +35,7 @@ router.get('/getReviewerComments/:id', async(req, res)=>{
     return res.json({ data: arrayReviewerComments});
 
 })
-//As an Admin I should be able to view case by company Name
+
 
 
 //create new case

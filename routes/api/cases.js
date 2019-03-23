@@ -14,7 +14,7 @@ router.get('/', async (req,res) => {
     res.json({data: cases})
 })
 
-router.get('/:companyName', async (req,res) => {
+router.get('/getByCompanyName/:companyName', async (req,res) => {
     const companyname = req.params.companyName
     const casesRequested = await Case.find({companyName : companyname})
     res.json({data: casesRequested})

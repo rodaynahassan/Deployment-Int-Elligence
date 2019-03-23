@@ -13,13 +13,8 @@ module.exports = {
             reviewerComments: Joi.array().items(Joi.string()),
             reviewerSeen: Joi.boolean(),
             reviewerApprove: Joi.boolean(),
-<<<<<<< HEAD
-            UserId: Joi.ObjectId().required()
-        })
-=======
             form:Joi.object()
         }
->>>>>>> 1c2bea08ad53fea6a1fc9888fc5986c5e58cba55
 
         return Joi.validate(request, createSchema)
     },

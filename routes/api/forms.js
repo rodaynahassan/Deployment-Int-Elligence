@@ -99,6 +99,4 @@ router.post('/', async (req,res) => {
     }  
  })
 
-//creatn a ssc manager
-createValidationSSCManagers
     module.exports = router

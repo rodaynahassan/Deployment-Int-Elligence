@@ -21,7 +21,6 @@ const CaseSchema = new Schema({
      },
      lawyerComments:{
          type:[String]
-        
      },
      lawyerApprove:{
          type:Boolean

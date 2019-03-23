@@ -29,7 +29,7 @@ const FormSchema= new Schema({
     companyGovernorate:{type:String,required:true},
     companyCity:{type:String,required:true},
     companyAddress:{type:String,required:true},
-    companyTelephone:{type:String,unique:true},
+    companyTelephone:{type:String,unique:true, },
     companyFax:{type:String,unique:true},
     companyName:{ type:String,required:true,unique:true},
     companyNameInEnglish:{type:String,unique:true},

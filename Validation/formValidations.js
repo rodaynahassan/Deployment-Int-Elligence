@@ -12,7 +12,7 @@ module.exports = {
             currency: Joi.string().required().min(2).max(10),
             equityCapital: Joi.number().required(),
             type: Joi.string().required(),
-            SSCManagers: joi.Array().required()
+            SSCManagers: joi.array().required()
         }
 
         return Joi.validate(request, SSCFormSchema)

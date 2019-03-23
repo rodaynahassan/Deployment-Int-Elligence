@@ -20,8 +20,8 @@ const User = new Schema({
   email: { type: String} ,
   password: { type: String, required: true },
   lawyer: { type: Object},
-  investorType: {type: [String]}
-  
+  investorType: {type: [String]},
+  financialBalance:{type:Number,required:false}
 });
 
 

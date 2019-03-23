@@ -24,7 +24,7 @@ router.get('/:id', async(req, res) => {
 
 //sort cases by ID
 router.get('/CasesSortedById/', async(req, res) => {
-    const cases= await Cases.find()
+    const cases= await Cases.find().data
     cases.sort(compareById)
     return res.json({ data: cases });
 })
@@ -43,14 +43,14 @@ function compareById(a,b){
 
 //View the sorted cases by date
 router.get('/CasesSortedByCreationDate/', async(req, res) => {
-    const cases= await Cases.find()
+    const cases= await Cases.find().data
     cases.sort(compare)
     return res.json({ data: cases });
 })
 
 function compare(a,b){
     if(Date.parse(a.creationDate)>Date.parse(b.creationDate)) return 1
-    if(Date.parse(a.creationDate)>Date.parse(b.creationDate)) return -1
+    if(Date.parse(a.creationDate)<Date.parse(b.creationDate)) return -1
     return 0
 }
 
@@ -79,7 +79,8 @@ router.put('/:id', async (req,res) => {
      if(!admin) return res.status(404).send({error: 'Admin does not exist'})
      const isValidated = validator.updateValidation(req.body)
      if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-     const updatedAdmin = await Admin.findByIdAndUpdate(id,req.body)
+     const x = await Admin.findByIdAndUpdate(id,req.body)
+     const updatedAdmin = Admin.findById(id)
      res.json({msg: 'Admin updated successfully',data:updatedAdmin})
     }
     catch(error) {

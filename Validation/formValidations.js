@@ -1,4 +1,5 @@
 const Joi = require('joi')
+Joi.objectId = require('joi-objectid')(Joi)
 module.exports = {
     createValidationSSC: request => {
         const SSCFormSchema = {
@@ -8,12 +9,12 @@ module.exports = {
             companyCity: Joi.string().required().min(3).max(20),
             companyTelephone: Joi.string().min(8).max(15),
             companyFax: Joi.string().min(5).max(20),
-            companyNameEnglish: Joi.string().max(50),
+            companyNameInEnglish: Joi.string().max(50),
             currency: Joi.string().required().min(2).max(10),
             equityCapital: Joi.number().required(),
             type: Joi.string().required(),
-            SSCManagers: joi.array().required(),
-            CaseId: joi.ObjectId()
+            SSCManagers: Joi.array().required(),
+            caseId: Joi.objectId()
         }
 
         return Joi.validate(request, SSCFormSchema)
@@ -26,20 +27,17 @@ module.exports = {
             companyCity: Joi.string().min(3).max(20),
             companyTelephone: Joi.string().min(8).max(15),
             companyFax: Joi.string().min(5).max(20),
-            companyNameEnglish: Joi.string().max(50),
+            companyNameInEnglish: Joi.string().max(50),
             currency: Joi.string().min(2).max(10),
             equityCapital: Joi.number(),
-<<<<<<< HEAD
-            SSCManagers: joi.Array()
-=======
-            CaseId: joi.ObjectId()
->>>>>>> 1c2bea08ad53fea6a1fc9888fc5986c5e58cba55
+            SSCManagers: Joi.array(),
+            caseId: Joi.objectId()
         }
 
         return Joi.validate(request, updateSSCFormSchema)
     }, 
     createValidationSPC: request => {
-        const SPCSchema =({
+        const SPCSchema ={
             companyName: Joi.string().required().max(50),
             companyGovernorate: Joi.string().required().min(3).max(20),
             companyAddress: Joi.string().required().min(5).max(50),
@@ -50,9 +48,9 @@ module.exports = {
             currency: Joi.string().required().min(2).max(10),
             equityCapital: Joi.number().required(),
             type: Joi.string().required(),
-            CaseId: joi.ObjectId()
+            caseId: Joi.objectId()
 
-        })
+        }
 
         return Joi.validate(request, SPCSchema)
     },
@@ -67,7 +65,7 @@ module.exports = {
             companyNameInEnglish: Joi.string().max(50),
             currency: Joi.string().min(2).max(10),
             equityCapital: Joi.number(),
-            CaseId: joi.ObjectId()
+            caseId: Joi.objectId()
         }
 
         return Joi.validate(request, updateSPCFormSchema)
@@ -80,8 +78,8 @@ module.exports = {
         type: Joi.string().required(),
         gender: Joi.string().min(4).max(6).required(),
         nationality: Joi.string().max(50).required(),
-        nationalityType: Joi.string().required().min(8).max(20),
-        nationalityNumber: Joi.string().min(8).max(50).required(),
+        identificationType: Joi.string().required().min(8).max(20),
+        identificationNumber: Joi.string().min(8).max(50).required(),
         birthdate: Joi.date().required(),
         address: Joi.string().required().min(5).max(50),
         typeOfManager: Joi.string().required()
@@ -95,14 +93,14 @@ module.exports = {
             type: Joi.string(),
             gender: Joi.string().min(4).max(6),
             nationality: Joi.string().max(50),
-            nationalityType: Joi.string().min(8).max(20),
-            nationalityNumber: Joi.string(),
+            identificationType: Joi.string().min(8).max(20),
+            identificationNumber: Joi.string(),
             birthdate: Joi.date(),
             address: Joi.string().min(5).max(50),
             typeOfManager: Joi.string()
 
         }
-        return Joi.validate(request, updateSSCManagersSchema)
+        return Joi.validate(request, updateSSCManagerSchema)
 
 }
 }

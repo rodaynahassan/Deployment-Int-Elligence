@@ -4,10 +4,42 @@ const uuid = require('uuid');
 const router = express.Router();
 
 
-
 const User = require('../../Models/User')
+const Cases = require('../../Models/Case')
 const validator = require('../../Validation/UserValidation')
 
+//sort by case creation date
+router.get('/CasesSortedByCreationDate/', async(req, res) => {                    
+    var cases= await Cases.find()
+    cases.sort(compare)
+    return res.json({ data: cases });
+})
+
+function compare(a,b){
+    if(Date.parse(a.creationDate)>Date.parse(b.creationDate)) return 1;
+    
+    if(Date.parse(a.creationDate)<Date.parse(b.creationDate)) return -1;
+
+    return 0;
+}
+//sort cases by id as a lawyer 
+router.get('/CaseSortedByCaseId/', async (req,res) => { // sort cases by case id
+    var cases= await Cases.find()
+    cases.sort(compareById)
+    return res.json({ data: cases });
+})
+
+
+function compareById(a , b){
+if(a._id > b._id )
+return 1;
+
+if(b._id > a._id )
+return -1;
+
+return 0;
+
+}
 // view a certain user
 router.get('/:id', async(req, res) => {
     const userid=req.params.id
@@ -30,21 +62,7 @@ router.get('/', async (req,res) => {
     res.json({data: users})
 })
 
- //sort by case creation date
-router.get('/CasesSortedByCreationDate/:id', async(req, res) => {                    
-    const userid=req.params.id
-    const user= await User.findById(userid)
-    user.cases.sort(compare)
-    return res.json({ data: user.cases });
-})
-
-function compare(a,b){
-    if(Date.parse(a.creationDate)>Date.parse(b.creationDate)) return 1;
-    
-    if(Date.parse(a.creationDate)<Date.parse(b.creationDate)) return -1;
-
-    return 0;
-}
+ 
 
 //create a user
 router.post('/', async (req,res) => {
@@ -79,18 +97,21 @@ router.post('/', async (req,res) => {
      const id = req.params.id
      const user = await User.findById(id)
      if(!user) return res.status(404).send({error: 'User does not exist'})
-     var isValidated = undefined
      if(req.body.userType==='Lawyer'){
-          isValidated = validator.updateValidationL(req.body)
+          const isValidated = validator.updateValidationL(req.body)
+          if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
      }
      if(req.body.userType==='Investor'){
-          isValidated = validator.updateValidationI(req.body)
+         const isValidated = validator.updateValidationI(req.body)
+          if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
      }
      if(req.body.userType==='Reviewer'){
-         isValidated = validator.updateValidationR(req.body)
+        const isValidated = validator.updateValidationR(req.body)
+         if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
     }
-     if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-     const updatedUser = await User.findByIdAndUpdate(id,req.body)
+    
+     const x = await User.findByIdAndUpdate(id,req.body)
+    const updatedUser = await User.findById(id)
      res.json({msg: 'User updated successfully',data:updatedUser})
     }
     catch(error) {
@@ -123,25 +144,6 @@ router.get('/getCases/:id',async(req,res) => {
 module.exports = router;
 
 
-//sort cases by id as a lawyer 
-router.get('/CaseSortedByCaseId/:id', async (req,res) => { // sort cases by case id
-    const userid=req.params.id
-    const user= await User.findById(userid)
-    user.cases.sort(compareById)
-    return res.json({data: user.cases})
-})
-
-
-function compareById(a , b){
-if(a._id > b._id )
-return 1;
-
-if(b._id > a._id )
-return -1;
-
-return 0;
-
-}
 
 
 

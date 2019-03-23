@@ -7,6 +7,7 @@ const validator = require('../../Validation/adminValidations')
 
 // Models
 const Admin = require('../../Models/Admin');
+const Cases = require('../../Models/Case');
 
 
 // Get admins
@@ -14,7 +15,17 @@ router.get('/', async (req,res) => {
 	const admins = await Admin.find()
 	res.json({data: admins})
 })
+router.get('/CasesSortedById', async(req, res) => {
+    var cases= await Cases.find()
+    cases.sort(compareById)
+    return res.json({ data: cases });
+})
 
+router.get('/CasesSortedByCreationDate', async(req, res) => {
+    var cases= await Cases.find()
+    cases.sort(compare)
+    return res.json({ data: cases });
+})
 router.get('/:id', async(req, res) => {
     const id=req.params.id
     const admins= await Admin.findById(id)
@@ -22,12 +33,6 @@ router.get('/:id', async(req, res) => {
 })
 
 //sort cases by ID
-router.get('/CasesSortedById/:id', async(req, res) => {
-    const id=req.params.id
-    const admin= await Admin.findById(id)
-    admin.cases.sort(compareById)
-    return res.json({ data: admin.cases });
-})
 
 
 
@@ -42,16 +47,10 @@ function compareById(a,b){
 
 
 //View the sorted cases by date
-router.get('/CasesSortedByCreationDate/:id', async(req, res) => {
-    const id=req.params.id
-    const admin= await Admin.findById(id)
-    admin.cases.sort(compare)
-    return res.json({ data: admin.cases });
-})
 
 function compare(a,b){
     if(Date.parse(a.creationDate)>Date.parse(b.creationDate)) return 1
-    if(Date.parse(a.creationDate)>Date.parse(b.creationDate)) return -1
+    if(Date.parse(a.creationDate)<Date.parse(b.creationDate)) return -1
     return 0
 }
 
@@ -80,7 +79,8 @@ router.put('/:id', async (req,res) => {
      if(!admin) return res.status(404).send({error: 'Admin does not exist'})
      const isValidated = validator.updateValidation(req.body)
      if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-     const updatedAdmin = await Admin.findByIdAndUpdate(id,req.body)
+     const x = await Admin.findByIdAndUpdate(id,req.body)
+     const updatedAdmin = Admin.findById(id)
      res.json({msg: 'Admin updated successfully',data:updatedAdmin})
     }
     catch(error) {

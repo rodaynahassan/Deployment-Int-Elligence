@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+var ObjectId = mongoose.Schema.Types.ObjectId;
 
 const SSCManager= new Schema({
     name: {type: String,required: true},
@@ -7,22 +8,11 @@ const SSCManager= new Schema({
     gender:{type: String,required: true},
     nationality: {type:String,required: true},
     identificationType: {type: String,required: true},
-    identificationNumber:{
-        type: String,
-        required: true
-    },
-    birthdate: {
-        type: Date,
-        required: true
-    },
-    address: {
-        type: String,
-        required: true
-    },
-     typeOfManagers: {
-        type: String,
-        required: true
-    }
+    identificationNumber:{type: String,required: true},
+    birthdate:{type: Date,required: true},
+    address:{type: String,required: true},
+    typeOfManagers:{type: String,required: true}
+
 })
 
 const FormSchema= new Schema({
@@ -37,7 +27,8 @@ const FormSchema= new Schema({
     equityCapital:{type:Number,required:true},
     SSCManagers:{type:Array,rquired:true},
     type:{type:String,required:true},
-    status:{type: String,enum:['Rejected','In progress','Approved']} 
+    status:{type: String,enum:['Rejected','In progress','Approved']},
+    CaseId:{type:ObjectId}
 })
 
 module.exports = Form = mongoose.model('forms', FormSchema)

@@ -14,6 +14,13 @@ router.get('/:id', async(req, res) => {
     const user= await User.findById(userid)
     return res.json({ data: user });
 })
+//view the financialBalance of an investor
+router.get('/getTheFinancialBalance/:id', async(req, res) => {
+    const userid=req.params.id
+    const user= await User.findById(userid)
+    const financialBalance= user.financialBalance
+    return res.json({ data: financialBalance });
+})
 
 
 
@@ -23,8 +30,8 @@ router.get('/', async (req,res) => {
     res.json({data: users})
 })
 
-
-router.get('/CasesSortedByCreationDate/:id', async(req, res) => {                     //sort by case creation date
+ //sort by case creation date
+router.get('/CasesSortedByCreationDate/:id', async(req, res) => {                    
     const userid=req.params.id
     const user= await User.findById(userid)
     user.cases.sort(compare)

@@ -14,15 +14,14 @@ const User = new Schema({
   identificationNumber: {type:String,required:true,unique:true},
   birthdate: {type:Date,required:true},
   address: {type:String,required:true},
-  telephone:{type:Number,unique:true},
-  fax:{type:Number,unique:true},
-  cases: {type: [Case], required: true },
+  telephone:{type:String,unique:true,required:false},
+  fax:{type:String,unique:true,required:false},
+  cases: {type:Array, required: false },
   email: { type: String, unique: true} ,
   password: { type: String, required: true,unique:true },
-  forms: {type: [Form],required: true},
-  companies: {type: Form,required: true},
-  lawyer: { type: Schema.Types.ObjectId, ref: 'users' ,required: true},
-  investorType: {type: [String], required: true}
+  lawyer: { type: Object},
+  investorType: {type: [String], required: true},
+  financialBalance:{type:Number,required:false}
   
 });
 

@@ -10,8 +10,8 @@ const Admin = new Schema({
   password: { type: String, required: true },
   birthdate:{ type: Date, required: true},
   address: { type: String, required: true},
-  telephone: String,
-  fax: String,
+  telephone: {type:String,required:false},
+  fax: {type:String,required:false},
   email: { type: String, unique: true }
 });
 

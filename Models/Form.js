@@ -12,6 +12,7 @@ const SSCManager= new Schema({
     birthdate:{type: Date,required: true},
     address:{type: String,required: true},
     typeOfManagers:{type: String,required: true}
+
 })
 
 const FormSchema= new Schema({
@@ -29,6 +30,5 @@ const FormSchema= new Schema({
     status:{type: String,enum:['Rejected','In progress','Approved']},
     CaseId:{type:ObjectId}
 })
-
 
 module.exports = Form = mongoose.model('forms', FormSchema)

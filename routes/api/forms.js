@@ -21,6 +21,10 @@ router.get('/:id', async (req,res) => {
 router.post('/', async (req,res) => {
     try {
         if(req.body.type==='SSCForm'){
+        const SSCMValidated=validator.createValidationSSCManagers(req.body)
+        if(SSCMValidated){
+            
+        }
      const isValidated = validator. createValidationSSC(req.body)
      if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
      const newSSCForm = await Form.create(req.body)

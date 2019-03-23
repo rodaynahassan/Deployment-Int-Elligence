@@ -12,8 +12,8 @@ module.exports = {
             currency: Joi.string().required().min(2).max(10),
             equityCapital: Joi.number().required(),
             type: Joi.string().required(),
-            SSCManagers: joi.array().required(),
-            CaseId: joi.ObjectId()
+            SSCManagers: Joi.array().required(),
+            caseId: Joi.objectId()
         }
 
         return Joi.validate(request, SSCFormSchema)
@@ -29,17 +29,14 @@ module.exports = {
             companyNameEnglish: Joi.string().max(50),
             currency: Joi.string().min(2).max(10),
             equityCapital: Joi.number(),
-<<<<<<< HEAD
-            SSCManagers: joi.Array()
-=======
-            CaseId: joi.ObjectId()
->>>>>>> 1c2bea08ad53fea6a1fc9888fc5986c5e58cba55
+            SSCManagers: Joi.array(),
+            caseId: Joi.objectId()
         }
 
         return Joi.validate(request, updateSSCFormSchema)
     }, 
     createValidationSPC: request => {
-        const SPCSchema =({
+        const SPCSchema ={
             companyName: Joi.string().required().max(50),
             companyGovernorate: Joi.string().required().min(3).max(20),
             companyAddress: Joi.string().required().min(5).max(50),
@@ -50,9 +47,9 @@ module.exports = {
             currency: Joi.string().required().min(2).max(10),
             equityCapital: Joi.number().required(),
             type: Joi.string().required(),
-            CaseId: joi.ObjectId()
+            caseId: Joi.objectId()
 
-        })
+        }
 
         return Joi.validate(request, SPCSchema)
     },
@@ -67,7 +64,7 @@ module.exports = {
             companyNameInEnglish: Joi.string().max(50),
             currency: Joi.string().min(2).max(10),
             equityCapital: Joi.number(),
-            CaseId: joi.ObjectId()
+            caseId: Joi.objectId()
         }
 
         return Joi.validate(request, updateSPCFormSchema)
@@ -102,7 +99,7 @@ module.exports = {
             typeOfManager: Joi.string()
 
         }
-        return Joi.validate(request, updateSSCManagersSchema)
+        return Joi.validate(request, updateSSCManagerSchema)
 
 }
 }

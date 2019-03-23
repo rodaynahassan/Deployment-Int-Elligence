@@ -23,7 +23,7 @@ router.get('/:id', async(req, res) => {
 })
 
 //sort cases by ID
-router.get('/CasesSortedById/', async(req, res) => {
+router.get('/CasesSortedById', async(req, res) => {
     var cases= await Cases.find()
     cases.sort(compareById)
     return res.json({ data: cases });
@@ -42,9 +42,9 @@ function compareById(a,b){
 
 
 //View the sorted cases by date
-router.get('/CasesSortedByCreationDate/', async(req, res) => {
+router.get('/CasesSortedByCreationDate', async(req, res) => {
     var cases= await Cases.find()
-    await cases.sort(compare)
+    cases.sort(compare)
     return res.json({ data: cases });
 })
 

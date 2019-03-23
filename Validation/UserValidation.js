@@ -15,7 +15,7 @@ module.exports = {
         fax:  Joi.string().min(5).max(20),
         email:  Joi.string().email().min(3).max(254),
         password : Joi.string().required().min(8).max(16),
-        cases: Joi.array.items(Joi.object()).required(),                //not sure yet
+        cases: Joi.array().required(),                //not sure yet
         
         }
 
@@ -38,11 +38,8 @@ module.exports = {
         fax:  Joi.string().min(5).max(20),
         email:  Joi.string().email().min(3).max(254),
         password : Joi.string().required().min(8).max(16),
-        forms: Joi.array.items(Joi.object()).required(),                //not sure yet
-        companies: Joi.array.items(Joi.object()).required(),            //not sure yet
-        lawyer: Joi.object().required(),                                //not sure yet
+        forms: Joi.array().required(),                                   //not sure yet
         investorType: Joi.string().required()
-
         }
 
 
@@ -65,7 +62,7 @@ module.exports = {
         fax:  Joi.string().min(5).max(20),
         email:  Joi.string().email().min(3).max(254),
         password : Joi.string().required().min(8).max(16),
-        cases: Joi.array.items(Joi.object()).required(),                //not sure yet
+        cases: Joi.array().required(),                //not sure yet
 
     
         
@@ -90,7 +87,7 @@ module.exports = {
             fax:  Joi.string().min(5).max(20),
             email:  Joi.string().email().max(254).min(3),
             password : Joi.string().required().min(8).max(16),
-            cases: Joi.array.items(Joi.object()).required(),                //not sure yet
+            cases: Joi.array().required(),                //not sure yet
         }
 
         return Joi.validate(request, updateSchema)
@@ -112,9 +109,7 @@ module.exports = {
             fax:  Joi.string().min(5).max(20),
             email:  Joi.string().email().max(254).min(3),
             password : Joi.string().required().min(8).max(16),
-            forms: Joi.array.items(Joi.object()).required(),                //not sure yet
-            companies: Joi.array.items(Joi.object()).required(),            //not sure yet
-            lawyer: Joi.object().required(),                                //not sure yet
+            forms: Joi.array().required(),                //not sure yet                            //not sure yet
             investorType: Joi.string().required()
     
         }
@@ -139,9 +134,7 @@ module.exports = {
         fax:  Joi.string().min(5).max(20),
         email:  Joi.string().email().max(254).min(3),
         password : Joi.string().required().min(8).max(16),
-        forms: Joi.array.items(Joi.object()).required(),                //not sure yet
-        companies: Joi.array.items(Joi.object()).required(),            //not sure yet
-        lawyer: Joi.object().required(),                                //not sure yet
+        forms: Joi.array().required(),                //not sure yet           //not sure yet                              //not sure yet
         investorType: Joi.string().required()
 
         }

@@ -14,6 +14,7 @@ const User = new Schema({
   identificationNumber: {type:String,required:true,unique:true},
   birthdate: {type:Date,required:true},
   address: {type:String,required:true},
+<<<<<<< HEAD
   telephone:{type:String,unique:true,required:false},
   fax:{type:String,unique:true,required:false},
   cases: {type:Array, required: false },
@@ -22,6 +23,15 @@ const User = new Schema({
   lawyer: { type: Object},
   investorType: {type: [String], required: true},
   financialBalance:{type:Number,required:false}
+=======
+  telephone:{type:String},
+  fax:{type:String},
+  cases: {type: Array },
+  email: { type: String} ,
+  password: { type: String, required: true },
+  lawyer: { type: Object},
+  investorType: {type: [String]}
+>>>>>>> 1c2bea08ad53fea6a1fc9888fc5986c5e58cba55
   
 });
 

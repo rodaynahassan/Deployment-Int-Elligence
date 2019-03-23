@@ -81,7 +81,7 @@ router.put('/:id', async (req,res) => {
      const isValidated = validator.updateValidation(req.body)
      if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
      const updatedAdmin = await Admin.findByIdAndUpdate(id,req.body)
-     res.json({msg: 'Admin updated successfully'})
+     res.json({msg: 'Admin updated successfully',data:updatedAdmin})
     }
     catch(error) {
         // We will be handling the error later

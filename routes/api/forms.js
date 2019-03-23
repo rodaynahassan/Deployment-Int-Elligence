@@ -8,12 +8,7 @@ const validator = require('../../Validation/formValidations')
 //get all companies
 //el moshkela hena f get all 
 router.get('/', async (req,res) => {
-    const form = await Form.find()
-    res.json({data: form})
-})
-
-router.get('/getRejectedSSCForms', async (req,res) => {
-    const forms  = await Form.find().where('type').equals('SSCForm').where('status').equals('Rejected')
+    const forms  = await Form.find()
     res.json({data: forms})
 })
 //get a company by id
@@ -22,10 +17,11 @@ router.get('/:id', async (req,res) => {
         const form = await Form.findById(id)
         res.json({data: form})
 })
-//create a company
+//create a form
 router.post('/', async (req,res) => {
     try {
         if(req.body.type==='SSCForm'){
+<<<<<<< HEAD
             
                     try {
                         const isSSCManagersValidated = validator.createValidationSSCManagers(req.body.SSCManagers)
@@ -44,11 +40,29 @@ router.post('/', async (req,res) => {
             res.json({msg:'SSC Form was created successfully', data:newSSCForm})
 
 }
+=======
+            for(i=0;i<req.body.SSCManagers.length;i++)
+            {
+            const SSCMValidated=validator.createValidationSSCManagers(req.body.SSCManagers[i])
+                if(!SSCMValidated)
+            {    
+                 return res.status(400).send({ error: SSCMValidated.error.details[0].message })
+            }
+        }
+                const isValidated = validator. createValidationSSC(req.body)
+                 if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+                const newSSCForm = await Form.create(req.body)
+                res.json({msg:'SSC Form was created successfully', data:newSSCForm})
+            }
+             
+>>>>>>> 1c2bea08ad53fea6a1fc9888fc5986c5e58cba55
     if(req.body.type==='SPCForm'){
         const isValidated = validator. createValidationSPC(req.body)
         if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-        const newSPCForm = await Form.create(req.body)
+        const newSPCForm = await Form.create(req.body)   
         res.json({msg:'SPC Form was created successfully', data:newSPCForm})
+
+        
        }
     }
     catch(error) {
@@ -76,7 +90,7 @@ router.post('/', async (req,res) => {
             const isValidated = validator. updateValidationSPC(req.body)
             if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
             const updatedSPC = await Form.findByIdAndUpdate(id,req.body)
-            res.json({msg: 'SPCForm updated successfully'})
+            res.json({msg: 'SPCForm updated successfully',data:updatedSPC})
                }
     }
     catch(error) {
@@ -84,8 +98,6 @@ router.post('/', async (req,res) => {
         console.log(error)
     }  
  })
-
- 
 //delete a company
  router.delete('/:id', async (req,res) => {
     try {
@@ -98,5 +110,6 @@ router.post('/', async (req,res) => {
         console.log(error)
     }  
  })
+
 
     module.exports = router

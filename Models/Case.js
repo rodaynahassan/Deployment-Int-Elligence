@@ -9,7 +9,8 @@ const CaseSchema = new Schema({
     companyName:{
         type:String,
         required:true,
-        unique:true},
+        unique:true
+    },
     creationDate: {
         type: Date,
         required: true

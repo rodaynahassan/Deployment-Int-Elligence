@@ -53,7 +53,7 @@ router.post('/', async (req,res) => {
  })
 
 
-
+//yarab
 //update a case
 router.put('/:id', async (req,res) => {
     try {
@@ -88,8 +88,8 @@ router.delete('/:id', async (req,res) => {
 router.get('/getForms/:id', async(req, res) => {
     const caseid = req.params.id
     const cases = await Case.findById(caseid)
-    var arrayOfForms = cases.form
-    res.json({ data: arrayOfForms });
+    var CaseForm = cases.form
+    res.json({ data: CaseForm });
 })
 
 module.exports = router;

@@ -14,11 +14,11 @@ const User = new Schema({
   identificationNumber: {type:String,required:true,unique:true},
   birthdate: {type:Date,required:true},
   address: {type:String,required:true},
-  telephone:{type:String,unique:true},
-  fax:{type:String,unique:true},
+  telephone:{type:String},
+  fax:{type:String},
   cases: {type: Array },
-  email: { type: String, unique: true} ,
-  password: { type: String, required: true,unique:true },
+  email: { type: String} ,
+  password: { type: String, required: true },
   lawyer: { type: Object},
   investorType: {type: [String]}
   

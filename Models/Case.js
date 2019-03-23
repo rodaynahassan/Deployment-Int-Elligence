@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const Form = require('../Models/Form').schema
-
+var ObjectId = mongoose.Schema.Types.ObjectId;
 //When using mongo require the Form class
 
 const CaseSchema = new Schema({
@@ -33,6 +33,10 @@ const CaseSchema = new Schema({
      },
      reviewerApprove:{
          type:Boolean
+     },
+     UserId:{
+        type:ObjectId,
+        required:true
      }
 
 })

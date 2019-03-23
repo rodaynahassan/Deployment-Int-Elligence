@@ -1,51 +1,34 @@
 const express = require('express')
+const mongoose = require('mongoose')
 
-const investors = require('./routes/api/investors')
-const sscForms = require('./routes/api/sscforms')
-
-const reviewers = require('./routes/api/reviewers')
-
-const SSCManager = require('./routes/api/SSCManagers')
-
-const spcForms = require('./routes/api/spcforms')
-
-const companies=require('./routes/api/companies')
-
-const lawyers = require('./routes/api/lawyers')
-
-
+const users = require('./routes/api/users')
+const forms = require('./routes/api/forms')
 const admins = require('./routes/api/admins')
-
-
-
 const cases=require('./routes/api/cases')
 
-
-
-
 const app = express()
+// DB Config
+const db = require('./config/keys').mongoURI
+
+// Connect to mongo
+mongoose
+    .connect('mongodb+srv://ScrumMaster:26312215@int-elligence-s1doh.mongodb.net/local_library?retryWrites=true')
+    .then(() => console.log('Connected to MongoDB'))
+    .catch(err => console.log(err))
+
+// Init middleware
+
 app.use(express.json())
+app.use(express.urlencoded({extended: false}))
 
 app.get('/', (req, res) => {
     res.send(`<h1>Welcome</h1>`);
 })
 
 // Direct routes to appropriate files 
-app.use('/routes/api/investors', investors)
-app.use('/routes/api/sscforms',sscForms)
-
-app.use('/routes/api/reviewers',reviewers)
-
-app.use('/routes/api/SSCManagers',SSCManager)
-
-app.use('/routes/api/spcforms',spcForms)
-app.use('/routes/api/companies',companies)
-
-app.use('/routes/api/lawyers',lawyers)
-
-
+app.use('/routes/api/users', users)
+app.use('/routes/api/forms',forms)
 app.use('/routes/api/admins',admins)
-
 app.use('/routes/api/cases',cases)
 
 
@@ -56,5 +39,5 @@ app.use((req, res) => {
     res.status(404).send({err: 'We can not find what you are looking for'});
  })
 
-const port = 3000
+const port =  process.env.PORT || 3000
 app.listen(port, () => console.log(`Server up and running on port ${port}`))

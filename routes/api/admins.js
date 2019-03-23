@@ -1,145 +1,105 @@
 // Dependencies
 const express = require('express');
-const Joi = require('joi');
 const uuid = require('uuid');
 const router = express.Router();
-
+const validator = require('../../Validation/adminValidations')
 
 
 // Models
 const Admin = require('../../Models/Admin');
 
 
-const admins = [
-	new Admin('Barney', 'Male','Egyptian','National ID','123456789','password1','1995-8-9','Maadi','1','1','a@b.com'),
-	new Admin('Lilly', 'Female','American','Passport','a1b2n33ii','password2','1993-1-1','Tagamoa','1','1','a@b.com'),
-	new Admin('Ted', 'Male','German','Passport','uimn827ee','password3','1990-4-11','Nasr City','1','1','a@b.com'),
-	new Admin('Marshal', 'Male','Tunisian','Passport','hdyf7w82j','password4','1991-11-19','Maadi','1','1','a@b.com'),
-	new Admin('Robin', 'Male','French','Passport','nd762behe','password5','1997-8-20','Maadi','1','1','a@b.com')
-];
+// Get admins
+router.get('/', async (req,res) => {
+	const admins = await Admin.find()
+	res.json({data: admins})
+})
 
+router.get('/:id', async(req, res) => {
+    const id=req.params.id
+    const admins= await Admin.findById(id)
+    return res.json({ data: admins});
+})
 
-
-router.get('/:id', (req, res) => {
-    const adminId = req.params.id
-    const admin = admins.find(admin => admin.id === adminId)
-    return res.json({ data: admin })
+//sort cases by ID
+router.get('/CasesSortedById/:id', async(req, res) => {
+    const id=req.params.id
+    const admin= await Admin.findById(id)
+    admin.cases.sort(compareById)
+    return res.json({ data: admin.cases });
 })
 
 
-// Get all admins
-router.get('/', (req, res) => res.json({ data: admins }))
+
+function compareById(a,b){
+    if(a._id < b._id) return -1
+    if(b._id < a._id) return 1
+    
+    return 0
+}
+
+
+
+
+//View the sorted cases by date
+router.get('/CasesSortedByCreationDate/:id', async(req, res) => {
+    const id=req.params.id
+    const admin= await Admin.findById(id)
+    admin.cases.sort(compare)
+    return res.json({ data: admin.cases });
+})
+
+function compare(a,b){
+    if(Date.parse(a.creationDate)>Date.parse(b.creationDate)) return 1
+    if(Date.parse(a.creationDate)>Date.parse(b.creationDate)) return -1
+    return 0
+}
+
+
+
 
 // Create a new admin
 
-router.post('/', (req, res) => {
-	const name = req.body.name;
-    const gender = req.body.gender;
-    const nationality = req.body.nationality;
-    const identificationType = req.body.identificationType;
-    const identificationNumber = req.body.identificationNumber;
-    const password = req.body.password;
-    const birthdate = req.body.birthdate;
-    const address = req.body.address;
-    const telephone = req.body.telephone;
-    const fax = req.body.fax;
-    const email = req.body.email;
+router.post('/', async (req,res) => {
+   try {
+    const isValidated = validator.createValidation(req.body)
+    if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+    const newAdmin = await Admin(req.body).save()
+    res.json({msg:'Admin was created successfully', data: newAdmin})
+   }
+   catch(error) {
+       // We will be handling the error later
+       console.log(error)
+   }  
+})
 
+router.put('/:id', async (req,res) => {
+    try {
+     const id = req.params.id
+     const admin = await Admin.findById(id)
+     if(!admin) return res.status(404).send({error: 'Admin does not exist'})
+     const isValidated = validator.updateValidation(req.body)
+     if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+     const updatedAdmin = await Admin.findByIdAndUpdate(id,req.body)
+     res.json({msg: 'Admin updated successfully',data:updatedAdmin})
+    }
+    catch(error) {
+        // We will be handling the error later
+        console.log(error)
+    }  
+ })
 
-	const schema = {
-        name: Joi.string().required(),
-        gender: Joi.string().required(),
-        nationality: Joi.string().required(),
-        identificationType: Joi.string().required(),
-        identificationNumber: Joi.string().required(),
-        password: Joi.string().min(8).required(),
-        birthdate: Joi.date().required(),
-        address: Joi.string().required(),
-        telephone: Joi.number(),
-        fax: Joi.number(),
-        email: Joi.string().email(),
-
+router.delete('/:id', async (req, res) => {
+	try{
+    const adminId = req.params.id 
+    const deletedAdmin = await Admin.findByIdAndRemove(adminId)
+	res.json({msg:'Admin was deleted successfully', data: deletedAdmin})
 	}
-
-	const result = Joi.validate(req.body, schema);
-
-	if (result.error) return res.status(400).send({ error: result.error.details[0].message });
-
-    const newAdmin = new Admin(
-		name,
-        gender,
-        nationality,
-        identificationType,
-        identificationNumber,
-        password,
-        birthdate,
-        address,
-        telephone,
-        fax,
-        email,
-    )
-    admins.push(newAdmin)
-    res.send(admins)
-	return res.json({ data: newAdmin });
-});
-
-router.put('/:id', (req, res) => {
-    const adminId = req.params.id 
-    const updatedName = req.body.name
-    const updatedGender = req.body.gender
-    const updatedNationality = req.body.nationality
-    const updatedIdentificationType = req.body.identificationType
-    const updatedIdentificationNumber = req.body.identificationNumber
-    const updatedPassword = req.body.password
-    const updatedBirthdate = req.body.birthdate
-    const updatedAddress = req.body.address
-    const updatedTelephone = req.body.telephone
-    const updatedFax = req.body.fax
-    const updatedEmail = req.body.email
-    const admin = admins.find(admin => admin.id === adminId)
-    if(updatedName){
-        admin.name = updatedName
-    }
-    if(updatedGender){
-        admin.gender = updatedGender
-    }
-    if(updatedNationality){
-        admin.nationality = updatedNationality
-    }
-    if(updatedIdentificationType){
-        admin.identificationType = updatedIdentificationType
-    }
-    if(updatedIdentificationNumber){
-        admin.identificationNumber = updatedIdentificationNumber
-    }
-    if(updatedPassword){
-        admin.password = updatedPassword
-    }
-    if(updatedBirthdate){
-        admin.birthdate = updatedBirthdate
-    }
-    if(updatedAddress){
-        admin.address = updatedAddress
-    }
-    if(updatedTelephone){
-        admin.telephone = updatedTelephone
-    }
-    if(updatedFax){
-        admin.fax = updatedFax
-    }
-    if(updatedEmail){
-        admin.email = updatedEmail
-    }
-    return res.json({ data: admins })
+	catch(error){
+		console.log(error)
+	}
 })
 
-router.delete('/:id', (req, res) => {
-    const adminId = req.params.id 
-    const admin = admins.find(admin => admin.id === adminId)
-    const index = admins.indexOf(admin)
-    admins.splice(index,1)
-    return res.json({ data: admins })
-})
 
 
 module.exports = router;

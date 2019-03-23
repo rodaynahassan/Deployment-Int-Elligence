@@ -58,7 +58,7 @@ router.post('/', async (req,res) => {
      const form = await Form.findById(id)
      if(form.type==='SSCForm'){
      if(!form) return res.status(404).send({error: 'SSC Form does not exist'})
-     const isValidated = validator. updateValidationSSC(req.body)
+     const isValidated = validator.updateValidationSSC(req.body)
      if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
      const x = await Form.findByIdAndUpdate(id,req.body)
      const updatedSSC = await Form.findById(id)

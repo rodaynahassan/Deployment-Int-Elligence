@@ -96,18 +96,21 @@ router.post('/', async (req,res) => {
      const id = req.params.id
      const user = await User.findById(id)
      if(!user) return res.status(404).send({error: 'User does not exist'})
-     var isValidated = undefined
      if(req.body.userType==='Lawyer'){
-          isValidated = validator.updateValidationL(req.body)
+          const isValidated = validator.updateValidationL(req.body)
+          if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
      }
      if(req.body.userType==='Investor'){
-          isValidated = validator.updateValidationI(req.body)
+         const isValidated = validator.updateValidationI(req.body)
+          if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
      }
      if(req.body.userType==='Reviewer'){
-         isValidated = validator.updateValidationR(req.body)
+        const isValidated = validator.updateValidationR(req.body)
+         if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
     }
-     if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-     const updatedUser = await User.findByIdAndUpdate(id,req.body)
+    
+     const x = await User.findByIdAndUpdate(id,req.body)
+    const updatedUser = await User.findById(id)
      res.json({msg: 'User updated successfully',data:updatedUser})
     }
     catch(error) {

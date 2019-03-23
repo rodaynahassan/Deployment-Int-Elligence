@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const validator = require('../../Validation/caseValidations')
+const formvalidator = require('../../Validation/formValidations')
 const mongoose = require('mongoose')
 const Case = require('../../Models/Case')
 
@@ -38,6 +39,16 @@ router.get('/:companyName', async (req,res) => {
 //create new case
 router.post('/', async (req,res) => {
     try {
+        const formValidated=formvalidator.createValidationSPC
+        if(formValidated)
+        {
+            if(req.body.type==='SPCForm'){
+                const isValidated = validator.createValidationSPC(req.body)
+                if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+                const newSPCForm = await Form.create(req.body)
+                res.json({msg:'SPC Form was created successfully', data:newSPCForm})
+               }
+        }
      const isValidated = validator.createValidation(req.body)
      if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
      const newCase = await Case.create(req.body)

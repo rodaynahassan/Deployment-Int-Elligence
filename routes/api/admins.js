@@ -15,7 +15,17 @@ router.get('/', async (req,res) => {
 	const admins = await Admin.find()
 	res.json({data: admins})
 })
+router.get('/CasesSortedById', async(req, res) => {
+    var cases= await Cases.find()
+    cases.sort(compareById)
+    return res.json({ data: cases });
+})
 
+router.get('/CasesSortedByCreationDate', async(req, res) => {
+    var cases= await Cases.find()
+    cases.sort(compare)
+    return res.json({ data: cases });
+})
 router.get('/:id', async(req, res) => {
     const id=req.params.id
     const admins= await Admin.findById(id)
@@ -23,11 +33,6 @@ router.get('/:id', async(req, res) => {
 })
 
 //sort cases by ID
-router.get('/CasesSortedById', async(req, res) => {
-    var cases= await Cases.find()
-    cases.sort(compareById)
-    return res.json({ data: cases });
-})
 
 
 
@@ -42,11 +47,6 @@ function compareById(a,b){
 
 
 //View the sorted cases by date
-router.get('/CasesSortedByCreationDate', async(req, res) => {
-    var cases= await Cases.find()
-    cases.sort(compare)
-    return res.json({ data: cases });
-})
 
 function compare(a,b){
     if(Date.parse(a.creationDate)>Date.parse(b.creationDate)) return 1

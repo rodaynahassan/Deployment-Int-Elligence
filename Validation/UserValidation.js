@@ -40,7 +40,8 @@ module.exports = {
         email:  Joi.string().email().min(3).max(254),
         password : Joi.string().required().min(8).max(16),
         investorType: Joi.string().required(),
-        financialBalance:Joi.number().required()  
+        financialBalance:Joi.number().required(),
+        cases:Joi.array().required() 
         }
 
 
@@ -112,7 +113,8 @@ module.exports = {
             email:  Joi.string().email().max(254).min(3),
             password : Joi.string().required().min(8).max(16),            
             investorType: Joi.string().required(),
-            financialBalance: Joi.number()
+            financialBalance: Joi.number(),
+            cases:Joi.array()
     
         }
 
@@ -136,7 +138,7 @@ module.exports = {
         fax:  Joi.string().min(5).max(20),
         email:  Joi.string().email().max(254).min(3),
         password : Joi.string().required().min(8).max(16),
-        investorType: Joi.string().required()
+        cases:Joi.array()
 
         }
 

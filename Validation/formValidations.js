@@ -29,11 +29,7 @@ module.exports = {
             companyNameEnglish: Joi.string().max(50),
             currency: Joi.string().min(2).max(10),
             equityCapital: Joi.number(),
-<<<<<<< HEAD
-            SSCManagers: joi.Array()
-=======
             CaseId: joi.ObjectId()
->>>>>>> 1c2bea08ad53fea6a1fc9888fc5986c5e58cba55
         }
 
         return Joi.validate(request, updateSSCFormSchema)

@@ -40,7 +40,8 @@ module.exports = {
         email:  Joi.string().email().min(3).max(254),
         password : Joi.string().required().min(8).max(16),
         investorType: Joi.string().required(),
-        financialBalance:Joi.number().required()  
+        financialBalance:Joi.number().required(),
+        cases:Joi.array().required() 
         }
 
 
@@ -77,17 +78,17 @@ module.exports = {
 
     updateValidationL: request => {                                     //update for lawyer
         const updateSchema = {
-            name: Joi.string().required().max(50).min(3),
-            gender:   Joi.string().required().max(6).min(4),
-            nationality: Joi.string().required().max(50),
-            identificationType: Joi.string().required().max(20).min(8), 
-            identificationNumber: Joi.string().required().max(50).min(8),
-            birthdate:  Joi.date().required(),
-            address: Joi.string().required().max(50).min(5),
+            name: Joi.string().max(50).min(3),
+            gender:   Joi.string().max(6).min(4),
+            nationality: Joi.string().max(50),
+            identificationType: Joi.string().max(20).min(8), 
+            identificationNumber: Joi.string().max(50).min(8),
+            birthdate:  Joi.date(),
+            address: Joi.string().max(50).min(5),
             telephone: Joi.string().max(15).min(4),
             fax:  Joi.string().min(5).max(20),
             email:  Joi.string().email().max(254).min(3),
-            password : Joi.string().required().min(8).max(16),
+            password : Joi.string().min(8).max(16),
             cases: Joi.array()              //not sure yet
             
         }
@@ -100,19 +101,20 @@ module.exports = {
 
     updateValidationI: request => {                                     //update for investor
         const updateSchema = {
-            name: Joi.string().required().max(50).min(3),
-            gender:   Joi.string().required().max(6).min(4),
-            nationality: Joi.string().required().max(50),
-            identificationType: Joi.string().required().max(20).min(8), 
-            identificationNumber: Joi.string().required().max(50).min(8),
-            birthdate:  Joi.date().required(),
-            address: Joi.string().required().max(50).min(5),
+            name: Joi.string().max(50).min(3),
+            gender:   Joi.string().max(6).min(4),
+            nationality: Joi.string().max(50),
+            identificationType: Joi.string().max(20).min(8), 
+            identificationNumber: Joi.string().max(50).min(8),
+            birthdate:  Joi.date(),
+            address: Joi.string().max(50).min(5),
             telephone: Joi.string().max(15).min(4),
             fax:  Joi.string().min(5).max(20),
             email:  Joi.string().email().max(254).min(3),
-            password : Joi.string().required().min(8).max(16),            
-            investorType: Joi.string().required(),
-            financialBalance: Joi.number()
+            password : Joi.string().min(8).max(16),            
+            investorType: Joi.string(),
+            financialBalance: Joi.number(),
+            cases:Joi.array()
     
         }
 
@@ -125,18 +127,18 @@ module.exports = {
 
     updateValidationR: request => {                                             //update for reviewer
         const updateSchema = {
-        name: Joi.string().required().max(50).min(3),
-        gender:   Joi.string().required().max(6).min(4),
-        nationality: Joi.string().required().max(50),
-        identificationType: Joi.string().required().max(20).min(8), 
-        identificationNumber: Joi.string().required().max(50).min(8),
-        birthdate:  Joi.date().required(),
-        address: Joi.string().required().max(50).min(5),
+        name: Joi.string().max(50).min(3),
+        gender:   Joi.string().max(6).min(4),
+        nationality: Joi.string().max(50),
+        identificationType: Joi.string().max(20).min(8), 
+        identificationNumber: Joi.string().max(50).min(8),
+        birthdate:  Joi.date(),
+        address: Joi.string().max(50).min(5),
         telephone: Joi.string().max(15).min(4),
         fax:  Joi.string().min(5).max(20),
         email:  Joi.string().email().max(254).min(3),
-        password : Joi.string().required().min(8).max(16),
-        investorType: Joi.string().required()
+        password : Joi.string().min(8).max(16),
+        cases:Joi.array()
 
         }
 

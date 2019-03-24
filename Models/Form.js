@@ -28,7 +28,7 @@ const FormSchema= new Schema({
     SSCManagers:{type:Array},
     type:{type:String,required:true},
     status:{type: String,enum:['Rejected','In progress','Approved']},
-    CaseId:{type:ObjectId}
+    caseId:{type:ObjectId}
 })
 
 module.exports = Form = mongoose.model('forms', FormSchema)

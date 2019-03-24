@@ -1,4 +1,5 @@
 const Joi = require('joi')
+Joi.objectId = require('joi-objectid')(Joi)
 const Form = require('../Models/Form').model
 const validator = require('../Validation/formValidations') 
 
@@ -13,7 +14,8 @@ module.exports = {
             reviewerComments: Joi.array().items(Joi.string()),
             reviewerSeen: Joi.boolean(),
             reviewerApprove: Joi.boolean(),
-            form:Joi.object()
+            form:Joi.object(),
+            userId:Joi.objectId().required()
         }
 
         return Joi.validate(request, createSchema)
@@ -28,7 +30,8 @@ module.exports = {
             lawyerApprove: Joi.boolean(),
             reviewerComments: Joi.array().items(Joi.string()),
             reviewerSeen: Joi.boolean(),
-            reviewerApprove: Joi.boolean()
+            reviewerApprove: Joi.boolean(),
+            UserId: Joi.ObjectId()
         }
 
         return Joi.validate(request, updateSchema)

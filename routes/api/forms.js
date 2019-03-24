@@ -1,8 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
-const Form = require('../../Models/form')
+const Form = require('../../Models/Form')
 const validator = require('../../Validation/formValidations')
+
 
 //get all companies
 //el moshkela hena f get all 
@@ -13,23 +14,34 @@ router.get('/', async (req,res) => {
 //get a company by id
 router.get('/:id', async (req,res) => {
         const id = req.params.id
-        const form = await Form.findOne({id})
+        const form = await Form.findById(id)
         res.json({data: form})
 })
-//create a company
+//create a form
 router.post('/', async (req,res) => {
     try {
         if(req.body.type==='SSCForm'){
-     const isValidated = validator. createValidationSSC(req.body)
-     if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-     const newSSCForm = await Form.create(req.body)
-     res.json({msg:'SSC Form was created successfully', data:newSSCForm})
-    }
+            for(i=0;i<req.body.SSCManagers.length;i++)
+            {
+            const SSCMValidated=validator.createValidationSSCManagers(req.body.SSCManagers[i])
+                if(!SSCMValidated)
+            {    
+                 return res.status(400).send({ error: SSCMValidated.error.details[0].message })
+            }
+        }
+                const isValidated = validator. createValidationSSC(req.body)
+                 if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+                const newSSCForm = await Form.create(req.body)
+                res.json({msg:'SSC Form was created successfully', data:newSSCForm})
+            }
+             
     if(req.body.type==='SPCForm'){
         const isValidated = validator. createValidationSPC(req.body)
         if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-        const newSPCForm = await Form.create(req.body)
+        const newSPCForm = await Form.create(req.body)   
         res.json({msg:'SPC Form was created successfully', data:newSPCForm})
+
+        
        }
     }
     catch(error) {
@@ -41,32 +53,32 @@ router.post('/', async (req,res) => {
     //update a company
  router.put('/:id', async (req,res) => {
     try {
-        if(req.body.type==='SSC'){
+        
      const id = req.params.id
-     const ssc = await Form.findOne({id})
-     if(!ssc) return res.status(404).send({error: 'SSC Form does not exist'})
-     const isValidated = validator. updateValidationSSC(req.body)
+     const form = await Form.findById(id)
+     if(form.type==='SSCForm'){
+     if(!form) return res.status(404).send({error: 'SSC Form does not exist'})
+     const isValidated = validator.updateValidationSSC(req.body)
      if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-     const updatedSSC = await Form.updateOne(req.body)
-     res.json({msg: 'SSCForm updated successfully'})
+     const x = await Form.findByIdAndUpdate(id,req.body)
+     const updatedSSC = await Form.findById(id)
+     return res.json({msg: 'SSCForm updated successfully',data:updatedSSC})
         }
-        if(req.body.type==='SPC'){
-            const id = req.params.id
-            const spc = await Form.findOne({id})
-            if(!spc) return res.status(404).send({error: 'SPC Form does not exist'})
-            const isValidated = validator. updateValidationSPC(req.body)
+        if(form.type==='SPCForm'){
+            if(!form) return res.status(404).send({error: 'SPC Form does not exist'})
+            const isValidated = validator.updateValidationSPC(req.body)
             if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-            const updatedSPC = await Form.updateOne(req.body)
-            res.json({msg: 'SPCForm updated successfully'})
+            const x = await Form.findByIdAndUpdate(id,req.body)
+            const updatedSPC = await Form.findById(id)
+            return res.json({msg: 'SPCForm updated successfully', data:updatedSPC})
                }
+               return res.status(404).send({error: 'Form does not exist'})
     }
     catch(error) {
         // We will be handling the error later
         console.log(error)
     }  
  })
-
- 
 //delete a company
  router.delete('/:id', async (req,res) => {
     try {

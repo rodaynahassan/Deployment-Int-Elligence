@@ -5,6 +5,7 @@ const router = express.Router();
 const validator = require('../../Validation/caseValidations')
 const mongoose = require('mongoose')
 const Case = require('../../Models/Case')
+//const formValidator=require('../../Validation/caseValidations')
 
 
 //get all cases
@@ -12,29 +13,29 @@ router.get('/', async (req,res) => {
     const cases = await Case.find()
     res.json({data: cases})
 })
-
+//As an Admin I should be able to view case by company Name
+router.get('/getByCompanyName/:companyName', async (req,res) => {
+    const companyname = req.params.companyName
+    const casesRequested = await Case.find({companyName : companyname})
+    res.json({data: casesRequested})
+})
 
 //get a case
 router.get('/:id', async (req,res) => {
     const id=req.params.id
-    const cases = await Case.findOne({id})
+    const cases = await Case.findById(id)
     res.json({data: cases})
 })
 
 //View Reviewer's comments
-router.get('/:id', async(req, res)=>{
+router.get('/getReviewerComments/:id', async(req, res)=>{
     const caseId = req.params.id
-    const caseComment = await Case.findOne({caseId})
+    const caseComment = await Case.findById(caseId)
     var arrayReviewerComments = caseComment.reviewerComments
     return res.json({ data: arrayReviewerComments});
 
 })
-//As an Admin I should be able to view case by company Name
-router.get('/:companyName', async (req,res) => {
-    const companyName = req.param.companyName
-	const casesRequested = await Case.find({companyName})
-	res.json({data: casesRequested})
-})
+
 
 
 //create new case
@@ -52,17 +53,18 @@ router.post('/', async (req,res) => {
  })
 
 
-
+//yarab
 //update a case
 router.put('/:id', async (req,res) => {
     try {
      const id = req.params.id
-     const newCase = await Case.findOne({id})
+     const newCase = await Case.findById(id)
      if(!newCase) return res.status(404).send({error: 'Case does not exist'})
      const isValidated = validator.updateValidation(req.body)
      if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-     const updatedCase = await Case.updateOne(req.body)
-     res.json({msg: 'Case updated successfully'})
+     const x = await Case.findByIdAndUpdate(id,req.body)
+    const updatedCase = await Case.findById(id)
+     res.json({msg: 'Case updated successfully', data:updatedCase})
     }
     catch(error) {
         // We will be handling the error later
@@ -86,9 +88,9 @@ router.delete('/:id', async (req,res) => {
   //Get the form of the Lawyer/Reviewer case
 router.get('/getForms/:id', async(req, res) => {
     const caseid = req.params.id
-    const cases = await Case.findOne({caseid})
-    var arrayOfForms = cases.form
-    res.json({ data: arrayOfForms });
+    const cases = await Case.findById(caseid)
+    var CaseForm = cases.form
+    res.json({ data: CaseForm });
 })
 
 module.exports = router;

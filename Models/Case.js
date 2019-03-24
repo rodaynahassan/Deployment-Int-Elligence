@@ -34,7 +34,7 @@ const CaseSchema = new Schema({
      reviewerApprove:{
          type:Boolean
      },
-     UserId:{
+     userId:{
         type:ObjectId,
         required:true
      }

@@ -2,9 +2,6 @@ const express = require('express');
 const Joi = require('joi');
 const uuid = require('uuid');
 const router = express.Router();
-
-
-
 const User = require('../../Models/User')
 const validator = require('../../Validation/UserValidation')
 

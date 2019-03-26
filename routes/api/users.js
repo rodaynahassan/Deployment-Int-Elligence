@@ -3,7 +3,7 @@ const Joi = require('joi');
 const uuid = require('uuid');
 const router = express.Router();
 const userController = require('../../controllers/userController')
-
+const caseController = require('../../controllers/caseController')
 
 
 
@@ -27,8 +27,8 @@ function compare(a,b){
 }
 //sort cases by id as a lawyer 
 router.get('/CaseSortedByCaseId/', async (req,res) => { // sort cases by case id
-    var cases= await Cases.find()
-    cases.sort(compareById)
+    const cases = await userController.search()
+    cases.cases.sort(userController.compareById)
     return res.json({ data: cases });
 })
 
@@ -110,10 +110,10 @@ router.post('/', async (req,res) => {
 
 //get the case of the lawyer/Reviewer 
 router.get('/getCases/:id',async(req,res) => {
-    const userid = req.params.id
-    const user = await User.findById(userid)
-    var arrayOfCases = user.cases 
-    res.json({data: arrayOfCases})
+    const userid=req.params.id
+    const user= await userController.search('_id',userid)
+    const casesOfUsers = user.cases
+    return res.json({ data: casesOfUsers });
 });
 
 module.exports = router;

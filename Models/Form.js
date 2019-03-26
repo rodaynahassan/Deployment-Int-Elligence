@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
-const SSCManager= new Schema({
+const SSCManagers= new Schema({
     name: {type: String,required: true},
     type: {type: String,required: true},
     gender:{type: String,required: true},
@@ -25,7 +25,7 @@ const FormSchema= new Schema({
     companyNameInEnglish:{type:String},
     currency:{type:String,required:true},
     equityCapital:{type:Number,required:true},
-    SSCManagers:{type:Array,rquired:true},
+    SSCManagers:{type:Array},
     type:{type:String,required:true},
     status:{type: String,enum:['Rejected','In progress','Approved']},
     caseId:{type:ObjectId}

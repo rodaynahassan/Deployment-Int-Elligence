@@ -14,6 +14,8 @@ exports.search=async function search (att,value)
         var certainAdmin=await Admin.findById(value)
         return certainAdmin
     }
+    var values=await Admin.findById({att:value})
+    return values
 }
 exports.create=async function create(body)
 {

@@ -23,7 +23,7 @@ router.get('/',async(req,res) =>
     return res.json({ data: admin });
 })
 router.post('/', async (req,res) => {
-    const newAdmin=adminController.create(req.body)
+    const newAdmin=await adminController.create(req.body)
     return res.json({ data: newAdmin });
  })
 

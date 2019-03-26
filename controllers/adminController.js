@@ -19,7 +19,7 @@ exports.create=async function create(body)
 {
     try
     {
-      var isAdminValidated=adminValidator.createValidation(body)
+      const isAdminValidated=adminValidator.createValidation(body)
       if (isAdminValidated.error) return {error:isAdminValidated.error.details[0].message}
       const newAdmin=await Admin.create(body)
       return newAdmin

@@ -3,19 +3,22 @@ const router = express.Router()
 const mongoose = require('mongoose')
 const Form = require('../../Models/Form')
 const validator = require('../../Validation/formValidations')
+const controller=require('../../controllers/formController')
 
 
 //get all companies
-//el moshkela hena f get all 
+ 
 router.get('/', async (req,res) => {
-    const forms  = await Form.find()
-    res.json({data: forms})
+    const forms  = await controller.search()
+    return res.json({data:forms})
+    
 })
 //get a company by id
 router.get('/:id', async (req,res) => {
         const id = req.params.id
-        const form = await Form.findById(id)
-        res.json({data: form})
+        const form = await controller.search('_id',id)
+        return res.json({data:form})
+        
 })
 //create a form
 router.post('/', async (req,res) => {
@@ -83,8 +86,8 @@ router.post('/', async (req,res) => {
  router.delete('/:id', async (req,res) => {
     try {
      const id = req.params.id
-     const deletedForm= await Form.findByIdAndRemove(id)
-     res.json({msg:'Form was deleted successfully', data: deletedForm})
+     const deletedForm= await controller.remove('_id',id)
+    return res.json({msg:'Form was deleted successfully', data: deletedForm})
     }
     catch(error) {
         // We will be handling the error later

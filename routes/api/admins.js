@@ -31,16 +31,17 @@ router.post('/', async (req,res) => {
 // sort cases by id
 router.get('/CasesSortedById', async(req, res) => {
     var cases= await Cases.find()
-    cases.sort(compareById)
+    cases.sort(adminController.compareById)
     return res.json({ data: cases });
 })
 // sort cases by creation date
 router.get('/CasesSortedByCreationDate', async(req, res) => {
     var cases= await Cases.find()
-    cases.sort(compare)
+    cases.sort(adminController.compare)
     return res.json({ data: cases });
 })
 
+<<<<<<< HEAD
 //sort cases by ID
 function compareById(a,b){
     if(a._id < b._id) return -1
@@ -55,6 +56,11 @@ function compare(a,b){
     if(Date.parse(a.creationDate)<Date.parse(b.creationDate)) return -1
     return 0
 }
+=======
+
+
+
+>>>>>>> 0657fce7b997f51e0cc6e589b219fccb638720ca
 // update an admin
 router.put('/:id', async (req,res) => {
     try {

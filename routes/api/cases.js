@@ -1,36 +1,37 @@
 const express = require('express');
 const router = express.Router();
-//const Joi = require('joi');
-//const uuid = require('uuid');
+
 const validator = require('../../Validation/caseValidations')
 const mongoose = require('mongoose')
 const Case = require('../../Models/Case')
-//const formValidator=require('../../Validation/caseValidations')
+const controller=require('../../controllers/caseController')
 
 
 //get all cases
 router.get('/', async (req,res) => {
-    const cases = await Case.find()
-    res.json({data: cases})
+    const cases = await controller.search()
+    res.json({data:cases})
+
 })
+
 //As an Admin I should be able to view case by company Name
 router.get('/getByCompanyName/:companyName', async (req,res) => {
     const companyname = req.params.companyName
-    const casesRequested = await Case.find({companyName : companyname})
-    res.json({data: casesRequested})
+    const casesRequested = await controller.search('companyName',companyname)
+   return res.json({data: casesRequested})
 })
 
 //get a case
 router.get('/:id', async (req,res) => {
     const id=req.params.id
-    const cases = await Case.findById(id)
-    res.json({data: cases})
+    const cases = await controller.search('_id',id)
+    res.json({data:cases})
 })
 
 //View Reviewer's comments
 router.get('/getReviewerComments/:id', async(req, res)=>{
     const caseId = req.params.id
-    const caseComment = await Case.findById(caseId)
+    const caseComment = await controller.search('_id',caseId)
     var arrayReviewerComments = caseComment.reviewerComments
     return res.json({ data: arrayReviewerComments});
 
@@ -53,7 +54,6 @@ router.post('/', async (req,res) => {
  })
 
 
-//yarab
 //update a case
 router.put('/:id', async (req,res) => {
     try {
@@ -77,7 +77,7 @@ router.put('/:id', async (req,res) => {
 router.delete('/:id', async (req,res) => {
     try {
      const id = req.params.id
-     const deletedCase = await Case.findByIdAndRemove(id)
+     const deletedCase = await controller.remove('_id',id)
      res.json({msg:'case was deleted successfully', data: deletedCase})
     }
     catch(error) {
@@ -85,10 +85,11 @@ router.delete('/:id', async (req,res) => {
         console.log(error)
     }  
  })
+
   //Get the form of the Lawyer/Reviewer case
 router.get('/getForms/:id', async(req, res) => {
     const caseid = req.params.id
-    const cases = await Case.findById(caseid)
+    const cases = await controller.search('_id',caseid)
     var CaseForm = cases.form
     res.json({ data: CaseForm });
 })

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const Admin = require('../../Models/Admin');
-const adminValidator = require('../../Validation/adminvalidations')
-const Case = require('../../Models/Case');
+const Admin = require('../Models/Admin');
+const adminValidator = require('../Validation/adminvalidations')
+const Case = require('../Models/Case');
 
 exports.create=async function search (att,value)
 {

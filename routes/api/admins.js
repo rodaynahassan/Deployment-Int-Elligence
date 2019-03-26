@@ -55,10 +55,6 @@ function compare(a,b){
     if(Date.parse(a.creationDate)<Date.parse(b.creationDate)) return -1
     return 0
 }
-
-
-
-
 // update an admin
 router.put('/:id', async (req,res) => {
     try {

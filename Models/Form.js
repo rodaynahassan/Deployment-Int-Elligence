@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
-const SSCManager= new Schema({
+const SSCManagers= new Schema({
     name: {type: String,required: true},
     type: {type: String,required: true},
     gender:{type: String,required: true},

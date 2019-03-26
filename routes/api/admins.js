@@ -73,7 +73,7 @@ router.put('/:id', async (req,res) => {
         console.log(error)
     }  
  })
-//delete an admin 
+//delete an admin
 router.delete('/:id', async (req, res) => {
 	try{
     const adminId = req.params.id 

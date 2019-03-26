@@ -57,11 +57,11 @@ exports.remove = async function remove(att,value){
         return null
     }
     if(att==='id'){
-        const  admin= await Admin.findByIdAndDelete(value,body)
+        const  admin= await Admin.findByIdAndDelete(value)
         return admin
     }
     else{
-        const  admins = await Admin.deleteMany({ att: value },body)
+        const  admins = await Admin.deleteMany({ att: value })
         return admins
     }
 }

@@ -66,7 +66,7 @@ router.put('/:id', async (req,res) => {
      var admin = await adminController.update('id',id,req.body)
      if(!admin) return res.json({msg:'ID not there'})
      if(admin.error) return res.status(400).send(admin)
-     return res.json({msg: 'Admin updated successfully'},{data:admin})
+     return res.json({msg: 'Admin updated successfully',data:admin})
     }
     catch(error) {
         // We will be handling the error later

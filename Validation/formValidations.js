@@ -82,7 +82,7 @@ module.exports = {
         identificationNumber: Joi.string().min(8).max(50).required(),
         birthdate: Joi.date().required(),
         address: Joi.string().required().min(5).max(50),
-        typeOfManager: Joi.string().required()
+        typeOfManagers: Joi.string().required()
         }
         return Joi.validate(request, SSCManagerSchema)
     },
@@ -97,7 +97,7 @@ module.exports = {
             identificationNumber: Joi.string(),
             birthdate: Joi.date(),
             address: Joi.string().min(5).max(50),
-            typeOfManager: Joi.string()
+            typeOfManagers: Joi.string()
 
         }
         return Joi.validate(request, updateSSCManagerSchema)

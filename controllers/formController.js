@@ -92,3 +92,35 @@ exports.update = async function update(att,value,body)
            console.log(error)
        }  
 }
+exports.search=async function search(att,value)
+{
+    if(!att)
+   {
+    const values  = await Form.find()
+     return values
+   }
+   if (att==='_id')
+   {
+       var values= await Form.findById(value)
+        return values
+
+   }
+   
+
+}
+
+exports.remove=async function remove(att,value)
+{
+    if(!att)
+    {
+      return null
+    }
+    if (att==='_id')
+    {
+        var deletedForm= await Form.findByIdAndDelete(value)
+         return deletedForm
+ 
+    }
+
+
+}

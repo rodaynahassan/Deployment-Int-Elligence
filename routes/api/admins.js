@@ -41,26 +41,9 @@ router.get('/CasesSortedByCreationDate', async(req, res) => {
     return res.json({ data: cases });
 })
 
-<<<<<<< HEAD
-//sort cases by ID
-function compareById(a,b){
-    if(a._id < b._id) return -1
-    if(b._id < a._id) return 1
-    
-    return 0
-}
-
-//View the sorted cases by date
-function compare(a,b){
-    if(Date.parse(a.creationDate)>Date.parse(b.creationDate)) return 1
-    if(Date.parse(a.creationDate)<Date.parse(b.creationDate)) return -1
-    return 0
-}
-=======
 
 
 
->>>>>>> 0657fce7b997f51e0cc6e589b219fccb638720ca
 // update an admin
 router.put('/:id', async (req,res) => {
     try {

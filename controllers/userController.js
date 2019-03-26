@@ -6,7 +6,7 @@ const validator = require('../Validation/UserValidation')
 
 
 
-function compare(a,b){                                                //comparing between creation dates
+exports.compareByDate=function compareByDate(a,b){                                                //comparing between creation dates
     if(Date.parse(a.creationDate)>Date.parse(b.creationDate)) return 1;
     
     if(Date.parse(a.creationDate)<Date.parse(b.creationDate)) return -1;

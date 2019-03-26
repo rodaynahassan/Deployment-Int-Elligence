@@ -6,17 +6,27 @@ const userController=require('../../controllers/userController')
 const User = require('../../Models/User')
 const Cases = require('../../Models/Case')
 const validator = require('../../Validation/UserValidation')
+const caseController=require('../../controllers/caseController')
 
 
 
 
 
 
-//sort by case creation date
-router.get('/CasesSortedByCreationDate/', async(req, res) => {                    
-    var cases= await Cases.find()
-    cases.sort(compare)
+//sort all cases for a  by case creation date
+router.get('/AllCasesSortedByCaseDate/', async(req, res) => {                    
+    var cases= await caseController.search()
+    cases.sort(userController.compareByDate)
     return res.json({ data: cases });
+})
+
+
+//sort by case creation date for a specific user
+router.get('/SpecificCasesSortedByCaseDate/:id', async(req, res) => {   
+    const userid=req.params.id
+    var SpecificUser= await userController.search('_id' ,userid )
+    SpecificUser.cases.sort(userController.compareByDate)
+    return res.json({ data: SpecificUser.cases });
 })
 
 

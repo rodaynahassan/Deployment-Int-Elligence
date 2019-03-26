@@ -15,7 +15,7 @@ exports.search=async function search (att,value)
         return certainAdmin
     }
 }
-exports.create=async function newadmin(body)
+exports.create=async function create(body)
 {
     try
     {

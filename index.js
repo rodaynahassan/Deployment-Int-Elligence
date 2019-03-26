@@ -15,8 +15,8 @@ const db = require('./config/keys').mongoURI
 
 // Connect to mongo
 mongoose
-    .connect('mongodb+srv://MohamedAboushnief:Mohamed1998@cluster0-dcauz.mongodb.net/Summerge?retryWrites=true',{ useNewUrlParser: true })
-    //.connect('mongodb+srv://ScrumMaster:26312215@int-elligence-s1doh.mongodb.net/local_library?retryWrites=true')
+
+    .connect('mongodb+srv://ScrumMaster:26312215@int-elligence-s1doh.mongodb.net/local_library?retryWrites=true')
     .then(() => console.log('Connected to MongoDB'))
     .catch(err => console.log(err))
     { useNewUrlParser: true }

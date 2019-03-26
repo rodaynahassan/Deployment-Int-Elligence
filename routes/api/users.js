@@ -2,11 +2,8 @@ const express = require('express');
 const Joi = require('joi');
 const uuid = require('uuid');
 const router = express.Router();
-<<<<<<< HEAD
-=======
 
 
->>>>>>> b31342608051b3299a61df416d94a5ff76d5f979
 const User = require('../../Models/User')
 const Cases = require('../../Models/Case')
 const validator = require('../../Validation/UserValidation')

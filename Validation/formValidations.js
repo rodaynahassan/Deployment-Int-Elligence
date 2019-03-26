@@ -14,11 +14,7 @@ module.exports = {
             equityCapital: Joi.number().required(),
             type: Joi.string().required(),
             SSCManagers: Joi.array().required(),
-<<<<<<< HEAD
-            CaseId: Joi.ObjectId()
-=======
             caseId: Joi.objectId()
->>>>>>> b31342608051b3299a61df416d94a5ff76d5f979
         }
 
         return Joi.validate(request, SSCFormSchema)
@@ -34,12 +30,8 @@ module.exports = {
             companyNameInEnglish: Joi.string().max(50),
             currency: Joi.string().min(2).max(10),
             equityCapital: Joi.number(),
-<<<<<<< HEAD
-            CaseId: Joi.ObjectId()
-=======
             SSCManagers: Joi.array(),
             caseId: Joi.objectId()
->>>>>>> b31342608051b3299a61df416d94a5ff76d5f979
         }
 
         return Joi.validate(request, updateSSCFormSchema)
@@ -56,11 +48,7 @@ module.exports = {
             currency: Joi.string().required().min(2).max(10),
             equityCapital: Joi.number().required(),
             type: Joi.string().required(),
-<<<<<<< HEAD
-            CaseId: Joi.ObjectId()
-=======
             caseId: Joi.objectId()
->>>>>>> b31342608051b3299a61df416d94a5ff76d5f979
 
         }
 
@@ -77,11 +65,7 @@ module.exports = {
             companyNameInEnglish: Joi.string().max(50),
             currency: Joi.string().min(2).max(10),
             equityCapital: Joi.number(),
-<<<<<<< HEAD
-            CaseId: Joi.ObjectId()
-=======
             caseId: Joi.objectId()
->>>>>>> b31342608051b3299a61df416d94a5ff76d5f979
         }
 
         return Joi.validate(request, updateSPCFormSchema)

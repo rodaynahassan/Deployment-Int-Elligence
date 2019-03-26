@@ -31,13 +31,13 @@ router.post('/', async (req,res) => {
 // sort cases by id
 router.get('/CasesSortedById', async(req, res) => {
     var cases= await Cases.find()
-    cases.sort(compareById)
+    cases.sort(adminController.compareById)
     return res.json({ data: cases });
 })
 // sort cases by creation date
 router.get('/CasesSortedByCreationDate', async(req, res) => {
     var cases= await Cases.find()
-    cases.sort(compare)
+    cases.sort(adminController.compare)
     return res.json({ data: cases });
 })
 

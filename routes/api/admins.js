@@ -3,7 +3,7 @@ const express = require('express');
 const uuid = require('uuid');
 const router = express.Router();
 const validator = require('../../Validation/adminValidations')
-const controller = require('../../controllers/adminController')
+const adminController = require('../../controllers/adminController')
 
 // Models
 const Admin = require('../../Models/Admin');

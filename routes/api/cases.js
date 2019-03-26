@@ -6,6 +6,7 @@ const validator = require('../../Validation/caseValidations')
 const mongoose = require('mongoose')
 const Case = require('../../Models/Case')
 //const formValidator=require('../../Validation/caseValidations')
+const controller = require('../../controllers/caseController')
 
 
 //get all cases
@@ -40,36 +41,47 @@ router.get('/getReviewerComments/:id', async(req, res)=>{
 
 //create new case
 router.post('/', async (req,res) => {
-    try {
-     const isValidated = validator.createValidation(req.body)
-     if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-     const newCase = await Case.create(req.body)
-     res.json({msg:'Case was created successfully', data: newCase})
-    }
-    catch(error) {
-        // We will be handling the error later
-        console.log(error)
-    }  
+
+    var newCase = await controller.create(req.body)
+    return res.json({data: newCase})
+    // try {
+    //  const isValidated = validator.createValidation(req.body)
+    //  if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+    //  const newCase = await Case.create(req.body)
+    //  res.json({msg:'Case was created successfully', data: newCase})
+    // }
+    // catch(error) {
+    //     // We will be handling the error later
+    //     console.log(error)
+    // }  
  })
 
 
-//yarab
 //update a case
 router.put('/:id', async (req,res) => {
-    try {
-     const id = req.params.id
-     const newCase = await Case.findById(id)
-     if(!newCase) return res.status(404).send({error: 'Case does not exist'})
-     const isValidated = validator.updateValidation(req.body)
-     if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-     const x = await Case.findByIdAndUpdate(id,req.body)
-    const updatedCase = await Case.findById(id)
-     res.json({msg: 'Case updated successfully', data:updatedCase})
+    try{
+        const id=req.params.id
+        var ncase = await controller.update('id',id,req.body)
+        if(!ncase) return res.json({msg:'ID not there'})
+        if(ncase.error) return res.status(400).send(ncase)
+        return res.json({msg:'case updated successfully',data:ncase})
     }
-    catch(error) {
-        // We will be handling the error later
-        console.log(error)
-    }  
+    
+    
+    // try {/.
+    //  const id = req.params.id
+    //  const newCase = await Case.findById(id)
+    //  if(!newCase) return res.status(404).send({error: 'Case does not exist'})
+    //  const isValidated = validator.updateValidation(req.body)
+    //  if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+    //  const x = await Case.findByIdAndUpdate(id,req.body)
+    // const updatedCase = await Case.findById(id)
+    //  res.json({msg: 'Case updated successfully', data:updatedCase})
+    // }
+     catch(error)
+      {
+         console.log(error)
+     }  
  })
 
 

@@ -2,6 +2,9 @@ const express = require('express');
 const Joi = require('joi');
 const uuid = require('uuid');
 const router = express.Router();
+const userController = require('../../controllers/userController')
+
+
 
 
 const User = require('../../Models/User')
@@ -30,36 +33,26 @@ router.get('/CaseSortedByCaseId/', async (req,res) => { // sort cases by case id
 })
 
 
-function compareById(a , b){
-if(a._id > b._id )
-return 1;
 
-if(b._id > a._id )
-return -1;
-
-return 0;
-
-}
 // view a certain user
 router.get('/:id', async(req, res) => {
     const userid=req.params.id
-    const user= await User.findById(userid)
-    return res.json({ data: user });
+    const searchUsers = await userController.search('_id',userid)
+    return res.json({ data: searchUsers });
 })
 //view the financialBalance of an investor
 router.get('/getTheFinancialBalance/:id', async(req, res) => {
     const userid=req.params.id
-    const user= await User.findById(userid)
+    const user= await userController.search('_id',userid)
     const financialBalance= user.financialBalance
     return res.json({ data: financialBalance });
 })
 
 
-
 //get all users
 router.get('/', async (req,res) => {
-    const users = await User.find()
-    res.json({data: users})
+    const searchUsers = await userController.search()
+    res.json({data: searchUsers})
 })
 
  
@@ -90,34 +83,16 @@ router.post('/', async (req,res) => {
     }  
  })
 
-
 //update a user
  router.put('/:id', async (req,res) => {
-    try {
-     const id = req.params.id
-     const user = await User.findById(id)
-     if(!user) return res.status(404).send({error: 'User does not exist'})
-     if(req.body.userType==='Lawyer'){
-          const isValidated = validator.updateValidationL(req.body)
-          if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-     }
-     if(req.body.userType==='Investor'){
-         const isValidated = validator.updateValidationI(req.body)
-          if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-     }
-     if(req.body.userType==='Reviewer'){
-        const isValidated = validator.updateValidationR(req.body)
-         if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-    }
-    
-     const x = await User.findByIdAndUpdate(id,req.body)
-    const updatedUser = await User.findById(id)
-     res.json({msg: 'User updated successfully',data:updatedUser})
-    }
-    catch(error) {
-        // We will be handling the error later
-        console.log(error)
-    }  
+      
+      const id = req.params.id 
+      const updateUser = await userController.update('_id',id,req.body)
+      if(!updateUser) return res.json({msg :'ID not there'})
+      if(updateUser.error) return res.status(400).send(updateUser)
+      return res.json({msg : 'User Updated Successfully',data: updateUser})
+
+     
  })
 
 //delete a user

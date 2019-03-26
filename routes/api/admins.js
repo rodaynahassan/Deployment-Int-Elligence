@@ -12,14 +12,14 @@ const Cases = require('../../Models/Case');
 //controller
 router.get('/getById/:id',async(req,res) => 
 {
-    var admin=adminController.search("id",req.params.id)
+    var admin=await adminController.search("id",req.params.id)
     return res.json({ data: admin });
 })
 
 
 router.get('/',async(req,res) => 
 {
-    const admin=adminController.search()
+    const admin=await adminController.search()
     return res.json({ data: admin });
 })
 router.post('/', async (req,res) => {

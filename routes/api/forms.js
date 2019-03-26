@@ -6,14 +6,14 @@ const validator = require('../../Validation/formValidations')
 const controller=require('../../controllers/formController')
 
 
-//get all companies
+//get all forms
  
 router.get('/', async (req,res) => {
     const forms  = await controller.search()
     return res.json({data:forms})
     
 })
-//get a company by id
+//get a form by id
 router.get('/:id', async (req,res) => {
         const id = req.params.id
         const form = await controller.search('_id',id)
@@ -44,7 +44,6 @@ router.post('/', async (req,res) => {
         const newSPCForm = await Form.create(req.body)   
         res.json({msg:'SPC Form was created successfully', data:newSPCForm})
 
-        
        }
     }
     catch(error) {
@@ -53,7 +52,7 @@ router.post('/', async (req,res) => {
       } 
 
     })
-    //update a company
+    //update a form
  router.put('/:id', async (req,res) => {
     try {
         
@@ -94,6 +93,4 @@ router.post('/', async (req,res) => {
         console.log(error)
     }  
  })
-
-
-    module.exports = router
+module.exports = router

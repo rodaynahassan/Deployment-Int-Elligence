@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
 const Admin = require('../Models/Admin');
 const adminValidator = require('../Validation/adminvalidations')
-const Case = require('../Models/Case');
 
-exports.create=async function search (att,value)
+exports.search=async function search (att,value)
 {
     if (!att)
     {
@@ -16,13 +15,13 @@ exports.create=async function search (att,value)
         return certainAdmin
     }
 }
-exports.create=async function create(body)
+exports.create=async function newadmin(body)
 {
     try
     {
-      var isAdminValidated=adminValidator.createValidation(req.body)
+      var isAdminValidated=adminValidator.createValidation(body)
       if (isAdminValidated.error) return {error:isAdminValidated.error.details[0].message}
-      const newAdmin=await Admin.create(req.body)
+      const newAdmin=await Admin.create(body)
       return newAdmin
 
 

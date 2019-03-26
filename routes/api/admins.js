@@ -13,17 +13,17 @@ const Cases = require('../../Models/Case');
 router.get('/getById/:id',async(req,res) => 
 {
     var admin=adminController.search("id",req.params.id)
-    return res.json({ data: cases });
+    return res.json({ data: admin });
 })
 
 
 router.get('/',async(req,res) => 
 {
     const admin=adminController.search()
-    return res.json({ data: cases });
+    return res.json({ data: admin });
 })
 router.post('/', async (req,res) => {
-    const newAdmin=adminController.create(req.body)
+    const newAdmin=adminController.newadmin(req.body)
     return res.json({ data: newAdmin });
  })
 

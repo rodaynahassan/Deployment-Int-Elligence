@@ -55,8 +55,8 @@ function compare(a,b){
 
 router.post('/', async (req,res) => {
    try {
-    const isValidated = validator.createValidation(req.body)
-    if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+    //const isValidated = Validation.createValidation(req.body)
+    //if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
     const newAdmin = await Admin.create(req.body)
     res.json({msg:'Admin was created successfully', data: newAdmin})
    }
@@ -69,12 +69,10 @@ router.post('/', async (req,res) => {
 router.put('/:id', async (req,res) => {
     try {
      const id = req.params.id
-     const admin = await Admin.findOne({id})
-     if(!admin) return res.status(404).send({error: 'Admin does not exist'})
-     const isValidated = validator.updateValidation(req.body)
-     if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-     const updatedAdmin = await Admin.updateOne(req.body)
-     res.json({msg: 'Admin updated successfully'})
+     var admin = await adminController.update('id',id,req.body)
+     if(!admin) return res.json({msg:'ID not there'})
+     if(admin.error) return res.status(400).send(admin)
+     return res.json({msg: 'Admin updated successfully'},{data:admin})
     }
     catch(error) {
         // We will be handling the error later
@@ -85,8 +83,9 @@ router.put('/:id', async (req,res) => {
 router.delete('/:id', async (req, res) => {
 	try{
     const adminId = req.params.id 
-    const deletedAdmin = await Admin.findByIdAndRemove(adminId)
-	res.json({msg:'Admin was deleted successfully', data: deletedAdmin})
+    const deletedAdmin = await adminController.remove('id',adminId)
+    if(!deletedAdmin)  return res.json({msg:'ID not there'})
+	return res.json({msg:'Admin was deleted successfully', data: deletedAdmin})
 	}
 	catch(error){
 		console.log(error)

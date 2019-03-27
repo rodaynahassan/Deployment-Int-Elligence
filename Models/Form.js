@@ -4,7 +4,7 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 
 const SSCManagers= new Schema({
     name: {type: String,required: true},
-    type: {type: String,required: true},
+    managerType: {type: String,required: true},
     gender:{type: String,required: true},
     nationality: {type:String,required: true},
     identificationType: {type: String,required: true},

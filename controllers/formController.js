@@ -92,6 +92,7 @@ exports.update = async function update(att,value,body)
            console.log(error)
        }  
 }
+//Getting
 exports.search=async function search(att,value)
 {
     if(!att)
@@ -108,7 +109,7 @@ exports.search=async function search(att,value)
    
 
 }
-
+//Deleting
 exports.remove=async function remove(att,value)
 {
     if(!att)

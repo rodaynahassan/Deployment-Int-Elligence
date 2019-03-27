@@ -22,18 +22,23 @@ router.get('/CasesSortedByCreationDate/', async(req, res) => {
 })
 
 
-//sort cases by id as a lawyer 
-router.get('/AllCaseSortedByCaseId/', async (req,res) => { // sort all cases by case id
+
+//sort all cases by id as a lawyer 
+router.get('/AllCaseSortedByCaseId/', async (req,res) => {  // sort all cases by case id
     const cases = await caseController.search()
     cases.sort(userController.compareById)
     return res.json({ data: cases });
 })
 
-// router.get('/SpecificCaseSortedByCaseId/', async (req,res) => { // sort specific cases by case id
-//     const cases = await userController.search()
-//     cases.cases.sort(userController.compareById)
-//     return res.json({ data: cases });
-// })
+
+//sort specific cases by id as a lawyer 
+router.get('/SpecificCaseSortedByCaseId/:id', async (req,res) => {  // sort specific cases by case id
+    var userid=req.params.id
+    var searchUsers = await userController.search('_id',userid)
+    //searchUsers.cases = await caseController.search()
+    searchUsers.cases.sort(userController.compareById)
+    return res.json({ data: searchUsers.cases });
+})
 
 
 
@@ -51,6 +56,15 @@ router.get('/getTheFinancialBalance/:id', async(req, res) => {
     const user= await userController.search('_id',userid)
     const financialBalance= user.financialBalance
     return res.json({ data: financialBalance });
+})
+
+
+// View lawyer comments of specific case of investor 
+router.get('/getLaywerCommentsOfInvestorsCase/:id', async(req, res) => {
+    var userid = req.params.id
+    var user = await userController.search('_id',userid)
+    var lawyercom = user.cases.lawyerComments
+    return res.json({ data: lawyercom });
 })
 
 

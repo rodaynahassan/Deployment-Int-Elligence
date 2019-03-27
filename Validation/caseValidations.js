@@ -15,7 +15,7 @@ module.exports = {
             reviewerSeen: Joi.boolean(),
             reviewerApprove: Joi.boolean(),
             form:Joi.object(),
-            userId:Joi.objectId().required()
+            userId:Joi.objectId()
         }
 
         return Joi.validate(request, createSchema)

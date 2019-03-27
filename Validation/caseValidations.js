@@ -31,7 +31,7 @@ module.exports = {
             reviewerComments: Joi.array().items(Joi.string()),
             reviewerSeen: Joi.boolean(),
             reviewerApprove: Joi.boolean(),
-            UserId: Joi.ObjectId()
+            UserId: Joi.objectId()
         }
 
         return Joi.validate(request, updateSchema)

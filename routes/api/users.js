@@ -141,6 +141,11 @@ router.get('/getCases/:id',async(req,res) => {
     res.json({data: arrayOfCases})
 });
 
+//accepting or rejecting a case
+
+
+
+
 module.exports = router;
 
 

@@ -108,4 +108,17 @@ router.get('/getForms/:id', async(req, res) => {
     res.json({ data: CaseForm });
 })
 
+//1)get my self as a lawyer or reviewer
+//2)get array of cases as a lawyer or reviewer
+//3)view the form of specific case as a lawyer or reviewer
+//4)get the attribute of accepting and rejecting of this specific case
+
+
+
+
+
+
+
+
+
 module.exports = router;

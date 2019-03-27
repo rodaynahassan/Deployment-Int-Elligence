@@ -51,6 +51,7 @@ exports.update=async function update (att , value, body)
       {
            console.log(error)
        } 
+    }
 //get the cases
 exports.search = async function search(att , value)
 {

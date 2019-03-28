@@ -4,7 +4,7 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 
 const SSCManagers= new Schema({
     name: {type: String,required: true},
-    managerType: {type: String,required: true},
+    type: {type: String,required: true},
     gender:{type: String,required: true},
     nationality: {type:String,required: true},
     identificationType: {type: String,required: true},
@@ -28,7 +28,16 @@ const FormSchema= new Schema({
     SSCManagers:{type:Array},
     type:{type:String,required:true},
     status:{type: String,enum:['Rejected','In progress','Approved']},
-    caseId:{type:ObjectId}
+    caseId:{type:ObjectId},
+    
+     creationDate:{type: Date,required: true},
+     lawyerSeen:{type:Boolean},
+     lawyerComments:{type:[String]},
+     lawyerApprove:{type:Boolean},
+     reviewerSeen:{type:Boolean},
+     reviewerComments:{type:[String]},
+     reviewerApprove:{type:Boolean},
+     userId:{type:ObjectId,required:true}
 })
 
 module.exports = Form = mongoose.model('forms', FormSchema)

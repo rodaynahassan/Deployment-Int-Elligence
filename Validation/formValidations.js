@@ -11,10 +11,19 @@ module.exports = {
             companyFax: Joi.string().min(5).max(20),
             companyNameInEnglish: Joi.string().max(50),
             currency: Joi.string().required().min(2).max(10),
-            equityCapital: Joi.number().required(),
+            equityCapital: Joi.number().required().min(50000),
             type: Joi.string().required(),
             SSCManagers: Joi.array().required(),
-            caseId: Joi.objectId()
+            caseId: Joi.objectId(),
+            status: Joi.enum().valid('Rejected','In progress','Approved'),
+            creationDate: Joi.date().required(),
+            lawyerComments: Joi.array().items(Joi.string()),
+            lawyerSeen: Joi.boolean(),
+            lawyerApprove: Joi.boolean(),
+            reviewerComments: Joi.array().items(Joi.string()),
+            reviewerSeen: Joi.boolean(),
+            reviewerApprove: Joi.boolean(),
+            userId:Joi.objectId().required()
         }
 
         return Joi.validate(request, SSCFormSchema)
@@ -29,9 +38,18 @@ module.exports = {
             companyFax: Joi.string().min(5).max(20),
             companyNameInEnglish: Joi.string().max(50),
             currency: Joi.string().min(2).max(10),
-            equityCapital: Joi.number(),
+            equityCapital: Joi.number().min(50000),
             SSCManagers: Joi.array(),
-            caseId: Joi.objectId()
+            caseId: Joi.objectId(),
+            status: Joi.string().valid('Rejected','In progress','Approved'),
+            creationDate: Joi.date(),
+            lawyerComments: Joi.array().items(Joi.string()), //must insert an object , syntax -> {} , it doesn't accept null
+            lawyerSeen: Joi.boolean(),
+            lawyerApprove: Joi.boolean(),
+            reviewerComments: Joi.array().items(Joi.string()),
+            reviewerSeen: Joi.boolean(),
+            reviewerApprove: Joi.boolean(),
+            UserId: Joi.objectId()
         }
 
         return Joi.validate(request, updateSSCFormSchema)
@@ -48,7 +66,16 @@ module.exports = {
             currency: Joi.string().required().min(2).max(10),
             equityCapital: Joi.number().required(),
             type: Joi.string().required(),
-            caseId: Joi.objectId()
+            caseId: Joi.objectId(),
+            status: Joi.string().valid('Rejected','In progress','Approved'),
+            creationDate: Joi.date().required(),
+            lawyerComments: Joi.array().items(Joi.string()),
+            lawyerSeen: Joi.boolean(),
+            lawyerApprove: Joi.boolean(),
+            reviewerComments: Joi.array().items(Joi.string()),
+            reviewerSeen: Joi.boolean(),
+            reviewerApprove: Joi.boolean(),
+            userId:Joi.objectId().required()
 
         }
 
@@ -65,7 +92,16 @@ module.exports = {
             companyNameInEnglish: Joi.string().max(50),
             currency: Joi.string().min(2).max(10),
             equityCapital: Joi.number(),
-            caseId: Joi.objectId()
+            caseId: Joi.objectId(),
+            status: Joi.string().valid('Rejected','In progress','Approved'),
+            creationDate: Joi.date(),
+            lawyerComments: Joi.array().items(Joi.string()), //must insert an object , syntax -> {} , it doesn't accept null
+            lawyerSeen: Joi.boolean(),
+            lawyerApprove: Joi.boolean(),
+            reviewerComments: Joi.array().items(Joi.string()),
+            reviewerSeen: Joi.boolean(),
+            reviewerApprove: Joi.boolean(),
+            UserId: Joi.objectId()
         }
 
         return Joi.validate(request, updateSPCFormSchema)

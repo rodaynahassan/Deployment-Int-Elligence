@@ -3,103 +3,69 @@ const express = require('express');
 const uuid = require('uuid');
 const router = express.Router();
 const validator = require('../../Validation/adminValidations')
-
+const adminController = require('../../controllers/adminController')
 
 // Models
 const Admin = require('../../Models/Admin');
-const Cases = require('../../Models/Case');
+const Forms = require('../../Models/Form');
 
-
-// Get admins
-router.get('/', async (req,res) => {
-	const admins = await Admin.find()
-	res.json({data: admins})
-})
-router.get('/CasesSortedById', async(req, res) => {
-    var cases= await Cases.find()
-    cases.sort(compareById)
-    return res.json({ data: cases });
+//get by ID
+router.get('/getById/:id',async(req,res) => 
+{
+    var admin=await adminController.search("id",req.params.id)
+    return res.json({ data: admin });
 })
 
-router.get('/CasesSortedByCreationDate', async(req, res) => {
-    var cases= await Cases.find()
-    cases.sort(compare)
-    return res.json({ data: cases });
+// get all admins
+router.get('/',async(req,res) => 
+{
+    const admin=await adminController.search()
+    return res.json({ data: admin });
 })
-router.get('/:id', async(req, res) => {
-    const id=req.params.id
-    const admins= await Admin.findById(id)
-    return res.json({ data: admins});
-})
-
-//sort cases by ID
-
-
-
-function compareById(a,b){
-    if(a._id < b._id) return -1
-    if(b._id < a._id) return 1
-    
-    return 0
-}
-
-
-
-
-//View the sorted cases by date
-
-function compare(a,b){
-    if(Date.parse(a.creationDate)>Date.parse(b.creationDate)) return 1
-    if(Date.parse(a.creationDate)<Date.parse(b.creationDate)) return -1
-    return 0
-}
-
-
-
-
-// Create a new admin
-
+//create admin
 router.post('/', async (req,res) => {
-   try {
-    const isValidated = validator.createValidation(req.body)
-    if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-    const newAdmin = await Admin(req.body).save()
-    res.json({msg:'Admin was created successfully', data: newAdmin})
-   }
-   catch(error) {
-       // We will be handling the error later
-       console.log(error)
-   }  
-})
+    const newAdmin=await adminController.create(req.body)
+    return res.json({ data: newAdmin });
+ })
 
+
+// sort cases by id
+router.get('/CasesSortedById', async(req, res) => {
+    var forms= await Forms.find()
+    forms.sort(adminController.compareById)
+    return res.json({ data: forms });
+})
+// sort cases by creation date
+router.get('/CasesSortedByCreationDate', async(req, res) => {
+    var forms= await Forms.find()
+    forms.sort(adminController.compare)
+    return res.json({ data: forms });
+})
+// update an admin
 router.put('/:id', async (req,res) => {
     try {
      const id = req.params.id
-     const admin = await Admin.findById(id)
-     if(!admin) return res.status(404).send({error: 'Admin does not exist'})
-     const isValidated = validator.updateValidation(req.body)
-     if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-     const x = await Admin.findByIdAndUpdate(id,req.body)
-     const updatedAdmin = Admin.findById(id)
-     res.json({msg: 'Admin updated successfully',data:updatedAdmin})
+     var admin = await adminController.update('id',id,req.body)
+     if(!admin) return res.json({msg:'ID not there'})
+     if(admin.error) return res.status(400).send(admin)
+     return res.json({msg: 'Admin updated successfully',data:admin})
     }
     catch(error) {
         // We will be handling the error later
         console.log(error)
     }  
  })
-
+//delete an admin
 router.delete('/:id', async (req, res) => {
 	try{
     const adminId = req.params.id 
-    const deletedAdmin = await Admin.findByIdAndRemove(adminId)
-	res.json({msg:'Admin was deleted successfully', data: deletedAdmin})
+    const deletedAdmin = await adminController.remove('id',adminId)
+    if(!deletedAdmin)  return res.json({msg:'ID not there'})
+	return res.json({msg:'Admin was deleted successfully', data: deletedAdmin})
 	}
 	catch(error){
 		console.log(error)
 	}
 })
-
-
 
 module.exports = router;

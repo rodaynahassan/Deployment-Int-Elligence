@@ -51,7 +51,7 @@ exports.update = async function update(att,value,body)
         {
             return null
         }
-        if(att==='id')
+        if(att==='_id')
         {
             const form = await Form.findById(value)
             if(form.type==='SSCForm')
@@ -92,21 +92,34 @@ exports.update = async function update(att,value,body)
            console.log(error)
        }  
 }
+<<<<<<< HEAD
 
 //Searching
+=======
+//Getting
+>>>>>>> 4c9fa5b00547c30290cd86fad5df9801b6773c10
 exports.search=async function search(att,value)
 {
     if(!att)
    {
-    const values  = await Form.find()
-     return values
+        const values  = await Form.find()
+        return values
    }
    if (att==='_id')
    {
-       var values= await Form.findById(value)
+        var values= await Form.findById(value)
         return values
-
    }
+   if(att ==='status')
+    {
+        var values=await Form.find({'status':value})
+        return values
+    }
+    if(att ==='companyName')
+    {
+    var values=await Case.find({'companyName':value})
+    return values
+    }
    
 }
 //Deleting
@@ -122,6 +135,4 @@ exports.remove=async function remove(att,value)
          return deletedForm
 
     }
-
-
 }

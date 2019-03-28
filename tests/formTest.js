@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const funcs = require('./fn');
 
 
@@ -72,6 +73,18 @@ test('delete certain form by id', async () => {
     const formId = req.params.id  
     expect(form.status.toEqual(200));
     expect(form.toContainEqual(formId))
+=======
+const funcs = require('./funcs/formFuncs')
+const mongoose = require('mongoose')
+const Form = require('../Models/Form')
+
+//Testing SSCForm requirements
+test('Creating an SSCForm',async () =>{
+    expect.assertions(1)
+    const response = await funcs.createForm()
+    expect(response.data.companyName).not.toBeNull()
+    expect(response.data.companyName).toBeLessThanOrEqual(50)
+>>>>>>> 4c9fa5b00547c30290cd86fad5df9801b6773c10
 })
 
 

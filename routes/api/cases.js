@@ -46,16 +46,7 @@ router.post('/', async (req,res) => {
 
     var newCase = await controller.create(req.body)
     return res.json({data: newCase})
-    // try {
-    //  const isValidated = validator.createValidation(req.body)
-    //  if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-    //  const newCase = await Case.create(req.body)
-    //  res.json({msg:'Case was created successfully', data: newCase})
-    // }
-    // catch(error) {
-    //     // We will be handling the error later
-    //     console.log(error)
-    // }  
+      
  })
 
 

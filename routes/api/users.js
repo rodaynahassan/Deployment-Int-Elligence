@@ -8,27 +8,35 @@ const userController=require('../../controllers/userController')
 const User = require('../../Models/User')
 const Cases = require('../../Models/Case')
 const validator = require('../../Validation/UserValidation')
+const caseController=require('../../controllers/caseController')
 
 
 
 
 
-
-//sort by case creation date
-router.get('/CasesSortedByCreationDate/', async(req, res) => {                    
-    var cases= await Cases.find()
-    cases.sort(compare)
+//sort all cases for a  by case creation date
+router.get('/AllCasesSortedByCaseDate/', async(req, res) => {                    
+    var cases= await caseController.search()
+    cases.sort(userController.compareByDate)
     return res.json({ data: cases });
 })
-
 
 
 //sort all cases by id as a lawyer 
 router.get('/AllCaseSortedByCaseId/', async (req,res) => {  // sort all cases by case id
     const cases = await caseController.search()
     cases.sort(userController.compareById)
-    return res.json({ data: cases });
+
 })
+
+//sort by case creation date for a specific user
+router.get('/SpecificCasesSortedByCaseDate/:id', async(req, res) => {   
+    const userid=req.params.id
+    var SpecificUser= await userController.search('_id' ,userid )
+    SpecificUser.cases.sort(userController.compareByDate)
+    return res.json({ data: SpecificUser.cases });
+})
+
 
 
 //sort specific cases by id as a lawyer 
@@ -39,6 +47,7 @@ router.get('/SpecificCaseSortedByCaseId/:id', async (req,res) => {  // sort spec
     searchUsers.cases.sort(userController.compareById)
     return res.json({ data: searchUsers.cases });
 })
+
 
 
 
@@ -84,13 +93,23 @@ router.post('/', async (req,res) => {
      return res.json({msg:'User was created successfully', data: newUser})
 
 
-    }
- )
+    })
 
 //update a user
  router.put('/:id', async (req,res) => {
       
-      const id = req.params.id 
+      var id = req.params.id 
+      var cases = body.cases
+      var user = await userController.search('_id',id)
+      if(cases){
+          var oldcases = user.cases
+      }
+      for(let i=0 ;i < cases.length ; i++){
+         cases(i) = await caseController.create(cases(i))
+         var newcases = oldcases + cases
+         body.cases = newcases
+      }
+
       const updateUser = await userController.update('_id',id,req.body)
       if(!updateUser) return res.json({msg :'ID not there'})
       if(updateUser.error) return res.status(400).send(updateUser)

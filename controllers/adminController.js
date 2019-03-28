@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 const Admin = require('../Models/Admin');
 const adminValidator = require('../Validation/adminvalidations')
+const userValidator = require('../Validation/UserValidation')
+const User = require('../Models/User')
+const bcrypt = require('bcrypt');
+
 
 exports.search=async function search (att,value)
 {
@@ -81,4 +85,48 @@ exports.compare = function compare(a,b){
     if(Date.parse(a.creationDate)<Date.parse(b.creationDate)) return -1
     return 0
 }
+
+
+// exports.createLawyerOrReviewer=async function createLawyerOrReviewer(body){                          //creating Lawyer or Reviewer
+    
+//     var isValidated = undefined
+//     if(body.userType==='Lawyer'){
+//          isValidated = validator.createValidationL(body)
+//     }
+//     if(body.userType==='Reviewer'){
+//         isValidated = validator.createValidationR(body)
+//     }
+//     if (isValidated.error) return { error: isValidated.error.details[0].message }
+ 
+//  const newUser = await User.create(body)
+//  return  newUser
+// }
+
+
+
+exports.registerLawyerOrReviewer=async function registerLawyerOrReviewer(body){                      //creating Lawyer or Reviewer
+    const { error1 } = userValidator.createValidationL(body)            
+    const { error2 } = userValidator.createValidationR(body)
+    if (error1) {
+        return error1.details[0].message;
+    }
+    if (error2){
+        return error2.details[0].message;
+    }
+    let user = await User.findOne({ email: body.email });
+   // const user = await User.findOne({body:email})
+    if(user) return {error: 'Account already exists'}
+    
+   
+    const newUser = await User.create(body)
+    const salt = await bcrypt.genSalt(10);
+    newUser.password = await bcrypt.hash(newUser.password, salt);
+    await newUser.save();
+
+    
+    return newUser
+}
+
+
+
 

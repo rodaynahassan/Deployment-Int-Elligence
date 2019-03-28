@@ -5,7 +5,7 @@ const users = require('./routes/api/users')
 const forms = require('./routes/api/forms')
 const admins = require('./routes/api/admins')
 const cases=require('./routes/api/cases')
-
+const externalentities=require('./routes/api/externalentities')
 const app = express()
 // DB Config
 const db = require('./config/keys').mongoURI
@@ -30,6 +30,7 @@ app.use('/routes/api/users', users)
 app.use('/routes/api/forms',forms)
 app.use('/routes/api/admins',admins)
 app.use('/routes/api/cases',cases)
+app.use('/routes/api/externalentities',externalentities)
 
 
 

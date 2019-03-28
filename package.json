@@ -8,6 +8,7 @@
     "joi": "^14.3.1",
     "joi-objectid": "^2.0.0",
     "mongoose": "^5.4.15",
+    "mongoose-type-url": "^1.0.5",
     "uuid": "^3.3.2"
   },
   "devDependencies": {},

@@ -4,49 +4,35 @@ const uuid = require('uuid');
 const router = express.Router();
 const userController=require('../../controllers/userController')
 const User = require('../../Models/User')
-const Cases = require('../../Models/Case')
+const Forms = require('../../Models/Form')
 const validator = require('../../Validation/UserValidation')
-const caseController=require('../../controllers/caseController')
-
-
-
-
-
+const formController = require('../../controllers/formController')
 
 //sort all cases for a  by case creation date
 router.get('/AllCasesSortedByCaseDate/', async(req, res) => {                    
-    var cases= await caseController.search()
-    cases.sort(userController.compareByDate)
-    return res.json({ data: cases });
+    var forms= await formController.search()
+    forms.sort(userController.compareByDate)
+    return res.json({ data: forms });
 })
-
-
 //sort by case creation date for a specific user
 router.get('/SpecificCasesSortedByCaseDate/:id', async(req, res) => {   
     const userid=req.params.id
     var SpecificUser= await userController.search('_id' ,userid )
-    SpecificUser.cases.sort(userController.compareByDate)
-    return res.json({ data: SpecificUser.cases });
+    SpecificUser.forms.sort(userController.compareByDate)
+    return res.json({ data: SpecificUser.forms });
 })
-
-
 //sort cases by id as a lawyer 
 router.get('/CaseSortedByCaseId/', async (req,res) => { // sort cases by case id
-    var cases= await Cases.find()
-    cases.sort(compareById)
-    return res.json({ data: cases });
+    var forms= await Forms.find()
+    forms.sort(compareById)
+    return res.json({ data: forms });
 })
-
-
-
 // view a certain user
 router.get('/:id', async(req, res) => {
     const userid=req.params.id
     const searchUsers = await userController.search('_id',userid)
     return res.json({ data: searchUsers });
 })
-
-
 //view the financialBalance of an investor
 router.get('/getTheFinancialBalance/:id', async(req, res) => {
     const userid=req.params.id
@@ -104,8 +90,8 @@ router.post('/', async (req,res) => {
 router.get('/getCases/:id',async(req,res) => {
     const userid = req.params.id
     const user = await User.findById(userid)
-    var arrayOfCases = user.cases 
-    res.json({data: arrayOfCases})
+    var arrayOfForms = user.forms 
+    res.json({data: arrayOfForms})
 });
 
 module.exports = router;

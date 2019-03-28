@@ -7,7 +7,7 @@ const adminController = require('../../controllers/adminController')
 
 // Models
 const Admin = require('../../Models/Admin');
-const Cases = require('../../Models/Case');
+const Forms = require('../../Models/Form');
 
 //get by ID
 router.get('/getById/:id',async(req,res) => 
@@ -22,6 +22,7 @@ router.get('/',async(req,res) =>
     const admin=await adminController.search()
     return res.json({ data: admin });
 })
+//create admin
 router.post('/', async (req,res) => {
     const newAdmin=await adminController.create(req.body)
     return res.json({ data: newAdmin });
@@ -30,20 +31,16 @@ router.post('/', async (req,res) => {
 
 // sort cases by id
 router.get('/CasesSortedById', async(req, res) => {
-    var cases= await Cases.find()
-    cases.sort(adminController.compareById)
-    return res.json({ data: cases });
+    var forms= await Forms.find()
+    forms.sort(adminController.compareById)
+    return res.json({ data: forms });
 })
 // sort cases by creation date
 router.get('/CasesSortedByCreationDate', async(req, res) => {
-    var cases= await Cases.find()
-    cases.sort(adminController.compare)
-    return res.json({ data: cases });
+    var forms= await Forms.find()
+    forms.sort(adminController.compare)
+    return res.json({ data: forms });
 })
-
-
-
-
 // update an admin
 router.put('/:id', async (req,res) => {
     try {
@@ -71,6 +68,7 @@ router.delete('/:id', async (req, res) => {
 	}
 })
 
+<<<<<<< HEAD
 router.post('/register', async (req,res) => {                       //register lawyer or reviewer
     const newUser = await adminController.registerLawyerOrReviewer(req.body) 
     if(newUser.error) return res.status(400).send(newUser) 
@@ -85,4 +83,6 @@ router.post('/register', async (req,res) => {                       //register l
 
 
 
+=======
+>>>>>>> 4c9fa5b00547c30290cd86fad5df9801b6773c10
 module.exports = router;

@@ -4,7 +4,6 @@ const mongoose = require('mongoose')
 const users = require('./routes/api/users')
 const forms = require('./routes/api/forms')
 const admins = require('./routes/api/admins')
-const cases=require('./routes/api/cases')
 
 
 mongoose.set('useCreateIndex', true)
@@ -34,7 +33,6 @@ app.get('/', (req, res) => {
 app.use('/routes/api/users', users)
 app.use('/routes/api/forms',forms)
 app.use('/routes/api/admins',admins)
-app.use('/routes/api/cases',cases)
 
 
 

@@ -51,12 +51,8 @@ exports.update=async function update (att , value, body)
       {
            console.log(error)
        }
-<<<<<<< HEAD
        
     }
-=======
-    }        
->>>>>>> 88c5e4a1af069089a61b0ecb6d9f13276c71f963
 //get the cases
 exports.search = async function search(att , value)
 {

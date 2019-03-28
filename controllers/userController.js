@@ -80,7 +80,7 @@ exports.update = async function update(att, value, body){  // Update Users
        }
       
        catch(error) {
-           // We will be handling the error later
+          
            console.log(error)
        }
 

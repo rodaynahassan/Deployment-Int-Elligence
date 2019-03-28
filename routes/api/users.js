@@ -7,51 +7,35 @@ const caseController = require('../../controllers/caseController')
 const userController=require('../../controllers/userController')
 const formController=require('../../controllers/formController')
 const User = require('../../Models/User')
-const Cases = require('../../Models/Case')
-const Form = require('../../Models/Form')
+const Forms = require('../../Models/Form')
 const validator = require('../../Validation/UserValidation')
+const formController = require('../../controllers/formController')
 
-
-
-
-
-
-//sort by case creation date
-router.get('/CasesSortedByCreationDate/', async(req, res) => {                    
-    var cases= await Cases.find()
-    cases.sort(compare)
-    return res.json({ data: cases });
+//sort all cases for a  by case creation date
+router.get('/AllCasesSortedByCaseDate/', async(req, res) => {                    
+    var forms= await formController.search()
+    forms.sort(userController.compareByDate)
+    return res.json({ data: forms });
 })
-
-
-
-//sort all cases by id as a lawyer 
-router.get('/AllCaseSortedByCaseId/', async (req,res) => {  // sort all cases by case id
-    const cases = await caseController.search()
-    cases.sort(userController.compareById)
-    return res.json({ data: cases });
+//sort by case creation date for a specific user
+router.get('/SpecificCasesSortedByCaseDate/:id', async(req, res) => {   
+    const userid=req.params.id
+    var SpecificUser= await userController.search('_id' ,userid )
+    SpecificUser.forms.sort(userController.compareByDate)
+    return res.json({ data: SpecificUser.forms });
 })
-
-
-//sort specific cases by id as a lawyer 
-router.get('/SpecificCaseSortedByCaseId/:id', async (req,res) => {  // sort specific cases by case id
-    var userid=req.params.id
-    var searchUsers = await userController.search('_id',userid)
-    //searchUsers.cases = await caseController.search()
-    searchUsers.cases.sort(userController.compareById)
-    return res.json({ data: searchUsers.cases });
+//sort cases by id as a lawyer 
+router.get('/CaseSortedByCaseId/', async (req,res) => { // sort cases by case id
+    var forms= await Forms.find()
+    forms.sort(compareById)
+    return res.json({ data: forms });
 })
-
-
-
 // view a certain user
 router.get('/:id', async(req, res) => {
     const userid=req.params.id
     const searchUsers = await userController.search('_id',userid)
     return res.json({ data: searchUsers });
 })
-
-
 //view the financialBalance of an investor
 router.get('/getTheFinancialBalance/:id', async(req, res) => {
     const userid=req.params.id
@@ -116,10 +100,10 @@ router.post('/', async (req,res) => {
 
 //get the case of the lawyer/Reviewer 
 router.get('/getCases/:id',async(req,res) => {
-    const userid=req.params.id
-    const user= await userController.search('_id',userid)
-    const casesOfUsers = user.cases
-    return res.json({ data: casesOfUsers });
+    const userid = req.params.id
+    const user = await User.findById(userid)
+    var arrayOfForms = user.forms 
+    res.json({data: arrayOfForms})
 });
 
 

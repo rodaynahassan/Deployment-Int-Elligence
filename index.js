@@ -4,15 +4,8 @@ const mongoose = require('mongoose')
 const users = require('./routes/api/users')
 const forms = require('./routes/api/forms')
 const admins = require('./routes/api/admins')
-<<<<<<< HEAD
 const cases=require('./routes/api/cases')
 const externalentities=require('./routes/api/externalentities')
-=======
-
-
-mongoose.set('useCreateIndex', true)
-
->>>>>>> 4c9fa5b00547c30290cd86fad5df9801b6773c10
 const app = express()
 // DB Config
 const db = require('./config/keys').mongoURI
@@ -38,12 +31,8 @@ app.get('/', (req, res) => {
 app.use('/routes/api/users', users)
 app.use('/routes/api/forms',forms)
 app.use('/routes/api/admins',admins)
-<<<<<<< HEAD
 app.use('/routes/api/cases',cases)
 app.use('/routes/api/externalentities',externalentities)
-=======
-
->>>>>>> 4c9fa5b00547c30290cd86fad5df9801b6773c10
 
 
 

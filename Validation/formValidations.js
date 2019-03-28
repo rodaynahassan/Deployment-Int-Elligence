@@ -14,7 +14,6 @@ module.exports = {
             equityCapital: Joi.number().required().min(50000),
             type: Joi.string().required(),
             SSCManagers: Joi.array().required(),
-            caseId: Joi.objectId(),
             status: Joi.enum().valid('Rejected','In progress','Approved'),
             creationDate: Joi.date().required(),
             lawyerComments: Joi.array().items(Joi.string()),
@@ -40,7 +39,6 @@ module.exports = {
             currency: Joi.string().min(2).max(10),
             equityCapital: Joi.number().min(50000),
             SSCManagers: Joi.array(),
-            caseId: Joi.objectId(),
             status: Joi.string().valid('Rejected','In progress','Approved'),
             creationDate: Joi.date(),
             lawyerComments: Joi.array().items(Joi.string()), //must insert an object , syntax -> {} , it doesn't accept null
@@ -66,7 +64,6 @@ module.exports = {
             currency: Joi.string().required().min(2).max(10),
             equityCapital: Joi.number().required(),
             type: Joi.string().required(),
-            caseId: Joi.objectId(),
             status: Joi.string().valid('Rejected','In progress','Approved'),
             creationDate: Joi.date().required(),
             lawyerComments: Joi.array().items(Joi.string()),
@@ -92,7 +89,6 @@ module.exports = {
             companyNameInEnglish: Joi.string().max(50),
             currency: Joi.string().min(2).max(10),
             equityCapital: Joi.number(),
-            caseId: Joi.objectId(),
             status: Joi.string().valid('Rejected','In progress','Approved'),
             creationDate: Joi.date(),
             lawyerComments: Joi.array().items(Joi.string()), //must insert an object , syntax -> {} , it doesn't accept null

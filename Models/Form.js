@@ -28,7 +28,6 @@ const FormSchema= new Schema({
     SSCManagers:{type:Array},
     type:{type:String,required:true},
     status:{type: String,enum:['Rejected','In progress','Approved']},
-    caseId:{type:ObjectId},
     
      creationDate:{type: Date,required: true},
      lawyerSeen:{type:Boolean},

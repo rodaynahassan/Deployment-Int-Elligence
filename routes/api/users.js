@@ -6,11 +6,7 @@ const router = express.Router();
 const formController = require('../../controllers/formController')
 const userController=require('../../controllers/userController')
 const User = require('../../Models/User')
-const Cases = require('../../Models/Case')
 const validator = require('../../Validation/UserValidation')
-const formController=require('../../controllers/formController')
-
-
 
 
 
@@ -94,7 +90,7 @@ router.post('/', async (req,res) => {
 
     })
 
-//update a user
+//update a user + updating his form if required
  router.put('/:id' , async (req,res) => {
       
       var id = req.params.id 
@@ -107,7 +103,7 @@ router.post('/', async (req,res) => {
          var formId = user.forms[i]._id 
          forms[i] = await formController.update('_id',formId,req.body)
          //var newforms = oldforms + forms
-         body.forms.push(forms[i])
+         body.forms.push(forms[i]) // Try oldforms.push()
       }
 
       const updateUser = await userController.update('_id',id,req.body)

@@ -30,6 +30,13 @@ router.get('/:id', async (req,res) => {
     res.json({data:cases})
 })
 
+//get case of certain userId
+router.get('/:userId', async (req,res) => {
+    const id=req.params.userId
+    const cases = await controller.search('userId',id)
+    res.json({data:cases})
+})
+
 //View Reviewer's comments
 router.get('/getReviewerComments/:id', async(req, res)=>{
     const caseId = req.params.id

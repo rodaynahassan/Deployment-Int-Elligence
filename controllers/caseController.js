@@ -39,12 +39,13 @@ exports.update=async function update (att , value, body)
     {
         return null 
     }
-    if (att==='id')
+    if (att==='_id')
     {
         const x = await Case.findByIdAndUpdate(value,body)
         const updatedCase = await Case.findById(value)
         return updatedCase
     }
+    
 
   }
       catch(error) 
@@ -67,8 +68,13 @@ exports.search = async function search(att , value)
     }
     if(att ==='companyName')
     {
-    var values=await Case.find({'companyName':value})
-    return values
+        var values=await Case.find({'companyName':value})
+        return values
+    }
+    if(att === 'userId')
+    {
+        var values=await Case.find({'userId':value})
+        return values
     }
 }
 

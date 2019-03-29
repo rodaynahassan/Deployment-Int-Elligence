@@ -7,6 +7,10 @@ const User = require('../../Models/User')
 const Forms = require('../../Models/Form')
 const validator = require('../../Validation/UserValidation')
 const formController = require('../../controllers/formController')
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken')
+const tokenKey = require('../config/keys').secretOrKey
+
 
 //sort all cases for a  by case creation date
 router.get('/AllCasesSortedByCaseDate/', async(req, res) => {                    
@@ -55,12 +59,33 @@ router.post('/register', async (req,res) => {                       //register I
     if(newUser.error) return res.status(400).send(newUser) 
      return res.json({msg:'Investor was created successfully', data: newUser})
  })
+ 
 //Login
 router.post('/login',async(req,res)=>{
-    const loginUser = await userController.loginUser(req.body) 
-    if(loginUser.error) return res.status(400).send(loginUser) 
-     return res.json({msg:'You are logged in now', data: newUser})
-})
+{
+    try{
+    const {email,password}=req.body;
+    const user = await User.findById({email});
+    if (!user)
+        return res.status(404).json({email:'This email is not registered yet'})
+    const doesItMatch= bcrypt.compareSync(password,user.passowrd);
+    if (doesItMatch)
+    {
+        const payload={
+            id:user.id,
+            name:user.name,
+            email:user.email
+        }
+    const token=jwt.sign(payload,tokenKey,{expiresIn:'1h'})  
+    res.json({data: `Bearer ${token}`})
+    return res.json({ data: 'Token' })
+    } 
+    else 
+        return res.status(400).send({ password: 'Wrong password' });   
+}
+catch(e){}
+}
+
 
 //update a user
  router.put('/:id', async (req,res) => {

@@ -1,9 +1,6 @@
 const mongoose = require('mongoose');
 const User = require('../Models/User')
 const userValidator = require('../Validation/UserValidation')
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken')
-const tokenKey = require('../config/keys').secretOrKey
 
 
 
@@ -38,32 +35,6 @@ exports.registerInvestor=async function registerInvestor(body){
 
     
     return newUser
-}
-
-//Login
-exports.loginUser= async function loginUser(body)
-{
-    try{
-    const {email,password}=req.body;
-    const user = await User.findById({email});
-    if (!user)
-        return res.status(404).send({email:'This email is not registered yet'})
-    const doesItMatch= bcrypt.compareSync(password,user.passowrd);
-    if (doesItMatch)
-    {
-        const payload={
-            id:user.id,
-            name:user.name,
-            email:user.email
-        }
-    const token=jwt.sign(payload,tokenKey,{expiresIn:'1h'})  
-    res.send( [`Bearer ${token}`])
-    return 'Token'
-    } 
-    else 
-        return res.status(400).send({ password: 'Wrong password' });   
-}
-catch(e){}
 }
 
 // Search users

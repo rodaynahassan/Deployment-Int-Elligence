@@ -1,7 +1,6 @@
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const Case= require('../Models/Case').schema
 const Form = require('../Models/Form').schema
 
 const User = new Schema({
@@ -16,7 +15,7 @@ const User = new Schema({
   address: {type:String,required:true},
   telephone:{type:String},
   fax:{type:String},
-  cases: {type: Array },
+  forms: {type: Array },
   email: { type: String} ,
   password: { type: String, required: true },
   lawyer: { type: Object},

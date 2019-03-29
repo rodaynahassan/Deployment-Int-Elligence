@@ -49,15 +49,18 @@ router.get('/', async (req,res) => {
 })
 
  
-
+//Register a user
 router.post('/register', async (req,res) => {                       //register Investor
     const newUser = await userController.registerInvestor(req.body) 
     if(newUser.error) return res.status(400).send(newUser) 
      return res.json({msg:'Investor was created successfully', data: newUser})
-
-
-
-    })
+ })
+//Login
+router.post('/login',async(req,res)=>{
+    const loginUser = await userController.loginUser(req.body) 
+    if(loginUser.error) return res.status(400).send(loginUser) 
+     return res.json({msg:'You are logged in now', data: newUser})
+})
 
 //update a user
  router.put('/:id', async (req,res) => {

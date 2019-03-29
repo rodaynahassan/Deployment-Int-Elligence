@@ -2,12 +2,15 @@ const mongoose = require('mongoose');
 const User = require('../Models/User')
 const userValidator = require('../Validation/UserValidation')
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken')
+const tokenKey = require('../../config/keys').secretOrKey
 
 
 
 
 
-exports.compareByDate=function compareByDate(a,b){                                                //comparing between creation dates
+ //comparing between creation dates
+exports.compareByDate=function compareByDate(a,b){                                               
     if(Date.parse(a.creationDate)>Date.parse(b.creationDate)) return 1;
     
     if(Date.parse(a.creationDate)<Date.parse(b.creationDate)) return -1;
@@ -15,7 +18,8 @@ exports.compareByDate=function compareByDate(a,b){                              
     return 0;
 }
 
-exports.registerInvestor=async function registerInvestor(body){                      //creating Investor
+//creating Investor
+exports.registerInvestor=async function registerInvestor(body){                      
     const { error1 } = userValidator.createValidationI(body)            
     
     if (error1) {
@@ -36,9 +40,34 @@ exports.registerInvestor=async function registerInvestor(body){                 
     return newUser
 }
 
+//Login
+exports.loginUser= async function loginUser(body)
+{
+    try{
+    const {email,password}=req.body;
+    const user = await User.findById({email});
+    if (!user)
+        return res.status(404).send({email:'This email is not registered yet'})
+    const doesItMatch= bcrypt.compareSync(password,user.passowrd);
+    if (doesItMatch)
+    {
+        const payload={
+            id:user.id,
+            name:user.name,
+            email:user.email
+        }
+    const token=jwt.sign(payload,tokenKey,{expiresIn:'1h'})  
+    res.send( [`Bearer ${token}`])
+    return 'Token'
+    } 
+    else 
+        return res.status(400).send({ password: 'Wrong password' });   
+}
+catch(e){}
+}
 
-   
-exports.search = async function search(att ,value ){  // Search users
+// Search users
+exports.search = async function search(att ,value ){  
     if(att === null){
      var values = await User.find()
      return values
@@ -56,8 +85,8 @@ exports.search = async function search(att ,value ){  // Search users
 
 
 
-
-exports.remove=async function remove(att,value){                           //delete user
+//delete user
+exports.remove=async function remove(att,value){                           
 
     
         if(att===null){
@@ -71,8 +100,8 @@ exports.remove=async function remove(att,value){                           //del
        
     }
         
-
-exports.update = async function update(att, value, body){  // Update Users
+// Update Users
+exports.update = async function update(att, value, body){  
    
     try {
         if(! att ) 
@@ -107,7 +136,8 @@ exports.update = async function update(att, value, body){  // Update Users
     }
 
        
-       function compareById(a , b){  // for sorting the cses by caseID
+    // for sorting the cses by caseID
+       function compareById(a , b){  
         if(a._id > b._id )
         return 1;
         

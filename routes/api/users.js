@@ -9,7 +9,7 @@ const validator = require('../../Validation/UserValidation')
 const formController = require('../../controllers/formController')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
-const tokenKey = require('../config/keys').secretOrKey
+const tokenKey = require('../../config/keys').secretOrKey
 
 
 //sort all cases for a  by case creation date

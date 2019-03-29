@@ -92,14 +92,14 @@ router.post('/', async (req,res) => {
 
 //update a user + updating his form if required
  router.put('/:id' , async (req,res) => {
-      
       var id = req.params.id 
       var forms = body.forms 
       var user = await userController.search('_id',id)
       if(forms){
           var oldforms = user.forms
       }
-      for(let i=0 ;i < forms.size ; i++){
+
+      for(let i=0 ;i < forms.length ; i++){  
          var formId = user.forms[i]._id 
          forms[i] = await formController.update('_id',formId,req.body)
          //var newforms = oldforms + forms
@@ -127,7 +127,9 @@ router.post('/', async (req,res) => {
     }  
  })
 
-//get the form of the lawyer/Reviewer 
+
+//get the case of the lawyer/Reviewer 
+//lsa we need to add en bageb ely status bta3etha in progress only
 router.get('/getCases/:id',async(req,res) => {
     const userid=req.params.id
     const user= await userController.search('_id',userid)

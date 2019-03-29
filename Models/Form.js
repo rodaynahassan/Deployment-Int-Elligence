@@ -16,21 +16,20 @@ const SSCManagers= new Schema({
 })
 
 const FormSchema= new Schema({
-    companyGovernorate:{type:String,required:true},
-    companyCity:{type:String,required:true},
-    companyAddress:{type:String,required:true},
+    // companyGovernorate:{type:String,required:true},
+    // companyCity:{type:String,required:true},
+    // companyAddress:{type:String,required:true},
     companyTelephone:{type:String},
     companyFax:{type:String},
     companyName:{ type:String,required:true,unique:true},
     companyNameInEnglish:{type:String},
-    currency:{type:String,required:true},
-    equityCapital:{type:Number,required:true},
+    //currency:{type:String,required:true},
+    //equityCapital:{type:Number,required:true},
     SSCManagers:{type:Array},
     type:{type:String,required:true},
     status:{type: String,enum:['Rejected','In progress','Approved']},
-    caseId:{type:ObjectId},
     
-     creationDate:{type: Date,required: true},
+     //creationDate:{type: Date,required: true},
      lawyerSeen:{type:Boolean},
      lawyerComments:{type:[String]},
      lawyerApprove:{type:Boolean},

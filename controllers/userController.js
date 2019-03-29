@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const User = require('../Models/User')
 const userValidator = require('../Validation/UserValidation')
-
+const bcrypt = require('bcrypt');
 
 
 

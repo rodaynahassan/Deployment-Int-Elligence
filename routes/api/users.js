@@ -9,7 +9,7 @@ const validator = require('../../Validation/UserValidation')
 const formController = require('../../controllers/formController')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
-const tokenKey = require('../../config/keys').secretOrKey
+const tokenKey = require('../../config/keys_dev').secretOrKey
 
 
 //sort all cases for a  by case creation date
@@ -63,21 +63,22 @@ router.post('/register', async (req,res) => {                       //register I
 //Login
 router.post('/login',async(req,res)=>{
     try{
-    const {email,password}=req.body;
-    const user = await User.findById({email});
+    const email=req.body.email;
+    const password=req.body.password;
+    const user = await User.findOne({email});
     if (!user)
         return res.status(404).json({email:'This email is not registered yet'})
-    const doesItMatch= bcrypt.compareSync(password,user.password);
+    const doesItMatch=await bcrypt.compareSync(password,user.password);
     if (doesItMatch)
     {
         const payload={
-            id:user.id,
+            id: user.id,
             name:user.name,
             email:user.email
         }
     const token=jwt.sign(payload,tokenKey,{expiresIn:'1h'})  
     res.json({data: `Bearer ${token}`})
-    return res.json({ data: 'Token' })
+    return res.json({msg: 'You are logged in now',data: 'Token' })
     } 
     else 
         return res.status(400).send({ password: 'Wrong password' });   

@@ -14,23 +14,26 @@ exports.compareByDate=function compareByDate(a,b){                              
     return 0;
 }
 
-exports.create=async function create(body){                          //creating user
+exports.registerInvestor=async function registerInvestor(body){                      //creating Lawyer or Reviewer
+    const { error1 } = userValidator.createValidationI(body)            
     
-        var isValidated = undefined
-        if(body.userType==='Lawyer'){
-             isValidated = validator.createValidationL(body)
-        }
-        if(body.userType==='Investor'){
-             isValidated = validator.createValidationI(body)
-        }
-        if(body.userType==='Reviewer'){
-            isValidated = validator.createValidationR(body)
-        }
-        if (isValidated.error) return { error: isValidated.error.details[0].message }
-     
-     const newUser = await User.create(body)
-     return  newUser
+    if (error1) {
+        return error1.details[0].message;
     }
+    
+    let user = await User.findOne({ email: body.email });
+   // const user = await User.findOne({body:email})
+    if(user) return {error: 'Account already exists'}
+    
+   
+    const newUser = await User.create(body)
+    const salt = await bcrypt.genSalt(10);
+    newUser.password = await bcrypt.hash(newUser.password, salt);
+    await newUser.save();
+
+    
+    return newUser
+}
 
 
    
@@ -60,7 +63,7 @@ exports.remove=async function remove(att,value){                           //del
             return 'there is no user to delete'
         }
         else if(att==='_id'){
-   
+
          const deletedUser = await User.findByIdAndDelete(value)
          return deletedUser
         }

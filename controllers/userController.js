@@ -4,7 +4,7 @@ const userValidator = require('../Validation/UserValidation')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 const tokenKey = require('../../config/keys').secretOrKey
-
+const config = require('../config');
 
 
 

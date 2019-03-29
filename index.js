@@ -1,6 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
-
+const cors = require('cors')
 const users = require('./routes/api/users')
 const forms = require('./routes/api/forms')
 const admins = require('./routes/api/admins')
@@ -24,6 +24,7 @@ mongoose
 
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
+app.use(cors())
 
 app.get('/', (req, res) => {
     res.send(`<h1>Welcome</h1>`);

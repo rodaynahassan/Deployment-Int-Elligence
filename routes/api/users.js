@@ -67,7 +67,7 @@ router.post('/login',async(req,res)=>{
     const user = await User.findById({email});
     if (!user)
         return res.status(404).json({email:'This email is not registered yet'})
-    const doesItMatch= bcrypt.compareSync(password,user.passowrd);
+    const doesItMatch= bcrypt.compareSync(password,user.password);
     if (doesItMatch)
     {
         const payload={

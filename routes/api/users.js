@@ -8,6 +8,9 @@ const Forms = require('../../Models/Form')
 const validator = require('../../Validation/UserValidation')
 const formController = require('../../controllers/formController')
 
+
+
+
 //sort all cases for a  by case creation date
 router.get('/AllCasesSortedByCaseDate/', async(req, res) => {                    
     var forms= await formController.search()
@@ -53,7 +56,7 @@ router.get('/', async (req,res) => {
 router.post('/register', async (req,res) => {                       //register Investor
     const newUser = await userController.registerInvestor(req.body) 
     if(newUser.error) return res.status(400).send(newUser) 
-     return res.json({msg:'Investor was created successfully', data: newUser})
+     return res.json({msg:'Account was created successfully', data: newUser})
 
 
 
@@ -84,6 +87,26 @@ module.exports = router;
 
 
 
+
+
+//When you delete a specific user , you delete with it all his forms 
+//Delete a user
+router.delete('/:id', async (req,res) => {
+    try {
+     const id = req.params.id
+     var SpecificUser= await userController.search('_id' ,id )
+     for(i=0;i<SpecificUser.forms.length;i++){
+         var formId=SpecificUser.forms[i]._id
+         await formController.remove('_id',formId)
+     }
+     const deletedUser = await userController.remove('_id',id)
+     res.json({msg:'User was deleted successfully', data: deletedUser})
+    }
+    catch(error) {
+    
+        console.log(error)
+    }  
+ })
 
 
 

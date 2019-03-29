@@ -59,7 +59,7 @@ router.post('/register', async (req,res) => {                       //register I
     if(newUser.error) return res.status(400).send(newUser) 
      return res.json({msg:'Investor was created successfully', data: newUser})
  })
- 
+
 //Login
 router.post('/login',async(req,res)=>{
 {
@@ -84,7 +84,7 @@ router.post('/login',async(req,res)=>{
         return res.status(400).send({ password: 'Wrong password' });   
 }
 catch(e){}
-}
+})
 
 
 //update a user
@@ -108,11 +108,3 @@ router.get('/getCases/:id',async(req,res) => {
 });
 
 module.exports = router;
-
-
-
-
-
-
-
-

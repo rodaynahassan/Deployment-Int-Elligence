@@ -4,10 +4,8 @@ const mongoose = require('mongoose')
 const users = require('./routes/api/users')
 const forms = require('./routes/api/forms')
 const admins = require('./routes/api/admins')
-
-
-mongoose.set('useCreateIndex', true)
-
+const cases=require('./routes/api/cases')
+const externalentities=require('./routes/api/externalentities')
 const app = express()
 // DB Config
 const db = require('./config/keys').mongoURI
@@ -34,7 +32,8 @@ app.get('/', (req, res) => {
 app.use('/routes/api/users', users)
 app.use('/routes/api/forms',forms)
 app.use('/routes/api/admins',admins)
-
+app.use('/routes/api/cases',cases)
+app.use('/routes/api/externalentities',externalentities)
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");

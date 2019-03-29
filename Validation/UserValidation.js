@@ -14,7 +14,7 @@ module.exports = {
         address: Joi.string().required().min(5).max(50),
         telephone: Joi.string().min(4).max(15),
         fax:  Joi.string().min(5).max(20),
-        email:  Joi.string().email().min(3).max(254),
+        email:  Joi.string().required().email().min(3).max(254),
         password : Joi.string().required().min(8).max(16),
         forms: Joi.array()
                     //not sure yet

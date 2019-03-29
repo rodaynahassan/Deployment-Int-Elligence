@@ -16,7 +16,7 @@ const User = new Schema({
   telephone:{type:String},
   fax:{type:String},
   forms: {type: Array },
-  email: { type: String} ,
+  email: { type: String,required:true} ,
   password: { type: String, required: true },
   lawyer: { type: Object},
   investorType: {type: String},

@@ -85,7 +85,6 @@ router.post('/register', async (req,res) => {                       //register I
     if(newUser.error) return res.status(400).send(newUser) 
      return res.json({msg:'Investor was created successfully', data: newUser})
 
-
     })
 
 //update a user + updating his form if required

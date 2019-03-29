@@ -24,7 +24,7 @@ module.exports = {
         return Joi.validate(request, createSchema)
     },
 
-
+    
 
     createValidationI: request => {                                 // create for investor
         const createSchema = {
@@ -66,9 +66,6 @@ module.exports = {
         email:  Joi.string().email().min(3).max(254),
         password : Joi.string().required().min(8).max(16),
         forms: Joi.array(),                //not sure yet
-
-    
-        
 
         }
 

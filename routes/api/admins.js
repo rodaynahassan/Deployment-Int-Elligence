@@ -9,6 +9,7 @@ const adminController = require('../../controllers/adminController')
 const Admin = require('../../Models/Admin');
 const Cases = require('../../Models/Case');
 
+
 //get by ID
 router.get('/getById/:id',async(req,res) => 
 {
@@ -16,12 +17,14 @@ router.get('/getById/:id',async(req,res) =>
     return res.json({ data: admin });
 })
 
+
 // get all admins
 router.get('/',async(req,res) => 
 {
     const admin=await adminController.search()
     return res.json({ data: admin });
 })
+
 router.post('/', async (req,res) => {
     const newAdmin=await adminController.create(req.body)
     return res.json({ data: newAdmin });

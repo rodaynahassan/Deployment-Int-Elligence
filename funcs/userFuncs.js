@@ -1,5 +1,6 @@
  const axios = require('axios')
  const mongoose= require('mongoose')
+
  const User= require('../Models/User')
 
 
@@ -86,19 +87,7 @@ const functions = {
         return user
     }
 
-
-
-  
-
-
-    
-    
-    
-
-
-
-    
-    
+ 
 };
 
 

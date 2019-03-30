@@ -3,7 +3,6 @@
  */
 
 
-let mongoose=require ("mongoose")
 const funcs= require('../funcs/userFuncs')
 
 
@@ -15,14 +14,14 @@ test('check if user is deleted from database',async()=>{
   try{
  
      //  expect.assertions(3)
-      //  const user1=await funcs.createLawyerOrReviewer('Lawyer','hesham','Male','Egyptian','National ID','245470443672','1998-5-1','Maadi','hesham.gp@7gmail.com','123462366777')
-      //  const user2=await funcs.createLawyerOrReviewer('Reviewer','Mohanad','Male','Egyptian','National ID','24411113672','1998-5-5','Maadi','mohanad.ahmed@gmail.com','116626727')
-      //  const user3=await funcs.createLawyerOrReviewer('Lawyer','Ali','Male','Egyptian','National ID','24415626672','1998-4-2','Masr el gedida','ali.ahmed@gmail.com','666626727')
+       const user1=await funcs.createLawyerOrReviewer('Lawyer','hesham','Male','Egyptian','National ID','245470443672','1998-5-1','Maadi','hesham.gp@7gmail.com','123462366777')
+       const user2=await funcs.createLawyerOrReviewer('Reviewer','Mohanad','Male','Egyptian','National ID','24411113672','1998-5-5','Maadi','mohanad.ahmed@gmail.com','116626727')
+       const user3=await funcs.createLawyerOrReviewer('Lawyer','Ali','Male','Egyptian','National ID','24415626672','1998-4-2','Masr el gedida','ali.ahmed@gmail.com','666626727')
  
    
 
    const OldUsers=await funcs.getUsers()
-   const oldLength=OldUsers.data.data.length
+   const oldLength=OldUsers.data.data.length        
 
    expect(OldUsers).toBeDefined()
    expect(OldUsers.status).toEqual(200)
@@ -44,7 +43,7 @@ test('check if user is deleted from database',async()=>{
 
   }
   catch(error){
-     console.log(error)
+   //  console.log(error)
   }
 
 })

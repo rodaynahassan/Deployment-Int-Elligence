@@ -7,6 +7,10 @@ const User = require('../../Models/User')
 const Forms = require('../../Models/Form')
 const validator = require('../../Validation/UserValidation')
 const formController = require('../../controllers/formController')
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken')
+const tokenKey = require('../../config/keys_dev').secretOrKey
+
 
 
 
@@ -52,15 +56,39 @@ router.get('/', async (req,res) => {
 })
 
  
-
+//Register a user
 router.post('/register', async (req,res) => {                       //register Investor
     const newUser = await userController.registerInvestor(req.body) 
     if(newUser.error) return res.status(400).send(newUser) 
      return res.json({msg:'Account was created successfully', data: newUser})
+})
 
+//Login
+router.post('/login',async(req,res)=>{
+    try{
+    const email=req.body.email;
+    const password=req.body.password;
+    const user = await User.findOne({email});
+    if (!user)
+        return res.status(404).json({email:'This email is not registered yet'})
+    const doesItMatch=await bcrypt.compareSync(password,user.password);
+    if (doesItMatch)
+    {
+        const payload={
+            id: user.id,
+            name:user.name,
+            email:user.email
+        }
+    const token=jwt.sign(payload,tokenKey,{expiresIn:'1h'})  
+    res.json({data: `Bearer ${token}`})
+    return res.json({msg: 'You are logged in now',data: 'Token' })
+    } 
+    else 
+        return res.status(400).send({ password: 'Wrong password' });   
+}
+catch(e){}
+})
 
-
-    })
 
 //update a user
  router.put('/:id', async (req,res) => {
@@ -82,32 +110,4 @@ router.get('/getCases/:id',async(req,res) => {
     res.json({data: arrayOfForms})
 });
 
-module.exports = router;
-
-
-
-
-
-
-//When you delete a specific user , you delete with it all his forms 
-//Delete a user
-router.delete('/:id', async (req,res) => {
-    try {
-     const id = req.params.id
-     var SpecificUser= await userController.search('_id' ,id )
-     for(i=0;i<SpecificUser.forms.length;i++){
-         var formId=SpecificUser.forms[i]._id
-         await formController.remove('_id',formId)
-     }
-     const deletedUser = await userController.remove('_id',id)
-     res.json({msg:'User was deleted successfully', data: deletedUser})
-    }
-    catch(error) {
-    
-        console.log(error)
-    }  
- })
-
-
-
-
+module.exports = router

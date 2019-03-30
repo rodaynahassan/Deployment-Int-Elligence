@@ -64,6 +64,27 @@ router.post('/', async (req,res) => {
     return res.json({data:newForm})
     })
 
+//changing the status of the form to inprogree if the lawyerseen
+// router.put('/changeStatusInprogress/:id', async (req,res) => {
+//     try
+//     {
+//         const id = req.params.id
+//         var form = await controller.search('_id',id)
+//         if(!form) return res.json({msg:"ID not found"})
+//         if(form.error) return res.status(400).send(form)
+//         if(form.lawyerSeen = true)
+//         {
+//             var wantedForm = await controller.update('_id',id,status)
+//             return res.json({ data:wantedForm})
+//         }
+//     }
+//     catch(error)
+//     {
+//         console.log(error)
+//     }
+
+// })
+
 //update a form
  router.put('/:id', async (req,res) => {
     try
@@ -92,6 +113,8 @@ router.post('/', async (req,res) => {
         console.log(error)
     }  
  })
+
+ 
 
 
     module.exports = router

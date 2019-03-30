@@ -1,7 +1,7 @@
 // const funcs= require('./funcs/userFuncs')
  const mongoose= require('mongoose')
  const User= require('../Models/User')
- const axios = require('axios')
+const axios = require('axios')
 
 
 

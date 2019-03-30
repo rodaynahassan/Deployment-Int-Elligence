@@ -16,16 +16,8 @@ module.exports = {
         password : Joi.string().required().min(8).max(16),
         telephone: Joi.string().min(4).max(15),
         fax:  Joi.string().min(5).max(20),
-<<<<<<< HEAD
-        email:  Joi.string().email().min(3).max(254),
-        password : Joi.string().required().min(8).max(16),
-        forms: Joi.array()
-        
-        }
-=======
         forms: Joi.array() //not sure yet
          }
->>>>>>> 2246a838f4d79b8b00a029a765c8ec90c37f196b
 
         return Joi.validate(request, createSchema)
     },
@@ -71,17 +63,7 @@ module.exports = {
         password : Joi.string().required().min(8).max(16),
         telephone: Joi.string().min(4).max(15),
         fax:  Joi.string().min(5).max(20),
-<<<<<<< HEAD
-        email:  Joi.string().email().min(3).max(254),
-        password : Joi.string().required().min(8).max(16),
-        forms: Joi.array(),              
-
-    
-        
-
-=======
         forms: Joi.array()//not sure yet
->>>>>>> 2246a838f4d79b8b00a029a765c8ec90c37f196b
         }
 
 

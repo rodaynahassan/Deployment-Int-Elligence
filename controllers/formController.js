@@ -92,7 +92,12 @@ exports.update = async function update(att,value,body)
            console.log(error)
        }  
 }
+<<<<<<< HEAD
+
+//Searching
+=======
 //Getting
+>>>>>>> 4c9fa5b00547c30290cd86fad5df9801b6773c10
 exports.search=async function search(att,value)
 {
     if(!att)
@@ -112,11 +117,10 @@ exports.search=async function search(att,value)
     }
     if(att ==='companyName')
     {
-    var values=await Case.find({'companyName':value})
+    var values=await Form.find({'companyName':value})
     return values
     }
    
-
 }
 //Deleting
 exports.remove=async function remove(att,value)
@@ -129,6 +133,6 @@ exports.remove=async function remove(att,value)
     {
         var deletedForm= await Form.findByIdAndDelete(value)
          return deletedForm
- 
+
     }
 }

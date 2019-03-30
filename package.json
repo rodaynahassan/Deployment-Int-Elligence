@@ -24,13 +24,8 @@
     "nodemon": "^1.18.10"
   },
   "scripts": {
-<<<<<<< HEAD
     "test": "jest --detectOpenHandles",
     "start": "node index.js",
-=======
-    "test": "jest",
-    "start": "node index",
->>>>>>> 2246a838f4d79b8b00a029a765c8ec90c37f196b
     "dev": "nodemon index"
   },
   "keywords": [],

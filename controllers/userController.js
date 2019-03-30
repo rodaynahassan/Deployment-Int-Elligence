@@ -15,8 +15,12 @@ exports.compareByDate=function compareByDate(a,b){
     return 0;
 }
 
+<<<<<<< HEAD
 //creating Investor
 exports.registerInvestor=async function registerInvestor(body){                      
+=======
+exports.registerInvestor=async function registerInvestor(body){                      //creating Investor
+>>>>>>> c52ac8472da3a6329c6717be809ddf544f81ec77
     const { error1 } = userValidator.createValidationI(body)            
     
     if (error1) {
@@ -32,6 +36,13 @@ exports.registerInvestor=async function registerInvestor(body){
     const salt = await bcrypt.genSalt(10);
     newUser.password = await bcrypt.hash(newUser.password, salt);
     await newUser.save();
+<<<<<<< HEAD
+=======
+
+    
+    return newUser
+}
+>>>>>>> c52ac8472da3a6329c6717be809ddf544f81ec77
 
     
     return newUser

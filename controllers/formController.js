@@ -92,12 +92,7 @@ exports.update = async function update(att,value,body)
            console.log(error)
        }  
 }
-<<<<<<< HEAD
 
-//Searching
-=======
-//Getting
->>>>>>> 4c9fa5b00547c30290cd86fad5df9801b6773c10
 exports.search=async function search(att,value)
 {
     if(!att)

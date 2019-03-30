@@ -79,6 +79,8 @@ module.exports = {
 
         }
 
+        //REQUIRED:companyName ,companyGovernorate ,companyAddress ,companyCity ,currency , equity capital , type,creation date ,user id
+
         return Joi.validate(request, SPCSchema)
     },
     updateValidationSPC: request => {

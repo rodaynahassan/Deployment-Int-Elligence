@@ -1,10 +1,8 @@
 const express = require('express')
 const mongoose = require('mongoose')
-
 const users = require('./routes/api/users')
 const forms = require('./routes/api/forms')
 const admins = require('./routes/api/admins')
-const cases=require('./routes/api/cases')
 const externalentities=require('./routes/api/externalentities')
 const app = express()
 // DB Config
@@ -31,7 +29,6 @@ app.get('/', (req, res) => {
 app.use('/routes/api/users', users)
 app.use('/routes/api/forms',forms)
 app.use('/routes/api/admins',admins)
-app.use('/routes/api/cases',cases)
 app.use('/routes/api/externalentities',externalentities)
 
 
@@ -42,5 +39,5 @@ app.use((req, res) => {
     res.status(404).send({err: 'We can not find what you are looking for'});
  })
 
-const port =   3000  //process.env.PORT  
+const port =process.env.PORT|| 3000  //process.env.PORT  
 app.listen(port, () => console.log(`Server up and running on port ${port}`))

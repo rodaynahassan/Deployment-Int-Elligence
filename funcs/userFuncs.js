@@ -1,7 +1,6 @@
-// const funcs= require('./funcs/userFuncs')
+ const axios = require('axios')
  const mongoose= require('mongoose')
  const User= require('../Models/User')
-const axios = require('axios')
 
 
 
@@ -65,7 +64,28 @@ const functions = {
         const user= await axios.delete('http://desolate-oasis-18053.herokuapp.com/routes/api/users/'+deleteID)
         return user
 
+    },
+
+    getUsers : async() => {
+
+        users= await axios({
+            method : 'get',
+            url:'http://desolate-oasis-18053.herokuapp.com/routes/api/users/'
+
+        })
+        return users
+    },
+
+
+    getUserById : async(UserId) => {
+
+        user= await axios({
+            method : 'get',
+            url:'http://desolate-oasis-18053.herokuapp.com/routes/api/users/'+UserId
+        })
+        return user
     }
+
 
 
   

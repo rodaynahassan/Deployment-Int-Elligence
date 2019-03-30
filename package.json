@@ -8,7 +8,6 @@
     "bcrypt": "^3.0.5",
     "express": "^4.16.4",
     "i": "^0.3.6",
-    "jest-cli": "^24.5.0",
     "joi": "^14.3.1",
     "joi-objectid": "^2.0.0",
     "mongoose": "^5.4.15",
@@ -19,8 +18,9 @@
     "nodemon": "^1.18.10"
   },
   "scripts": {
-    "test": "jest",
-    "start": "node index.js"
+    "test": "jest --detectOpenHandles",
+    "start": "node index.js",
+    "dev": "nodemon index"
   },
   "repository": {
     "type": "git",

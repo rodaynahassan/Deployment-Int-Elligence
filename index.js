@@ -46,9 +46,5 @@ app.use((req, res) => {
     res.status(404).send({err: 'We can not find what you are looking for'});
  })
 
-<<<<<<< HEAD
 const port =   process.env.PORT ||  3000 
-=======
-const port =   5000  //process.env.PORT  
->>>>>>> c52ac8472da3a6329c6717be809ddf544f81ec77
 app.listen(port, () => console.log(`Server up and running on port ${port}`))

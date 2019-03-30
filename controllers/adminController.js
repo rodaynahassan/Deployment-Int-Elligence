@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
 const Admin = require('../Models/Admin');
-<<<<<<< HEAD
 const adminValidator = require('../Validation/adminValidations')
-=======
-const adminValidator = require('../Validation/adminvalidations')
->>>>>>> c52ac8472da3a6329c6717be809ddf544f81ec77
 const userValidator = require('../Validation/UserValidation')
 const User = require('../Models/User')
 const bcrypt = require('bcrypt');

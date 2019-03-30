@@ -74,11 +74,7 @@ router.delete('/:id', async (req, res) => {
 router.post('/register', async (req,res) => {                       //register lawyer or reviewer
     const newUser = await adminController.registerLawyerOrReviewer(req.body) 
     if(newUser.error) return res.status(400).send(newUser) 
-<<<<<<< HEAD
      return res.json({msg:'Account was created successfully', data: newUser})
-=======
-     return res.json({msg:'User was created successfully', data: newUser})
->>>>>>> c52ac8472da3a6329c6717be809ddf544f81ec77
 
 
 

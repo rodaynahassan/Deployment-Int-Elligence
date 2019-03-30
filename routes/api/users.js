@@ -21,6 +21,8 @@ router.get('/AllCasesSortedByCaseDate/', async(req, res) => {
     forms.sort(userController.compareByDate)
     return res.json({ data: forms });
 })
+
+
 //sort by case creation date for a specific user
 router.get('/SpecificCasesSortedByCaseDate/:id', async(req, res) => {   
     const userid=req.params.id
@@ -28,18 +30,24 @@ router.get('/SpecificCasesSortedByCaseDate/:id', async(req, res) => {
     SpecificUser.forms.sort(userController.compareByDate)
     return res.json({ data: SpecificUser.forms });
 })
+
+
 //sort cases by id as a lawyer 
 router.get('/CaseSortedByCaseId/', async (req,res) => { // sort cases by case id
     var forms= await Forms.find()
     forms.sort(compareById)
     return res.json({ data: forms });
 })
+
+
 // view a certain user
 router.get('/:id', async(req, res) => {
     const userid=req.params.id
     const searchUsers = await userController.search('_id',userid)
     return res.json({ data: searchUsers });
 })
+
+
 //view the financialBalance of an investor
 router.get('/getTheFinancialBalance/:id', async(req, res) => {
     const userid=req.params.id
@@ -98,6 +106,9 @@ router.post('/register', async (req,res) => {                       //register I
 
     }
  )
+
+
+ 
 //update a user
  router.put('/:id', async (req,res) => {
       

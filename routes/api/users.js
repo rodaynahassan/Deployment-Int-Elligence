@@ -40,16 +40,11 @@ router.get('/getTheFinancialBalance/:id', async(req, res) => {
     const financialBalance= user.financialBalance
     return res.json({ data: financialBalance });
 })
-
-
 //get all users
 router.get('/', async (req,res) => {
     const searchUsers = await userController.search()
     res.json({data: searchUsers})
 })
-
- 
-
 //create a user
 router.post('/', async (req,res) => {
     
@@ -71,7 +66,6 @@ router.post('/', async (req,res) => {
 
      
  })
-
 //delete a user
  router.delete('/:id', async (req,res) => {
     try {
@@ -84,16 +78,35 @@ router.post('/', async (req,res) => {
         console.log(error)
     }  
  })
-
-//get the case of the lawyer/Reviewer 
-//lsa we need to add en bageb ely status bta3etha in progress only
-router.get('/getCases/:id',async(req,res) => {
+//as a lawyer/reviewer/investor i should be able to view my cases
+router.get('/getInProgressCases/:id',async(req,res) => {
     const userid = req.params.id
-    const user = await User.findById(userid)
-    var arrayOfForms = user.forms 
-    res.json({data: arrayOfForms})
+    var user = await userController.search('_id',userid)
+        var userForms = user.forms
+        var inprogressForms = []
+        for(i=0;i<userForms.length;i++){
+            if(userForms[i]==='In progress')
+                inprogressForms.push(userForms[i])
+        }
+        res.json({data:inprogressForms})
 });
-
+//as an investor i should be able to view my companies
+router.get('/getApprovedCompanies/:id',async(req,res) => {
+    const userid = req.params.id
+    var user = await userController.search('_id',userid)
+    if(user.type==='Investor'){
+        var userForms = user.forms
+        var approvedForms = []
+        for(i=0;i<userForms.length;i++){
+            if(userForms[i].status==='Approved')
+                approvedForms.push(userForms[i])
+        }
+        res.json({data:approvedForms})
+}
+else{
+    res.json({msg: 'You are not an investor to get you accepted companies'})
+}
+});
 module.exports = router;
 
 

@@ -108,7 +108,7 @@ router.post('/register', async (req,res) => {                       //register I
  )
 
 
- 
+
 //update a user
  router.put('/:id', async (req,res) => {
       
@@ -139,8 +139,11 @@ router.delete('/:id', async (req,res) => {
      for(i=0;i<SpecificUser.forms.length;i++){
          var formId=SpecificUser.forms[i]._id
          await formController.remove('_id',formId)
+         
      }
+     
      const deletedUser = await userController.remove('_id',id)
+
      res.json({msg:'User was deleted successfully', data: deletedUser})
     }
     catch(error) {

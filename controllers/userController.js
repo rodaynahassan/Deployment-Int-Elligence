@@ -63,6 +63,7 @@ exports.remove=async function remove(att,value){
         if(att===null){
             return 'there is no user to delete'
         }
+
         else if(att==='_id'){
 
          const deletedUser = await User.findByIdAndDelete(value)

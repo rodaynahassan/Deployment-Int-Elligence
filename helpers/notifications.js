@@ -1,4 +1,6 @@
 const nodemailer = require('nodemailer');
+const extrernalEntitiesController = require('../controllers/extrernalentityController')
+
 var auth = {
     type: 'oauth2',
     user: 'summegreintelligence@gmail.com',
@@ -33,3 +35,5 @@ transporter.sendMail(mailOptions, (err, res) => {
     transporter.close()
 });
 }
+
+

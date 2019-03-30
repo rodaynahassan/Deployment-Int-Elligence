@@ -79,6 +79,25 @@ router.get('/getCases/:id',async(req,res) => {
     res.json({data: arrayOfForms})
 });
 
+//When you delete a specific user , you delete with it all his forms 
+//Delete a user
+router.delete('/:id', async (req,res) => {
+    try {
+     const id = req.params.id
+     var SpecificUser= await userController.search('_id' ,id )
+     for(i=0;i<SpecificUser.forms.length;i++){
+         var formId=SpecificUser.forms[i]._id
+         await formController.remove('_id',formId)
+     }
+     const deletedUser = await userController.remove('_id',id)
+     res.json({msg:'User was deleted successfully', data: deletedUser})
+    }
+    catch(error) {
+    
+        console.log(error)
+    }  
+ })
+
 module.exports = router;
 
 

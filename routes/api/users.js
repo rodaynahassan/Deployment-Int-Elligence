@@ -50,12 +50,10 @@ router.get('/', async (req,res) => {
 
  
 
-//create a user
-router.post('/', async (req,res) => {
-    
-     const newUser = await userController.create(req.body)
-     if(newUser.error) return res.status(400).send(newUser) 
-     return res.json({msg:'User was created successfully', data: newUser})
+router.post('/register', async (req,res) => {                       //register Investor
+    const newUser = await userController.registerInvestor(req.body) 
+    if(newUser.error) return res.status(400).send(newUser) 
+     return res.json({msg:'Investor was created successfully', data: newUser})
 
 
     }
@@ -69,21 +67,8 @@ router.post('/', async (req,res) => {
       if(updateUser.error) return res.status(400).send(updateUser)
       return res.json({msg : 'User Updated Successfully',data: updateUser})
 
-     
  })
 
-//delete a user
- router.delete('/:id', async (req,res) => {
-    try {
-     const id = req.params.id
-     const deletedUser = await userController.remove('_id',id)
-     res.json({msg:'User was deleted successfully', data: deletedUser})
-    }
-    catch(error) {
-        // We will be handling the error later
-        console.log(error)
-    }  
- })
 
 //get the case of the lawyer/Reviewer 
 //lsa we need to add en bageb ely status bta3etha in progress only

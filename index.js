@@ -20,6 +20,7 @@ mongoose
 
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
+//app.use(express.multipart());
 
 app.get('/', (req, res) => {
     res.send(`<h1>Welcome</h1>`);
@@ -31,7 +32,11 @@ app.use('/routes/api/forms',forms)
 app.use('/routes/api/admins',admins)
 app.use('/routes/api/externalentities',externalentities)
 
-
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 
 
 // Handling 404

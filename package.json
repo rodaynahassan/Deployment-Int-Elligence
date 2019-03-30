@@ -7,11 +7,16 @@
     "axios": "^0.18.0",
     "cli": "^1.0.1",
     "express": "^4.16.4",
+    "bcrypt": "^3.0.5",
+    "express": "^4.16.4",
+    "i": "^0.3.6",
     "jest-cli": "^24.5.0",
     "joi": "^14.3.1",
     "joi-objectid": "^2.0.0",
     "mongoose": "^5.4.15",
     "mongoose-type-url": "^1.0.5",
+    "nodemailer": "^6.0.0",
+    "nodemon": "^1.18.10",
     "uuid": "^3.3.2"
   },
   "devDependencies": {

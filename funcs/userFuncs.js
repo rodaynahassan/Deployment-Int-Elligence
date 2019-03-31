@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const axios = require('axios')
 const mongoose = require('mongoose')
 const Form = require('../Models/Form')
@@ -22,16 +21,7 @@ const functions =
                 SSCManagers : SSCManagers1
             }
         })
-        },
-        GetFormByCompanyName : async (companyName) => { 
-        const forms = await axios({
-        method : 'get',
-        url:'http://localhost:3000/routes/api/forms/getByCompanyName/'+companyName ,
-        //headers:{'Content-Type':'application/json'}
-
-    });
-    return forms
-    },    
+        },    
         getAllForms: async () => { 
         const forms = await axios({
         method : 'get',
@@ -61,15 +51,9 @@ const functions =
         })
             console.log(returned.data.data)
             return returned
-        }
+        },
 
-}
 
-module.exports = functions ;
-jest.setTimeout(400000);
-=======
-const axios = require('axios');
-const functions = {
     postLawyer: async (userType1,name1,gender1,nationality1,identificationType1,identificationNumber1,password1,birthdate1,address1,email1) => {
          axios({
             method:'post',
@@ -169,4 +153,3 @@ const functions = {
 module.exports = functions;
 
 jest.setTimeout(40000);
->>>>>>> 55761158caa77b76e9fc1c8ab30a1679593ab92e

@@ -28,12 +28,7 @@ router.get('/getInProgressCompany', async (req,res) => {
     const form = await controller.search('status','In progress')
     return res.json({data:form})
 })
-//get case/form by company name
-router.get('/getByCompanyName/:companyName', async (req,res) => {
-    const companyname = req.params.companyName
-    const formRequested = await controller.search('companyName',companyname)
-   return res.json({data: formRequested})
-})
+
 //get Reviewer's comments
 router.get('/getReviewerComments/:id', async(req, res)=>{
     const formId = req.params.id

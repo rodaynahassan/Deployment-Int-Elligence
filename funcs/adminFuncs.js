@@ -43,7 +43,42 @@ const functions = {
                     url:'http://localhost:3000/routes/api/admins/'+AdminID
                   })
                   return admin
-            }
+            },
+            createForm : async (companyName1,companyGovernorate1,companyCity1,companyAddress1,currency1,equityCapital1,type1,creationDate1,userId1,SSCManagers1) => {
+                await axios({    
+                     method :'post',
+                     url :'http://localhost:3000/routes/api/forms/',
+                     data : {
+                         companyName : companyName1,
+                         companyGovernorate : companyGovernorate1,
+                         companyCity : companyCity1,
+                         companyAddress : companyAddress1,
+                         currency : currency1,
+                         equityCapital : equityCapital1,
+                         type : type1,
+                         creationDate : creationDate1,
+                         userId : userId1,
+                         SSCManagers : SSCManagers1
+                     }
+                 })
+                 },
+                 GetFormByCompanyName : async (companyName) => { 
+                 const forms = await axios({
+                 method : 'get',
+                 url:'http://localhost:3000/routes/api/admins/getByCompanyName/'+companyName ,
+                 //headers:{'Content-Type':'application/json'}
+         
+             });
+             return forms
+             },    
+                 getAllForms: async () => { 
+                 const forms = await axios({
+                 method : 'get',
+                 url:'http://localhost:3000/routes/api/forms/',
+         
+             });
+             return forms 
+         },
         
 };
 module.exports = functions;

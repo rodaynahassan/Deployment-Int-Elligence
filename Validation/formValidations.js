@@ -17,10 +17,6 @@ module.exports = {
             currency: Joi.string().required().min(2).max(10),
             equityCapital: Joi.number().required().min(50000),
             type: Joi.string().required(),
-<<<<<<< HEAD
-            SSCManagers: Joi.array().required(),
-=======
->>>>>>> 55761158caa77b76e9fc1c8ab30a1679593ab92e
             status: Joi.string().valid('Rejected','In progress','Approved'),
             creationDate: Joi.date().required(),
             lawyerComments: Joi.array().items(Joi.string()),

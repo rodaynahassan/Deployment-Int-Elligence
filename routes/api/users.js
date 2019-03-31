@@ -8,14 +8,11 @@ const userController=require('../../controllers/userController')
 const User = require('../../Models/User')
 const Forms = require('../../Models/Form')
 const validator = require('../../Validation/UserValidation')
-<<<<<<< HEAD
-=======
 const formController = require('../../controllers/formController')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 const tokenKey = require('../../config/keys_dev').secretOrKey
 
->>>>>>> 55761158caa77b76e9fc1c8ab30a1679593ab92e
 
 //sort all forms for a  by form creation date
 router.get('/AllformsSortedByformDate/', async(req, res) => {                    
@@ -30,13 +27,8 @@ router.get('/SpecificformsSortedByformDate/:id', async(req, res) => {
     SpecificUser.forms.sort(userController.compareByDate)
     return res.json({ data: SpecificUser.forms });
 })
-<<<<<<< HEAD
 //sort forms by id as a lawyer 
 router.get('/formSortedByformId/', async (req,res) => { // sort forms by form id
-=======
-//sort cases by id as aa lawyer 
-router.get('/CaseSortedByCaseId/', async (req,res) => { // sort cases by case id
->>>>>>> 55761158caa77b76e9fc1c8ab30a1679593ab92e
     var forms= await Forms.find()
     forms.sort(compareById)
     return res.json({ data: forms });
@@ -79,13 +71,11 @@ router.post('/register', async (req,res) => {                       //register I
      return res.json({msg:'Investor was created successfully', data: newUser})
  })
 
-<<<<<<< HEAD
 router.post('/register', async (req,res) => {                       //register Investor
     const newUser = await userController.registerInvestor(req.body) 
     if(newUser.error) return res.status(400).send(newUser) 
      return res.json({msg:'Investor was created successfully', data: newUser})
 
-=======
 //Login
 router.post('/login',async(req,res)=>{
     try{
@@ -111,7 +101,6 @@ router.post('/login',async(req,res)=>{
 }
 catch(e){}
 })
->>>>>>> 55761158caa77b76e9fc1c8ab30a1679593ab92e
 
 //update a user
  router.put('/:id', async (req,res) => {
@@ -124,37 +113,6 @@ catch(e){}
 
  })
 
-<<<<<<< HEAD
-
-//get the case of the lawyer/Reviewer 
-//lsa we need to add en bageb ely status bta3etha in progress only
-router.get('/getCases/:id',async(req,res) => {
-    const userid = req.params.id
-    const user = await User.findById(userid)
-    var arrayOfForms = user.forms 
-    res.json({data: arrayOfForms})
-});
-
-//When you delete a specific user , you delete with it all his forms 
-//Delete a user
-router.delete('/:id', async (req,res) => {
-    try {
-     const id = req.params.id
-     var SpecificUser= await userController.search('_id' ,id )
-     for(i=0;i<SpecificUser.forms.length;i++){
-         var formId=SpecificUser.forms[i]._id
-         await formController.remove('_id',formId)
-     }
-     const deletedUser = await userController.remove('_id',id)
-     res.json({msg:'User was deleted successfully', data: deletedUser})
-    }
-    catch(error) {
-    
-        console.log(error)
-    }  
- })
-=======
->>>>>>> 55761158caa77b76e9fc1c8ab30a1679593ab92e
 
 //get the form of the lawyer/Reviewer 
 router.get('/getforms/:id',async(req,res) => {
@@ -164,18 +122,6 @@ router.get('/getforms/:id',async(req,res) => {
     res.json({data: arrayOfForms})
 });
 
-<<<<<<< HEAD
-
-// as a lawyer/reviewer i can make a decision 
-// router.put('/Decision/:userId/:formId', async(req, res) => {
-//     const userid=req.params.userId 
-//     const formid=req.params.formId
-//     const user= await userController.search('_id',userid)
-//     const updatedForm= await formController.update('_id',formid,req.body)
-//     user.forms = updatedForm
-//     const returnedUser = await userController.update('_id',userid,{forms:user.forms})
-//     return res.json({data:returnedUser});
-// });
 
 
 // as a lawyer i can make a comment
@@ -235,6 +181,4 @@ module.exports = router;
 
 
 
-=======
 module.exports = router;
->>>>>>> 55761158caa77b76e9fc1c8ab30a1679593ab92e

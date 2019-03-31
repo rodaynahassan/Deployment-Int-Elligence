@@ -103,6 +103,3 @@ const functions = {
 };
 module.exports = functions 
 jest.setTimeout(40000);
-   
-
-

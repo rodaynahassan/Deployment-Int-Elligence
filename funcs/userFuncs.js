@@ -9,7 +9,7 @@
 const functions = {
 
 
-    createLawyerOrReviewer: async(userType1,name1,gender1,nationality1,identificationType1,identificationNumber1,birthdate1,address1,email1,password1) =>{  
+    createLawyerOrReviewer: async(userType1,name1,gender1,nationality1,identificationType1,identificationNumber1,birthdate1,address1,email1,password1,telephone1) =>{  
          await axios({
             method:'post',
             url:'http://localhost:3000/routes/api/admins/register',
@@ -24,7 +24,8 @@ const functions = {
             birthdate: birthdate1,
             address:address1 ,
             email:email1,
-            password:password1
+            password:password1,
+            telephone:telephone1
            
             }
         })

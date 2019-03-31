@@ -16,7 +16,7 @@ module.exports = {
         password : Joi.string().required().min(8).max(16),
         telephone: Joi.string().min(4).max(15),
         fax:  Joi.string().min(5).max(20),
-        forms: Joi.array() //not sure yet
+        forms: Joi.array()
          }
 
         return Joi.validate(request, createSchema)
@@ -63,7 +63,7 @@ module.exports = {
         password : Joi.string().required().min(8).max(16),
         telephone: Joi.string().min(4).max(15),
         fax:  Joi.string().min(5).max(20),
-        forms: Joi.array()//not sure yet
+        forms: Joi.array()
         }
 
 
@@ -84,7 +84,7 @@ module.exports = {
             password : Joi.string().min(8).max(16),
             telephone: Joi.string().max(15).min(4),
             fax:  Joi.string().min(5).max(20),
-            forms: Joi.array()//not sure yet
+            forms: Joi.array()
              }
 
         return Joi.validate(request, updateSchema)

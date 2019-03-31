@@ -7,6 +7,7 @@ const User = require('../../Models/User')
 const Forms = require('../../Models/Form')
 const validator = require('../../Validation/UserValidation')
 const formController = require('../../controllers/formController')
+const notifications = require('../../helpers/notifications')
 
 //sort all cases for a  by case creation date
 router.get('/AllCasesSortedByCaseDate/', async(req, res) => {                    
@@ -68,6 +69,33 @@ router.post('/register', async (req,res) => {                       //register I
       return res.json({msg : 'User Updated Successfully',data: updateUser})
 
  })
+
+ //Update a user's form
+ router.put('/:userId/:formId' , async (req,res) =>{
+     var userid = req.params.userId
+     var formid=req.params.formId
+     var user = await userController.search('_id',userid)
+     var updatedForm = await formController.update('_id',formid,req.body)
+     user.forms = updatedForm
+     const returnedUser = await userController.update('_id',userid,{forms:user.forms})
+     if(req.body.status){
+        if(req.body.status==='Approved'){
+            var notify = await notifications.notifyExternalEntities(updatedForm)
+        }
+    }
+
+     if(req.body.status!==undefined||req.body.lawyerSeen!==undefined||req.body.lawyerComments!==undefined||req.body.lawyerApprove!==undefined||req.body.reviewerSeen!==undefined||req.body.reviewersComments!==undefined||req.body.reviewerApprove!==undefined){
+        var notifyUser = await notifications.notifyUserForFormUpdates(user,updatedForm)
+        console.log('hi')
+        console.log(notifyUser)
+        return res.json({data:returnedUser,notification:notifyUser})
+     }
+
+     return res.json({data:returnedUser})
+     
+
+     
+})
 
 
 //get the case of the lawyer/Reviewer 

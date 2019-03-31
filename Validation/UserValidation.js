@@ -1,5 +1,6 @@
 const Joi = require('joi')
 
+
 module.exports = {
     createValidationL: request => {                         // create for lawyer
         const createSchema = {
@@ -15,7 +16,7 @@ module.exports = {
         fax:  Joi.string().min(5).max(20),
         email:  Joi.string().email().min(3).max(254),
         password : Joi.string().required().min(8).max(16),
-        forms: Joi.array()
+        forms: Joi.array() 
                     //not sure yet
         
         }

@@ -60,17 +60,14 @@ router.get('/', async (req,res) => {
 
  
 
-//create a user
-router.post('/', async (req,res) => {
-    
-     const newUser = await userController.create(req.body)
-     if(newUser.error) return res.status(400).send(newUser) 
-     return res.json({msg:'User was created successfully', data: newUser})
+router.post('/register', async (req,res) => {                       //register Investor
+    const newUser = await userController.registerInvestor(req.body) 
+    if(newUser.error) return res.status(400).send(newUser) 
+     return res.json({msg:'Investor was created successfully', data: newUser})
 
 
     }
  )
-
 //update a user
  router.put('/:id', async (req,res) => {
       
@@ -80,18 +77,33 @@ router.post('/', async (req,res) => {
       if(updateUser.error) return res.status(400).send(updateUser)
       return res.json({msg : 'User Updated Successfully',data: updateUser})
 
-     
  })
 
-//delete a user
- router.delete('/:id', async (req,res) => {
+
+//get the case of the lawyer/Reviewer 
+//lsa we need to add en bageb ely status bta3etha in progress only
+router.get('/getCases/:id',async(req,res) => {
+    const userid = req.params.id
+    const user = await User.findById(userid)
+    var arrayOfForms = user.forms 
+    res.json({data: arrayOfForms})
+});
+
+//When you delete a specific user , you delete with it all his forms 
+//Delete a user
+router.delete('/:id', async (req,res) => {
     try {
      const id = req.params.id
+     var SpecificUser= await userController.search('_id' ,id )
+     for(i=0;i<SpecificUser.forms.length;i++){
+         var formId=SpecificUser.forms[i]._id
+         await formController.remove('_id',formId)
+     }
      const deletedUser = await userController.remove('_id',id)
      res.json({msg:'User was deleted successfully', data: deletedUser})
     }
     catch(error) {
-        // We will be handling the error later
+    
         console.log(error)
     }  
  })
@@ -117,12 +129,14 @@ router.get('/getforms/:id',async(req,res) => {
 // });
 
 
-// as a reviewer i can make a comment
+// as a lawyer i can make a comment
 router.put('/lawyerComments/:userId/:formId', async(req, res) => {
     const userid=req.params.userId 
     const formid=req.params.formId
     const user= await userController.search('_id',userid)
+    //console.log(user)
     const form = await formController.search('_id',formid) 
+    //console.log(form)
     var comments = form.lawyerComments
     for(i=0;i<req.body.lawyerComments.length;i++)
     {
@@ -130,16 +144,17 @@ router.put('/lawyerComments/:userId/:formId', async(req, res) => {
         comments.push(x)
     }
     for(i=0;i<user.forms.length;i++){
-        if(user.forms[i]===form)
+        if(user.forms[i]._id.equals(form._id))
         {
-            user.forms[i].lawyerComments=comments
+            console.log(i)
+            user.forms[i] = await formController.update('_id',formid,{lawyerComments:comments})
         }
     }
     const returnedUser = await userController.update('_id',userid,{forms:user.forms})
     return res.json({data:returnedUser});
 });
 
-//as a reviewer i can make a commet
+//as a reviewer i can make a comment
 router.put('/reviewerComments/:userId/:formId', async(req, res) => {
     const userid=req.params.userId 
     const formid=req.params.formId
@@ -152,9 +167,9 @@ router.put('/reviewerComments/:userId/:formId', async(req, res) => {
         comments.push(x)
     }
     for(i=0;i<user.forms.length;i++){
-        if(user.forms[i]===form)
+        if(user.forms[i]._id.equals(form._id))
         {
-            user.forms[i].reviewerComments=comments
+            user.forms[i] = await formController.update('_id',formid,{reviewerComments:comments})
         }
     }
     const returnedUser = await userController.update('_id',userid,{forms:user.forms})

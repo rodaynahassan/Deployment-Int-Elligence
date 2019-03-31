@@ -101,7 +101,7 @@ router.post('/', async (req,res) => {
     }
  })
 
-//delete a company
+//delete a form
  router.delete('/:id', async (req,res) => {
     try {
      const id = req.params.id
@@ -109,12 +109,11 @@ router.post('/', async (req,res) => {
     return res.json({msg:'Form was deleted successfully', data: deletedForm})
     }
     catch(error) {
-        // We will be handling the error later
         console.log(error)
     }  
  })
 
  
 
+module.exports = router
 
-    module.exports = router

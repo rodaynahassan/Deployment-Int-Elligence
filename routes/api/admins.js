@@ -4,6 +4,7 @@ const uuid = require('uuid');
 const router = express.Router();
 const validator = require('../../Validation/adminValidations')
 const adminController = require('../../controllers/adminController')
+const formController = require('../../controllers/formController')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 const tokenKey = require('../../config/keys').secretOrKey
@@ -33,7 +34,12 @@ router.post('/', async (req,res) => {
     return res.json({ data: newAdmin });
  })
 
-
+//get case/form by company name
+router.get('/getByCompanyName/:companyName', async (req,res) => {
+    const companyname = req.params.companyName
+    const formRequested = await formController.search('companyName',companyname)
+   return res.json({data: formRequested})
+})
 // sort cases by id
 router.get('/CasesSortedById', async(req, res) => {
     var forms= await Forms.find()
@@ -46,6 +52,14 @@ router.get('/CasesSortedByCreationDate', async(req, res) => {
     forms.sort(adminController.compare)
     return res.json({ data: forms });
 })
+
+//get case/form by company name
+router.get('/getByCompanyName/:companyName', async (req,res) => {
+    const companyname = req.params.companyName
+    const formRequested = await formController.search('companyName',companyname)
+   return res.json({data: formRequested})
+})
+
 // update an admin
 router.put('/:id', async (req,res) => {
     try {
@@ -81,6 +95,8 @@ router.post('/register', async (req,res) => {                       //register l
 
 
     })
+
+
 //Login
     router.post('/login',async(req,res)=>{
         try{

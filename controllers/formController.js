@@ -143,11 +143,14 @@ exports.search=async function search(att,value)
         var values=await Form.find({'status':value})
         return values
     }
-    if(att ==='companyName')
+   
+   if(att ==='companyName')
     {
     var values=await Form.find({'companyName':value})
     return values
     }
+    
+    
    
 }
 //Deleting

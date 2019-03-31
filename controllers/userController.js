@@ -15,8 +15,10 @@ exports.compareByDate=function compareByDate(a,b){
     return 0;
 }
 
-//creating Investor                      
-exports.registerInvestor=async function registerInvestor(body){                      //creating Investor
+
+//creating Investor
+exports.registerInvestor=async function registerInvestor(body){                      
+
     const { error1 } = userValidator.createValidationI(body)            
     
     if (error1) {
@@ -31,9 +33,7 @@ exports.registerInvestor=async function registerInvestor(body){                 
     const newUser = await User.create(body)
     const salt = await bcrypt.genSalt(10);
     newUser.password = await bcrypt.hash(newUser.password, salt);
-    await newUser.save();
-
-    
+    await newUser.save();    
     return newUser
 }
 
@@ -48,6 +48,11 @@ exports.search = async function search(att ,value ){
         var values = await User.findById(value)
         return values
     }
+    // if(att ==='Lawyer')
+    // {
+    // var values=await Form.find({'Lawyer':value})
+    // return values
+    // }
 
     var values = User.find({att:value})
     return values

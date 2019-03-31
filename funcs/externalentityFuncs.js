@@ -5,7 +5,7 @@ const functions =
 {
     //creating new entitiy
     postExternalEntity : async(Name1,Equation1,Api1,Email1) => {
-       return axios({
+       return await axios({
             method :'post',
             url :'http://localhost:3000/routes/api/externalentities/',
             data:{
@@ -41,8 +41,44 @@ const functions =
         .catch(error => {
 
         });
+    },
+
+
+    getExternalEntityByName : async(Name) => {
+        externalentities = await axios({
+        method :'get',
+        url:'http://localhost:3000/routes/api/externalentities/getByExternalEntityName/'+Name
+        })
+        return externalentities
+    },
+    getExternalEntityByAPI : async(Api) => {
+        externalentities = await axios({
+        method :'get',
+        url:'http://localhost:3000/routes/api/externalentities/getByExternalEntityApi/'+Api
+        })
+        return externalentities
     }
+
+    
+
 }
 
 module.exports = functions
+jest.setTimeout(40000);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+module.exports = functions ;
 jest.setTimeout(40000);

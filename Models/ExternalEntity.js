@@ -11,8 +11,8 @@ const ExternalEntitySchema= new Schema({
     Equation:{type: String,required: true},
   //  Api: {type:  mongoose.SchemaTypes.Url, required: true}
   Api: {type: String, required: true},
-   // EquityCapital:{type:number,required:true},
-  Email: {type:String,required:true}
+  Email:{type: String, required:true}
+  
 })
 
 module.exports = ExternalEntity = mongoose.model('externalentities', ExternalEntitySchema)

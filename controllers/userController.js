@@ -14,11 +14,8 @@ exports.compareByDate=function compareByDate(a,b){
 
     return 0;
 }
-
-
 //creating Investor
 exports.registerInvestor=async function registerInvestor(body){                      
-
     const { error1 } = userValidator.createValidationI(body)            
     
     if (error1) {

@@ -1,6 +1,7 @@
-const axios = require('axios')
-const mongoose = require('mongoose')
+ const axios = require('axios');
+ const mongoose = require('mongoose')
 const Form = require('../Models/ExternalEntity')
+
 const functions =
 {
     //creating new entitiy
@@ -12,11 +13,18 @@ const functions =
                 Name : Name1,
                 Equation : Equation1,
                 Api : Api1,
-                Email : Email1
+                Email:Email1
             }
         })
     },
-    //getting all entities
+    deleteExternalEntity: async()=>{
+                return axios({
+                   method: 'delete',
+                   url: 'localhost:3000/routes/api/externalentities/',
+                   headers: {'Content-Type': 'application/json'}
+                })
+
+    },
     getExternalEntity : async() => {
         const externalentities = await axios.get('http://localhost:3000/routes/api/externalentities/')
         return externalentities
@@ -45,25 +53,22 @@ const functions =
 
 
     getExternalEntityByName : async(Name) => {
-        externalentities = await axios({
-        method :'get',
-        url:'http://localhost:3000/routes/api/externalentities/getByExternalEntityName/'+Name
-        })
-        return externalentities
-    },
+                externalentities = await axios({
+                method :'get',
+                url:'http://localhost:3000/routes/api/externalentities/getByExternalEntityName/'+Name
+                })
+                return externalentities
+            },
     getExternalEntityByAPI : async(Api) => {
-        externalentities = await axios({
-        method :'get',
-        url:'http://localhost:3000/routes/api/externalentities/getByExternalEntityApi/'+Api
-        })
-        return externalentities
-    }
-
-    
+                externalentities = await axios({
+                method :'get',
+                url:'http://localhost:3000/routes/api/externalentities/getByExternalEntityApi/'+Api
+                })
+                return externalentities
+            }
 
 }
-
-module.exports = functions
+module.exports = functions;
 jest.setTimeout(40000);
 
 
@@ -80,5 +85,5 @@ jest.setTimeout(40000);
 
 
 
-module.exports = functions ;
-jest.setTimeout(40000);
+
+

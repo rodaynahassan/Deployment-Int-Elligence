@@ -36,6 +36,7 @@ router.get('/getByExternalEntityApi/:Api', async (req,res) => {
 //create an external entity 
 router.post('/', async (req,res) => {
    var newExternalEntity=await controller.create(req.body)
+   if(newExternalEntity.error) res.status(400).send({error:error})
    return res.json({data:newExternalEntity})
  })
 

@@ -25,6 +25,15 @@ router.get('/getInProgressCompany', async (req,res) => {
     const form = await controller.search('status','In progress')
     return res.json({data:form})
 })
+
+//get Reviewer's comments
+router.get('/getReviewerComments/:id', async(req, res)=>{
+    const formId = req.params.id
+    const formComment = await controller.search('_id',formId)
+    var arrayReviewerComments = formComment.reviewerComments
+    return res.json({ data: arrayReviewerComments});
+
+})
 //get Lawyer's comments
 router.get('/getLawyerComments/:id', async(req, res)=>{
     const formId = req.params.id
@@ -47,6 +56,34 @@ router.get('/:id', async (req,res) => {
         return res.json({data:form})
         
 })
+
+//create a form
+router.post('/', async (req,res) => {
+    const newForm = await controller.create(req.body)
+    return res.json({data:newForm})
+    })
+
+//changing the status of the form to inprogree if the lawyerseen
+// router.put('/changeStatusInprogress/:id', async (req,res) => {
+//     try
+//     {
+//         const id = req.params.id
+//         var form = await controller.search('_id',id)
+//         if(!form) return res.json({msg:"ID not found"})
+//         if(form.error) return res.status(400).send(form)
+//         if(form.lawyerSeen = true)
+//         {
+//             var wantedForm = await controller.update('_id',id,status)
+//             return res.json({ data:wantedForm})
+//         }
+//     }
+//     catch(error)
+//     {
+//         console.log(error)
+//     }
+
+// })
+
 //update a form
  router.put('/:id', async (req,res) => {
     try
@@ -63,7 +100,7 @@ router.get('/:id', async (req,res) => {
     }
  })
 
-//delete a company
+//delete a form
  router.delete('/:id', async (req,res) => {
     try {
      const id = req.params.id
@@ -71,8 +108,11 @@ router.get('/:id', async (req,res) => {
     return res.json({msg:'Form was deleted successfully', data: deletedForm})
     }
     catch(error) {
-        // We will be handling the error later
         console.log(error)
     }  
  })
-   module.exports = router
+
+ 
+
+module.exports = router
+

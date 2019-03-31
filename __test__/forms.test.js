@@ -10,7 +10,7 @@ test('Create form', async () => {
    const length = response.data.data.length
    try{
      await funcs.postForm('Telal', 'Cech','3 masr st.','Batates','Euro',200000,'SPCForm','1998-09-08', mongoose.Types.ObjectId('5c9ff68965c44707647a620c'))
-     //await funcs.postForm('Marassi', 'Marassi', '88 villa sg', 'Bab', 300000 , [{name:"Fares"},{type:"Person"},{gender:"female"},{nationality:"French"},{identificationType:"Passport"},{identificationNumber:"0999990999099"},{birthdate:"1899-09-09"},{address:"76 paris"},{typeOfManagers:"CPE"}],'SSCForm',mongoose.Types.ObjectId('5c9ff68965c44707647a620c'))
+     
    }
    catch(err){
    console.log(err);}

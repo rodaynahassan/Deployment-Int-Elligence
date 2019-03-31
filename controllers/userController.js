@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
 const User = require('../Models/User')
-const validator = require('../Validation/UserValidation')
+const userValidator = require('../Validation/UserValidation')
+const bcrypt = require('bcrypt');
 
 
 
 
-
-exports.compareByDate=function compareByDate(a,b){                                                //comparing between creation dates
+ //comparing between creation dates
+exports.compareByDate=function compareByDate(a,b){                                               
     if(Date.parse(a.creationDate)>Date.parse(b.creationDate)) return 1;
     
     if(Date.parse(a.creationDate)<Date.parse(b.creationDate)) return -1;
@@ -14,27 +15,41 @@ exports.compareByDate=function compareByDate(a,b){                              
     return 0;
 }
 
-exports.create=async function create(body){                          //creating user
+<<<<<<< HEAD
+exports.registerInvestor=async function registerInvestor(body){                      //creating Investor
+=======
+//creating Investor
+exports.registerInvestor=async function registerInvestor(body){                      
+>>>>>>> 55761158caa77b76e9fc1c8ab30a1679593ab92e
+    const { error1 } = userValidator.createValidationI(body)            
     
-        var isValidated = undefined
-        if(body.userType==='Lawyer'){
-             isValidated = validator.createValidationL(body)
-        }
-        if(body.userType==='Investor'){
-             isValidated = validator.createValidationI(body)
-        }
-        if(body.userType==='Reviewer'){
-            isValidated = validator.createValidationR(body)
-        }
-        if (isValidated.error) return { error: isValidated.error.details[0].message }
-     
-     const newUser = await User.create(body)
-     return  newUser
+    if (error1) {
+        return error1.details[0].message;
     }
-
-
+    
+    let user = await User.findOne({ email: body.email });
+   // const user = await User.findOne({body:email})
+    if(user) return {error: 'Account already exists'}
+    
    
-exports.search = async function search(att ,value ){  // Search users
+    const newUser = await User.create(body)
+    const salt = await bcrypt.genSalt(10);
+    newUser.password = await bcrypt.hash(newUser.password, salt);
+    await newUser.save();
+<<<<<<< HEAD
+
+    
+    return newUser
+}
+=======
+>>>>>>> 55761158caa77b76e9fc1c8ab30a1679593ab92e
+
+    
+    return newUser
+}
+
+// Search users
+exports.search = async function search(att ,value ){  
     if(att === null){
      var values = await User.find()
      return values
@@ -57,23 +72,23 @@ exports.search = async function search(att ,value ){  // Search users
 
 
 
-
-exports.remove=async function remove(att,value){                           //delete user
+//delete user
+exports.remove=async function remove(att,value){                           
 
     
         if(att===null){
             return 'there is no user to delete'
         }
         else if(att==='_id'){
-   
+
          const deletedUser = await User.findByIdAndDelete(value)
          return deletedUser
         }
        
     }
         
-
-exports.update = async function update(att, value, body){  // Update Users
+// Update Users
+exports.update = async function update(att, value, body){  
    
     try {
         if(! att ) 
@@ -108,7 +123,8 @@ exports.update = async function update(att, value, body){  // Update Users
     }
 
        
-       function compareById(a , b){  // for sorting the cses by caseID
+    // for sorting the cses by caseID
+       function compareById(a , b){  
         if(a._id > b._id )
         return 1;
         

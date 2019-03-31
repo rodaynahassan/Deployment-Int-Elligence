@@ -1,5 +1,6 @@
 const Joi = require('joi')
 
+
 module.exports = {
     createValidationL: request => {                         // create for lawyer
         const createSchema = {
@@ -11,15 +12,16 @@ module.exports = {
         identificationNumber: Joi.string().required().min(8).max(50),
         birthdate:  Joi.date().required(),
         address: Joi.string().required().min(5).max(50),
+        email:  Joi.string().required().email().min(3).max(254),
+        password : Joi.string().required().min(8).max(16),
         telephone: Joi.string().min(4).max(15),
         fax:  Joi.string().min(5).max(20),
         email:  Joi.string().email().min(3).max(254),
         password : Joi.string().required().min(8).max(16),
-        forms: Joi.array()
+        forms: Joi.array() 
                     //not sure yet
         
         }
-
         return Joi.validate(request, createSchema)
     },
 
@@ -35,10 +37,10 @@ module.exports = {
         identificationNumber: Joi.string().required().min(8).max(50),
         birthdate:  Joi.date().required(),
         address: Joi.string().required().min(5).max(50),
+        email:  Joi.string().required().email().min(3).max(254),
+        password : Joi.string().required().min(8).max(16),
         telephone: Joi.string().min(4).max(15),
         fax:  Joi.string().min(5).max(20),
-        email:  Joi.string().email().min(3).max(254),
-        password : Joi.string().required().min(8).max(16),
         investorType: Joi.string().required(),
         financialBalance:Joi.number(),
         forms:Joi.array().required() 
@@ -60,15 +62,11 @@ module.exports = {
         identificationNumber: Joi.string().required().min(8).max(50),
         birthdate:  Joi.date().required(),
         address: Joi.string().required().min(5).max(50),
+        email:  Joi.string().email().required().min(3).max(254),
+        password : Joi.string().required().min(8).max(16),
         telephone: Joi.string().min(4).max(15),
         fax:  Joi.string().min(5).max(20),
-        email:  Joi.string().email().min(3).max(254),
-        password : Joi.string().required().min(8).max(16),
-        forms: Joi.array(),                //not sure yet
-
-    
-        
-
+        forms: Joi.array()//not sure yet
         }
 
 
@@ -85,13 +83,12 @@ module.exports = {
             identificationNumber: Joi.string().max(50).min(8),
             birthdate:  Joi.date(),
             address: Joi.string().max(50).min(5),
-            telephone: Joi.string().max(15).min(4),
-            fax:  Joi.string().min(5).max(20),
             email:  Joi.string().email().max(254).min(3),
             password : Joi.string().min(8).max(16),
-            forms: Joi.array()              //not sure yet
-            
-        }
+            telephone: Joi.string().max(15).min(4),
+            fax:  Joi.string().min(5).max(20),
+            forms: Joi.array()//not sure yet
+             }
 
         return Joi.validate(request, updateSchema)
     }, 
@@ -108,15 +105,14 @@ module.exports = {
             identificationNumber: Joi.string().max(50).min(8),
             birthdate:  Joi.date(),
             address: Joi.string().max(50).min(5),
+            email: Joi.string().email().max(254).min(3),
+            password : Joi.string().min(8).max(16),   
             telephone: Joi.string().max(15).min(4),
-            fax:  Joi.string().min(5).max(20),
-            email:  Joi.string().email().max(254).min(3),
-            password : Joi.string().min(8).max(16),            
+            fax: Joi.string().min(5).max(20),
             investorType: Joi.string(),
             financialBalance: Joi.number(),
             forms:Joi.array()
-    
-        }
+   }
 
         return Joi.validate(request, updateSchema)
     }, 
@@ -134,13 +130,13 @@ module.exports = {
         identificationNumber: Joi.string().max(50).min(8),
         birthdate:  Joi.date(),
         address: Joi.string().max(50).min(5),
-        telephone: Joi.string().max(15).min(4),
-        fax:  Joi.string().min(5).max(20),
         email:  Joi.string().email().max(254).min(3),
         password : Joi.string().min(8).max(16),
+        telephone: Joi.string().max(15).min(4),
+        fax:  Joi.string().min(5).max(20),
         forms:Joi.array()
 
-        }
+     }
 
         return Joi.validate(request, updateSchema)
     }, 

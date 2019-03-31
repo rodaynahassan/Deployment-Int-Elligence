@@ -76,6 +76,8 @@ router.post('/register', async (req,res) => {                       //register l
     if(newUser.error) return res.status(400).send(newUser) 
      return res.json({msg:'Account was created successfully', data: newUser})
 
+
+
     })
 
 

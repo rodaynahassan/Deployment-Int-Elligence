@@ -7,9 +7,7 @@ const formController = require('../../controllers/formController')
 const userController=require('../../controllers/userController')
 const User = require('../../Models/User')
 const validator = require('../../Validation/UserValidation')
-<<<<<<< HEAD
-=======
-const formController = require('../../controllers/formController')
+
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 const tokenKey = require('../../config/keys_dev').secretOrKey
@@ -17,7 +15,6 @@ const tokenKey = require('../../config/keys_dev').secretOrKey
 
 
 
->>>>>>> e3c20fd2470b7c101d3c1e90b10f8dc3d49867c6
 
 
 
@@ -29,7 +26,6 @@ router.get('/AllFormsSortedByFormDate/', async(req, res) => {
 })
 
 
-<<<<<<< HEAD
 //sort all forms by id as a lawyer 
 router.get('/AllFormSortedByFormId/', async (req,res) => {  // sort all forms by form id
     const forms = await formController.search()
@@ -39,10 +35,6 @@ router.get('/AllFormSortedByFormId/', async (req,res) => {  // sort all forms by
 
 //sort by form creation date for a specific user
 router.get('/SpecificFormsSortedByFormDate/:id', async(req, res) => {   
-=======
-//sort by case creation date for a specific user
-router.get('/SpecificCasesSortedByCaseDate/:id', async(req, res) => {   
->>>>>>> e3c20fd2470b7c101d3c1e90b10f8dc3d49867c6
     const userid=req.params.id
     var SpecificUser= await userController.search('_id' ,userid )
     SpecificUser.forms.sort(userController.compareByDate)
@@ -50,7 +42,6 @@ router.get('/SpecificCasesSortedByCaseDate/:id', async(req, res) => {
 })
 
 
-<<<<<<< HEAD
 
 //sort specific forms by id as a lawyer 
 router.get('/SpecificFormSortedByFormId/:id', async (req,res) => {  // sort specific forms by form id
@@ -63,7 +54,6 @@ router.get('/SpecificFormSortedByFormId/:id', async (req,res) => {  // sort spec
 
 
 
-=======
 //sort cases by id as a lawyer 
 router.get('/CaseSortedByCaseId/', async (req,res) => { // sort cases by case id
     var forms= await Forms.find()
@@ -72,7 +62,6 @@ router.get('/CaseSortedByCaseId/', async (req,res) => { // sort cases by case id
 })
 
 
->>>>>>> e3c20fd2470b7c101d3c1e90b10f8dc3d49867c6
 // view a certain user
 router.get('/:id', async(req, res) => {
     const userid=req.params.id
@@ -145,24 +134,11 @@ router.post('/register', async (req,res) => {                       //register I
     if(newUser.error) return res.status(400).send(newUser) 
      return res.json({msg:'Investor was created successfully', data: newUser})
 
-<<<<<<< HEAD
     })
 
 //update a user 
  router.put('/:id' , async (req,res) => {
       var id = req.params.id  
-=======
-
-    }
- )
-
-
-
-//update a user
- router.put('/:id', async (req,res) => {
-      
-      const id = req.params.id 
->>>>>>> e3c20fd2470b7c101d3c1e90b10f8dc3d49867c6
       const updateUser = await userController.update('_id',id,req.body)
       if(!updateUser) return res.json({msg :'ID not there'})
       if(updateUser.error) return res.status(400).send(updateUser)
@@ -195,24 +171,13 @@ router.get('/getForms/:id',async(req,res) => {
     return res.json({ data: formsOfUsers });
 });
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> e3c20fd2470b7c101d3c1e90b10f8dc3d49867c6
 //When you delete a specific user , you delete with it all his forms 
 //Delete a user
 router.delete('/:id', async (req,res) => {
     try {
      const id = req.params.id
      var SpecificUser= await userController.search('_id' ,id )
-<<<<<<< HEAD
-     for(i=0;i<SpecificUser.forms.length;i++){
-         var formId=SpecificUser.forms[i]._id
-         await formController.remove('_id',formId)
-     }
-     const deletedUser = await userController.remove('_id',id)
-=======
+
      if(!SpecificUser) return res.json({msg:'This user doesnt exist'})
      for(i=0;i<SpecificUser.forms.length;i++){
          var formId=SpecificUser.forms[i]._id
@@ -222,7 +187,7 @@ router.delete('/:id', async (req,res) => {
      
      const deletedUser = await userController.remove('_id',id)
 
->>>>>>> e3c20fd2470b7c101d3c1e90b10f8dc3d49867c6
+
      res.json({msg:'User was deleted successfully', data: deletedUser})
     }
     catch(error) {
@@ -231,11 +196,7 @@ router.delete('/:id', async (req,res) => {
     }  
  })
 
-<<<<<<< HEAD
 
-
-=======
->>>>>>> e3c20fd2470b7c101d3c1e90b10f8dc3d49867c6
 module.exports = router;
 
 

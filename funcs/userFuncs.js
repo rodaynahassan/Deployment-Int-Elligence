@@ -11,9 +11,55 @@ const functions = {
 
 
    CreateReviewerOrLawyer: async(userType1,name1,gender1,nationality1,identificationType1,identificationNumber1,birthdate1,address1,email1,password1) =>{  
-       await axios({
+           await axios({
+            method:'post',
+            url:'http://localhost:3000/routes/api/admins/register',
+            //url:'http://desolate-oasis-18053.herokuapp.com/routes/api/admins/register',
+            data:{ 
+            userType:userType1,
+            name: name1,
+            gender:gender1 ,
+            nationality:nationality1 ,
+            identificationType:identificationType1 ,
+            identificationNumber: identificationNumber1 ,
+            birthdate: birthdate1,
+            address:address1 ,
+            email:email1,
+            password:password1,
+           
+            }
+        })
+    },
+    
+    createLawyerOrReviewer: async(userType1,name1,gender1,nationality1,identificationType1,identificationNumber1,birthdate1,address1,email1,password1,telephone1) =>{  
+         await axios({
+            method:'post',
+            url:'http://localhost:3000/routes/api/admins/register',
+            //url:'http://desolate-oasis-18053.herokuapp.com/routes/api/admins/register',
+            data:{ 
+            userType:userType1,
+            name: name1,
+            gender:gender1 ,
+            nationality:nationality1 ,
+            identificationType:identificationType1 ,
+            identificationNumber: identificationNumber1 ,
+            birthdate: birthdate1,
+            address:address1 ,
+            email:email1,
+            password:password1,
+            telephone:telephone1
+           
+            }
+        })
+      
+      
+    },
+
+    createInvestor: async(userType1,name1,gender1,nationality1,identificationType1,identificationNumber1,birthdate1,address1,email1,password1) =>{  
+        await axios({
            method:'post',
-           url:'http://localhost:3000/routes/api/admins/register',
+           url:'http://localhost:3000/routes/api/users/register',
+           //url:'http://desolate-oasis-18053.herokuapp.com/routes/api/admins/register',
            data:{ 
            userType:userType1,
            name: name1,
@@ -99,32 +145,39 @@ UpdateFormInUser: async(UserId,FormId) =>{     // update a form in a certain use
     })
   
 },
-
-GetFormById : async(FormId) => {    // get certain form
+           
+    
+    DeleteUser: async(deleteID) =>{  
+        const user= await axios.delete('http://localhost:3000/routes/api/users/'+deleteID)
        
-    form = await axios({
-        method : 'get',
-        url:'http://localhost:3000/routes/api/forms/'+ FormId
-    })
+        //const user= await axios.delete('http://desolate-oasis-18053.herokuapp.com/routes/api/users/'+deleteID)
+        return user
 
-    return form 
-},
+    },
 
 
-GetAllForms : async() => {   // get all forms
-
-    forms= await axios({
-        method : 'get',
-        url:'http://localhost:3000/routes/api/forms/'
-    })
-    return forms
-},
-
-
-
-
-   
+    GetFormById : async(FormId) => {    // get certain form
+       
+        form = await axios({
+            method : 'get',
+            url:'http://localhost:3000/routes/api/forms/'+ FormId
+        })
+    
+        return form 
+    },
+    
+    
+    GetAllForms : async() => {   // get all forms
+    
+        forms= await axios({
+            method : 'get',
+            url:'http://localhost:3000/routes/api/forms/'
+        })
+        return forms
+    },
+    
 };
+
 
 
 jest.setTimeout(40000)

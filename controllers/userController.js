@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
 const User = require('../Models/User')
-const validator = require('../Validation/UserValidation')
+const userValidator = require('../Validation/UserValidation')
+const bcrypt = require('bcrypt');
 
 
 
 
-
-exports.compareByDate=function compareByDate(a,b){                                                //comparing between creation dates
+ //comparing between creation dates
+exports.compareByDate=function compareByDate(a,b){                                               
     if(Date.parse(a.creationDate)>Date.parse(b.creationDate)) return 1;
     
     if(Date.parse(a.creationDate)<Date.parse(b.creationDate)) return -1;
@@ -14,6 +15,7 @@ exports.compareByDate=function compareByDate(a,b){                              
     return 0;
 }
 
+//creating Investor                      
 exports.registerInvestor=async function registerInvestor(body){                      //creating Investor
     const { error1 } = userValidator.createValidationI(body)            
     
@@ -35,9 +37,8 @@ exports.registerInvestor=async function registerInvestor(body){                 
     return newUser
 }
 
-
-   
-exports.search = async function search(att ,value ){  // Search users
+// Search users
+exports.search = async function search(att ,value ){  
     if(att === null){
      var values = await User.find()
      return values
@@ -61,6 +62,7 @@ exports.remove=async function remove(att,value){                           //del
         if(att===null){
             return 'there is no user to delete'
         }
+
         else if(att==='_id'){
 
          const deletedUser = await User.findByIdAndDelete(value)
@@ -69,8 +71,8 @@ exports.remove=async function remove(att,value){                           //del
        
     }
         
-
-exports.update = async function update(att, value, body){  // Update Users
+// Update Users
+exports.update = async function update(att, value, body){  
    
     try {
         if(! att ) 

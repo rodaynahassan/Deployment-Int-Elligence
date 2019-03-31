@@ -13,11 +13,11 @@ const User = new Schema({
   identificationNumber: {type:String,required:true,unique:true},
   birthdate: {type:Date,required:true},
   address: {type:String,required:true},
+  email: { type: String,required:true} ,
+  password: { type: String, required: true },
   telephone:{type:String},
   fax:{type:String},
   forms: {type: Array },
-  email: { type: String , required: true} ,
-  password: { type: String, required: true },
   lawyer: { type: Object},
   investorType: {type: String},
   financialBalance:{type:Number}

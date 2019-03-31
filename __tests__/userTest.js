@@ -2,23 +2,26 @@
  * @jest-environment node
  */
 
-const funcs = require('../funcs/userFuncs');
+const mongoose=require('mongoose')
+const funcs= require('../funcs/userFuncs')
 
 test('Test getting all users ', async () => {
   try {
     
     const r = await funcs.GetAllUsers()
-    expect(r.data.data.length).toBe(36)
+    const len = r.data.data.length
+    
   // creating a lawyer and a reviwer for testing 
-    await funcs.CreateReviewerOrLawyer('Lawyer','Ali Ibrahim','male','Egyptian','national id','A13670019','1998-12-1','Maadi','hh033@yahoo.com','123456788')
-    await funcs.CreateReviewerOrLawyer('Reviewer','mohamdd Amr','male','Egyptian','national id','A34990109','1998-12-1','Maadi','ob03@yahoo.com','123456787')
+
+    await funcs.CreateReviewerOrLawyer('Lawyer','Ali Ibrahim22','male','Egyptian','national id','A136700190453','1998-12-1','Maadi','alihh033@yahoo.com','123456788')
   
   const res = await funcs.GetAllUsers()
   console.log(res.data)
-  expect(res.data.data.length).toBe(r.data.data.length + 2)
+  expect(res.data.data.length).toBe(len + 1)
   expect(res.data).toBeDefined()
   expect(res.status).toEqual(200)
-  //expect(res.data.data.length).toEqual(2);
+ 
+  await funcs.DeleteUser(res.data.data[res.data.data.length-1]._id)
   
   }
 
@@ -28,6 +31,52 @@ test('Test getting all users ', async () => {
   
   }
 
+
+})
+
+test('check if a user is deleted from database',async()=>{
+
+  try{
+ 
+       //expect.assertions(6)
+       const user1=await funcs.createLawyerOrReviewer('Lawyer','ammar','Male','Egyptian','National ID','245330443672','1998-5-1','Maadi','ammar.gp@7gmail.com','133462366777')
+      // const user2=await funcs.createLawyerOrReviewer('Reviewer','Mohanad','Male','Egyptian','National ID','24411113672','1998-5-5','Maadi','mohanad.ahmed@gmail.com','116626727')
+      // const user3=await funcs.createLawyerOrReviewer('Lawyer','misho','Male','Egyptian','National ID','2441fvv26672','1998-4-2','Masr el gedida','alxi.ahmed@gmail.com','66v6626727')
+ 
+   
+
+   const OldUsers=await funcs.GetAllUsers()
+   const oldLength=OldUsers.data.data.length        
+
+   console.log(OldUsers.data)
+
+   expect(OldUsers).toBeDefined()
+   expect(OldUsers.status).toEqual(200)
+   expect(OldUsers.data.data).toHaveLength(oldLength)
+   
+
+   await funcs.DeleteUser(OldUsers.data.data[OldUsers.data.data.length-1]._id)    //delete an existing user
+  
+
+   const newUsers = await funcs.GetAllUsers()
+   const newLength=oldLength-1
+   console.log(newUsers.data)
+
+   expect(newUsers).toBeDefined()
+   expect(newUsers.status).toEqual(200)
+   expect(newUsers.data.data).toHaveLength(newLength)                              //check if length will be less by 1
+
+
+
+
+  //  await funcs.DeleteUser(OldUsers.data.data[OldUsers.data.data.length-1]._id)
+  //  await funcs.DeleteUser(OldUsers.data.data[OldUsers.data.data.length-1]._id)
+   
+
+  }
+  catch(error){
+    console.log(error)
+  }
 
 })
 
@@ -60,7 +109,10 @@ test('Test getting a certain user ', async () => {
   expect(res2.data.data.birthdate).toBe('1998-12-10T00:00:00.000Z')
   expect(res2.data.data.address).toBe('Maadi')
   expect(res2.data.data.email).toBe('Al@yahoo.com')
-  //expect(res2.data.data.password).toBe('$2b$10$Vx8xyf/01VncjCAqpFdB.Oc/rzeJqRImVUVgFjdBQoLurAw8cl/zi')
+ 
+  await funcs.DeleteUser(res.data.data[res.data.data.length-1]._id)
+
+
  
  
   }
@@ -71,6 +123,55 @@ test('Test getting a certain user ', async () => {
   
   }
 
+
+})
+
+
+
+
+test('check if delete a user that is not in the database will be deleted or not',async()=>{
+
+  try{
+ 
+       //expect.assertions(6)
+      // const user1=await funcs.createLawyerOrReviewer('Lawyer','hesham','Male','Egyptian','National ID','245470443672','1998-5-1','Maadi','hesham.gp@7gmail.com','123462366777')
+      //  const user2=await funcs.createLawyerOrReviewer('Reviewer','Mohanad','Male','Egyptian','National ID','24411113672','1998-5-5','Maadi','mohanad.ahmed@gmail.com','116626727')
+       // const user3=await funcs.createLawyerOrReviewer('Lawyer','misho','Male','Egyptian','National ID','2441fvv26672','1998-4-2','Masr el gedida','alxi.ahmed@gmail.com','66v6626727')
+ 
+   
+
+   const OldUsers=await funcs.GetAllUsers()
+   const oldLength=OldUsers.data.data.length        
+
+   console.log(OldUsers.data)
+
+   expect(OldUsers).toBeDefined()
+   expect(OldUsers.status).toEqual(200)
+   expect(OldUsers.data.data).toHaveLength(oldLength)
+   
+
+
+   
+
+   await funcs.DeleteUser(mongoose.Types.ObjectId('5c9fb264da7a330017864111'))         //try to delete non existing user
+  
+
+   const newUsers = await funcs.GetAllUsers()
+   
+   console.log(newUsers.data)
+
+   expect(newUsers).toBeDefined()
+   expect(newUsers.status).toEqual(200)
+   expect(newUsers.data.data).not.toHaveLength(oldLength-1)       //check if length will change
+
+  //  await funcs.DeleteUser(OldUsers.data.data[OldUsers.data.data.length-1]._id)
+  //  await funcs.DeleteUser(OldUsers.data.data[OldUsers.data.data.length-1]._id)
+   
+
+  }
+  catch(error){
+    console.log(error)
+  }
 
 })
 
@@ -103,6 +204,41 @@ test('Test getting the financial balance of a certain Investor ', async () => {
   
   }
 
+
+})
+
+test('check if Investor is created',async()=>{
+
+  try{
+ 
+   // expect.assertions(5)
+   var OldUsers=await funcs.GetAllUsers()
+   console.log(OldUsers.data)
+   var oldLength=OldUsers.data.data.length  
+   expect(OldUsers).toBeDefined()
+   expect(OldUsers.status).toEqual(200)
+
+
+  
+   await funcs.createInvestor('Investor','misho','male','Egyptian','National ID','24rrcf4wgwchrddn2','1998-04-02','Masr el gedida','besdddddrr@gmail.com','oppdnnwd44c0cle')
+   
+
+  
+   var newUsers = await funcs.GetAllUsers()
+   console.log(newUsers.data)
+   expect(newUsers).toBeDefined()
+   expect(newUsers.status).toEqual(200)
+
+   expect(newUsers.data.data).toHaveLength(oldLength+1)
+ 
+
+   await funcs.DeleteUser(newUsers.data.data[newUsers.data.data.length-1]._id)
+   //await funcs.DeleteUser(OldUsers.data.data[OldUsers.data.data.length-1]._id)
+   
+  }
+  catch(error){
+    console.log(error)
+  }
 
 })
 
@@ -183,11 +319,42 @@ test('Check the get of a certain form', async () => {   // get a certain form
 }
 });
 
+test('check if Lawyer or Reviewer is created',async()=>{
+
+  try{
+ 
+   //expect.assertions(5)
+   var OldUsers=await funcs.GetAllUsers()
+   console.log(OldUsers.data)
+   var oldLength=OldUsers.data.data.length  
+   expect(OldUsers).toBeDefined()
+   expect(OldUsers.status).toEqual(200)
+
+   
+   await funcs.createLawyerOrReviewer('Lawyer','momo','male','Egyptian','National ID','2444ff4wgwchrddn2','1998-04-02','Masr el gedida','w4dffuyyyyy@gmail.com','oppdwwfn44cccle','35666266662')
+   
+
+  
+   var newUsers = await funcs.GetAllUsers()
+   console.log(newUsers.data)
+   expect(newUsers).toBeDefined()
+   expect(newUsers.status).toEqual(200)
+
+   expect(newUsers.data.data).toHaveLength(oldLength+1)
+ 
+
+   await funcs.DeleteUser(newUsers.data.data[newUsers.data.data.length-1]._id)
+   
+  }
+  catch(error){
+    console.log(error)
+  }
+
+})
 
 
 
 
-// "jest": "^24.5.0",
-    // "nodemon": "^1.18.10"
+
 
 

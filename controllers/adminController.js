@@ -123,8 +123,8 @@ exports.registerLawyerOrReviewer=async function registerLawyerOrReviewer(body){ 
     newUser.password = await bcrypt.hash(newUser.password, salt);
     await newUser.save();
 
-    
     return newUser
+
 }
 
 

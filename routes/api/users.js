@@ -11,7 +11,7 @@ const validator = require('../../Validation/UserValidation')
 
 
 //sort all forms for a  by form creation date
-router.get('/AllCasesSortedByCaseDate/', async(req, res) => {                    
+router.get('/AllFormsSortedByFormDate/', async(req, res) => {                    
     var forms= await formController.search()
     forms.sort(userController.compareByDate)
     return res.json({ data: forms });
@@ -19,14 +19,14 @@ router.get('/AllCasesSortedByCaseDate/', async(req, res) => {
 
 
 //sort all forms by id as a lawyer 
-router.get('/AllCaseSortedByCaseId/', async (req,res) => {  // sort all forms by form id
+router.get('/AllFormSortedByFormId/', async (req,res) => {  // sort all forms by form id
     const forms = await formController.search()
     forms.sort(userController.compareById)
 
 })
 
 //sort by form creation date for a specific user
-router.get('/SpecificCasesSortedByCaseDate/:id', async(req, res) => {   
+router.get('/SpecificFormsSortedByFormDate/:id', async(req, res) => {   
     const userid=req.params.id
     var SpecificUser= await userController.search('_id' ,userid )
     SpecificUser.forms.sort(userController.compareByDate)
@@ -36,7 +36,7 @@ router.get('/SpecificCasesSortedByCaseDate/:id', async(req, res) => {
 
 
 //sort specific forms by id as a lawyer 
-router.get('/SpecificCaseSortedByCaseId/:id', async (req,res) => {  // sort specific forms by form id
+router.get('/SpecificFormSortedByFormId/:id', async (req,res) => {  // sort specific forms by form id
     var userid=req.params.id
     var searchUsers = await userController.search('_id',userid)
     //searchUsers.forms = await formController.search()
@@ -64,7 +64,7 @@ router.get('/getTheFinancialBalance/:id', async(req, res) => {
 
 
 // View lawyer comments of specific form of investor 
-router.get('/getLaywerCommentsOfInvestorsCase/:id', async(req, res) => {
+router.get('/getLaywerCommentsOfInvestorsForm/:id', async(req, res) => {
     var userid = req.params.id
     var user = await userController.search('_id',userid)
     var lawyercom = user.forms.lawyerComments
@@ -87,22 +87,9 @@ router.post('/register', async (req,res) => {                       //register I
 
     })
 
-//update a user + updating his form if required
+//update a user 
  router.put('/:id' , async (req,res) => {
-      var id = req.params.id 
-      var forms = body.forms 
-      var user = await userController.search('_id',id)
-      if(forms){
-          var oldforms = user.forms
-      }
-
-      for(let i=0 ;i < forms.length ; i++){  
-         var formId = user.forms[i]._id 
-         forms[i] = await formController.update('_id',formId,req.body)
-         //var newforms = oldforms + forms
-         body.forms.push(forms[i]) // Try oldforms.push()
-      }
-
+      var id = req.params.id  
       const updateUser = await userController.update('_id',id,req.body)
       if(!updateUser) return res.json({msg :'ID not there'})
       if(updateUser.error) return res.status(400).send(updateUser)
@@ -111,15 +98,52 @@ router.post('/register', async (req,res) => {                       //register I
  })
 
 
+//update a user's form 
+router.put('/:userId/:formId' , async (req,res) => {
+    
+    var userid=req.params.userId 
+    var formid=req.params.formId
+    var user= await userController.search('_id',userid)
+    var updatedForm= await formController.update('_id',formid,req.body)
+    user.forms = updatedForm
+    const returnedUser = await userController.update('_id',userid,{forms:user.forms})
+    return res.json({data:returnedUser});
+
+})
+
+
 
 //get the case of the lawyer/Reviewer 
 //lsa we need to add en bageb ely status bta3etha in progress only
-router.get('/getCases/:id',async(req,res) => {
+router.get('/getForms/:id',async(req,res) => {
     const userid=req.params.id
     const user= await userController.search('_id',userid)
     const formsOfUsers = user.forms
     return res.json({ data: formsOfUsers });
 });
+
+
+
+//When you delete a specific user , you delete with it all his forms 
+//Delete a user
+router.delete('/:id', async (req,res) => {
+    try {
+     const id = req.params.id
+     var SpecificUser= await userController.search('_id' ,id )
+     for(i=0;i<SpecificUser.forms.length;i++){
+         var formId=SpecificUser.forms[i]._id
+         await formController.remove('_id',formId)
+     }
+     const deletedUser = await userController.remove('_id',id)
+     res.json({msg:'User was deleted successfully', data: deletedUser})
+    }
+    catch(error) {
+    
+        console.log(error)
+    }  
+ })
+
+
 
 module.exports = router;
 

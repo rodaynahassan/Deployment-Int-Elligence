@@ -25,7 +25,7 @@ router.get('/SpecificCasesSortedByCaseDate/:id', async(req, res) => {
     SpecificUser.forms.sort(userController.compareByDate)
     return res.json({ data: SpecificUser.forms });
 })
-//sort cases by id as a lawyer 
+//sort cases by id as aa lawyer 
 router.get('/CaseSortedByCaseId/', async (req,res) => { // sort cases by case id
     var forms= await Forms.find()
     forms.sort(compareById)

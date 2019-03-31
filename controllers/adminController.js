@@ -26,6 +26,9 @@ exports.create=async function create(body)
       const isAdminValidated=adminValidator.createValidation(body)
       if (isAdminValidated.error) return {error:isAdminValidated.error.details[0].message}
       const newAdmin=await Admin.create(body)
+      const salt = await bcrypt.genSalt(10);
+      newAdmin.password = await bcrypt.hash(newAdmin.password, salt);
+      await newAdmin.save();
       return newAdmin
 
 

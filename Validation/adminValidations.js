@@ -13,7 +13,7 @@ module.exports = {
             address: Joi.string().required().max(50),
             telephone: Joi.string().min(8).max(20),
             fax: Joi.string().max(20),
-            email: Joi.string().email().max(20)
+            email: Joi.string().required().email().max(20)
         }
 
         return Joi.validate(request, createSchema)

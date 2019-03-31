@@ -1,7 +1,6 @@
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const Case= require('../Models/Case').schema
 const Form = require('../Models/Form').schema
 
 const User = new Schema({
@@ -14,14 +13,14 @@ const User = new Schema({
   identificationNumber: {type:String,required:true,unique:true},
   birthdate: {type:Date,required:true},
   address: {type:String,required:true},
+  email: { type: String,required:true} ,
+  password: { type: String, required: true },
   telephone:{type:String},
   fax:{type:String},
-  cases: {type: Array },
-  email: { type: String} ,
-  password: { type: String, required: true },
+  forms: {type: Array },
   lawyer: { type: Object},
   investorType: {type: String},
-  financialBalance:{type:Number,required:false}
+  financialBalance:{type:Number}
 });
 
 

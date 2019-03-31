@@ -3,94 +3,95 @@ const router = express.Router()
 const mongoose = require('mongoose')
 const Form = require('../../Models/Form')
 const validator = require('../../Validation/formValidations')
+const controller = require('../../controllers/formController')
 
-
-//get all companies
-//el moshkela hena f get all 
+//get all forms
 router.get('/', async (req,res) => {
-    const forms  = await Form.find()
-    res.json({data: forms})
+    const forms  = await controller.search()
+    return res.json({data:forms})
 })
-//get a company by id
+//get company aka status=approved
+router.get('/getApprovedCompany', async (req,res) => {
+    const form = await Controller.search('status','Approved')
+    return res.json({data:form})  
+})
+//get rejected form
+router.get('/getRejectedCompany', async (req,res) => {
+    const form = await controller.search('status','Rejected')
+    return res.json({data:form})
+})
+//get In progress form
+router.get('/getInProgressCompany', async (req,res) => {
+    const form = await controller.search('status','In progress')
+    return res.json({data:form})
+})
+
+//get Reviewer's comments
+router.get('/getReviewerComments/:id', async(req, res)=>{
+    const formId = req.params.id
+    const formComment = await controller.search('_id',formId)
+    var arrayReviewerComments = formComment.reviewerComments
+    return res.json({ data: arrayReviewerComments});
+
+})
+//get Lawyer's comments
+router.get('/getLawyerComments/:id', async(req, res)=>{
+    const formId = req.params.id
+    const formComment = await controller.search('_id',formId)
+    var arrayLawyerComments = formComment.lawyerComments
+    return res.json({ data: arrayLawyerComments});
+
+})
+ //get Reviewer's comments
+ router.get('/getReviewerComments/:id', async(req, res)=>{
+    const formId = req.params.id
+    const formComment = await controller.search('_id',formId)
+    var arrayReviewerComments = formComment.reviewerComments
+    return res.json({ data: arrayReviewerComments});
+})
+//get a form by id
 router.get('/:id', async (req,res) => {
         const id = req.params.id
-        const form = await Form.findById(id)
-        res.json({data: form})
+        const form = await controller.search('_id',id)
+        return res.json({data:form})
+        
 })
+
 //create a form
 router.post('/', async (req,res) => {
-    try {
-        if(req.body.type==='SSCForm'){
-            for(i=0;i<req.body.SSCManagers.length;i++)
-            {
-            const SSCMValidated=validator.createValidationSSCManagers(req.body.SSCManagers[i])
-                if(!SSCMValidated)
-            {    
-                 return res.status(400).send({ error: SSCMValidated.error.details[0].message })
-            }
-        }
-                const isValidated = validator. createValidationSSC(req.body)
-                 if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-                const newSSCForm = await Form.create(req.body)
-                res.json({msg:'SSC Form was created successfully', data:newSSCForm})
-            }
-             
-    if(req.body.type==='SPCForm'){
-        const isValidated = validator. createValidationSPC(req.body)
-        if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-        const newSPCForm = await Form.create(req.body)   
-        res.json({msg:'SPC Form was created successfully', data:newSPCForm})
-
-        
-       }
-    }
-    catch(error) {
-        // We will be handling the error later
-        console.log(error)
-      } 
-
+    const newForm = await controller.create(req.body)
+    return res.json({data:newForm})
     })
-    //update a company
+
+//update a form
  router.put('/:id', async (req,res) => {
-    try {
-        
-     const id = req.params.id
-     const form = await Form.findById(id)
-     if(form.type==='SSCForm'){
-     if(!form) return res.status(404).send({error: 'SSC Form does not exist'})
-     const isValidated = validator.updateValidationSSC(req.body)
-     if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-     const x = await Form.findByIdAndUpdate(id,req.body)
-     const updatedSSC = await Form.findById(id)
-     return res.json({msg: 'SSCForm updated successfully',data:updatedSSC})
-        }
-        if(form.type==='SPCForm'){
-            if(!form) return res.status(404).send({error: 'SPC Form does not exist'})
-            const isValidated = validator.updateValidationSPC(req.body)
-            if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-            const x = await Form.findByIdAndUpdate(id,req.body)
-            const updatedSPC = await Form.findById(id)
-            return res.json({msg: 'SPCForm updated successfully', data:updatedSPC})
-               }
-               return res.status(404).send({error: 'Form does not exist'})
+    try
+    {
+        const id = req.params.id
+        var form = await controller.update('_id',id,req.body)
+        if(!form) return res.json({msg:"ID not found"})
+        if(form.error) return res.status(400).send(form)
+        return res.json({msg:"Form Updated Successfully", data:form})
     }
-    catch(error) {
-        // We will be handling the error later
+    catch(error)
+    {
         console.log(error)
-    }  
+    }
  })
-//delete a company
+
+//delete a form
  router.delete('/:id', async (req,res) => {
     try {
      const id = req.params.id
-     const deletedForm= await Form.findByIdAndRemove(id)
-     res.json({msg:'Form was deleted successfully', data: deletedForm})
+     const deletedForm= await controller.remove('_id',id)
+    return res.json({msg:'Form was deleted successfully', data: deletedForm})
     }
     catch(error) {
-        // We will be handling the error later
         console.log(error)
     }  
  })
 
+ 
 
-    module.exports = router
+module.exports = router
+

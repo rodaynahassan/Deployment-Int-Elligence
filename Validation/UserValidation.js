@@ -117,7 +117,6 @@ module.exports = {
 
 
 
-
     updateValidationR: request => {                                             //update for reviewer
         const updateSchema = {
         name: Joi.string().max(50).min(3),

@@ -6,6 +6,7 @@
  const axios = require('axios');
  const funcs = require('../funcs/userFuncs');
 
+ //Getting approved companies
  test('Get approved forms (Company) of Investor', async () => {
       try{
         await funcs.createInvestor('Investor','Youssr','Female','Egyptian','National ID','123456766890','1998-04-02','Masr el gedida','yoyy@hotmail.com','sjeirys22')
@@ -24,6 +25,7 @@
       }
     })
  
+  //Getting in progress cases
    test('Get in progress forms (Cases)', async () => {
      try{
         await funcs.createInvestor('Investor','Ahmed','Male','Egyptian','Passport','0987654321111','1997-12-15','Nasr City','tott@gmail.com','hahahahaha') 
@@ -61,7 +63,32 @@
   catch(error){
     console.log(error)
   }
-  });
+  })
+test('Test getting all users ', async () => {
+  try {
+    
+    const r = await funcs.getAllUsers()
+    const len = r.data.data.length
+    
+  // creating a lawyer and a reviwer for testing 
+
+    await funcs.CreateReviewerOrLawyer('Lawyer','Ali Ibrahim22','male','Egyptian','national id','A136700190453','1998-12-1','Maadi','alihh033@yahoo.com','123456788')
+  
+  const res = await funcs.getAllUsers()
+  console.log(res.data)
+  expect(res.data.data.length).toBe(len + 1)
+  expect(res.data).toBeDefined()
+  expect(res.status).toEqual(200)
+ 
+  await funcs.deleteUser(res.data.data[res.data.data.length-1]._id)
+  
+  }
+
+  catch(error){
+    
+    console.log(error)
+  
+  }
 
   test('Login Investor', async () => {
  
@@ -108,6 +135,7 @@
     console.log(error)
   }
   });
+})
 
 test('check if a user is deleted from database',async()=>{
 
@@ -120,7 +148,7 @@ test('check if a user is deleted from database',async()=>{
  
    
 
-   const OldUsers=await funcs.getUsers()
+   const OldUsers=await funcs.getAllUsers()
    const oldLength=OldUsers.data.data.length        
 
    console.log(OldUsers.data)
@@ -130,13 +158,10 @@ test('check if a user is deleted from database',async()=>{
    expect(OldUsers.data.data).toHaveLength(oldLength)
    
 
-
-
-
-   await funcs.DeleteUser(OldUsers.data.data[OldUsers.data.data.length-1]._id)    //delete an existing user
+   await funcs.deleteUser(OldUsers.data.data[OldUsers.data.data.length-1]._id)    //delete an existing user
   
 
-   const newUsers = await funcs.getUsers()
+   const newUsers = await funcs.getAllUsers()
    const newLength=oldLength-1
    console.log(newUsers.data)
 
@@ -147,8 +172,8 @@ test('check if a user is deleted from database',async()=>{
 
 
 
-  //  await funcs.DeleteUser(OldUsers.data.data[OldUsers.data.data.length-1]._id)
-  //  await funcs.DeleteUser(OldUsers.data.data[OldUsers.data.data.length-1]._id)
+  //  await funcs.deleteUser(OldUsers.data.data[OldUsers.data.data.length-1]._id)
+  //  await funcs.deleteUser(OldUsers.data.data[OldUsers.data.data.length-1]._id)
    
 
   }
@@ -157,6 +182,55 @@ test('check if a user is deleted from database',async()=>{
   }
 
 })
+
+
+
+test('Test getting a certain user ', async () => {
+  try {
+  
+   
+  //creating a lawyer for testing 
+  await funcs.CreateReviewerOrLawyer('Lawyer','Ali el seba3y','male','Egyptian','national id','01612340078','1998-12-10T00:00:00.000Z','Maadi','Al@yahoo.com','123456788')
+  
+  
+  const res = await funcs.getAllUsers()   // getting all users
+  expect(res.data).toBeDefined()
+  expect(res.status).toEqual(200)
+  
+  const res2 = await funcs.getUserById(res.data.data[res.data.data.length-1]._id)  // getting a certain user 
+  console.log(res2.data)
+
+
+  // checking the requirements of the created user:-
+
+  expect(res2.data.data.userType).toBe('Lawyer')
+  expect(res2.data.data.name).toBe('Ali el seba3y')
+  expect(res2.data.data.gender).toBe('male')
+  expect(res2.data.data.nationality).toBe('Egyptian')
+  expect(res2.data.data.identificationType).toBe('national id')
+  expect(res2.data.data.identificationNumber).toBe('01612340078')
+  expect(res2.data.data.birthdate).toBe('1998-12-10T00:00:00.000Z')
+  expect(res2.data.data.address).toBe('Maadi')
+  expect(res2.data.data.email).toBe('Al@yahoo.com')
+ 
+  await funcs.deleteUser(res.data.data[res.data.data.length-1]._id)
+
+
+ 
+ 
+  }
+
+  catch(error){
+    
+    console.log(error)
+  
+  }
+
+
+})
+
+
+
 
 test('check if delete a user that is not in the database will be deleted or not',async()=>{
 
@@ -169,7 +243,7 @@ test('check if delete a user that is not in the database will be deleted or not'
  
    
 
-   const OldUsers=await funcs.getUsers()
+   const OldUsers=await funcs.getAllUsers()
    const oldLength=OldUsers.data.data.length        
 
    console.log(OldUsers.data)
@@ -182,10 +256,10 @@ test('check if delete a user that is not in the database will be deleted or not'
 
    
 
-   await funcs.DeleteUser(mongoose.Types.ObjectId('5c9fb264da7a330017864111'))         //try to delete non existing user
+   await funcs.deleteUser(mongoose.Types.ObjectId('5c9fb264da7a330017864111'))         //try to delete non existing user
   
 
-   const newUsers = await funcs.getUsers()
+   const newUsers = await funcs.getAllUsers()
    
    console.log(newUsers.data)
 
@@ -193,8 +267,8 @@ test('check if delete a user that is not in the database will be deleted or not'
    expect(newUsers.status).toEqual(200)
    expect(newUsers.data.data).not.toHaveLength(oldLength-1)       //check if length will change
 
-  //  await funcs.DeleteUser(OldUsers.data.data[OldUsers.data.data.length-1]._id)
-  //  await funcs.DeleteUser(OldUsers.data.data[OldUsers.data.data.length-1]._id)
+  //  await funcs.deleteUser(OldUsers.data.data[OldUsers.data.data.length-1]._id)
+  //  await funcs.deleteUser(OldUsers.data.data[OldUsers.data.data.length-1]._id)
    
 
   }
@@ -204,12 +278,44 @@ test('check if delete a user that is not in the database will be deleted or not'
 
 })
 
+
+
+
+test('Test getting the financial balance of a certain Investor ', async () => {
+  try {
+  
+   
+  //creating an Investor for testing 
+  await funcs.CreateInvestor('Investor','sebaaa3y','male','Egyptian','national id','A6123456777','1998-12-10T00:00:00.000Z','Maadi','ali@yahoo.com','123456789','202')
+  
+  
+  const res = await funcs.getAllUsers()  // getting all users
+  expect(res.data).toBeDefined()
+  expect(res.status).toEqual(200)
+  
+  const res2 = await funcs.getUserById(res.data.data[res.data.data.length-1]._id) // getting a certain user 
+  console.log(res2.data)   
+
+  expect(res2.data.data.financialBalance).toEqual(202)   // checking his financial balance
+  
+ 
+  }
+
+  catch(error){
+    
+    console.log(error)
+  
+  }
+
+
+})
+
 test('check if Investor is created',async()=>{
 
   try{
  
    // expect.assertions(5)
-   var OldUsers=await funcs.getUsers()
+   var OldUsers=await funcs.getAllUsers()
    console.log(OldUsers.data)
    var oldLength=OldUsers.data.data.length  
    expect(OldUsers).toBeDefined()
@@ -221,7 +327,7 @@ test('check if Investor is created',async()=>{
    
 
   
-   var newUsers = await funcs.getUsers()
+   var newUsers = await funcs.getAllUsers()
    console.log(newUsers.data)
    expect(newUsers).toBeDefined()
    expect(newUsers.status).toEqual(200)
@@ -229,8 +335,8 @@ test('check if Investor is created',async()=>{
    expect(newUsers.data.data).toHaveLength(oldLength+1)
  
 
-   await funcs.DeleteUser(newUsers.data.data[newUsers.data.data.length-1]._id)
-   //await funcs.DeleteUser(OldUsers.data.data[OldUsers.data.data.length-1]._id)
+   await funcs.deleteUser(newUsers.data.data[newUsers.data.data.length-1]._id)
+   //await funcs.deleteUser(OldUsers.data.data[OldUsers.data.data.length-1]._id)
    
   }
   catch(error){
@@ -239,12 +345,89 @@ test('check if Investor is created',async()=>{
 
 })
 
+
+
+test('Check the update of a certain user', async () => {
+    
+  try{
+  
+  const res =  await funcs.getAllUsers()       // getting all users
+  expect(res).toBeDefined()
+  expect(res.status).toEqual(200)
+  var len = res.data.data[res.data.data.length-1]
+  var lenid = res.data.data[res.data.data.length-1]._id   // get the id of a certain user 
+  expect(res.data.data.length).toEqual(42)   // check the length 
+
+  await funcs.UpdateUser(lenid)    // update the user
+
+  var x = await funcs.getUserById(lenid)
+  console.log(x.data)   // printing the result just for testing
+
+  expect(x.data.data.name).toBe('ALI EL SEBAIE2')   // checking
+  expect(x.data.data.nationality).toBe('Masry')    // checking
+  expect(res.data.data.length).toEqual(42)   // check the length again to make sure that it is not changed after updating
+  
+}catch(error){
+  console.log(error)
+}
+});
+
+
+
+test('Check the update of a form in a certain user', async () => {
+    
+  try{
+  
+  const res =  await funcs.getAllUsers()    // getting all users
+  const res2 = await funcs.getAllForms()    // getting all forms
+  expect(res).toBeDefined()
+  expect(res.status).toEqual(200)
+  var lenid = res.data.data[res.data.data.length-1]._id     // get the id of a certain user 
+  var formid = res2.data.data[res2.data.data.length-1]._id  // get the id of a certain form
+  
+  await funcs.UpdateFormInUser(lenid,formid)    // update the form of the user
+
+
+  var x = await funcs.getFormById(formid)
+  console.log(x.data)   // printing the result just for testing
+
+  expect(x.data.data.companyName).toBe('sebaie200 company')   // checking
+  expect(x.data.data.companyNameInEnglish).toBe('Irish comp')    // checking
+
+  
+}catch(error){
+  console.log(error)
+}
+});
+
+
+
+test('Check the get of a certain form', async () => {   // get a certain form
+    
+  try{
+  
+    const res = await funcs.getAllForms()   // getting all Forms
+      expect(res.data).toBeDefined()
+      expect(res.status).toEqual(200)
+
+      const res2 = await funcs.getFormById(res.data.data[res.data.data.length-1]._id)  // getting a certain form 
+      console.log(res2.data)
+ 
+   expect(res2.data.data.companyName).toBe('rwaaaarr')   // checking
+   expect(res2.data.data.type).toBe('SPCForm')    // checking
+
+  
+}catch(error){
+  console.log(error)
+}
+});
+
 test('check if Lawyer or Reviewer is created',async()=>{
 
   try{
  
    //expect.assertions(5)
-   var OldUsers=await funcs.getUsers()
+   var OldUsers=await funcs.getAllUsers()
    console.log(OldUsers.data)
    var oldLength=OldUsers.data.data.length  
    expect(OldUsers).toBeDefined()
@@ -255,7 +438,7 @@ test('check if Lawyer or Reviewer is created',async()=>{
    
 
   
-   var newUsers = await funcs.getUsers()
+   var newUsers = await funcs.getAllUsers()
    console.log(newUsers.data)
    expect(newUsers).toBeDefined()
    expect(newUsers.status).toEqual(200)
@@ -263,7 +446,7 @@ test('check if Lawyer or Reviewer is created',async()=>{
    expect(newUsers.data.data).toHaveLength(oldLength+1)
  
 
-   await funcs.DeleteUser(newUsers.data.data[newUsers.data.data.length-1]._id)
+   await funcs.deleteUser(newUsers.data.data[newUsers.data.data.length-1]._id)
    
   }
   catch(error){
@@ -271,3 +454,10 @@ test('check if Lawyer or Reviewer is created',async()=>{
   }
 
 })
+
+
+
+
+
+
+

@@ -2,11 +2,12 @@ const express = require('express');
 const Joi = require('joi');
 const uuid = require('uuid');
 const router = express.Router();
+
+const formController = require('../../controllers/formController')
 const userController=require('../../controllers/userController')
 const User = require('../../Models/User')
-const Forms = require('../../Models/Form')
 const validator = require('../../Validation/UserValidation')
-const formController = require('../../controllers/formController')
+
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 const tokenKey = require('../../config/keys_dev').secretOrKey
@@ -15,21 +16,42 @@ const tokenKey = require('../../config/keys_dev').secretOrKey
 
 
 
-//sort all cases for a  by case creation date
-router.get('/AllCasesSortedByCaseDate/', async(req, res) => {                    
+
+
+//sort all forms for a  by form creation date
+router.get('/AllFormsSortedByFormDate/', async(req, res) => {                    
     var forms= await formController.search()
     forms.sort(userController.compareByDate)
     return res.json({ data: forms });
 })
 
 
-//sort by case creation date for a specific user
-router.get('/SpecificCasesSortedByCaseDate/:id', async(req, res) => {   
+//sort all forms by id as a lawyer 
+router.get('/AllFormSortedByFormId/', async (req,res) => {  // sort all forms by form id
+    const forms = await formController.search()
+    forms.sort(userController.compareById)
+
+})
+
+//sort by form creation date for a specific user
+router.get('/SpecificFormsSortedByFormDate/:id', async(req, res) => {   
     const userid=req.params.id
     var SpecificUser= await userController.search('_id' ,userid )
     SpecificUser.forms.sort(userController.compareByDate)
     return res.json({ data: SpecificUser.forms });
 })
+
+
+
+//sort specific forms by id as a lawyer 
+router.get('/SpecificFormSortedByFormId/:id', async (req,res) => {  // sort specific forms by form id
+    var userid=req.params.id
+    var searchUsers = await userController.search('_id',userid)
+    //searchUsers.forms = await formController.search()
+    searchUsers.forms.sort(userController.compareById)
+    return res.json({ data: searchUsers.forms });
+})
+
 
 
 //sort cases by id as a lawyer 
@@ -55,6 +77,17 @@ router.get('/getTheFinancialBalance/:id', async(req, res) => {
     const financialBalance= user.financialBalance
     return res.json({ data: financialBalance });
 })
+
+
+// View lawyer comments of specific form of investor 
+router.get('/getLaywerCommentsOfInvestorsForm/:id', async(req, res) => {
+    var userid = req.params.id
+    var user = await userController.search('_id',userid)
+    var lawyercom = user.forms.lawyerComments
+    return res.json({ data: lawyercom });
+})
+
+
 //get all users
 router.get('/', async (req,res) => {
     const searchUsers = await userController.search()
@@ -95,10 +128,17 @@ router.post('/login',async(req,res)=>{
 catch(e){}
 })
 
-//update a user
- router.put('/:id', async (req,res) => {
-      
-      const id = req.params.id 
+
+router.post('/register', async (req,res) => {                       //register Investor
+    const newUser = await userController.registerInvestor(req.body) 
+    if(newUser.error) return res.status(400).send(newUser) 
+     return res.json({msg:'Investor was created successfully', data: newUser})
+
+    })
+
+//update a user 
+ router.put('/:id' , async (req,res) => {
+      var id = req.params.id  
       const updateUser = await userController.update('_id',id,req.body)
       if(!updateUser) return res.json({msg :'ID not there'})
       if(updateUser.error) return res.status(400).send(updateUser)
@@ -116,7 +156,8 @@ router.get('/getInProgressCases/:id',async(req,res) => {
             inprogressForms.push(userForms[i])
     }
     res.json({data:inprogressForms})
-});
+})
+
 //as an investor i should be able to view my companies
 router.get('/getApprovedCompanies/:id',async(req,res) => {
     const userid = req.params.id
@@ -133,7 +174,20 @@ router.get('/getApprovedCompanies/:id',async(req,res) => {
 else{
     res.json({msg: 'You are not an investor to get you accepted companies'})
 }
-});
+})
+
+//update a user's form 
+router.put('/:userId/:formId' , async (req,res) => {
+    
+    var userid=req.params.userId 
+    var formid=req.params.formId
+    var user= await userController.search('_id',userid)
+    var updatedForm= await formController.update('_id',formid,req.body)
+    user.forms = updatedForm
+    const returnedUser = await userController.update('_id',userid,{forms:user.forms})
+    return res.json({data:returnedUser});
+
+})
 
 //When you delete a specific user , you delete with it all his forms 
 //Delete a user
@@ -141,6 +195,7 @@ router.delete('/:id', async (req,res) => {
     try {
      const id = req.params.id
      var SpecificUser= await userController.search('_id' ,id )
+
      if(!SpecificUser) return res.json({msg:'This user doesnt exist'})
      for(i=0;i<SpecificUser.forms.length;i++){
          var formId=SpecificUser.forms[i]._id
@@ -150,6 +205,7 @@ router.delete('/:id', async (req,res) => {
      
      const deletedUser = await userController.remove('_id',id)
 
+
      res.json({msg:'User was deleted successfully', data: deletedUser})
     }
     catch(error) {
@@ -157,5 +213,7 @@ router.delete('/:id', async (req,res) => {
         console.log(error)
     }  
  })
+
+
 
 module.exports = router;

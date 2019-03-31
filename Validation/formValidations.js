@@ -58,9 +58,9 @@ module.exports = {
         const SPCSchema ={
             userId:Joi.objectId().required(),
             companyName: Joi.string().required().max(50),
-            companyGovernorate: Joi.string().required().min(3).max(20),
-            companyAddress: Joi.string().required().min(5).max(50),
-            companyCity: Joi.string().required().min(3).max(20),
+            // companyGovernorate: Joi.string().required().min(3).max(20),
+            // companyAddress: Joi.string().required().min(5).max(50),
+            // companyCity: Joi.string().required().min(3).max(20),
             companyTelephone: Joi.string().min(8).max(15),
             companyFax: Joi.string().min(5).max(20),
             companyNameInEnglish: Joi.string().max(50),

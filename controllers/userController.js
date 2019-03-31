@@ -56,8 +56,7 @@ exports.search = async function search(att ,value ){
 
 
 
-//delete user
-exports.remove=async function remove(att,value){                           
+exports.remove=async function remove(att,value){                           //delete user
 
     
         if(att===null){
@@ -102,14 +101,13 @@ exports.update = async function update(att, value, body){
        }
       
        catch(error) {
-           // We will be handling the error later
+          
            console.log(error)
        }
-    }
 
-       
-    // for sorting the cses by caseID
-       function compareById(a , b){  
+
+
+      exports.compareById = async function compareById(a , b){  // for sorting the cses by caseID
         if(a._id > b._id )
         return 1;
         
@@ -121,9 +119,8 @@ exports.update = async function update(att, value, body){
         }
 
    
+}
 
-
-    
 
 
 

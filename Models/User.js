@@ -20,7 +20,7 @@ const User = new Schema({
   forms: {type: Array },
   lawyer: { type: Object},
   investorType: {type: String},
-  financialBalance:{type:Number,required:false}
+  financialBalance:{type:Number}
 });
 
 

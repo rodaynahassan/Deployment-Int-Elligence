@@ -117,7 +117,7 @@ exports.registerLawyerOrReviewer=async function registerLawyerOrReviewer(body){ 
         return error2.details[0].message;
     }
     let user = await User.findOne({ email: body.email });
-   // const user = await User.findOne({body:email})
+    // const user = await User.findOne({body:email})
     if(user) return {error: 'Account already exists'}
     
    
@@ -126,8 +126,8 @@ exports.registerLawyerOrReviewer=async function registerLawyerOrReviewer(body){ 
     newUser.password = await bcrypt.hash(newUser.password, salt);
     await newUser.save();
 
-    
     return newUser
+
 }
 
 

@@ -40,27 +40,34 @@ router.get('/getTheFinancialBalance/:id', async(req, res) => {
     const financialBalance= user.financialBalance
     return res.json({ data: financialBalance });
 })
-
-
 //get all users
 router.get('/', async (req,res) => {
     const searchUsers = await userController.search()
     res.json({data: searchUsers})
 })
 
- 
+ //As a User i can Create a form
+router.post('/CreatingForm/:id', async(req,res) =>{
+    const id = req.params.id        //userID
+    req.body.userId=id
+    const newForm = await formController.create(req.body)
+    const user = await userController.search('_id',id)
+    if(newForm.error) return res.status(400).send(newForm.error)
+    if(!newForm) return res.json({msg:"Form is null"})
+    user.forms.push(newForm)
+    const returnedUser = await userController.update('_id',id,{forms:user.forms})
+    return res.json({data:returnedUser})
+})
 
-//create a user
+//Create a User
 router.post('/', async (req,res) => {
     
      const newUser = await userController.create(req.body)
      if(newUser.error) return res.status(400).send(newUser) 
      return res.json({msg:'User was created successfully', data: newUser})
-
-
     }
  )
-//update a user
+//Update a User
  router.put('/:id', async (req,res) => {
       
       const id = req.params.id 
@@ -68,8 +75,6 @@ router.post('/', async (req,res) => {
       if(!updateUser) return res.json({msg :'ID not there'})
       if(updateUser.error) return res.status(400).send(updateUser)
       return res.json({msg : 'User Updated Successfully',data: updateUser})
-
-     
  })
 
 //delete a user
@@ -80,7 +85,6 @@ router.post('/', async (req,res) => {
      res.json({msg:'User was deleted successfully', data: deletedUser})
     }
     catch(error) {
-        // We will be handling the error later
         console.log(error)
     }  
  })
@@ -93,13 +97,4 @@ router.get('/getCases/:id',async(req,res) => {
     var arrayOfForms = user.forms 
     res.json({data: arrayOfForms})
 });
-
 module.exports = router;
-
-
-
-
-
-
-
-

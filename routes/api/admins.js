@@ -4,6 +4,7 @@ const uuid = require('uuid');
 const router = express.Router();
 const validator = require('../../Validation/adminValidations')
 const adminController = require('../../controllers/adminController')
+const formController = require('../../controllers/formController')
 
 // Models
 const Admin = require('../../Models/Admin');
@@ -28,7 +29,12 @@ router.post('/', async (req,res) => {
     return res.json({ data: newAdmin });
  })
 
-
+//get case/form by company name
+router.get('/getByCompanyName/:companyName', async (req,res) => {
+    const companyname = req.params.companyName
+    const formRequested = await formController.search('companyName',companyname)
+   return res.json({data: formRequested})
+})
 // sort cases by id
 router.get('/CasesSortedById', async(req, res) => {
     var forms= await Forms.find()

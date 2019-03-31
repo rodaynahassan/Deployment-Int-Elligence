@@ -44,6 +44,11 @@ exports.search = async function search(att ,value ){  // Search users
         var values = await User.findById(value)
         return values
     }
+    // if(att ==='Lawyer')
+    // {
+    // var values=await Form.find({'Lawyer':value})
+    // return values
+    // }
 
     var values = User.find({att:value})
     return values

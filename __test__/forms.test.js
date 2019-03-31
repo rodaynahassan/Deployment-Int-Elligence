@@ -5,22 +5,22 @@ const mongoose = require('mongoose');
 const funcs = require('../funcs/formFn');
 const axios = require('axios');
 //Testing Creating a form by a User 
-// test('Create form', async () => {
-//    var response =  await funcs.getForms()
-//    const length = response.data.data.length
-//    try{
-//      await funcs.postForm('Telal', 'Cech','3 masr st.','Batates','Euro',200000,'SPCForm','1998-09-08', mongoose.Types.ObjectId('5c9ff68965c44707647a620c'))
-//      //await funcs.postForm('Marassi', 'Marassi', '88 villa sg', 'Bab', 300000 , [{name:"Fares"},{type:"Person"},{gender:"female"},{nationality:"French"},{identificationType:"Passport"},{identificationNumber:"0999990999099"},{birthdate:"1899-09-09"},{address:"76 paris"},{typeOfManagers:"CPE"}],'SSCForm',mongoose.Types.ObjectId('5c9ff68965c44707647a620c'))
-//    }
-//    catch(err){
-//    console.log(err);}
-//    response =  await funcs.getForms()
-//    expect(response.status).toEqual(200)
-//    expect(response.data.data[length].companyName).toMatch("Batates")
-//    expect(response.data.data).toHaveLength(length+1)
+test('Create form', async () => {
+   var response =  await funcs.getForms()
+   const length = response.data.data.length
+   try{
+     await funcs.postForm('Telal', 'Cech','3 masr st.','Batates','Euro',200000,'SPCForm','1998-09-08', mongoose.Types.ObjectId('5c9ff68965c44707647a620c'))
+     //await funcs.postForm('Marassi', 'Marassi', '88 villa sg', 'Bab', 300000 , [{name:"Fares"},{type:"Person"},{gender:"female"},{nationality:"French"},{identificationType:"Passport"},{identificationNumber:"0999990999099"},{birthdate:"1899-09-09"},{address:"76 paris"},{typeOfManagers:"CPE"}],'SSCForm',mongoose.Types.ObjectId('5c9ff68965c44707647a620c'))
+   }
+   catch(err){
+   console.log(err);}
+   response =  await funcs.getForms()
+   expect(response.status).toEqual(200)
+   expect(response.data.data[length].companyName).toMatch("Batates")
+   expect(response.data.data).toHaveLength(length+1)
    
     
-//   });
+  });
   
   test ('get reviewers Comments ', async()=>{
     try{
@@ -64,21 +64,21 @@ const axios = require('axios');
   });
   
   //testing creating SSC form
-  // test ('create a SSC form', async ()=>{
-  //   var response =  await funcs.getForms()
-  //   const length = response.data.data.length
-  //  try {
-  //    await funcs.postSSCForm('Paris', 'Paris', '444 par', 'Abdo', 'Euro', 2000000,[{name:"Fares",type:"Person",gender:"female",nationality:"French",identificationType:"Passport",identificationNumber:"0999990999099",birthdate:"1899-09-09",address:"76 paris",typeOfManagers:"CPE"}], 'SSCForm','1977-09-07', mongoose.Types.ObjectId('5c9ff68965c44707647a620c'))
-  //    response =  await funcs.getForms()
-  //    expect(response.status).toEqual(200)
-  //    console.log(response.data.data[length].companyName)
-  //    expect(response.data.data[length].companyName).toMatch('Abdo')
-  //    expect(response.data.data[length].type).toBe('SSCForm')
-  //    expect(response.data.data).toHaveLength(length+1)
-  //   }
-  //  catch(err){
-  //   console.log(err);
-  // }
+  test ('create a SSC form', async ()=>{
+    var response =  await funcs.getForms()
+    const length = response.data.data.length
+   try {
+     await funcs.postSSCForm('Paris', 'Paris', '444 par', 'Abdo', 'Euro', 2000000,[{name:"Fares",type:"Person",gender:"female",nationality:"French",identificationType:"Passport",identificationNumber:"0999990999099",birthdate:"1899-09-09",address:"76 paris",typeOfManagers:"CPE"}], 'SSCForm','1977-09-07', mongoose.Types.ObjectId('5c9ff68965c44707647a620c'))
+     response =  await funcs.getForms()
+     expect(response.status).toEqual(200)
+     console.log(response.data.data[length].companyName)
+     expect(response.data.data[length].companyName).toMatch('Abdo')
+     expect(response.data.data[length].type).toBe('SSCForm')
+     expect(response.data.data).toHaveLength(length+1)
+    }
+   catch(err){
+    console.log(err);
+  }
    
     
-  // });
+  });

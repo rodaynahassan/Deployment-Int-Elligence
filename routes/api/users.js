@@ -12,12 +12,17 @@ const jwt = require('jsonwebtoken')
 const tokenKey = require('../../config/keys_dev').secretOrKey
 
 
+
+
+
 //sort all cases for a  by case creation date
 router.get('/AllCasesSortedByCaseDate/', async(req, res) => {                    
     var forms= await formController.search()
     forms.sort(userController.compareByDate)
     return res.json({ data: forms });
 })
+
+
 //sort by case creation date for a specific user
 router.get('/SpecificCasesSortedByCaseDate/:id', async(req, res) => {   
     const userid=req.params.id
@@ -25,18 +30,24 @@ router.get('/SpecificCasesSortedByCaseDate/:id', async(req, res) => {
     SpecificUser.forms.sort(userController.compareByDate)
     return res.json({ data: SpecificUser.forms });
 })
-//sort cases by id as aa lawyer 
+
+
+//sort cases by id as a lawyer 
 router.get('/CaseSortedByCaseId/', async (req,res) => { // sort cases by case id
     var forms= await Forms.find()
     forms.sort(compareById)
     return res.json({ data: forms });
 })
+
+
 // view a certain user
 router.get('/:id', async(req, res) => {
     const userid=req.params.id
     const searchUsers = await userController.search('_id',userid)
     return res.json({ data: searchUsers });
 })
+
+
 //view the financialBalance of an investor
 router.get('/getTheFinancialBalance/:id', async(req, res) => {
     const userid=req.params.id
@@ -55,8 +66,8 @@ router.get('/', async (req,res) => {
 router.post('/register', async (req,res) => {                       //register Investor
     const newUser = await userController.registerInvestor(req.body) 
     if(newUser.error) return res.status(400).send(newUser) 
-     return res.json({msg:'Investor was created successfully', data: newUser})
- })
+     return res.json({msg:'Account was created successfully', data: newUser})
+})
 
 //Login
 router.post('/login',async(req,res)=>{
@@ -130,11 +141,15 @@ router.delete('/:id', async (req,res) => {
     try {
      const id = req.params.id
      var SpecificUser= await userController.search('_id' ,id )
+     if(!SpecificUser) return res.json({msg:'This user doesnt exist'})
      for(i=0;i<SpecificUser.forms.length;i++){
          var formId=SpecificUser.forms[i]._id
          await formController.remove('_id',formId)
+         
      }
+     
      const deletedUser = await userController.remove('_id',id)
+
      res.json({msg:'User was deleted successfully', data: deletedUser})
     }
     catch(error) {

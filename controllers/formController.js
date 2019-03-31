@@ -124,7 +124,8 @@ exports.update = async function update(att,value,body)
            console.log(error)
        }  
 }
-//Getting
+
+//Searching
 exports.search=async function search(att,value)
 {
     if(!att)

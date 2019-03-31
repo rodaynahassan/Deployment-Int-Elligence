@@ -21,10 +21,40 @@ const functions = {
        })
       return user
     },
+    createLawyerOrReviewer: async(userType1,name1,gender1,nationality1,identificationType1,identificationNumber1,birthdate1,address1,email1,password1,telephone1) =>{  
+        await axios({
+           method:'post',
+           url:'http://localhost:3000/routes/api/admins/register',
+           //url:'http://desolate-oasis-18053.herokuapp.com/routes/api/admins/register',
+           data:{ 
+           userType:userType1,
+           name: name1,
+           gender:gender1 ,
+           nationality:nationality1 ,
+           identificationType:identificationType1 ,
+           identificationNumber: identificationNumber1 ,
+           birthdate: birthdate1,
+           address:address1 ,
+           email:email1,
+           password:password1,
+           telephone:telephone1
+          
+           }
+       })
+   },
    getAllUsers : async() =>{
         const forms = await axios.get('http://localhost:3000/routes/api/users/')
         return forms
    },
+   getUserById : async(UserId) => {
+
+    user= await axios({
+        method : 'get',
+        url:'localhost:3000/routes/api/users/'+UserId
+        //url:'http://desolate-oasis-18053.herokuapp.com/routes/api/users/'+UserId
+    })
+    return user
+},
     postFormForUser: async(companyGovernorate1 , companyCity1 , companyAddress1 , companyName1 , currency1 ,equityCapital1 ,type1,status1 ,creationDate1 ,userId1)=>{
         var form = await axios({
             method:'post',
@@ -44,25 +74,25 @@ const functions = {
             })
             return form;
     },
-        getAllForms: async() =>{
-                const forms = await axios.get('http://localhost:3000/routes/api/forms/')
-                   return forms
+    getAllForms: async() =>{
+            const forms = await axios.get('http://localhost:3000/routes/api/forms/')
+                return forms
         },
-        getFormByID: async(FormID) =>{
-                const form = await axios({
-                    method:'get',
-                    url:'http://localhost:3000/routes/api/forms/'+FormID
-                  })
-                  return form
-        },
-        getCompanyOfAnInvestor: async(userID) =>{
-                const form =  await axios({
-                    method:'get',
-                    url:'http://localhost:3000/routes/api/users/getApprovedCompanies/'+userID
+    getFormByID: async(FormID) =>{
+            const form = await axios({
+                method:'get',
+                url:'http://localhost:3000/routes/api/forms/'+FormID
                 })
-                return form
+            return form
         },
-        getInProgressCase: async(userID) =>{
+    getCompanyOfAnInvestor: async(userID) =>{
+            const form =  await axios({
+                method:'get',
+                url:'http://localhost:3000/routes/api/users/getApprovedCompanies/'+userID
+                })
+            return form
+        },
+    getInProgressCase: async(userID) =>{
             const form =  await axios({
                 method:'get',
                 url:'http://localhost:3000/routes/api/users/getInProgressCases/'+userID
@@ -70,7 +100,7 @@ const functions = {
             return form
     },
     postLawyer: async (userType1,name1,gender1,nationality1,identificationType1,identificationNumber1,password1,birthdate1,address1,email1) => {
-         axios({
+        await axios({
             method:'post',
             url:'http://localhost:3000/routes/api/users/register',
             data: {
@@ -88,7 +118,7 @@ const functions = {
             })
         },
     loginLawyer: async (password1,email1) => {
-            axios({
+        await axios({
                method:'post',
                url:'http://localhost:3000/routes/api/usres/login',
                data: {
@@ -98,7 +128,7 @@ const functions = {
                })
            },
     loginInvestor: async (password1,email1) => {
-               axios({
+        await axios({
                   method:'post',
                   url:'http://localhost:3000/routes/api/usres/login',
                   data: {
@@ -108,7 +138,7 @@ const functions = {
                   })
               },
     postReviewer: async (userType1,name1,gender1,nationality1,identificationType1,identificationNumber1,password1,birthdate1,address1,email1) => {
-                axios({
+        await axios({
                    method:'post',
                    url:'http://localhost:3000/routes/api/users/register',
                    data: {
@@ -126,7 +156,7 @@ const functions = {
                    })
                },
     loginReviewer: async (password1,email1) => {
-                   axios({
+        await axios({
                       method:'post',
                       url:'http://localhost:3000/routes/api/usres/login',
                       data: {
@@ -136,11 +166,10 @@ const functions = {
                       })
                   },
     deleteUser: async (DeleteID) => {
-            await axios.delete('http://localhost:/routes/api/users/'+ DeleteID)
+        await axios.delete('http://localhost:/routes/api/users/'+ DeleteID)
             
         }
         
 };
 module.exports = functions;
-
-jest.setTimeout(40000);
+jest.setTimeout(100000);

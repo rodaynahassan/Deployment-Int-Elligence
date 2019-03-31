@@ -15,8 +15,8 @@ exports.compareByDate=function compareByDate(a,b){
     return 0;
 }
 
-//creating Investor
-exports.registerInvestor=async function registerInvestor(body){                      
+//creating Investor                      
+exports.registerInvestor=async function registerInvestor(body){                      //creating Investor
     const { error1 } = userValidator.createValidationI(body)            
     
     if (error1) {
@@ -63,6 +63,7 @@ exports.remove=async function remove(att,value){
         if(att===null){
             return 'there is no user to delete'
         }
+
         else if(att==='_id'){
 
          const deletedUser = await User.findByIdAndDelete(value)

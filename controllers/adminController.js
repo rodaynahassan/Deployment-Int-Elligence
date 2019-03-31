@@ -42,7 +42,8 @@ exports.update = async function update(att,value,body){
     }
     if(att==='id'){
         
-        const  admin= await Admin.findByIdAndUpdate(value,body)
+        const  admin1= await Admin.findByIdAndUpdate(value,body)
+        const admin = await Admin.findById(value)
         return admin
     }
     else{

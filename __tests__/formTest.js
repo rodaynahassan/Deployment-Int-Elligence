@@ -11,7 +11,7 @@ test('Test getting all forms ', async () => {
       
       // creating two forms
    
-     const form1 = await funcs.postForm('Qahira', 'New Qahira','eltagamo3','The best','euro',150000,'SPCForm','2019-07-08T00:00:00.000Z',mongoose.Types.ObjectId('5c9fa001237c771924d621d7'))
+     const form1 = await funcs.postForm('Qahira', 'New Qahira','eltagamo3','The best 3','euro',150000,'SPCForm','2019-07-08T00:00:00.000Z',mongoose.Types.ObjectId('5c9fa001237c771924d621d7'))
      //const form2 = await funcs.postForm('whyyqi','posss','French','ali','LE',2345,'SPCForm','2018-07-08T00:00:00.000Z',mongoose.Types.ObjectId('5c9fb269da7a330017865000'))
         
       
@@ -23,7 +23,7 @@ test('Test getting all forms ', async () => {
        expect(res.data.data[res.data.data.length-1].companyGovernorate).toBe('Qahira')
        expect(res.data.data[res.data.data.length-1].companyCity).toBe('New Qahira')
        expect(res.data.data[res.data.data.length-1].companyAddress).toBe('eltagamo3')
-       expect(res.data.data[res.data.data.length-1].companyName).toBe('The best')
+       expect(res.data.data[res.data.data.length-1].companyName).toBe('The best 3')
        expect(res.data.data[res.data.data.length-1].currency).toBe('euro')
        expect(res.data.data[res.data.data.length-1].equityCapital).toBe(150000)
        expect(res.data.data[res.data.data.length-1].type).toBe('SPCForm')
@@ -41,7 +41,7 @@ test('Test getting all forms ', async () => {
     //    expect(form2.data.data.creationDate).toBe('2018-07-08T00:00:00.000Z')
     //    expect(form2.data.data.userId).toBe('5c9fb269da7a330017865000')
 
-    //    await funcs.deleteForm(form1._id) 
+     await funcs.deleteForm(res.data.data[res.data.data.length-1]._id) 
     //    await funcs.deleteForm(form2._id)
      }
      catch(error){
@@ -56,7 +56,7 @@ test('Test getting all forms ', async () => {
 test('Test getting a certain form ', async () => {
     try { 
     //creating a form for testing 
-    await funcs.postForm('Portsaid', 'New Portsaid','Gomhorya','Best of the best','euro',150000,'SPCForm','2019-07-08T00:00:00.000Z',mongoose.Types.ObjectId('5c9fa001237c771924d621d7'))
+    await funcs.postForm('Portsaid', 'New Portsaid','Gomhorya','Best of the best 3','euro',150000,'SPCForm','2019-07-08T00:00:00.000Z',mongoose.Types.ObjectId('5c9fa001237c771924d621d7'))
     const res = await funcs.getForms()
     expect(res.data).toBeDefined()
     expect(res.status).toEqual(200)
@@ -64,17 +64,17 @@ test('Test getting a certain form ', async () => {
     const res2 = await funcs.GetFormById(res.data.data[res.data.data.length-1]._id)
     console.log(res2.data)
   
-    expect(res2.data.data.companyGovernorate).toBe('Portsaid')
+      expect(res2.data.data.companyGovernorate).toBe('Portsaid')
        expect(res2.data.data.companyCity).toBe('New Portsaid')
        expect(res2.data.data.companyAddress).toBe('Gomhorya')
-       expect(res2.data.data.companyName).toBe('Best of the best')
+       expect(res2.data.data.companyName).toBe('Best of the best 3')
        expect(res2.data.data.currency).toBe('euro')
        expect(res2.data.data.equityCapital).toBe(150000)
        expect(res2.data.data.type).toBe('SPCForm')
        expect(res2.data.data.creationDate).toBe('2019-07-08T00:00:00.000Z')
        expect(res2.data.data.userId).toBe('5c9fa001237c771924d621d7')
    
-   
+       await funcs.deleteForm(res.data.data[res.data.data.length-1]._id) 
     }
   
     catch(error){

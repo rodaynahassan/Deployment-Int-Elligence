@@ -79,7 +79,7 @@ const functions = {
                    const form = await axios.delete('http://localhost:3000/routes/api/forms/'+ DeleteID )
                   return form
               },
-              GetFormById : async(FormID) => {    // get certain form
+    GetFormById : async(FormID) => {    // get certain form
        
                 form= await axios({
                     method : 'get',

@@ -51,10 +51,27 @@ router.post('/', async (req,res) => {
      const newUser = await userController.create(req.body)
      if(newUser.error) return res.status(400).send(newUser) 
      return res.json({msg:'User was created successfully', data: newUser})
+})
+router.post('/register', async (req,res) => {                       //register Investor
+    const newUser = await userController.registerInvestor(req.body) 
+    if(newUser.error) return res.status(400).send(newUser) 
+     return res.json({msg:'Investor was created successfully', data: newUser})
 
 
     }
  )
+ //as a user i can create a form
+router.post('/CreatingForm/:id', async(req,res) =>{
+    const id = req.params.id        //userID
+    req.body.userId=id
+    const newForm = await formController.create(req.body)
+    const user = await userController.search('_id',id)
+    if(newForm.error) return res.status(400).send(newForm.error)
+    if(!newForm) return res.json({msg:"Form is null"})
+    user.forms.push(newForm)
+    const returnedUser = await userController.update('_id',id,{forms:user.forms})
+    return res.json({data:returnedUser})
+})
 //update a user
  router.put('/:id', async (req,res) => {
       
@@ -64,37 +81,24 @@ router.post('/', async (req,res) => {
       if(updateUser.error) return res.status(400).send(updateUser)
       return res.json({msg : 'User Updated Successfully',data: updateUser})
 
-     
  })
-//delete a user
- router.delete('/:id', async (req,res) => {
-    try {
-     const id = req.params.id
-     const deletedUser = await userController.remove('_id',id)
-     res.json({msg:'User was deleted successfully', data: deletedUser})
-    }
-    catch(error) {
-        // We will be handling the error later
-        console.log(error)
-    }  
- })
-//as a lawyer/reviewer/investor i should be able to view my cases
+//as a lawyer/reviewer/investor I should be able to view my in progress cases
 router.get('/getInProgressCases/:id',async(req,res) => {
     const userid = req.params.id
     var user = await userController.search('_id',userid)
-        var userForms = user.forms
-        var inprogressForms = []
-        for(i=0;i<userForms.length;i++){
-            if(userForms[i]==='In progress')
-                inprogressForms.push(userForms[i])
-        }
-        res.json({data:inprogressForms})
+    var userForms = user.forms
+    var inprogressForms = []
+    for(i=0;i<userForms.length;i++){
+        if(userForms[i].status==='In progress')
+            inprogressForms.push(userForms[i])
+    }
+    res.json({data:inprogressForms})
 });
 //as an investor i should be able to view my companies
 router.get('/getApprovedCompanies/:id',async(req,res) => {
     const userid = req.params.id
     var user = await userController.search('_id',userid)
-    if(user.type==='Investor'){
+    if(user.userType==='Investor'){
         var userForms = user.forms
         var approvedForms = []
         for(i=0;i<userForms.length;i++){
@@ -107,12 +111,24 @@ else{
     res.json({msg: 'You are not an investor to get you accepted companies'})
 }
 });
+
+//When you delete a specific user , you delete with it all his forms 
+//Delete a user
+router.delete('/:id', async (req,res) => {
+    try {
+     const id = req.params.id
+     var SpecificUser= await userController.search('_id' ,id )
+     for(i=0;i<SpecificUser.forms.length;i++){
+         var formId=SpecificUser.forms[i]._id
+         await formController.remove('_id',formId)
+     }
+     const deletedUser = await userController.remove('_id',id)
+     res.json({msg:'User was deleted successfully', data: deletedUser})
+    }
+    catch(error) {
+    
+        console.log(error)
+    }  
+ })
+
 module.exports = router;
-
-
-
-
-
-
-
-

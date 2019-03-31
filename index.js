@@ -1,6 +1,5 @@
 const express = require('express')
 const mongoose = require('mongoose')
-
 const users = require('./routes/api/users')
 const forms = require('./routes/api/forms')
 const admins = require('./routes/api/admins')
@@ -45,5 +44,5 @@ app.use((req, res) => {
     res.status(404).send({err: 'We can not find what you are looking for'});
  })
 
-const port =   5000  //process.env.PORT  
+const port =   process.env.PORT ||  3000  
 app.listen(port, () => console.log(`Server up and running on port ${port}`))

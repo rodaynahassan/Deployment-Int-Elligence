@@ -6,8 +6,8 @@ const bcrypt = require('bcrypt');
 
 
 
-
-exports.compareByDate=function compareByDate(a,b){                                                //comparing between creation dates
+ //comparing between creation dates
+exports.compareByDate=function compareByDate(a,b){                                               
     if(Date.parse(a.creationDate)>Date.parse(b.creationDate)) return 1;
     
     if(Date.parse(a.creationDate)<Date.parse(b.creationDate)) return -1;
@@ -15,7 +15,10 @@ exports.compareByDate=function compareByDate(a,b){                              
     return 0;
 }
 
-exports.registerInvestor=async function registerInvestor(body){                      //creating Investor
+
+//creating Investor
+exports.registerInvestor=async function registerInvestor(body){                      
+
     const { error1 } = userValidator.createValidationI(body)            
     
     if (error1) {
@@ -30,15 +33,12 @@ exports.registerInvestor=async function registerInvestor(body){                 
     const newUser = await User.create(body)
     const salt = await bcrypt.genSalt(10);
     newUser.password = await bcrypt.hash(newUser.password, salt);
-    await newUser.save();
-
-    
+    await newUser.save();    
     return newUser
 }
 
-
-   
-exports.search = async function search(att ,value ){  // Search users
+// Search users
+exports.search = async function search(att ,value ){  
     if(att === null){
      var values = await User.find()
      return values
@@ -48,12 +48,16 @@ exports.search = async function search(att ,value ){  // Search users
         var values = await User.findById(value)
         return values
     }
+    // if(att ==='Lawyer')
+    // {
+    // var values=await Form.find({'Lawyer':value})
+    // return values
+    // }
 
     var values = User.find({att:value})
     return values
 
 }
-
 
 
 
@@ -63,6 +67,7 @@ exports.remove=async function remove(att,value){                           //del
         if(att===null){
             return 'there is no user to delete'
         }
+
         else if(att==='_id'){
 
          const deletedUser = await User.findByIdAndDelete(value)
@@ -71,8 +76,8 @@ exports.remove=async function remove(att,value){                           //del
        
     }
         
-
-exports.update = async function update(att, value, body){  // Update Users
+// Update Users
+exports.update = async function update(att, value, body){  
    
     try {
         if(! att ) 
@@ -101,13 +106,13 @@ exports.update = async function update(att, value, body){  // Update Users
        }
       
        catch(error) {
-           // We will be handling the error later
+          
            console.log(error)
        }
-    }
 
-       
-       function compareById(a , b){  // for sorting the cses by caseID
+
+
+      exports.compareById = async function compareById(a , b){  // for sorting the cses by caseID
         if(a._id > b._id )
         return 1;
         
@@ -119,9 +124,8 @@ exports.update = async function update(att, value, body){  // Update Users
         }
 
    
+}
 
-
-    
 
 
 

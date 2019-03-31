@@ -28,14 +28,13 @@ const FormSchema= new Schema({
     SSCManagers:{type:Array},
     type:{type:String,required:true},
     status:{type: String,enum:['Rejected','In progress','Approved']},
-    
-     creationDate:{type: Date,required: true},
-     lawyerSeen:{type:Boolean},
-     lawyerComments:{type:[String]},
-     lawyerApprove:{type:Boolean},
-     reviewerSeen:{type:Boolean},
-     reviewerComments:{type:[String]},
-     reviewerApprove:{type:Boolean},
-     userId:{type:ObjectId,required:true}
+    creationDate:{type: Date,required: true},
+    lawyerSeen:{type:Boolean},
+    lawyerComments:{type:[String]},
+    lawyerApprove:{type:Boolean},
+    reviewerSeen:{type:Boolean},
+    reviewerComments:{type:[String]},
+    reviewerApprove:{type:Boolean},
+    userId:{type:ObjectId,required:true}
 })
 module.exports = Form = mongoose.model('forms', FormSchema)

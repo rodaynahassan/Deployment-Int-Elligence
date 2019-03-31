@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Admin = require('../Models/Admin');
-const adminValidator = require('../Validation/adminvalidations')
+const adminValidator = require('../Validation/adminValidations')
 const userValidator = require('../Validation/UserValidation')
 const User = require('../Models/User')
 const bcrypt = require('bcrypt');
@@ -18,7 +18,9 @@ exports.search=async function search (att,value)
         var certainAdmin=await Admin.findById(value)
         return certainAdmin
     }
+    
 }
+
 exports.create=async function create(body)
 {
     try
@@ -26,6 +28,9 @@ exports.create=async function create(body)
       const isAdminValidated=adminValidator.createValidation(body)
       if (isAdminValidated.error) return {error:isAdminValidated.error.details[0].message}
       const newAdmin=await Admin.create(body)
+      const salt = await bcrypt.genSalt(10);
+      newAdmin.password = await bcrypt.hash(newAdmin.password, salt);
+      await newAdmin.save();
       return newAdmin
 
 
@@ -114,7 +119,7 @@ exports.registerLawyerOrReviewer=async function registerLawyerOrReviewer(body){ 
         return error2.details[0].message;
     }
     let user = await User.findOne({ email: body.email });
-   // const user = await User.findOne({body:email})
+    // const user = await User.findOne({body:email})
     if(user) return {error: 'Account already exists'}
     
    
@@ -123,8 +128,8 @@ exports.registerLawyerOrReviewer=async function registerLawyerOrReviewer(body){ 
     newUser.password = await bcrypt.hash(newUser.password, salt);
     await newUser.save();
 
-    
     return newUser
+
 }
 
 

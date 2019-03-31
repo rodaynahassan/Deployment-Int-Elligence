@@ -23,9 +23,8 @@ module.exports = {
         Equation: Joi.string(),
        // Api: Joi.string().uri()
         Api: Joi.string(),
-        Email:Joi.string().email()
         //EquityCapital:Form.equityCapital
-       
+       Email: Joi.string().email()
     }
     return Joi.validate(request, updateSchema)
 

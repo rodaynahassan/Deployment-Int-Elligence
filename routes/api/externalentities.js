@@ -22,14 +22,14 @@ router.get('/:id', async (req,res) => {
 //get a specific external entity by it's name
 router.get('/getByExternalEntityName/:Name', async (req,res) => {
     const externalentityname = req.params.Name
-    const externalentityRequested = await controller.search({Name : externalentityname})
+    const externalentityRequested = await controller.search('Name',externalentityname)
     return res.json({data: externalentityRequested})
 })
 
 //get an external entity by it's api
 router.get('/getByExternalEntityApi/:Api', async (req,res) => {
     const externalentityapi = req.params.Api
-    const externalentityRequested = await controller.search({Api : externalentityapi})
+    const externalentityRequested = await controller.search('Api',externalentityapi)
     return res.json({data: externalentityRequested})
 })
 

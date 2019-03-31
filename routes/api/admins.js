@@ -4,7 +4,10 @@ const uuid = require('uuid');
 const router = express.Router();
 const validator = require('../../Validation/adminValidations')
 const adminController = require('../../controllers/adminController')
-
+const formController = require('../../controllers/formController')
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken')
+const tokenKey = require('../../config/keys').secretOrKey
 // Models
 const Admin = require('../../Models/Admin');
 const Forms = require('../../Models/Form');
@@ -44,6 +47,14 @@ router.get('/CasesSortedByCreationDate', async(req, res) => {
     forms.sort(adminController.compare)
     return res.json({ data: forms });
 })
+
+//get case/form by company name
+router.get('/getByCompanyName/:companyName', async (req,res) => {
+    const companyname = req.params.companyName
+    const formRequested = await formController.search('companyName',companyname)
+   return res.json({data: formRequested})
+})
+
 // update an admin
 router.put('/:id', async (req,res) => {
     try {
@@ -81,6 +92,31 @@ router.post('/register', async (req,res) => {                       //register l
     })
 
 
+//Login
+    router.post('/login',async(req,res)=>{
+        try{
+        const email=req.body.email;
+        const password=req.body.password;
+        const admin = await Admin.findOne({email});
+        if (!admin)
+            return res.status(404).json({email:'This email is not registered yet'})
+        const doesItMatch=await bcrypt.compareSync(password,admin.password);
+        if (doesItMatch)
+        {
+            const payload={
+                id: admin.id,
+                name:admin.name,
+                email:admin.email
+            }
+        const token=jwt.sign(payload,tokenKey,{expiresIn:'1h'})  
+        res.json({data: `Bearer ${token}`})
+        return res.json({msg: 'You are logged in now',data: 'Token' })
+        } 
+        else 
+            return res.status(400).send({ password: 'Wrong password' });   
+    }
+    catch(e){}
+    })
 
 
 

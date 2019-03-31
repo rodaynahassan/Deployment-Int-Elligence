@@ -5,32 +5,23 @@
   "main": "index.js",
   "dependencies": {
     "axios": "^0.18.0",
-<<<<<<< HEAD
     "express": "^4.16.4",
     "i": "^0.3.6",
     "jest": "^24.5.0",
     "bcrypt": "^3.0.5",
     "jest-cli": "^24.5.0",
-=======
-    "bcrypt": "^3.0.5",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
-    "express": "^4.16.4",
-    "i": "^0.3.6",
->>>>>>> 55761158caa77b76e9fc1c8ab30a1679593ab92e
     "joi": "^14.3.1",
     "joi-objectid": "^2.0.0",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
     "mongoose": "^5.4.15",
-<<<<<<< HEAD
     "mongoose-type-url": "^1.0.5",
     "nodemailer": "^6.0.0",
     "nodemon": "^1.18.10",
-=======
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
->>>>>>> 55761158caa77b76e9fc1c8ab30a1679593ab92e
     "uuid": "^3.3.2"
   },
   "devDependencies": {
@@ -38,13 +29,8 @@
     "nodemon": "^1.18.10"
   },
   "scripts": {
-<<<<<<< HEAD
     "test": "jest --detectOpenHandles",
     "start": "node index.js",
-=======
-    "test": "jest",
-    "start": "node index",
->>>>>>> 55761158caa77b76e9fc1c8ab30a1679593ab92e
     "dev": "nodemon index"
   },
   "keywords": [],

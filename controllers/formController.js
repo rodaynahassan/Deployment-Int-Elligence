@@ -10,7 +10,7 @@ exports.create = async function create(body)
     {
         if(body.type==='SSCForm')
         {
-            //var found=false;
+            var found=false;
             const userId=body.userId;
             const form=await Form.findOne({userId})
             if (form!==null)

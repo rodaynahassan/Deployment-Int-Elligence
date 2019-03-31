@@ -2,7 +2,7 @@ const axios = require('axios');
 
 const functions = {
     postAdmin: async (name1,gender1,nationality1,identificationType1,identificationNumber1,password1,birthdate1,address1,email1) => {
-         axios({
+         await axios({
             method:'post',
             url:'http://localhost:3000/routes/api/admins/',
             data: {
@@ -19,7 +19,7 @@ const functions = {
             })
         },
         loginAdmin: async (password1,email1) => {
-            axios({
+            await axios({
                method:'post',
                url:'http://localhost:3000/routes/api/admins/login',
                data: {

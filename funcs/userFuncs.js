@@ -44,7 +44,7 @@ const functions = {
             }
         })  
     },
-    createInvestor: async(userType1,name1,gender1,nationality1,identificationType1,identificationNumber1,birthdate1,address1,email1,password1) =>{  
+    createInvestor: async(userType1,name1,gender1,nationality1,identificationType1,identificationNumber1,birthdate1,address1,email1,password1,investorType1) =>{  
         var user = await axios({
            method:'post',
            url:'http://localhost:3000/routes/api/users/register',
@@ -58,7 +58,8 @@ const functions = {
            birthdate: birthdate1,
            address:address1 ,
            email: email1 ,
-           password:password1
+           password:password1,
+           investorType:investorType1
            }
     
        })
@@ -128,14 +129,14 @@ const functions = {
             }
         })
         },    
-        getAllForms: async () => { 
-        const forms = await axios({
-        method : 'get',
-        url:'http://localhost:3000/routes/api/forms/',
+//         getAllForms: async () => { 
+//         const forms = await axios({
+//         method : 'get',
+//         url:'http://localhost:3000/routes/api/forms/',
 
-    });
-    return forms 
-},
+//     });
+//     return forms 
+// },
         putFormLawyerComments: async (lawyerComments1,userId1,formId1)=> {
             var returned = await axios({ 
             method :'put',
@@ -280,8 +281,6 @@ UpdateUser: async(UserId) =>{     // update a certain user
             name: 'ALI EL SEBAIE2',
             nationality:'Masry',
         }
-      
-    
     })
    
   

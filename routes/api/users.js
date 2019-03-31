@@ -7,7 +7,6 @@ const formController = require('../../controllers/formController')
 const userController=require('../../controllers/userController')
 const User = require('../../Models/User')
 const validator = require('../../Validation/UserValidation')
-const formController = require('../../controllers/formController')
 const notifications = require('../../helpers/notifications')
 
 const bcrypt = require('bcrypt');
@@ -34,7 +33,22 @@ router.get('/formSortedByformId/', async (req,res) => { // sort forms by form id
     forms.sort(compareById)
     return res.json({ data: forms });
 })
+//sort all forms by id as a lawyer 
+router.get('/AllFormSortedByFormId/', async (req,res) => {  // sort all forms by form id
+    const forms = await formController.search()
+    forms.sort(userController.compareById)
 
+})
+
+
+//sort specific forms by id as a lawyer 
+router.get('/SpecificFormSortedByFormId/:id', async (req,res) => {  // sort specific forms by form id
+    var userid=req.params.id
+    var searchUsers = await userController.search('_id',userid)
+    //searchUsers.forms = await formController.search()
+    searchUsers.forms.sort(userController.compareById)
+    return res.json({ data: searchUsers.forms });
+})
 
 // view a certain user
 router.get('/:id', async(req, res) => {
@@ -169,8 +183,6 @@ router.get('/getInProgressCases/:id',async(req,res) => {
 
      if(req.body.status!==undefined||req.body.lawyerSeen!==undefined||req.body.lawyerComments!==undefined||req.body.lawyerApprove!==undefined||req.body.reviewerSeen!==undefined||req.body.reviewersComments!==undefined||req.body.reviewerApprove!==undefined){
         var notifyUser = await notifications.notifyUserForFormUpdates(user,updatedForm)
-        console.log('hi')
-        console.log(notifyUser)
         return res.json({data:returnedUser,notification:notifyUser})
      }
 
@@ -243,7 +255,7 @@ router.put('/lawyerComments/:userId/:formId', async(req, res) => {
     const userid=req.params.userId 
     const formid=req.params.formId
     const user= await userController.search('_id',userid)
-    //console.log(user)
+    console.log(user)
     const form = await formController.search('_id',formid) 
     //console.log(form)
     var comments = form.lawyerComments
@@ -260,7 +272,12 @@ router.put('/lawyerComments/:userId/:formId', async(req, res) => {
         }
     }
     const returnedUser = await userController.update('_id',userid,{forms:user.forms})
-    return res.json({data:returnedUser});
+    if(req.body.lawyerComments!==undefined){
+        var notifyUser = await notifications.notifyUserForFormUpdates(user,updatedForm)
+        return res.json({data:returnedUser,notification:notifyUser})
+     }
+
+     return res.json({data:returnedUser})
 });
 
 //as a reviewer i can make a comment
@@ -282,8 +299,15 @@ router.put('/reviewerComments/:userId/:formId', async(req, res) => {
         }
     }
     const returnedUser = await userController.update('_id',userid,{forms:user.forms})
-    return res.json({data:returnedUser});
+    if(req.body.reviewerComments!==undefined){
+        var notifyUser = await notifications.notifyUserForFormUpdates(user,updatedForm)
+        return res.json({data:returnedUser,notification:notifyUser})
+     }
+
+     return res.json({data:returnedUser})
 });
+
+
 
 
 module.exports = router;

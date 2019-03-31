@@ -108,9 +108,9 @@ module.exports = {
         };
         const SpecificUser= User.findById(updateSPCFormSchema.userId)
         if (SpecificUser.nationality!=='Egyptian')
-        SPCSchema.equityCapital= Joi.number().required().min(100000)
+        updateSPCFormchema.equityCapital= Joi.number().required().min(100000)
         else
-        SPCSchema.equityCapital= Joi.number().required()
+        updateSPCFormSchema.equityCapital= Joi.number().required()
         return Joi.validate(request, updateSPCFormSchema)
     },
         

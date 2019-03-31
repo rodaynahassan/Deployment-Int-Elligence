@@ -95,6 +95,7 @@ module.exports = {
             companyFax: Joi.string().min(5).max(20),
             companyNameInEnglish: Joi.string().max(50),
             currency: Joi.string().min(2).max(10),
+            equityCapital: Joi.number(),
             status: Joi.string().valid('Rejected','In progress','Approved'),
             creationDate: Joi.date(),
             lawyerComments: Joi.array().items(Joi.string()), //must insert an object , syntax -> {} , it doesn't accept null

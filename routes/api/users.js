@@ -86,7 +86,6 @@ router.post('/login',async(req,res)=>{
 catch(e){}
 })
 
-
 //update a user
  router.put('/:id', async (req,res) => {
       
@@ -100,6 +99,7 @@ catch(e){}
 
 
 //get the case of the lawyer/Reviewer 
+//lsa we need to add en bageb ely status bta3etha in progress only
 router.get('/getCases/:id',async(req,res) => {
     const userid = req.params.id
     const user = await User.findById(userid)

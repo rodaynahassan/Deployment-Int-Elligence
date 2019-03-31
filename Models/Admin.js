@@ -8,11 +8,12 @@ const Admin = new Schema({
   identificationType: { type: String, required: true},
   identificationNumber: { type: String, required: true, unique: true},
   password: { type: String, required: true },
+  email: {type: String,required:true},
   birthdate:{ type: Date, required: true},
   address: { type: String, required: true},
   telephone:{ type:String},
   fax:{ type:String},
-  email: {type: String}
+
 });
 
 module.exports = admin = mongoose.model('admins', Admin);

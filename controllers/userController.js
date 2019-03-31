@@ -6,8 +6,8 @@ const bcrypt = require('bcrypt');
 
 
 
-
-exports.compareByDate=function compareByDate(a,b){                                                //comparing between creation dates
+ //comparing between creation dates
+exports.compareByDate=function compareByDate(a,b){                                               
     if(Date.parse(a.creationDate)>Date.parse(b.creationDate)) return 1;
     
     if(Date.parse(a.creationDate)<Date.parse(b.creationDate)) return -1;
@@ -15,7 +15,8 @@ exports.compareByDate=function compareByDate(a,b){                              
     return 0;
 }
 
-exports.registerInvestor=async function registerInvestor(body){                      //creating Investor
+//creating Investor
+exports.registerInvestor=async function registerInvestor(body){                      
     const { error1 } = userValidator.createValidationI(body)            
     
     if (error1) {
@@ -36,9 +37,8 @@ exports.registerInvestor=async function registerInvestor(body){                 
     return newUser
 }
 
-
-   
-exports.search = async function search(att ,value ){  // Search users
+// Search users
+exports.search = async function search(att ,value ){  
     if(att === null){
      var values = await User.find()
      return values
@@ -56,8 +56,8 @@ exports.search = async function search(att ,value ){  // Search users
 
 
 
-
-exports.remove=async function remove(att,value){                           //delete user
+//delete user
+exports.remove=async function remove(att,value){                           
 
     
         if(att===null){
@@ -71,8 +71,8 @@ exports.remove=async function remove(att,value){                           //del
        
     }
         
-
-exports.update = async function update(att, value, body){  // Update Users
+// Update Users
+exports.update = async function update(att, value, body){  
    
     try {
         if(! att ) 
@@ -107,7 +107,8 @@ exports.update = async function update(att, value, body){  // Update Users
     }
 
        
-       function compareById(a , b){  // for sorting the cses by caseID
+    // for sorting the cses by caseID
+       function compareById(a , b){  
         if(a._id > b._id )
         return 1;
         

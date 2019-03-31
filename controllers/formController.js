@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Form = require('../Models/Form')
 const validator = require('../Validation/formValidations')
+const User = require('../Models/User')
 
 //Creating
 exports.create = async function create(body)
@@ -9,22 +10,53 @@ exports.create = async function create(body)
     {
         if(body.type==='SSCForm')
         {
-            for(i=0;i<body.SSCManagers.length;i++)
+            //var found=false;
+            const userId=body.userId;
+            const form=await Form.findOne({userId})
+            if (form!==null)
+            return {error: 'Sorry you have already created a SSC Company before'}
+            else{
+            const SpecificUser= User.findById(userId)
+            if (SpecificUser.nationality ==='Egyptian')   
+            {
+                for(i=0;i<body.SSCManagers.length;i++)
             {
                 const SSCMValidated=validator.createValidationSSCManagers(body.SSCManagers[i])
                 if(SSCMValidated.error)
                 {       
                     return {error: SSCMValidated.error.details[0].message}
                 }
-            }   
-            const isValidated = validator.createValidationSSC(body)
+            }
+              
+        }   
+        else{
+            for(j=0;j<body.SSCManagers.length;j++)
+            {
+                const SSCMValidated=validator.createValidationSSCManagers(body.SSCManagers[j])
+                if(SSCMValidated.error)
+                {       
+                    return {error: SSCMValidated.error.details[0].message}
+                }
+                if(body.SSCManagers[j].nationality==='Egyptian'){
+                    found=true;
+                }
+            }
+            if (!found)
+            {
+                return {error: 'You must have an egyptian manager'}  
+            }
+
+            
+        }
+        const isValidated = validator.createValidationSSC(body)
             if (isValidated.error)
             {
-                return {error: isValidated.error.details[0].message}
+                return "There is sth worong with your entries"
             } 
             const newSSCForm = await Form.create(body)
             return newSSCForm
-        }
+    }
+    }
              
         if(body.type==='SPCForm')
         {

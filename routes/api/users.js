@@ -7,6 +7,10 @@ const User = require('../../Models/User')
 const Forms = require('../../Models/Form')
 const validator = require('../../Validation/UserValidation')
 const formController = require('../../controllers/formController')
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken')
+const tokenKey = require('../../config/keys_dev').secretOrKey
+
 
 //sort all cases for a  by case creation date
 router.get('/AllCasesSortedByCaseDate/', async(req, res) => {                    
@@ -21,7 +25,7 @@ router.get('/SpecificCasesSortedByCaseDate/:id', async(req, res) => {
     SpecificUser.forms.sort(userController.compareByDate)
     return res.json({ data: SpecificUser.forms });
 })
-//sort cases by id as a lawyer 
+//sort cases by id as aa lawyer 
 router.get('/CaseSortedByCaseId/', async (req,res) => { // sort cases by case id
     var forms= await Forms.find()
     forms.sort(compareById)
@@ -45,33 +49,41 @@ router.get('/', async (req,res) => {
     const searchUsers = await userController.search()
     res.json({data: searchUsers})
 })
-//create a user
-router.post('/', async (req,res) => {
-    
-     const newUser = await userController.create(req.body)
-     if(newUser.error) return res.status(400).send(newUser) 
-     return res.json({msg:'User was created successfully', data: newUser})
-})
+
+ 
+//Register a user
 router.post('/register', async (req,res) => {                       //register Investor
     const newUser = await userController.registerInvestor(req.body) 
     if(newUser.error) return res.status(400).send(newUser) 
      return res.json({msg:'Investor was created successfully', data: newUser})
+ })
 
-
-    }
- )
- //as a user i can create a form
-router.post('/CreatingForm/:id', async(req,res) =>{
-    const id = req.params.id        //userID
-    req.body.userId=id
-    const newForm = await formController.create(req.body)
-    const user = await userController.search('_id',id)
-    if(newForm.error) return res.status(400).send(newForm.error)
-    if(!newForm) return res.json({msg:"Form is null"})
-    user.forms.push(newForm)
-    const returnedUser = await userController.update('_id',id,{forms:user.forms})
-    return res.json({data:returnedUser})
+//Login
+router.post('/login',async(req,res)=>{
+    try{
+    const email=req.body.email;
+    const password=req.body.password;
+    const user = await User.findOne({email});
+    if (!user)
+        return res.status(404).json({email:'This email is not registered yet'})
+    const doesItMatch=await bcrypt.compareSync(password,user.password);
+    if (doesItMatch)
+    {
+        const payload={
+            id: user.id,
+            name:user.name,
+            email:user.email
+        }
+    const token=jwt.sign(payload,tokenKey,{expiresIn:'1h'})  
+    res.json({data: `Bearer ${token}`})
+    return res.json({msg: 'You are logged in now',data: 'Token' })
+    } 
+    else 
+        return res.status(400).send({ password: 'Wrong password' });   
+}
+catch(e){}
 })
+
 //update a user
  router.put('/:id', async (req,res) => {
       

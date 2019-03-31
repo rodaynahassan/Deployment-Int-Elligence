@@ -136,6 +136,7 @@ router.delete('/:id', async (req,res) => {
     try {
      const id = req.params.id
      var SpecificUser= await userController.search('_id' ,id )
+     if(!SpecificUser) return res.json({msg:'This user doesnt exist'})
      for(i=0;i<SpecificUser.forms.length;i++){
          var formId=SpecificUser.forms[i]._id
          await formController.remove('_id',formId)

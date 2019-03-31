@@ -6,13 +6,23 @@
   "dependencies": {
     "axios": "^0.18.0",
     "bcrypt": "^3.0.5",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
     "express": "^4.16.4",
     "i": "^0.3.6",
+<<<<<<< HEAD
     "jest": "^24.5.0",
     "jest-cli": "^24.5.0",
+=======
+>>>>>>> e3c20fd2470b7c101d3c1e90b10f8dc3d49867c6
     "joi": "^14.3.1",
     "joi-objectid": "^2.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.24.0",
     "mongoose": "^5.4.15",
+    "mongoose-type-url": "^1.0.5",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
     "uuid": "^3.3.2"
   },
   "devDependencies": {},
@@ -21,6 +31,7 @@
     "start": "node index.js",
     "dev": "nodemon index"
   },
+  "keywords": [],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SE-GUC/Int-Elligence.git"

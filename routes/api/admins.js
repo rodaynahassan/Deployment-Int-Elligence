@@ -9,6 +9,7 @@ const adminController = require('../../controllers/adminController')
 const Admin = require('../../Models/Admin');
 const Forms = require('../../Models/Form');
 
+
 //get by ID
 router.get('/getById/:id',async(req,res) => 
 {
@@ -16,12 +17,14 @@ router.get('/getById/:id',async(req,res) =>
     return res.json({ data: admin });
 })
 
+
 // get all admins
 router.get('/',async(req,res) => 
 {
     const admin=await adminController.search()
     return res.json({ data: admin });
 })
+
 //create admin
 router.post('/', async (req,res) => {
     const newAdmin=await adminController.create(req.body)
@@ -71,7 +74,7 @@ router.delete('/:id', async (req, res) => {
 router.post('/register', async (req,res) => {                       //register lawyer or reviewer
     const newUser = await adminController.registerLawyerOrReviewer(req.body) 
     if(newUser.error) return res.status(400).send(newUser) 
-     return res.json({msg:'User was created successfully', data: newUser})
+     return res.json({msg:'Account was created successfully', data: newUser})
 
     })
 

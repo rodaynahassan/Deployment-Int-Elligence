@@ -161,7 +161,7 @@ router.get('/getInProgressCases/:id',async(req,res) => {
     var userForms = user.forms
     var inprogressForms = []
     for(i=0;i<userForms.length;i++){
-        if(userForms[i].status==='In progress')
+        if(userForms[i].status==='In progress Lawyer'||userForms[i].status==='In progress Reviewer')
             inprogressForms.push(userForms[i])
     }
     res.json({data:inprogressForms})

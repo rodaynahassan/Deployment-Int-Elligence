@@ -10,15 +10,16 @@ class App extends Component {
 
   render() {
     return (
-      <div className="In Progress SPC">
+      <div className="In Progress And Approved Forms">
       <InProgressCases/>
+      <ApprovedCompanies/>
+      </div>
       
-
-    </div>
      
      
     );
   }
 }
+
 
 export default App;

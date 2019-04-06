@@ -7,7 +7,7 @@ module.exports = {
     createValidationSSC: request => {
         const SSCFormSchema = {
             userId:Joi.objectId().required(),
-            companyName: Joi.string().required().max(50),
+            companyName: Joi.string().required().max(50).regex(/^[\u0621-\u064A]/),
             companyGovernorate: Joi.string().required().min(3).max(20),
             companyAddress: Joi.string().required().min(5).max(50),
             companyCity: Joi.string().required().min(3).max(20),
@@ -30,7 +30,7 @@ module.exports = {
     },
     updateValidationSSC: request => {
         const updateSSCFormSchema = {
-            companyName: Joi.string().max(50),
+            companyName: Joi.string().max(50).regex(/^[\u0621-\u064A]/),
             companyGovernorate: Joi.string().min(3).max(20),
             companyAddress: Joi.string().min(5).max(50),
             companyCity: Joi.string().min(3).max(20),
@@ -43,11 +43,7 @@ module.exports = {
             status: Joi.string().valid('Unassigned','Rejected','In progress Lawyer','In progress Reviewer','Approved'),
             creationDate: Joi.date(),
             lawyerComments: Joi.array().items(Joi.string()), //must insert an object , syntax -> {} , it doesn't accept null
-            lawyerSeen: Joi.boolean(),
-            lawyerApprove: Joi.boolean(),
             reviewerComments: Joi.array().items(Joi.string()),
-            reviewerSeen: Joi.boolean(),
-            reviewerApprove: Joi.boolean(),
             userId: Joi.objectId()
         }
 
@@ -57,7 +53,7 @@ module.exports = {
     createValidationSPC: request => {
         const SPCSchema ={
             userId:Joi.objectId().required(),
-            companyName: Joi.string().required().max(50),
+            companyName: Joi.string().required().max(50).regex(/^[\u0621-\u064A]/),
             companyGovernorate: Joi.string().required().min(3).max(20),
             companyAddress: Joi.string().required().min(5).max(50),
             companyCity: Joi.string().required().min(3).max(20),
@@ -69,11 +65,7 @@ module.exports = {
             status: Joi.string().valid('Unassigned','Rejected','In progress Lawyer','In progress Reviewer','Approved'),
             creationDate: Joi.date().required(),
             lawyerComments: Joi.array().items(Joi.string()),
-            lawyerSeen: Joi.boolean(),
-            lawyerApprove: Joi.boolean(),
-            reviewerComments: Joi.array().items(Joi.string()),
-            reviewerSeen: Joi.boolean(),
-            reviewerApprove: Joi.boolean(),
+            reviewerComments: Joi.array().items(Joi.string())
         };
             const SpecificUser= User.findById(SPCSchema.userId);
             if (SpecificUser.nationality!=='Egyptian')
@@ -87,7 +79,7 @@ module.exports = {
     updateValidationSPC: request => {
         const updateSPCFormSchema = {
             userId: Joi.objectId(),
-            companyName: Joi.string().max(50),
+            companyName: Joi.string().max(50).regex(/^[\u0621-\u064A]/),
             companyGovernorate: Joi.string().min(3).max(20),
             companyAddress: Joi.string().min(5).max(50),
             companyCity: Joi.string().min(3).max(20),
@@ -99,17 +91,13 @@ module.exports = {
             status: Joi.string().valid('Unassigned','Rejected','In progress Lawyer','In progress Reviewer','Approved'),
             creationDate: Joi.date(),
             lawyerComments: Joi.array().items(Joi.string()), //must insert an object , syntax -> {} , it doesn't accept null
-            lawyerSeen: Joi.boolean(),
-            lawyerApprove: Joi.boolean(),
-            reviewerComments: Joi.array().items(Joi.string()),
-            reviewerSeen: Joi.boolean(),
-            reviewerApprove: Joi.boolean(),
+            reviewerComments: Joi.array().items(Joi.string())
         };
         const SpecificUser= User.findById(updateSPCFormSchema.userId)
         if (SpecificUser.nationality!=='Egyptian')
-        updateSPCFormchema.equityCapital= Joi.number().required().min(100000)
+        SPCSchema.equityCapital= Joi.number().min(100000)
         else
-        updateSPCFormSchema.equityCapital= Joi.number().required()
+        SPCSchema.equityCapital= Joi.number()
         return Joi.validate(request, updateSPCFormSchema)
     },
         

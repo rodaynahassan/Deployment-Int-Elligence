@@ -51,11 +51,17 @@ exports.create = async function create(body)
         const isValidated = validator.createValidationSSC(body)
             if (isValidated.error)
             {
+<<<<<<< HEAD
                 return "There is sth wrong with your entries"
+=======
+                return  {error: isValidated.error.details[0].message }  //'There is sth wrong with your entries'
+>>>>>>> 69dc4ebbf49ced4ea7bdcda482b098b8f8ca2680
             } 
+            else{
             const newSSCForm = await Form.create(body)
             return newSSCForm
     }
+}
     }
              
         if(body.type==='SPCForm')

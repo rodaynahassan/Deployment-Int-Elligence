@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "name": "myapp",
+=======
+  "name": "client",
+>>>>>>> 69dc4ebbf49ced4ea7bdcda482b098b8f8ca2680
   "version": "0.1.0",
   "private": true,
   "dependencies": {

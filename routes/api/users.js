@@ -150,7 +150,7 @@ router.post('/login',async(req,res)=>{
         }
     const token=jwt.sign(payload,tokenKey,{expiresIn:'1h'})  
     res.json({data: `Bearer ${token}`})
-    return res.json({msg: 'You are logged in now',data: 'Token' })
+    return res.json({msg: 'You are logged in now',data:'Token' })
     } 
     else 
         return res.status(400).send({ password: 'Wrong password' });   

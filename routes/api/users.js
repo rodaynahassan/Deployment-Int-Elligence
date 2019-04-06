@@ -2,13 +2,11 @@ const express = require('express');
 const Joi = require('joi');
 const uuid = require('uuid');
 const router = express.Router();
-
 const formController = require('../../controllers/formController')
 const userController=require('../../controllers/userController')
 const User = require('../../Models/User')
 const validator = require('../../Validation/UserValidation')
 const notifications = require('../../helpers/notifications')
-
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 const tokenKey = require('../../config/keys_dev').secretOrKey
@@ -130,7 +128,7 @@ router.post('/login',async(req,res)=>{
         }
     const token=jwt.sign(payload,tokenKey,{expiresIn:'1h'})  
     res.json({data: `Bearer ${token}`})
-    return res.json({msg: 'You are logged in now',data: 'Token' })
+    return res.json({msg: 'You are logged in now',data:'Token' })
     } 
     else 
         return res.status(400).send({ password: 'Wrong password' });   

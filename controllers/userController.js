@@ -3,9 +3,6 @@ const User = require('../Models/User')
 const userValidator = require('../Validation/UserValidation')
 const bcrypt = require('bcrypt');
 
-
-
-
  //comparing between creation dates
 exports.compareByDate=function compareByDate(a,b){                                               
     if(Date.parse(a.creationDate)>Date.parse(b.creationDate)) return 1;

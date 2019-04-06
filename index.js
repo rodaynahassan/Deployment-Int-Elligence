@@ -8,7 +8,7 @@ const cors = require('cors');
 const app = express()
 // DB Config
 const db = require('./config/keys').mongoURI
-const cors = require('cors')
+
 
 
 // Connect to mongo
@@ -25,7 +25,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use(cors())
 //app.use(express.multipart());
-app.use(cors())
+
 app.get('/', (req, res) => {
     res.send(`<h1>Welcome</h1>`);
 })
@@ -48,6 +48,7 @@ app.use(function(req, res, next) {
 app.use((req, res) => {
      res.status(404).send({err: 'We can not find what you are looking for'});
  })
+
 
 const port =   process.env.PORT ||  5000  
 

@@ -20,6 +20,7 @@ class App extends Component {
 
 constructor(){
   super()
+
 }
 
   // {/* <Dropdown>
@@ -71,5 +72,23 @@ constructor(){
    }
  }
 
+
  ReactDOM.render(<App />, document.getElementById('root'));
 export default App;
+
+// class App extends Component {
+   
+
+//   render() {
+//     return (
+//       <div className="In Progress And Approved Forms">
+//       <InProgressCases/>
+//       <ApprovedCompanies/>
+//       </div>
+      
+     
+     
+//     );
+//   }
+// }
+

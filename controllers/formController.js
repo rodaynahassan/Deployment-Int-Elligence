@@ -52,7 +52,6 @@ exports.create = async function create(body)
             if (isValidated.error)
             {
          return  {error: isValidated.error.details[0].message }  //'There is sth wrong with your entries'
-
             } 
             else{
             const newSSCForm = await Form.create(body)

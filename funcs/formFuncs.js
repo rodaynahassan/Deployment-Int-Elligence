@@ -4,7 +4,7 @@ const functions = {
     postForm: async(companyGovernorate1 , companyCity1 , companyAddress1 , companyName1 , currency1 ,equityCapital1 ,type1 ,creationDate1 ,userId1)=>{
             var form = await axios({
                 method:'post',
-                url:'http://localhost:3000/routes/api/forms/',
+                url:'http://localhost:5000/routes/api/forms/',
                 data: {
                     companyName:companyName1,
                     companyGovernorate:companyGovernorate1 ,
@@ -23,7 +23,7 @@ const functions = {
     postFormForUser: async(companyGovernorate1 , companyCity1 , companyAddress1 , companyName1 , currency1 ,equityCapital1 ,type1 ,creationDate1 ,userId1)=>{
         var form = await axios({
             method:'post',
-            url:'http://localhost:3000/routes/api/users/CreatingForm/'+ userId1,
+            url:'http://localhost:5000/routes/api/users/CreatingForm/'+ userId1,
             data: {
                 companyGovernorate:companyGovernorate1 ,
                 companyCity:companyCity1,
@@ -40,18 +40,18 @@ const functions = {
             return form;
 },
     getForms: async() =>{
-        const forms= await axios.get('http://localhost:3000/routes/api/forms/')
+        const forms= await axios.get('http://localhost:5000/routes/api/forms/')
         return forms 
     },
     deleteForm: async (DeleteID) => {
-                   const form = await axios.delete('http://localhost:3000/routes/api/forms/'+ DeleteID )
+                   const form = await axios.delete('http://localhost:5000/routes/api/forms/'+ DeleteID )
                   return form
               },
     GetFormById : async(FormID) => {    // get certain form
        
                 form= await axios({
                     method : 'get',
-                    url:'http://localhost:3000/routes/api/forms/'+ FormID
+                    url:'http://localhost:5000/routes/api/forms/'+ FormID
                 })
                 return form
             },
@@ -59,7 +59,7 @@ const functions = {
         
                 var form = await axios({
                 method:'post',
-                url :'http://localhost:3000/routes/api/users/CreatingForm/'+ userId1 ,
+                url :'http://localhost:5000/routes/api/users/CreatingForm/'+ userId1 ,
                 data :{
                     companyGovernorate:companyGovernorate1 ,
                     companyCity:companyCity1,
@@ -80,13 +80,13 @@ const functions = {
         
             
     getReviewerComments : async (formId)=>{
-                const reviewerComments = await axios.get('http://localhost:3000/routes/api/forms/getReviewerComments'+ formId)
+                const reviewerComments = await axios.get('http://localhost:5000/routes/api/forms/getReviewerComments'+ formId)
                 return reviewerComments
             },
     postFormComments : async(companyGovernorate1 , companyCity1 , companyAddress1 , companyName1 , currency1 ,equityCapital1,type1 ,creationDate1 ,reviewerComments1,userId1)=>{
                 var form = await axios({
                     method:'post',
-                    url :'http://localhost:3000/routes/api/users/CreatingForm/'+ userId1 ,
+                    url :'http://localhost:5000/routes/api/users/CreatingForm/'+ userId1 ,
                     data :{
                         companyGovernorate:companyGovernorate1 ,
                         companyCity:companyCity1,
@@ -107,7 +107,7 @@ const functions = {
     postFormLawyerComments : async(companyGovernorate1 , companyCity1 , companyAddress1 , companyName1 , currency1 ,equityCapital1 ,type1 ,creationDate1 ,lawyerComments1,userId1)=>{
                 var form = await axios({
                     method:'post',
-                    url :'http://localhost:3000/routes/api/users/CreatingForm/'+ userId1 ,
+                    url :'http://localhost:5000/routes/api/users/CreatingForm/'+ userId1 ,
                     data :{
                         companyGovernorate:companyGovernorate1 ,
                         companyCity:companyCity1,
@@ -126,7 +126,7 @@ const functions = {
                    return form ; 
             },
     getLawyerComments : async (formId)=>{
-                const lawyerComments = await axios.get('http://localhost:3000/routes/api/forms/getLawyerComments/'+ formId)
+                const lawyerComments = await axios.get('http://localhost:5000/routes/api/forms/getLawyerComments/'+ formId)
                 return lawyerComments
             }
 };

@@ -3,6 +3,7 @@ import axios from 'axios';
 import '../../App.css';
 import GetAllCompanies from './GetAllCompanies';
 import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button';
 
 class Companies extends Component {
     state = {

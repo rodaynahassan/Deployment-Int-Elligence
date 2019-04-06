@@ -6,10 +6,9 @@ const forms = require('./routes/api/forms')
 const admins = require('./routes/api/admins')
 const externalentities=require('./routes/api/externalentities')
 const app = express()
-const cors=require('cors')
+
 // DB Config
 const db = require('./config/keys').mongoURI
-
 
 
 // Connect to mongo
@@ -23,11 +22,11 @@ mongoose
 // Init middleware
 
 app.use(express.json())
-app.use(cors())
-app.use(express.urlencoded({extended: false}))
-app.use(cors())
-//app.use(express.multipart());
 
+app.use(express.urlencoded({extended: false}))
+
+//app.use(express.multipart());
+app.use(cors())
 app.get('/', (req, res) => {
     res.send(`<h1>Welcome</h1>`);
 })

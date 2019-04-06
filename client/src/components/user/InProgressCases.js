@@ -40,12 +40,8 @@ class InProgressCases extends Component {
                 <th>Capital</th>
                 <th>Type</th>
                 <th>Creation Date</th>
-                <th>Lawyer Seen</th>
                 <th>Lawyer Comments</th>
-                <th>Lawyer Approve</th>
-                <th>Reviewer Seen</th>
                 <th>Reviewer Comments</th>
-                <th>Reviewer Approve</th>
               </tr>
             </thead>
             <tbody>

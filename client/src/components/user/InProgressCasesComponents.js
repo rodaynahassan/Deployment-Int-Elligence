@@ -16,12 +16,8 @@ class inProgressCaseComponents extends Component {
                 <td>{this.props.inProgressCase.equityCapital} </td>
                 <td>{this.props.inProgressCase.type} </td>
                 <td>{this.props.inProgressCase.creationDate} </td>
-                <td>{this.props.inProgressCase.lawyerSeen} </td>
                 <td>{this.props.inProgressCase.lawyerComments} </td>
-                <td>{this.props.inProgressCase.lawyerApprove} </td>
-                <td>{this.props.inProgressCase.reviewerSeen} </td>
                 <td>{this.props.inProgressCase.reviewerComments} </td>
-                <td>{this.props.inProgressCase.reviewerApprove} </td>
             </tr>
         )
     }

@@ -20,9 +20,19 @@ router.get('/getRejectedCompany', async (req,res) => {
     const form = await controller.search('status','Rejected')
     return res.json({data:form})
 })
-//get In progress form
-router.get('/getInProgressCompany', async (req,res) => {
-    const form = await controller.search('status','In progress')
+//get In progress Lawyer form
+router.get('/getInProgressLawyerCompany', async (req,res) => {
+    const form = await controller.search('status','In progress Lawyer')
+    return res.json({data:form})
+})
+//get In progress Reviewer form
+router.get('/getInProgressReviewerCompany', async (req,res) => {
+    const form = await controller.search('status','In progress Reviewer')
+    return res.json({data:form})
+})
+//get un assigned form 
+router.get('/getUnAssignedForm', async (req,res) => {
+    const form = await controller.search('status','Unassigned')
     return res.json({data:form})
 })
 

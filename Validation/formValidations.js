@@ -21,11 +21,10 @@ module.exports = {
             status: Joi.string().valid('Unassigned','Rejected','In progress Lawyer','In progress Reviewer','Approved'),
             creationDate: Joi.date().required(),
             lawyerComments: Joi.array().items(Joi.string()),
-            lawyerSeen: Joi.boolean(),
-            lawyerApprove: Joi.boolean(),
+            //lawyerApprove: Joi.boolean(),
             reviewerComments: Joi.array().items(Joi.string()),
-            reviewerSeen: Joi.boolean(),
-            reviewerApprove: Joi.boolean()}
+            //reviewerApprove: Joi.boolean(),
+            SSCManagers: Joi.array().required()}
      return Joi.validate(request, SSCFormSchema)
     },
     updateValidationSSC: request => {
@@ -65,7 +64,7 @@ module.exports = {
             status: Joi.string().valid('Unassigned','Rejected','In progress Lawyer','In progress Reviewer','Approved'),
             creationDate: Joi.date().required(),
             lawyerComments: Joi.array().items(Joi.string()),
-            reviewerComments: Joi.array().items(Joi.string())
+            reviewerComments: Joi.array().items(Joi.string()),
         };
             const SpecificUser= User.findById(SPCSchema.userId);
             if (SpecificUser.nationality!=='Egyptian')
@@ -91,13 +90,13 @@ module.exports = {
             status: Joi.string().valid('Unassigned','Rejected','In progress Lawyer','In progress Reviewer','Approved'),
             creationDate: Joi.date(),
             lawyerComments: Joi.array().items(Joi.string()), //must insert an object , syntax -> {} , it doesn't accept null
-            reviewerComments: Joi.array().items(Joi.string())
+            reviewerComments: Joi.array().items(Joi.string()),
         };
         const SpecificUser= User.findById(updateSPCFormSchema.userId)
         if (SpecificUser.nationality!=='Egyptian')
-        SPCSchema.equityCapital= Joi.number().min(100000)
+        updateSPCFormSchema.equityCapital= Joi.number().min(100000)
         else
-        SPCSchema.equityCapital= Joi.number()
+        updateSPCFormSchema.equityCapital= Joi.number()
         return Joi.validate(request, updateSPCFormSchema)
     },
         

@@ -2,7 +2,6 @@ const express = require('express');
 const Joi = require('joi');
 const uuid = require('uuid');
 const router = express.Router();
-
 const formController = require('../../controllers/formController')
 const userController=require('../../controllers/userController')
 const User = require('../../Models/User')
@@ -186,15 +185,9 @@ router.get('/getInProgressCases/:id',async(req,res) => {
         return res.json({data:returnedUser,notification:notifyUser})
      }
 
-     return res.json({data:returnedUser})
-     
-
-     
+     return res.json({data:returnedUser})     
 })
 
-
-
-//as an investor i should be able to view my companies
 router.get('/getApprovedCompanies/:id',async(req,res) => {
     const userid = req.params.id
     var user = await userController.search('_id',userid)
@@ -211,8 +204,6 @@ else{
     res.json({msg: 'You are not an investor to get you accepted companies'})
 }
 })
-
-
 
 //When you delete a specific user , you delete with it all his forms 
 //Delete a user

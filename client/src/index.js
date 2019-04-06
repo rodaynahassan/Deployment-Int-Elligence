@@ -2,6 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import Form from './components/form/form'
+import Footer from './components/layout/footer'
+import About from './components/pages/aboutContactUsPage'
+import Profile from './components/pages/profilePage'
 import * as serviceWorker from './serviceWorker';
 
 

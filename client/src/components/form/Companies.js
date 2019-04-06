@@ -21,6 +21,8 @@ class Companies extends Component {
       }
       render(){
         return (
+          <div>
+             <Button variant="nada" block disabled><h1>Electronic Journal</h1></Button>
             <Table stripped bordered hover variant='dark' size='sm'>
             <thead>
               <tr>
@@ -44,6 +46,7 @@ class Companies extends Component {
               {this.tabRow()}
             </tbody>
           </Table>
+          </div>
         )
           
       }

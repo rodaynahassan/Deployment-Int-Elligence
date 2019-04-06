@@ -6,9 +6,9 @@ const admins = require('./routes/api/admins')
 const externalentities=require('./routes/api/externalentities')
 const cors = require('cors');
 const app = express()
-
 // DB Config
 const db = require('./config/keys').mongoURI
+
 
 
 // Connect to mongo
@@ -50,6 +50,6 @@ app.use((req, res) => {
  })
 
 
-const port =   process.env.PORT ||  5000 
+const port =   process.env.PORT ||  5000  
 
 app.listen(port, () => console.log(`Server up and running on port ${port}`))

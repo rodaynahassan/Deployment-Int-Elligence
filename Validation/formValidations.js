@@ -21,7 +21,11 @@ module.exports = {
             status: Joi.string().valid('Unassigned','Rejected','In progress Lawyer','In progress Reviewer','Approved'),
             creationDate: Joi.date().required(),
             lawyerComments: Joi.array().items(Joi.string()),
-            reviewerComments: Joi.array().items(Joi.string())}
+            lawyerSeen: Joi.boolean(),
+            lawyerApprove: Joi.boolean(),
+            reviewerComments: Joi.array().items(Joi.string()),
+            reviewerSeen: Joi.boolean(),
+            reviewerApprove: Joi.boolean()}
      return Joi.validate(request, SSCFormSchema)
     },
     updateValidationSSC: request => {
@@ -83,6 +87,7 @@ module.exports = {
             companyFax: Joi.string().min(5).max(20),
             companyNameInEnglish: Joi.string().max(50),
             currency: Joi.string().min(2).max(10),
+            equityCapital: Joi.number(),
             status: Joi.string().valid('Unassigned','Rejected','In progress Lawyer','In progress Reviewer','Approved'),
             creationDate: Joi.date(),
             lawyerComments: Joi.array().items(Joi.string()), //must insert an object , syntax -> {} , it doesn't accept null

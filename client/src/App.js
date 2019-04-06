@@ -1,17 +1,25 @@
 import React, { Component } from 'react';
-import './App.css';
-import ApprovedCompanies from './components/user/ApprovedCompanies'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Badge from 'react-bootstrap/Badge'
+import './App.css';
+import axios from 'axios';
+import InProgressCases from './components/user/InProgressCases';
+
+
 class App extends Component {
+   
+
   render() {
-      return (
-        <div className="Approved Companies">
-        <h2 align="center"><Badge variant="dark">Your Approved Companies</Badge></h2>
-        < ApprovedCompanies/>
-        </div>
-      );
-    }
+    return (
+      <div className="In Progress And Approved Forms">
+      <InProgressCases/>
+      <ApprovedCompanies/>
+      </div>
+      
+     
+     
+    );
   }
+}
+
 
 export default App;

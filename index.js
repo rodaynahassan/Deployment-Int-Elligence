@@ -8,6 +8,7 @@ const app = express()
 const cors = require('cors')
 // DB Config
 const db = require('./config/keys').mongoURI
+const cors = require('cors')
 
 // Connect to mongo
 mongoose
@@ -23,7 +24,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use(cors())
 //app.use(express.multipart());
-
+app.use(cors())
 app.get('/', (req, res) => {
     res.send(`<h1>Welcome</h1>`);
 })
@@ -47,5 +48,9 @@ app.use((req, res) => {
     res.status(404).send({err: 'We can not find what you are looking for'});
  })
 
+<<<<<<< HEAD
+const port =   process.env.PORT ||  5000 
+=======
 const port =   process.env.PORT ||  5000  
+>>>>>>> 69dc4ebbf49ced4ea7bdcda482b098b8f8ca2680
 app.listen(port, () => console.log(`Server up and running on port ${port}`))

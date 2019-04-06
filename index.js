@@ -5,6 +5,7 @@ const forms = require('./routes/api/forms')
 const admins = require('./routes/api/admins')
 const externalentities=require('./routes/api/externalentities')
 const app = express()
+const cors=require('cors')
 // DB Config
 const db = require('./config/keys').mongoURI
 
@@ -19,6 +20,7 @@ mongoose
 // Init middleware
 
 app.use(express.json())
+app.use(cors())
 app.use(express.urlencoded({extended: false}))
 //app.use(express.multipart());
 
@@ -44,5 +46,5 @@ app.use((req, res) => {
     res.status(404).send({err: 'We can not find what you are looking for'});
  })
 
-const port =   process.env.PORT ||  3000  
+const port =   process.env.PORT ||  5000  
 app.listen(port, () => console.log(`Server up and running on port ${port}`))

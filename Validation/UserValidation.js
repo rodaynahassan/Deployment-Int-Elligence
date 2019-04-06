@@ -40,7 +40,7 @@ module.exports = {
         fax:  Joi.string().min(5).max(20),
         investorType: Joi.string().required(),
         financialBalance:Joi.number(),
-        forms:Joi.array().required() 
+        forms:Joi.array() 
         }
 
 

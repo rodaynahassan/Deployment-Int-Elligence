@@ -109,6 +109,7 @@ router.post('/', async (req,res) => {
 router.post('/register', async (req,res) => {                       //register Investor
     const newUser = await userController.registerInvestor(req.body) 
     if(newUser.error) return res.status(400).send(newUser) 
+   
      return res.json({msg:'Account was created successfully', data: newUser})
 })
 
@@ -139,12 +140,7 @@ catch(e){}
 })
 
 
-router.post('/register', async (req,res) => {                       //register Investor
-    const newUser = await userController.registerInvestor(req.body) 
-    if(newUser.error) return res.status(400).send(newUser) 
-     return res.json({msg:'Investor was created successfully', data: newUser})
 
-    })
 
 //update a user 
  router.put('/:id' , async (req,res) => {

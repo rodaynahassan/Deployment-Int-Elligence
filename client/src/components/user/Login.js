@@ -13,19 +13,28 @@ constructor(props){
   this.state={
   email:'',
   password:''
+  //fields:''
   }
  }
+ validateForm() {
+      //  let emailValid=email.match.('/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i')
+      return this.state.email.length >= 3 && this.state.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) && this.state.email.length <= 50&& this.state.password.length >= 8 && this.state.password.length <= 20
+
+ }
+
 render() {
+
     return (
       <div>
         <MuiThemeProvider>
           <div>
-          <AppBar
+          {/* <AppBar
              title="Login"
-           />
+           /> */}
            <TextField
              hintText="Enter your Email"
              floatingLabelText="Email"
+             type="email"
              onChange = {(event,newValue) => this.setState({email:newValue})}
              />
            <br/>
@@ -36,7 +45,10 @@ render() {
                onChange = {(event,newValue) => this.setState({password:newValue})}
                />
              <br/>
-             <RaisedButton label="Submit" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
+             
+             <RaisedButton label="Sign in" primary={true} style={style} 
+             disabled={!this.validateForm()}
+             onClick={(event) => this.handleClick(event)}/>
          </div>
          </MuiThemeProvider>
       </div>
@@ -47,6 +59,9 @@ render() {
     var self = this;
     var payload={
 
+     
+        // this.state.email.map(x => <li key={x._id}></li>
+        //     this.state.password.map(x => <li key={x._id}></li>)}
     "email":this.state.email,
     "password":this.state.password
 
@@ -66,7 +81,7 @@ render() {
     alert("username password do not match")
     }
     else{
-    console.log("Email does not exists");
+    console.log("Email does not exist");
     alert("Email does not exist");
     }
     })

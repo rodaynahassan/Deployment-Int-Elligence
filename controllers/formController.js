@@ -149,9 +149,6 @@ exports.search=async function search(att,value)
     var values=await Form.find({'companyName':value})
     return values
     }
-    
-    
-   
 }
 //Deleting
 exports.remove=async function remove(att,value)

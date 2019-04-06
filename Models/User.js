@@ -5,7 +5,7 @@ const Form = require('../Models/Form').schema
 
 const User = new Schema({
 
-  userType:{type:String,required: true},
+  userType:{type: String,enum:['Reviewer','Lawyer','Investor']},
   name: {type:String,required:true},
   gender: {type:String,required:true},
   nationality: {type:String,required:true},

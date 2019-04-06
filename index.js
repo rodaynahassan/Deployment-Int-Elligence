@@ -1,12 +1,16 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const cors =require('cors')
 const users = require('./routes/api/users')
 const forms = require('./routes/api/forms')
 const admins = require('./routes/api/admins')
 const externalentities=require('./routes/api/externalentities')
 const app = express()
+
 // DB Config
 const db = require('./config/keys').mongoURI
+
+
 
 // Connect to mongo
 mongoose
@@ -19,7 +23,9 @@ mongoose
 // Init middleware
 
 app.use(express.json())
+app.use(cors())
 app.use(express.urlencoded({extended: false}))
+
 //app.use(express.multipart());
 
 app.get('/', (req, res) => {
@@ -32,6 +38,7 @@ app.use('/routes/api/forms',forms)
 app.use('/routes/api/admins',admins)
 app.use('/routes/api/externalentities',externalentities)
 
+
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -41,8 +48,8 @@ app.use(function(req, res, next) {
 
 // Handling 404
 app.use((req, res) => {
-    res.status(404).send({err: 'We can not find what you are looking for'});
+     res.status(404).send({err: 'We can not find what you are looking for'});
  })
 
-const port =   process.env.PORT ||  3000  
+const port =   process.env.PORT ||  5000  
 app.listen(port, () => console.log(`Server up and running on port ${port}`))

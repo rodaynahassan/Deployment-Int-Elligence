@@ -1,35 +1,47 @@
-import React, { Component } from 'react';
-//import logo from './logo.svg';
-import Navbar from 'react-bootstrap/Navbar'
-import Nav from 'react-bootstrap/Nav'
-import NavDropdown from 'react-bootstrap/NavDropdown'
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
-import FormControl from 'react-bootstrap/FormControl'
-import '../../App.scss'
-import sum from './s.png'
-
+import React, { Component } from "react";
+import { MDBNavbar, MDBContainer, MDBNavLink, MDBNavItem, MDBHamburgerToggler, MDBNavbarBrand, MDBNavbarNav,
+MDBCollapse } from "mdbreact";
+import {BrowserRouter as Router, Route} from 'react-router-dom'
 
 class Header extends Component {
-  render() {
-    return (
-      <Navbar bg="omar">
-      <span>
-      <img src={sum} width="90" height="30" alt=""></img>
-      </span>
-      <Navbar.Brand href="#home">Navbar</Navbar.Brand>
-      <Nav className="mr-auto">
-        <Nav.Link href="#home">Home</Nav.Link>
-        <Nav.Link href="#features">Features</Nav.Link>
-        <Nav.Link href="#pricing">Pricing</Nav.Link>
-      </Nav>
-      <Form inline>
-        <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-        <Button variant="secondary">Search</Button>
-      </Form>
-    </Navbar>
-      
-        )}
+  
+state = {
+  collapse1: ''
+}
+
+toggleSingleCollapse = collapseId => () => {
+  this.setState({
+    [collapseId]: !this.state[collapseId]
+  });
+};
+
+render(){
+  return(
+    <Router>
+<MDBNavbar color="indigo darken-2" style={{ marginTop: '20px' }} dark>
+        <MDBContainer>
+          <MDBNavbarBrand className="white-text">
+            MDBNavbar
+          </MDBNavbarBrand>
+          <MDBHamburgerToggler onClick={this.toggleSingleCollapse('collapse3')} id="hamburger3" />
+          <MDBCollapse isOpen={this.state.collapse3} navbar>
+            <MDBNavbarNav left>
+              <MDBNavItem active>
+                <MDBNavLink >Home</MDBNavLink>
+              </MDBNavItem>
+              <MDBNavItem>
+                <MDBNavLink >Link</MDBNavLink>
+              </MDBNavItem>
+              <MDBNavItem>
+                <MDBNavLink >Profile</MDBNavLink>
+              </MDBNavItem>
+            </MDBNavbarNav>
+          </MDBCollapse>
+        </MDBContainer>
+      </MDBNavbar>
+      </Router>
+    );
+  }
 }
 
 export default Header;

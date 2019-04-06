@@ -14,6 +14,8 @@ import egypt from './This is Egypt.mp4'
 import {Redirect} from 'react-router-dom'
 import Header from './header'
 import ReactDOM from 'react-dom';
+import Companies from '../form/Companies'
+
 class LandingBody extends Component {
 
   render() {
@@ -26,23 +28,13 @@ class LandingBody extends Component {
             </video>
           <Carousel.Caption>
             <h3>Invest in Egypt</h3>
-              <Button variant="outline-light" size="lg"  href="/test">Sign Up</Button> <Button variant="outline-light" size="lg">Sign In</Button>
+              <Button variant="outline-light" size="lg"  href="/register">Sign Up</Button> <Button variant="outline-light" size="lg" href="/login">Sign In</Button>
           </Carousel.Caption>
         </Carousel.Item>
-        {/* <Carousel.Item>
-          <img
-            className="d-block w-100"
-            src={sum}
-            alt="Third slide"
-            height="100%"
-          />
-      
-          <Carousel.Caption>
-            <h3>Second slide label</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item>
+         <Carousel.Item>
+          <Companies/>
+          </Carousel.Item>
+        {/*<Carousel.Item>
           <img
             className="d-block w-100"
              src={sum}

@@ -57,24 +57,24 @@ module.exports = {
    
     createValidationSPC: request => {
         const SPCSchema ={
-            userId:Joi.objectId().required(),
+           userId:Joi.objectId().required(),
             companyName: Joi.string().required().max(50),
-            // companyGovernorate: Joi.string().required().min(3).max(20),
-            // companyAddress: Joi.string().required().min(5).max(50),
-            // companyCity: Joi.string().required().min(3).max(20),
+            companyGovernorate: Joi.string().required().min(3).max(20),
+            companyAddress: Joi.string().required().min(5).max(50),
+            companyCity: Joi.string().required().min(3).max(20),
             companyTelephone: Joi.string().min(8).max(15),
             companyFax: Joi.string().min(5).max(20),
             companyNameInEnglish: Joi.string().max(50),
             currency: Joi.string().required().min(2).max(10),
-            type: Joi.string().required(),
-            status: Joi.string().valid('Rejected','In progress','Approved'),
-            creationDate: Joi.date().required(),
-            lawyerComments: Joi.array().items(Joi.string()),
-            lawyerSeen: Joi.boolean(),
-            lawyerApprove: Joi.boolean(),
-            reviewerComments: Joi.array().items(Joi.string()),
-            reviewerSeen: Joi.boolean(),
-            reviewerApprove: Joi.boolean(),
+            type: Joi.string().required()
+            // status: Joi.string().valid('Rejected','In progress','Approved'),
+            // creationDate: Joi.date().required(),
+            // lawyerComments: Joi.array().items(Joi.string()),
+            // lawyerSeen: Joi.boolean(),
+            // lawyerApprove: Joi.boolean(),
+            // reviewerComments: Joi.array().items(Joi.string()),
+            // reviewerSeen: Joi.boolean(),
+            // reviewerApprove: Joi.boolean(),
         };
             const SpecificUser= User.findById(SPCSchema.userId);
             if (SpecificUser.nationality!=='Egyptian')

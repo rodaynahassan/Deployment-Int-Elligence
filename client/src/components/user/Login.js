@@ -7,7 +7,6 @@ import TextField from 'material-ui/TextField';
 const axios = require('axios');
 
 class Login extends Component {
-
 constructor(props){
   super(props);
   this.state={

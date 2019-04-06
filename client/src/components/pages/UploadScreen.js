@@ -4,7 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Login from '../user/Login';
 import Register from '../user/Register';
 
-class Loginscreen extends Component {
+class Uploadscreen extends Component {
   constructor(props){
     super(props);
     this.state={
@@ -13,15 +13,13 @@ class Loginscreen extends Component {
       loginscreen:[],
       loginmessage:'',
       buttonLabel:'Register',
-      isLogin:true
-      
+      isLogin:true  
     }
   }
   componentWillMount(){
     var loginscreen=[];
-    loginscreen.push(<Login parentContext={this} appContext={this.props.parentContext} key={"ninja"}/>);
-    
-    var loginmessage = "Not registered yet, Register Now";
+    loginscreen.push(<Login parentContext={this} appContext={this.props.parentContext}/>);
+    var loginmessage = "your profile";
     this.setState({
                   loginscreen:loginscreen,
                   loginmessage:loginmessage
@@ -34,8 +32,7 @@ class Loginscreen extends Component {
     if(this.state.isLogin){
       var loginscreen=[];
       loginscreen.push(<Register parentContext={this}/>);
-      loginmessage = "Already registered.Go to Login";
-      
+      loginmessage = "your profile";
       this.setState({
                      loginscreen:loginscreen,
                      loginmessage:loginmessage,
@@ -46,7 +43,7 @@ class Loginscreen extends Component {
     else{
       var loginscreen=[];
       loginscreen.push(<Login parentContext={this}/>);
-      loginmessage = "Not Registered yet.Go to registration";
+      loginmessage = "your profile";
       this.setState({
                      loginscreen:loginscreen,
                      loginmessage:loginmessage,
@@ -57,7 +54,6 @@ class Loginscreen extends Component {
   }
 
   render() {
-    
     return (
       <div className="loginscreen">
         {this.state.loginscreen}
@@ -65,7 +61,7 @@ class Loginscreen extends Component {
           {this.state.loginmessage}
           <MuiThemeProvider>
             <div>
-               <RaisedButton label={this.state.buttonLabel} primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
+             <RaisedButton label={this.state.buttonLabel} primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
            </div>
           </MuiThemeProvider>
         </div>
@@ -76,4 +72,4 @@ class Loginscreen extends Component {
 const style = {
   margin: 15,
 };
-export default Loginscreen;
+export default Uploadscreen;

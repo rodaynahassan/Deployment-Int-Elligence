@@ -3,8 +3,9 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-//import UploadScreen from '../pages/UploadScreen'
+import UploadScreen from '../pages/UploadScreen'
 const axios = require('axios');
+
 
 class Login extends Component {
 constructor(props){
@@ -72,8 +73,8 @@ render() {
     console.log("Login successfull");
     alert("Login successfull");
     var uploadScreen=[];
- //   uploadScreen.push(<UploadScreen appContext={self.props.appContext}/>)
-  //  self.props.appContext.setState({loginPage:[],uploadScreen:uploadScreen})
+    uploadScreen.push(<UploadScreen appContext={self.props.appContext}/>)
+    self.props.appContext.setState({loginPage:[],uploadScreen:uploadScreen})
     }
     else if(response.status === 204){
     console.log("Username password do not match");
@@ -91,7 +92,5 @@ render() {
 }
 const style = {
  margin: 15,
- 
- 
 };
 export default Login;

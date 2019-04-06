@@ -30,9 +30,7 @@ const FormSchema= new Schema({
     status:{type: String,enum:['Unassigned','Rejected','In progress Lawyer','In progress Reviewer','Approved']},
      creationDate:{type: Date,required: true},
      lawyerComments:{type:[String]},
-     //lawyerApprove:{type:Boolean},
      reviewerComments:{type:[String]},
-     //reviewerApprove:{type:Boolean},
      userId:{type:ObjectId,required:true}
 })
 module.exports = Form = mongoose.model('forms', FormSchema)

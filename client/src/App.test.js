@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import form from '../components/form/form';
 import App from './App';
 
 it('renders without crashing', () => {

@@ -1,14 +1,11 @@
 const express = require('express');
 const Joi = require('joi');
-const uuid = require('uuid');
 const router = express.Router();
-
 const formController = require('../../controllers/formController')
 const userController=require('../../controllers/userController')
 const User = require('../../Models/User')
 const validator = require('../../Validation/UserValidation')
 const notifications = require('../../helpers/notifications')
-
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 const tokenKey = require('../../config/keys_dev').secretOrKey
@@ -37,27 +34,35 @@ router.get('/formSortedByformId/', async (req,res) => { // sort forms by form id
 router.get('/AllFormSortedByFormId/', async (req,res) => {  // sort all forms by form id
     const forms = await formController.search()
     forms.sort(userController.compareById)
-
 })
-
-
 //sort specific forms by id as a lawyer 
 router.get('/SpecificFormSortedByFormId/:id', async (req,res) => {  // sort specific forms by form id
     var userid=req.params.id
     var searchUsers = await userController.search('_id',userid)
-    //searchUsers.forms = await formController.search()
     searchUsers.forms.sort(userController.compareById)
     return res.json({ data: searchUsers.forms });
 })
-
+//get all lawyers 
+router.get('/getAllLawyers', async(req, res) => {
+    const userType = await userController.search('userType','Lawyer')
+    return res.json({data:userType})
+})
+//get all investors
+router.get('/getAllInvestors', async(req, res) => {
+    const userType = await userController.search('userType','Investor')
+    return res.json({data:userType})
+})
+//get all Reviewers 
+router.get('/getAllReviewers', async(req, res) => {
+    const userType = await userController.search('userType','Reviewer')
+    return res.json({data:userType})
+})
 // view a certain user
 router.get('/:id', async(req, res) => {
     const userid=req.params.id
     const searchUsers = await userController.search('_id',userid)
     return res.json({ data: searchUsers });
 })
-
-
 //view the financialBalance of an investor
 router.get('/getTheFinancialBalance/:id', async(req, res) => {
     const userid=req.params.id
@@ -65,8 +70,6 @@ router.get('/getTheFinancialBalance/:id', async(req, res) => {
     const financialBalance= user.financialBalance
     return res.json({ data: financialBalance });
 })
-
-
 // View lawyer comments of specific form of investor 
 router.get('/getLaywerCommentsOfInvestorsform/:id', async(req, res) => {
     var userid = req.params.id
@@ -74,15 +77,12 @@ router.get('/getLaywerCommentsOfInvestorsform/:id', async(req, res) => {
     var lawyercom = user.forms.lawyerComments
     return res.json({ data: lawyercom });
 })
-
-
 //get all users
 router.get('/', async (req,res) => {
     const searchUsers = await userController.search()
     res.json({data: searchUsers})
 })
-
- //As a User i can Create a form
+//As a User i can Create a form
 router.post('/CreatingForm/:id', async(req,res) =>{
     const id = req.params.id        //userID
     req.body.userId=id
@@ -94,7 +94,29 @@ router.post('/CreatingForm/:id', async(req,res) =>{
     const returnedUser = await userController.update('_id',id,{forms:user.forms})
     return res.json({data:returnedUser})
 })
-
+//When you delete a specific user , you delete the unassigned forms only
+//Delete a user
+router.delete('/:id', async (req,res) => {
+    try {
+     const id = req.params.id
+     var SpecificUser= await userController.search('_id' ,id )
+     if(!SpecificUser) return res.json({msg:'This user doesnt exist'})
+     for(i=0;i<SpecificUser.forms.length;i++)
+     {
+        //var deletedForm = SpecificUser.forms[i].status
+        if(SpecificUser.forms[i].status === 'Unassigned')
+        {
+            var formId=SpecificUser.forms[i]._id
+            await formController.remove('_id',formId)  
+        }
+     }
+     const deletedUser = await userController.remove('_id',id)
+     res.json({msg:'User was deleted successfully', data: deletedUser})
+    }
+    catch(error) {
+        console.log(error)
+    }  
+ })
 //Create a User
 router.post('/', async (req,res) => {
     
@@ -104,14 +126,13 @@ router.post('/', async (req,res) => {
     }
  )
 //Update a User
- 
-//Register a user
+ //Register a user
 router.post('/register', async (req,res) => {                       //register Investor
     const newUser = await userController.registerInvestor(req.body) 
     if(newUser.error) return res.status(400).send(newUser) 
+   
      return res.json({msg:'Account was created successfully', data: newUser})
 })
-
 //Login
 router.post('/login',async(req,res)=>{
     try{
@@ -130,7 +151,7 @@ router.post('/login',async(req,res)=>{
         }
     const token=jwt.sign(payload,tokenKey,{expiresIn:'1h'})  
     res.json({data: `Bearer ${token}`})
-    return res.json({msg: 'You are logged in now',data: 'Token' })
+    return res.json({msg: 'You are logged in now',data:'Token' })
     } 
     else 
         return res.status(400).send({ password: 'Wrong password' });   
@@ -139,12 +160,7 @@ catch(e){}
 })
 
 
-router.post('/register', async (req,res) => {                       //register Investor
-    const newUser = await userController.registerInvestor(req.body) 
-    if(newUser.error) return res.status(400).send(newUser) 
-     return res.json({msg:'Investor was created successfully', data: newUser})
 
-    })
 
 //update a user 
  router.put('/:id' , async (req,res) => {
@@ -161,7 +177,7 @@ router.get('/getInProgressCases/:id',async(req,res) => {
     var userForms = user.forms
     var inprogressForms = []
     for(i=0;i<userForms.length;i++){
-        if(userForms[i].status==='In progress')
+        if((userForms[i].status==='In progress Lawyer')||(userForms[i].status==='In progress Reviewer'))
             inprogressForms.push(userForms[i])
     }
     res.json({data:inprogressForms})
@@ -186,14 +202,8 @@ router.get('/getInProgressCases/:id',async(req,res) => {
         return res.json({data:returnedUser,notification:notifyUser})
      }
 
-     return res.json({data:returnedUser})
-     
-
-     
+     return res.json({data:returnedUser})  
 })
-
-
-
 //as an investor i should be able to view my companies
 router.get('/getApprovedCompanies/:id',async(req,res) => {
     const userid = req.params.id
@@ -213,33 +223,6 @@ else{
 })
 
 
-
-//When you delete a specific user , you delete with it all his forms 
-//Delete a user
-router.delete('/:id', async (req,res) => {
-    try {
-     const id = req.params.id
-     var SpecificUser= await userController.search('_id' ,id )
-
-     if(!SpecificUser) return res.json({msg:'This user doesnt exist'})
-     for(i=0;i<SpecificUser.forms.length;i++){
-         var formId=SpecificUser.forms[i]._id
-         await formController.remove('_id',formId)
-         
-     }
-     
-     const deletedUser = await userController.remove('_id',id)
-
-
-     res.json({msg:'User was deleted successfully', data: deletedUser})
-    }
-    catch(error) {
-        console.log(error)
-    }  
- })
-
-
-
 //get the form of the lawyer/Reviewer 
 router.get('/getforms/:id',async(req,res) => {
     const userid = req.params.id
@@ -247,9 +230,6 @@ router.get('/getforms/:id',async(req,res) => {
     var arrayOfForms = user.forms 
     res.json({data: arrayOfForms})
 });
-
-
-
 // as a lawyer i can make a comment
 router.put('/lawyerComments/:userId/:formId', async(req, res) => {
     const userid=req.params.userId 
@@ -306,9 +286,5 @@ router.put('/reviewerComments/:userId/:formId', async(req, res) => {
 
      return res.json({data:returnedUser})
 });
-
-
-
-
 module.exports = router;
 

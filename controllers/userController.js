@@ -3,9 +3,6 @@ const User = require('../Models/User')
 const userValidator = require('../Validation/UserValidation')
 const bcrypt = require('bcrypt');
 
-
-
-
  //comparing between creation dates
 exports.compareByDate=function compareByDate(a,b){                                               
     if(Date.parse(a.creationDate)>Date.parse(b.creationDate)) return 1;
@@ -45,11 +42,11 @@ exports.search = async function search(att ,value ){
         var values = await User.findById(value)
         return values
     }
-    // if(att ==='Lawyer')
-    // {
-    // var values=await Form.find({'Lawyer':value})
-    // return values
-    // }
+    if(att ==='userType')
+    {
+        var values=await User.find({'userType':value})
+        return values
+    }
 
     var values = User.find({att:value})
     return values

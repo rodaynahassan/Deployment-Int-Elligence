@@ -42,7 +42,7 @@ class form extends Component {
           Choose Your Form
           </Dropdown.Toggle>
         <Dropdown.Menu>
-          <Dropdown.Item href="http://www.google.com">
+          <Dropdown.Item href="/SSC">
           SSCForm
           </Dropdown.Item>
           <Dropdown.Divider />

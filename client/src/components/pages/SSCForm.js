@@ -9,9 +9,9 @@ import TextField from 'material-ui/TextField';
 import { MDBRow, MDBCol, MDBInput, MDBBtn } from "mdbreact";
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
+var mongoose = require('mongoose')
 
-
-class SPCform extends React.Component{
+class SSCForm extends React.Component{
 
     constructor(props){
         super(props);
@@ -46,18 +46,53 @@ class SPCform extends React.Component{
             equityCapital:{
               value : '',
               valid : false,
-             }
-             
+             },
+             SSCManagerName: {
+                value : '',
+                valid : false,
+               },
+             SSCManagerType: {
+                value : '',
+                valid : false,
+               },
+             SSCManagerGender:{
+                value : '',
+                valid : false,
+               },
+             SSCManagerNationality: {
+                value : '',
+                valid : false,
+               },
+             SSCManagerIdentificationType: {
+                value : '',
+                valid : false,
+               },
+             SSCManagerIdentificationNumber:{
+                value : '',
+                valid : false,
+               },
+             SSCManagerBirthdate:{
+                value : '',
+                valid : false,
+               },
+             SSCManagerAddress:{
+                value : '',
+                valid : false,
+               },
+             typeOfManagers:{
+                value : '',
+                valid : false,
+               }
         };
         
     }
     
     
       handleClick(event){
-        
-        var apiBaseUrl = "http://localhost:5000/routes/api/users/CreatingForm/5ca6302a13e5d0343c6e2a0e";
+
+        var apiBaseUrl = "http://localhost:5000/routes/api/users/CreatingForm/" + mongoose.Types.ObjectId('5ca7b4c9de707c37f8113097');
         var payload={
-          // "userId": this.state.userId.value,
+         //"userId":mongoose.Types.ObjectId('5ca7b4748be2725704f230bc'),
           "companyName": this.state.companyName.value,
           "companyGovernorate": this.state.companyGovernorate.value,
           "companyAddress": this.state.companyAddress.value,
@@ -66,15 +101,21 @@ class SPCform extends React.Component{
           "companyFax": this.state.companyFax.value,
           "companyNameInEnglish": this.state.companyNameInEnglish.value,
           "currency": this.state.currency.value,
-          "type" : 'SPCForm',
-          "equityCapital" : this.state.equityCapital.value
-        }
+          "type" : 'SSCForm',
+          "equityCapital" : this.state.equityCapital.value,
+          "lawyerComments" : [],
+          "reviewerComments" : [],
+          "SSCManagers":[{"name":this.state.SSCManagerName.value,"type":this.state.SSCManagerType.value,"gender":this.state.SSCManagerGender.value,"nationality":this.state.SSCManagerNationality.value,"identificationType":this.state.SSCManagerIdentificationType.value,"identificationNumber":this.state.SSCManagerIdentificationNumber.value,"birthdate":this.state.SSCManagerBirthdate.value,"address":this.state.SSCManagerAddress.value,"typeOfManagers":this.state.typeOfManagers.value}],
+       
+          "creationDate": "2018-4-7",
+          "status" : "Unassigned"
+          }
         
         axios.post(apiBaseUrl, payload)
        .then(function (response) {
          console.log(response);
          if(response.data.code === 200){
-          alert('SPCForm Created Succesfully') ;
+          alert('SSCForm Created Succesfully') ;
          }
        })
        .catch(function (error) {
@@ -96,7 +137,7 @@ class SPCform extends React.Component{
           <MuiThemeProvider>
             <div>
             <AppBar
-               title="Create your SPCForm"
+               title="Create your SSCForm"
              />
                <br/>
                <MDBRow>
@@ -156,7 +197,7 @@ class SPCform extends React.Component{
             
           <MDBCol>
         <div className="form-group">
-            <label for="companyGovernorate">Company Governorate</label>
+            <label htmlFor="companyGovernorate">Company Governorate</label>
             <select className="form-control" 
             //className={this.state.companyGovernorate.valid ? "is-valid" : "is-invalid"} 
             id="exampleFormControlSelect1" name="companyGovernorate"
@@ -173,7 +214,7 @@ class SPCform extends React.Component{
 
           <MDBCol>
         <div className="form-group">
-            <label for="companyCity">Company City</label>
+            <label htmlFor="companyCity">Company City</label>
             <select className="form-control" id="exampleFormControlSelect1" name="companyCity"
                 onChange={this.changeHandler} value={this.state.companyCity.value}>
               <option>Agamy</option> 
@@ -211,7 +252,7 @@ class SPCform extends React.Component{
 
                <MDBCol>
               <div className="form-group">
-                  <label for="currency">Currency</label>
+                  <label htmlFor="currency">Currency</label>
                   <select className="form-control"  
                   id="exampleFormControlSelect1" name="currency"
                       onChange={this.changeHandler} 
@@ -276,9 +317,169 @@ class SPCform extends React.Component{
                </MDBInput>
                </MDBCol>
                </MDBRow>
+               <MDBRow>
+               <MDBCol>
+              <MDBInput
+                label="Manager Name"                
+                value={this.state.SSCManagerName.value}
+                className={this.state.SSCManagerName.valid ? "is-valid" : "is-invalid"}
+                name="SSCManagerName"
+                onChange={this.changeHandler}
+                type="text"
+                id="materialFormRegisterNameEx" 
+                required
+              >
+              <div className="valid-feedback">Looks good!</div>
+             <div className="invalid-feedback">Provide a valid name!</div>
+              </MDBInput>
+              
+            </MDBCol>
+           <br/>
+              
+           <MDBCol>
+               
+           <MDBInput
+           label="Manager Type"                
+           value={this.state.SSCManagerType.value}
+           className={this.state.SSCManagerType.valid ? "is-valid" : "is-invalid"}
+           name="SSCManagerType"
+           onChange={this.changeHandler}
+           type="text"
+           id="materialFormRegisterNameEx" 
+           required
+         >
+         <div className="valid-feedback">Looks good!</div>
+        <div className="invalid-feedback">Provide a valid type!</div>
+         </MDBInput>
+             </MDBCol>
+             
+
+            <br/>
+            <MDBCol>
+              <MDBInput
+                value={this.state.SSCManagerGender.value}
+                className={this.state.SSCManagerGender.valid ? "is-valid" : "is-invalid"}
+                name="SSCManagerGender"
+                onChange={this.changeHandler}
+                type="text"
+                id="materialFormRegisterNameEx"
+                label="Manager gender"
+                required
+              >
+                <div className="valid-feedback">Looks good!</div>
+                <div className="invalid-feedback">Provide a valid gender!</div>
+              </MDBInput>
+            </MDBCol>
+            </MDBRow>
+            <MDBRow>
+               <MDBCol>
+              <MDBInput
+                label="Manager nationality"                
+                value={this.state.SSCManagerNationality.value}
+                className={this.state.SSCManagerNationality.valid ? "is-valid" : "is-invalid"}
+                name="SSCManagerNationality"
+                onChange={this.changeHandler}
+                type="text"
+                id="materialFormRegisterNameEx" 
+                required
+              >
+              <div className="valid-feedback">Looks good!</div>
+             <div className="invalid-feedback">Provide a valid nationality!</div>
+              </MDBInput>
+              
+            </MDBCol>
+           <br/>
+              
+           <MDBCol>
+               
+           <MDBInput
+           label="Manager Identification type"                
+           value={this.state.SSCManagerIdentificationType.value}
+           className={this.state.SSCManagerIdentificationType.valid ? "is-valid" : "is-invalid"}
+           name="SSCManagerIdentificationType"
+           onChange={this.changeHandler}
+           type="text"
+           id="materialFormRegisterNameEx" 
+           required
+         >
+         <div className="valid-feedback">Looks good!</div>
+        <div className="invalid-feedback">Provide a valid Identification type!</div>
+         </MDBInput>
+             </MDBCol>
+
+            <br/>
+            <MDBCol>
+              <MDBInput
+                value={this.state.SSCManagerIdentificationNumber.value}
+                className={this.state.SSCManagerIdentificationNumber.valid ? "is-valid" : "is-invalid"}
+                name="SSCManagerIdentificationNumber"
+                onChange={this.changeHandler}
+                type="text"
+                id="materialFormRegisterNameEx"
+                label="Manager Identification number"
+                required
+              >
+                <div className="valid-feedback">Looks good!</div>
+                <div className="invalid-feedback">Provide a valid Identification number!</div>
+              </MDBInput>
+            </MDBCol>
+            </MDBRow>
+            <MDBRow>
+               <MDBCol>
+              <MDBInput
+                label="Manager Birth date"                
+                value={this.state.SSCManagerBirthdate.value}
+                className={this.state.SSCManagerBirthdate.valid ? "is-valid" : "is-invalid"}
+                name="SSCManagerBirthdate"
+                onChange={this.changeHandler}
+                type="text"
+                id="materialFormRegisterNameEx" 
+                required
+              >
+              <div className="valid-feedback">Looks good!</div>
+             <div className="invalid-feedback">Provide a valid date!</div>
+              </MDBInput>
+              
+            </MDBCol>
+           <br/>
+              
+           <MDBCol>
+               
+           <MDBInput
+           label="Manager Address"                
+           value={this.state.SSCManagerAddress.value}
+           className={this.state.SSCManagerAddress.valid ? "is-valid" : "is-invalid"}
+           name="SSCManagerAddress"
+           onChange={this.changeHandler}
+           type="text"
+           id="materialFormRegisterNameEx" 
+           required
+         >
+         <div className="valid-feedback">Looks good!</div>
+        <div className="invalid-feedback">Provide a valid Address!</div>
+         </MDBInput>
+             </MDBCol>
+
+            <br/>
+            <MDBCol>
+              <MDBInput
+                value={this.state.typeOfManagers.value}
+                className={this.state.typeOfManagers.valid ? "is-valid" : "is-invalid"}
+                name="typeOfManagers"
+                onChange={this.changeHandler}
+                type="text"
+                id="materialFormRegisterNameEx"
+                label="Managerial Type"
+                required
+              >
+                <div className="valid-feedback">Looks good!</div>
+                <div className="invalid-feedback">Provide a valid type!</div>
+              </MDBInput>
+            </MDBCol>
+            </MDBRow>
                <RaisedButton label="Submit" primary={true} style={style}
                disabled={!this.validateForm()}
-               onClick={(event) => (this.handleClick(event) , alert('SPCForm Created Succesfully'))}/>
+               onClick={(event) => (this.handleClick(event) , alert('SSCForm Created Succesfully'))}/>
            </div>
            </MuiThemeProvider>
         </div>
@@ -291,8 +492,7 @@ class SPCform extends React.Component{
 
   
 
-ReactDOM.render(<SPCform />, document.getElementById('root'));
+ReactDOM.render(<SSCForm />, document.getElementById('root'));
 
 
-export default SPCform;
-
+export default SSCForm;

@@ -13,8 +13,10 @@ exports.create = async function create(body)
             var found=false;
             const userId=body.userId;
             const form=await Form.findOne({userId})
-            if (form!==null)
+            if (form!==null){
+                console.log("hhhh")    
             return {error: 'Sorry you have already created a SSC Company before'}
+        }
             else{
             const SpecificUser= User.findById(userId)
             if (SpecificUser.nationality ==='Egyptian')   
@@ -24,6 +26,8 @@ exports.create = async function create(body)
                 const SSCMValidated=validator.createValidationSSCManagers(body.SSCManagers[i])
                 if(SSCMValidated.error)
                 {       
+                    console.log(SSCMValidated.error.details[0].message)
+                
                     return {error: SSCMValidated.error.details[0].message}
                 }
             }
@@ -35,6 +39,8 @@ exports.create = async function create(body)
                 const SSCMValidated=validator.createValidationSSCManagers(body.SSCManagers[j])
                 if(SSCMValidated.error)
                 {       
+                    console.log(SSCMValidated.error.details[0].message)
+                
                     return {error: SSCMValidated.error.details[0].message}
                 }
                 if(body.SSCManagers[j].nationality==='Egyptian'){
@@ -43,6 +49,8 @@ exports.create = async function create(body)
             }
             if (!found)
             {
+                console.log("aaaa")
+                
                 return {error: 'You must have an egyptian manager'}  
             }
 
@@ -51,6 +59,8 @@ exports.create = async function create(body)
         const isValidated = validator.createValidationSSC(body)
             if (isValidated.error)
             {
+                console.log(isValidated.error.details[0].message)
+                
          return  {error: isValidated.error.details[0].message }  //'There is sth wrong with your entries'
             } 
             else{
@@ -65,7 +75,6 @@ exports.create = async function create(body)
             const isValidated = validator.createValidationSPC(body)
             if (isValidated.error) 
             {
-                console.log(isValidated.error.details[0].message)
                 return {error: isValidated.error.details[0].message}
             }
             const newSPCForm = await Form.create(body)   

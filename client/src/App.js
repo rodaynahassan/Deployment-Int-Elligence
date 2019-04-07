@@ -20,6 +20,7 @@ import InProgressCases from './components/pages/InProgressCases'
  import Footer from './components/layout/footer'
 import SPCForm from './components/pages/SPCform'
 import form from './components/pages/form'
+import SSCForm from './components/pages/SSCForm'
 class App extends Component {
   render() {
     return (
@@ -39,6 +40,7 @@ class App extends Component {
       <Route path='/inProgressCases' component={InProgressCases}/>
       <Route path='/SPC' component={SPCForm}/>
       <Route path='/form' component={form}/>
+      <Route path='/SSC' component={SSCForm}/>
       </div>
           <Footer/>
       </Router>

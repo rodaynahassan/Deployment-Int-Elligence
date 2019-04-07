@@ -65,6 +65,7 @@ exports.create = async function create(body)
             const isValidated = validator.createValidationSPC(body)
             if (isValidated.error) 
             {
+                console.log(isValidated.error.details[0].message)
                 return {error: isValidated.error.details[0].message}
             }
             const newSPCForm = await Form.create(body)   

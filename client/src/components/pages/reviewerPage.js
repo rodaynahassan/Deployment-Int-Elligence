@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import React, { Component } from 'react';
-import Footerr from '../layout/footerrr'
+import Footer from '../layout/footer'
 import { DropdownMenu, MenuItem } from 'react-bootstrap-dropdown-menu';
 
 
@@ -25,7 +25,7 @@ class Reviewer extends Component {
             <MenuItem text="Logout" onClick={this.logout} />
             </DropdownMenu> */}
 
-            <Footerr />
+            <Footer />
             </div>
         )
     }

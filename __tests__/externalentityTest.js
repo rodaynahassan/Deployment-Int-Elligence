@@ -30,7 +30,7 @@ const funcs = require('../funcs/externalentityFuncs');
   
     catch(error){
       
-      console.log(error)
+
     
     }
   })
@@ -87,7 +87,7 @@ test ('test get  external entity by its Api', async()=>
     expect(res2.data.data[res2.data.data.length-1].Api).toBe('http:huyyyt.ccom')
     }
     catch(err){
-        console.log(err)
+       
     }
 })
 

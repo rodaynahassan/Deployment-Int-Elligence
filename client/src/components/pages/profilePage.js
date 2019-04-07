@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import React, { Component } from 'react';
-import Footerr from '../layout/footerrr';
+import Footer from '../layout/footer';
 import ReactDOM from 'react-dom';
 import {Badge,ListGroup} from 'react-bootstrap'
 import { DropdownMenu, MenuItem } from 'react-bootstrap-dropdown-menu';
@@ -37,7 +37,7 @@ class Profile extends Component{
           <br />
           <br />
           <br />
-          <Footerr />
+          <Footer />
           </div>
         );
     }

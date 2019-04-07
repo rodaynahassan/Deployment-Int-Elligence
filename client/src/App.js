@@ -1,94 +1,66 @@
-import 'bootstrap/dist/css/bootstrap.css'
 import React, { Component } from 'react';
-import {Button} from 'react-bootstrap';
-import {Dropdown} from 'react-bootstrap';
-import { DropdownMenu, MenuItem } from 'react-bootstrap-dropdown-menu';
-import { Redirect } from 'react-router-dom'
-import Form from './components/form/form.js';
-import Footer from './components/layout/footer.js';
-import ReactDOM from 'react-dom';
-import {BrowserRouter as Router,Route} from 'react-router-dom'
-import About from './components/pages/aboutContactUsPage'
-import Investor from './components/pages/investorPage'
-import Lawyer from './components/pages/lawyerPage'
-import Reviewer from './components/pages/reviewerPage'
+//import logo from './logo.svg';
+//import './App.css';
+import {BrowserRouter as Router, Route} from 'react-router-dom'
+import Navbar from 'react-bootstrap/Navbar'
+import Nav from 'react-bootstrap/Nav'
+import NavDropdown from 'react-bootstrap/NavDropdown'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
+import FormControl from 'react-bootstrap/FormControl'
+import './App.scss'
+//import Header from './components/layout/header'
+import LandingBody from './components/pages/landingBody'
+import Login from './components/pages/Login'
+import Register from './components/pages/Register'
 import Profile from './components/pages/profilePage'
-import Footerr from './components/layout/footerrr'
-import './App.css';
-
+import About from './components/pages/aboutContactUsPage'
+import ApprovedCompanies from './components/pages/ApprovedCompanies'
+import InProgressCases from './components/pages/InProgressCases'
+ import Footer from './components/layout/footer'
+import SPCForm from './components/pages/SPCform'
+import form from './components/pages/form'
 class App extends Component {
-
-constructor(){
-  super()
-
-}
-
-  // {/* <Dropdown>
-  //       <Dropdown.Toggle variant="success" id="dropdown-basic" >
-  //         Choose Your Form
-  //         </Dropdown.Toggle>
-
-  //       <Dropdown.Menu>
-  //         <Dropdown.Item href="#/action-1">SSCForm
-  //         </Dropdown.Item>
-  //         <Dropdown.Divider />
-  //         <Dropdown.Item href="#/action-2">SPCForm
-  //         </Dropdown.Item>
-  //         <Dropdown.Divider />
-  //         <Dropdown.Item href="#/action-3">Other Forms
-  //         </Dropdown.Item>
-  //         <Dropdown.Divider />
-  //       </Dropdown.Menu>
-  //    </Dropdown>; */}
-
- 
   render() {
     return (
       <Router>
-      <div>  
-          <Route exact path="/"  />
-          <Route path='/Form' component={Form}/>
-          <Route path='/About' component={About}/>
-          <Route path='/Lawyer' component={Lawyer}/>
-          <Route path='/Investor' component={Investor}/>
-          <Route path='/Reviewer' component={Reviewer}/>
-          <Route path='/Profile' component={Profile}/>
-          <Route path='/Footerr' component={Footerr}/>
-    </div>
-    {/* <Footer /> */}
-    </Router>
-//         {this.renderRedirectSSC()}
-//         {this.renderRedirectSPC()}
-//           <form className="form">
-//           <Button variant="primary" size="sm" onClick={this.setRedirectSSC}>
-//           SSCForm
-//           </Button>
-//           <Button variant="primary" size="sm" onClick={this.setRedirectSPC}>
-//           SPCForm
-//           </Button>
-//           </form>
-//        
-     );
-   }
- }
-
-
- ReactDOM.render(<App />, document.getElementById('root'));
-export default App;
-
-// class App extends Component {
-   
-
-//   render() {
-//     return (
-//       <div className="In Progress And Approved Forms">
-//       <InProgressCases/>
-//       <ApprovedCompanies/>
-//       </div>
+     
+      <div>
       
-     
-     
-//     );
-//   }
-// }
+        <Route exact path="/" render={props=>(
+           <LandingBody/>
+        )}/>
+      {/* <Route path='/home' component={LandingBody}/> */}
+      <Route path='/login' component={Login}/>
+      <Route path='/register' component={Register}/>
+      <Route path='/profile' component={Profile}/>
+      <Route path='/about' component={About}/>
+      <Route path='/approvedCompanies' component={ApprovedCompanies}/>
+      <Route path='/inProgressCases' component={InProgressCases}/>
+      <Route path='/SPC' component={SPCForm}/>
+      <Route path='/form' component={form}/>
+      </div>
+          <Footer/>
+      </Router>
+        )}
+  //     <div className="App">
+  //       <header className="App-header">
+  //         <img src={logo} className="App-logo" alt="logo" />
+  //         <p>
+  //           Edit <code>src/App.js</code> and save to reload.
+  //         </p>
+  //         <a
+  //           className="App-link"
+  //           href="https://reactjs.org"
+  //           target="_blank"
+  //           rel="noopener noreferrer"
+  //         >
+  //           Learn React
+  //         </a>
+  //       </header>
+  //     </div>
+  //   );
+  // }
+}
 
+export default App;

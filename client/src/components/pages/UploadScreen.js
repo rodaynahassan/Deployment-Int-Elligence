@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
-import Login from '../user/Login';
-import Register from '../user/Register';
+import Login from './Login';
+import Register from './Register';
 
 class Uploadscreen extends Component {
   constructor(props){

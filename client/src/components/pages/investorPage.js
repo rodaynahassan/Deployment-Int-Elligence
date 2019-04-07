@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import {Button} from 'react-bootstrap';
 import {Dropdown} from 'react-bootstrap';
 import { DropdownMenu, MenuItem } from 'react-bootstrap-dropdown-menu';
-import Form from '../form/form'
-import Footerr from '../layout/footerrr'
+import Form from './form'
+import Footer from '../layout/footer'
 import ReactDOM from 'react-dom';
 
 class Investor extends Component {
@@ -19,7 +19,7 @@ class Investor extends Component {
          <Form />
          <br />
          <br />
-         <Footerr />
+         <Footer />
          </div>
         )
     }

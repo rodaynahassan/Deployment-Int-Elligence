@@ -46,7 +46,7 @@ class form extends Component {
           SSCForm
           </Dropdown.Item>
           <Dropdown.Divider />
-          <Dropdown.Item href="#/action-2">
+          <Dropdown.Item href="/SPC">
           SPCForm
           </Dropdown.Item>
           <Dropdown.Divider />

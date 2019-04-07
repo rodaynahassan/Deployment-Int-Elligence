@@ -1,7 +1,7 @@
 import  React, { Component } from 'react';
 import axios from 'axios';
 import '../../App.css';
-import GetAllCompanies from './GetAllCompanies';
+import GetAllCompanies from '../form/GetAllCompanies';
 import Table from 'react-bootstrap/Table';
 import {Button} from 'react-bootstrap';
 import "mdbreact/dist/css/mdb.css";

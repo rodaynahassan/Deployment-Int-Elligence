@@ -4,7 +4,7 @@ import {Button} from 'react-bootstrap';
 import {Card} from 'react-bootstrap';
 import {Dropdown} from 'react-bootstrap';
 import { DropdownMenu, MenuItem } from 'react-bootstrap-dropdown-menu';
-import Form from '../form/form'
+import Form from './form'
 import Footer from '../layout/footer'
 import ReactDOM from 'react-dom';
 

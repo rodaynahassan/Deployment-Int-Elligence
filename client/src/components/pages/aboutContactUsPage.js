@@ -6,8 +6,8 @@ import ReactDOM from 'react-dom';
 import Footer from '../layout/footer'
 import {Row,Col,Container,Image} from 'react-bootstrap'
 import { MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBCol } from 'mdbreact';
+//import Header from '../layout/header'
 import background from '../../backkk.jpeg'
-import Header from '../layout/header'
 class About extends Component{
 
     constructor()
@@ -19,7 +19,7 @@ class About extends Component{
      {
          return (
              <section style={{ width:"100%" ,height:"800px", backgroundImage:"url("+background+")",backgroundRepeat:"no-repeat",backgroundSize:"100% 100%"}}>   
-        <Header/>
+      
         <br />
         <Card bg="light" text="grey" style={{ width: '30rem',height:'20rem' }}>
         <Card.Header>About Us</Card.Header>
@@ -33,7 +33,7 @@ class About extends Component{
         </Form>
         </Card.Body>
         </Card>
-        <Footer />
+      
         </section>
 
           )

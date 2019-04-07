@@ -8,13 +8,11 @@ import Button from 'react-bootstrap/Button'
 import FormControl from 'react-bootstrap/FormControl'
 import Carousel from 'react-bootstrap/Carousel'
 import '../../App.scss'
-import sum from './s.png'
-import vid from './Team1.mp4'
-import egypt from './This is Egypt.mp4'
+import egypt from '../layout/This is Egypt.mp4'
 import {Redirect} from 'react-router-dom'
-import Header from './header'
+import Header from '../layout/header'
 import ReactDOM from 'react-dom';
-import Companies from '../form/Companies'
+import Companies from '../pages/Companies'
 
 class LandingBody extends Component {
 
@@ -27,7 +25,7 @@ class LandingBody extends Component {
                  <source src={egypt} type="video/mp4"></source>
             </video>
           <Carousel.Caption>
-            <h3>Invest in Egypt</h3>
+            <h1>Invest in Egypt</h1>
               <Button variant="outline-light" size="lg"  href="/register">Sign Up</Button> <Button variant="outline-light" size="lg" href="/login">Sign In</Button>
           </Carousel.Caption>
         </Carousel.Item>

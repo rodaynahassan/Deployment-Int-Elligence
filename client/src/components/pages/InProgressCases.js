@@ -1,7 +1,7 @@
 import  React, { Component } from 'react';
 import axios from 'axios';
 import '../../App.css';
-import InProgressCasesComponents from './InProgressCasesComponents';
+import InProgressCasesComponents from '../user/InProgressCasesComponents';
 import Table from 'react-bootstrap/Table'
 import Navbar from 'react-bootstrap/Navbar'
 import Badge from 'react-bootstrap/Badge'

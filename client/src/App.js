@@ -9,15 +9,17 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import FormControl from 'react-bootstrap/FormControl'
 import './App.scss'
-import Header from './components/layout/header'
-import LandingBody from './components/layout/landingBody'
-import Login from './components/user/Login'
-import Register from './components/user/Register'
+//import Header from './components/layout/header'
+import LandingBody from './components/pages/landingBody'
+import Login from './components/pages/Login'
+import Register from './components/pages/Register'
 import Profile from './components/pages/profilePage'
 import About from './components/pages/aboutContactUsPage'
-import ApprovedCompanies from './components/user/ApprovedCompanies'
-import InProgressCases from './components/user/InProgressCases'
-import Footer from './components/layout/footer'
+import ApprovedCompanies from './components/pages/ApprovedCompanies'
+import InProgressCases from './components/pages/InProgressCases'
+ import Footer from './components/layout/footer'
+import SPCForm from './components/pages/SPCform'
+import form from './components/pages/form'
 class App extends Component {
   render() {
     return (
@@ -35,6 +37,8 @@ class App extends Component {
       <Route path='/about' component={About}/>
       <Route path='/approvedCompanies' component={ApprovedCompanies}/>
       <Route path='/inProgressCases' component={InProgressCases}/>
+      <Route path='/SPC' component={SPCForm}/>
+      <Route path='/form' component={form}/>
       </div>
           <Footer/>
       </Router>

@@ -1,7 +1,7 @@
 import  React, { Component } from 'react';
 import axios from 'axios';
 import '../../App.css';
-import ApprovedCompaniesFields from './ApprovedCompaniesFields';
+import ApprovedCompaniesFields from '../user/ApprovedCompaniesFields';
 import Table from 'react-bootstrap/Table'
 import Navbar from 'react-bootstrap/Navbar'
 import {Badge} from 'react-bootstrap'

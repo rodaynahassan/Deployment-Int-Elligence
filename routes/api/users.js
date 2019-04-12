@@ -9,6 +9,7 @@ const notifications = require('../../helpers/notifications')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 const tokenKey = require('../../config/keys_dev').secretOrKey
+const axios = require('axios');
 
 
 //sort all forms for a  by form creation date
@@ -82,16 +83,35 @@ router.get('/', async (req,res) => {
     const searchUsers = await userController.search()
     res.json({data: searchUsers})
 })
+
 //As a User i can Create a form
 router.post('/CreatingForm/:id', async(req,res) =>{
-    const id = req.params.id        //userID
-    req.body.userId=id
+    const userId = req.params.id        //userID
+    req.body.userId=userId
     const newForm = await formController.create(req.body)
-    const user = await userController.search('_id',id)
+    newForm.fees = 0
+    const user = await userController.search('_id',userId)
+    if(user.userType === "Investor")
+    {
+        newForm.status = "Unassigned"
+        const formId = newForm._id
+        const returnedForm = await formController.update('_id',formId,{status:newForm.status,fees:newForm.fees})
+
+    }
+    else if(user.userType === "Lawyer")
+    {
+        newForm.status = "Lawyer accepted"
+        newForm.lawyerId=userId
+        const formId = newForm._id
+        const returnedForm = await formController.update('_id',formId,{status:newForm.status,lawyerId:userId,fees:newForm.fees})
+    }
+    else{
+        return res.json({msg:'You can not create a form'})
+    }
     if(newForm.error) return res.status(400).send(newForm.error)
     if(!newForm) return res.json({msg:"Form is null"})
     user.forms.push(newForm)
-    const returnedUser = await userController.update('_id',id,{forms:user.forms})
+    const returnedUser = await userController.update('_id',userId,{forms:user.forms})
     return res.json({data:returnedUser})
 })
 //When you delete a specific user , you delete the unassigned forms only
@@ -103,7 +123,6 @@ router.delete('/:id', async (req,res) => {
      if(!SpecificUser) return res.json({msg:'This user doesnt exist'})
      for(i=0;i<SpecificUser.forms.length;i++)
      {
-        //var deletedForm = SpecificUser.forms[i].status
         if(SpecificUser.forms[i].status === 'Unassigned')
         {
             var formId=SpecificUser.forms[i]._id
@@ -128,10 +147,17 @@ router.post('/', async (req,res) => {
 //Update a User
  //Register a user
 router.post('/register', async (req,res) => {                       //register Investor
-    const newUser = await userController.registerInvestor(req.body) 
+    const newUser = await userController.registerInvestor(req.body)
     if(newUser.error) return res.status(400).send(newUser) 
-   
-     return res.json({msg:'Account was created successfully', data: newUser})
+    if(newUser.userType==='Investor'){
+        newUser.financialBalance=0
+        returnedUser = await userController.update('_id',newUser._id,{financialBalance:newUser.financialBalance})
+        return res.json({msg:'Account was created successfully', data: returnedUser})
+    }
+    return res.json({msg:'Account was created successfully', data:newUser})
+     
+    
+     
 })
 //Login
 router.post('/login',async(req,res)=>{
@@ -159,7 +185,173 @@ router.post('/login',async(req,res)=>{
 catch(e){}
 })
 
+//Calculating fees as a lawyer
+router.put('/CalculatingFees/:formId',async(req,res) =>{
+   var equation = await axios.get('http://localhost:5000/routes/api/fakeServer/ReturningEquation')
+   const formid = req.params.formId
+   const form = await formController.search('_id',formid)
+   var capital = form.equityCapital
+   var calculatedFees = (equation.data.data.m * capital)+(equation.data.data.c)
+   const returnedFees = calculatedFees
+   const updatedForm = await formController.update('_id',formid,{fees:returnedFees})
+   const investorid = updatedForm.userId
+   const lawyerid = updatedForm.lawyerId
+   const investor = await userController.search('_id',investorid)
+   const lawyer = await userController.search('_id',lawyerid)
+   const investorForms = investor.forms
+    for(i=0;i<investorForms.length;i++){
+        if(investorForms[i]._id.equals(formid)){
+            investorForms.remove(investorForms[i])
+        }
+    }
+    const lawyerForms = lawyer.forms
+    for(i=0;i<lawyerForms.length;i++){
+        if(lawyerForms[i]._id.equals(formid)){
+            lawyerForms.remove(lawyerForms[i])
+        }
+    }
+    lawyer.forms.push(updatedForm)
+    investor.forms.push(updatedForm)
+    const returnedLawyer = await userController.update('_id',lawyerid,{forms:lawyer.forms})
+    const returnedInvestor = await userController.update('_id',investorid,{forms:investor.forms})
+   res.json({data:updatedForm})
+})
 
+//Accepting and updating financial balance of the investor
+router.put('/accept/:formId/:userId',async(req,res)=>{
+    const userid=req.params.userId;
+    const formid=req.params.formId;
+    const user= await userController.search('_id',userid)
+    const form = await formController.search('_id',formid) 
+    if(form.status ==='In progress Lawyer' && user.userType ==='Lawyer')
+    {
+        form.status = 'Lawyer accepted'
+        const investorid = form.userId
+        const investor = await userController.search('_id',investorid)
+        const investorForms = investor.forms
+        for(i=0;i<investorForms.length;i++){
+            if(investorForms[i]._id.equals(formid)){
+                investorForms.remove(investorForms[i])
+            }
+        }
+        const lawyerForms = user.forms
+        for(i=0;i<lawyerForms.length;i++){
+            if(lawyerForms[i]._id.equals(formid)){
+                lawyerForms.remove(lawyerForms[i])
+            }
+        }
+        const returnedForm = await formController.update('_id',formid,{status:form.status})
+        user.forms.push(returnedForm)
+        investor.forms.push(returnedForm)
+        const returnedLawyer = await userController.update('_id',userid,{forms:user.forms})
+        const returnedInvestor = await userController.update('_id',investorid,{forms:investor.forms})
+        return res.json({data:returnedLawyer})
+    }
+    else if(form.status==='In progress Reviewer' && user.userType === 'Reviewer')
+    {
+        form.status = 'Approved'
+        const investorid = form.userId
+        const investor = await userController.search('_id',investorid)
+        const investorForms = investor.forms
+        for(i=0;i<investorForms.length;i++){
+            if(investorForms[i]._id.equals(formid)){
+                investorForms.remove(investorForms[i])
+            }
+        }
+        const lawyerid = form.lawyerId
+        const lawyer = await userController.search('_id',lawyerid)
+        const lawyerForms = lawyer.forms
+        for(i=0;i<lawyerForms.length;i++){
+            if(lawyerForms[i]._id.equals(formid)){
+                lawyerForms.remove(lawyerForms[i])
+            }
+        }
+        const reviewerForms = user.forms
+        for(i=0;i<reviewerForms.length;i++)
+        {
+            if(reviewerForms[i]._id.equals(formid)){
+                reviewerForms.remove(reviewerForms[i])
+            }
+        }
+
+        const returnedForm = await formController.update('_id',formid,{status:form.status})
+        user.forms=reviewerForms
+        lawyer.forms=lawyerForms
+        investor.forms.push(returnedForm)
+        if(investorid.equals(lawyerid)){
+            const returnedInvestor = await userController.update('_id',investorid,{forms:investor.forms})
+            const returnedReviewer = await userController.update('_id',userid,{forms:user.forms})
+            return res.json({data:returnedReviewer})
+        }
+        else{
+            const updatedFinancialBalance = form.fees + investor.financialBalance
+            const returnedInvestor = await userController.update('_id',investorid,{forms:investor.forms,financialBalance:updatedFinancialBalance})
+            const returnedReviewer = await userController.update('_id',userid,{forms:user.forms})
+            const returnedLawyer = await userController.update('_id',lawyerid,{forms:lawyer.forms})
+            return res.json({data:returnedReviewer})
+        }     
+    } 
+    else
+    {
+        return res.json({msg:'You can not accept it'})
+    }
+    
+});
+
+//add a form to the array of forms of the lawyer/reviewer
+router.put('/takingForm/:userId/:formId' ,  async (req,res) => {
+    const userid = req.params.userId
+    const formid = req.params.formId
+    const user = await userController.search('_id',userid)
+    const form = await formController.search('_id',formid)
+    if(form.status==='Unassigned' && user.userType==='Lawyer'){
+        form.status='In progress Lawyer'
+        const id = form.userId
+        const investor = await userController.search('_id',id)
+        const investorForms = investor.forms
+        for(i=0;i<investorForms.length;i++){
+            if(investorForms[i]._id.equals(formid)){
+                investorForms.remove(investorForms[i])
+            }
+        }
+        const returnedForm = await formController.update('_id',formid,{status:form.status,lawyerId:userid})
+        user.forms.push(returnedForm)
+        investor.forms.push(returnedForm)
+        const returnedUser = await userController.update('_id',userid,{forms:user.forms})
+        const returnedInvestor = await userController.update('_id',id,{forms:investor.forms})
+        return res.json({data:returnedUser})
+   }
+   else if(form.status==='Lawyer accepted' && user.userType==='Reviewer'){
+        form.status='In progress Reviewer'
+        const id = form.userId
+        const investor = await userController.search('_id',id)
+        const investorForms = investor.forms
+        for(i=0;i<investorForms.length;i++){
+            if(investorForms[i]._id.equals(formid)){
+                investorForms.remove(investorForms[i])
+            }
+        }
+        const lawyerid = form.lawyerId
+        const lawyer = await userController.search('_id',lawyerid)
+        const lawyerForms = lawyer.forms
+        for(i=0;i<lawyerForms.length;i++){
+            if(lawyerForms[i]._id.equals(formid)){
+                lawyerForms.remove(lawyerForms[i])
+            }
+        }
+        const returnedForm = await formController.update('_id',formid,{status:form.status})
+        user.forms.push(returnedForm)
+        investor.forms.push(returnedForm)
+        lawyer.forms.push(returnedForm)
+        const returnedUser = await userController.update('_id',userid,{forms:user.forms})
+        const returnedInvestor = await userController.update('_id',id,{forms:investor.forms})
+        const returnedLawyer = await userController.update('_id',lawyerid,{forms:lawyer.forms})
+        return res.json({data:returnedUser})
+}
+   else{
+       return res.json({msg:'You can not take it :)'})
+   }
+})
 
 
 //update a user 
@@ -189,7 +381,14 @@ router.get('/getInProgressCases/:id',async(req,res) => {
      var formid=req.params.formId
      var user = await userController.search('_id',userid)
      var updatedForm = await formController.update('_id',formid,req.body)
-     user.forms = updatedForm
+     const userForms = user.forms
+     for(i=0;i<user.forms.length;i++){
+         if(userForms[i]._id.equals(formid)){
+             userForms.remove(userForms[i])
+         }
+     }
+     userForms.push(updatedForm)
+     user.forms = userForms
      const returnedUser = await userController.update('_id',userid,{forms:user.forms})
      if(req.body.status){
         if(req.body.status==='Approved'){
@@ -197,7 +396,7 @@ router.get('/getInProgressCases/:id',async(req,res) => {
         }
     }
 
-     if(req.body.status!==undefined||req.body.lawyerSeen!==undefined||req.body.lawyerComments!==undefined||req.body.lawyerApprove!==undefined||req.body.reviewerSeen!==undefined||req.body.reviewersComments!==undefined||req.body.reviewerApprove!==undefined){
+     if(req.body.status!==undefined||req.body.lawyerComments!==undefined||req.body.reviewersComments!==undefined){
         var notifyUser = await notifications.notifyUserForFormUpdates(user,updatedForm)
         return res.json({data:returnedUser,notification:notifyUser})
      }

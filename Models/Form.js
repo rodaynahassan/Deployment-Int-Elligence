@@ -27,10 +27,12 @@ const FormSchema= new Schema({
     equityCapital:{type:Number,required:true},
     SSCManagers:{type:Array},
     type:{type:String,required:true},
-    status:{type: String,enum:['Unassigned','Rejected','In progress Lawyer','In progress Reviewer','Approved']},
+    status:{type: String,enum:['Unassigned','Rejected','In progress Lawyer','Lawyer accepted','In progress Reviewer','Approved']},
      creationDate:{type: Date,required: true},
      lawyerComments:{type:[String]},
      reviewerComments:{type:[String]},
-     userId:{type:ObjectId,required:true}
+     userId:{type:ObjectId,required:true},
+     lawyerId:{type:ObjectId},
+     fees:{type:Number}
 })
 module.exports = Form = mongoose.model('forms', FormSchema)

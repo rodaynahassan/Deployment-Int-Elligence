@@ -4,6 +4,7 @@ const cors =require('cors')
 const users = require('./routes/api/users')
 const forms = require('./routes/api/forms')
 const admins = require('./routes/api/admins')
+const fakeServer = require('./routes/api/fakeServer')
 const externalentities=require('./routes/api/externalentities')
 const nationalities=require('./routes/api/nationalities')
 const governorates=require('./routes/api/governorates')
@@ -41,6 +42,7 @@ app.use('/routes/api/externalentities',externalentities)
 app.use('/routes/api/nationalities',nationalities)
 app.use('/routes/api/governorates',governorates)
 
+app.use('/routes/api/fakeServer',fakeServer)
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");

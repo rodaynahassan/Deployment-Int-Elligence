@@ -138,12 +138,17 @@ router.delete('/:id', async (req,res) => {
  })
 //Create a User
 router.post('/', async (req,res) => {
-    
+    try{
      const newUser = await userController.create(req.body)
      if(newUser.error) return res.status(400).send(newUser) 
      return res.json({msg:'User was created successfully', data: newUser})
     }
- )
+   
+catch(err)
+{
+    console.log(err)
+   }
+})
 //Update a User
  //Register a user
 router.post('/register', async (req,res) => {                       //register Investor
@@ -216,6 +221,61 @@ router.put('/CalculatingFees/:formId',async(req,res) =>{
     const returnedInvestor = await userController.update('_id',investorid,{forms:investor.forms})
    res.json({data:updatedForm})
 })
+//safa
+//reject a specific form  
+router.put('/reject/:formId/:userId',async(req,res)=>{
+    const userid=req.params.userId ;
+    const formid=req.params.formId ;
+    const user= await userController.search('_id',userid)
+    const form = await formController.search('_id',formid) 
+    if(form.status==='In progress Reviewer' && user.userType === ("Reviewer"))
+    {
+        form.status = "Rejected"
+        const formId = form._id
+        
+        const id = form.userId
+        const investor = await userController.search('_id',id)
+        const investorForms = investor.forms
+        for(i=0;i<investorForms.length;i++){
+            if(investorForms[i]._id.equals(formid)){
+                investorForms.remove(investorForms[i])
+            }
+        }
+        const lawyerid = form.lawyerId
+        const lawyer = await userController.search('_id',lawyerid)
+        const lawyerForms = lawyer.forms
+        for(i=0;i<lawyerForms.length;i++){
+            if(lawyerForms[i]._id.equals(formid)){
+                lawyerForms.remove(lawyerForms[i])
+            }
+        }
+        const reviewerid = req.params.userId
+        const reviewer = await userController.search('_id',reviewerid)
+        const reviewerForms = reviewer.forms
+        for(i=0;i<reviewerForms.length;i++)
+        {
+            if(reviewerForms[i]._id.equals(formid)){
+                reviewerForms.remove(reviewerForms[i])
+            }
+        }
+
+         const returnedForm = await formController.update('_id',formId,{status:form.status})
+        user.forms.push(returnedForm)
+        investor.forms.push(returnedForm)
+        lawyer.forms.push(returnedForm)
+        reviewer.forms.push(returnedForm)
+        const returnedUser = await userController.update('_id',userid,{forms:user.forms})
+        const returnedInvestor = await userController.update('_id',id,{forms:investor.forms})
+        const returnedLawyer = await userController.update('_id',lawyerid,{forms:lawyer.forms})
+        const returnedReviewer = await userController.update('_id',reviewerid,{forms:reviewer.forms})
+        return res.json({data:returnedForm})
+    } 
+    else
+    {
+        return res.json({msg:'NO'})
+    }
+    
+});
 
 //Accepting and updating financial balance of the investor
 router.put('/accept/:formId/:userId',async(req,res)=>{

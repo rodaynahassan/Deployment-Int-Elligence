@@ -35,7 +35,11 @@ router.get('/getUnAssignedForm', async (req,res) => {
     const form = await controller.search('status','Unassigned')
     return res.json({data:form})
 })
-
+//get Lawyer Acceptedform 
+router.get('/getLawyerAccepted', async (req,res) => {
+    const form = await controller.search('status','Lawyer accepted')
+    return res.json({data:form})
+})
 //get Reviewer's comments
 router.get('/getReviewerComments/:id', async(req, res)=>{
     const formId = req.params.id

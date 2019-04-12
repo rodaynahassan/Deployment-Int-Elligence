@@ -21,6 +21,8 @@ import InProgressCases from './components/pages/InProgressCases'
 import SPCForm from './components/pages/SPCform'
 import form from './components/pages/form'
 import SSCForm from './components/pages/SSCForm'
+import unassignedForm from './components/pages/unassignedForm'
+import assignToReviewer from './components/pages/assignToReviewer'
 class App extends Component {
   render() {
     return (
@@ -41,6 +43,8 @@ class App extends Component {
       <Route path='/SPC' component={SPCForm}/>
       <Route path='/form' component={form}/>
       <Route path='/SSC' component={SSCForm}/>
+      <Route path='/unassignedForm' component={unassignedForm}/>
+      <Route path='/lawyerAcceptedForms' component={assignToReviewer}/>
       </div>
           <Footer/>
       </Router>

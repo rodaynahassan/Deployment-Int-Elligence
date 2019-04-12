@@ -138,12 +138,17 @@ router.delete('/:id', async (req,res) => {
  })
 //Create a User
 router.post('/', async (req,res) => {
-    
+    try{
      const newUser = await userController.create(req.body)
      if(newUser.error) return res.status(400).send(newUser) 
      return res.json({msg:'User was created successfully', data: newUser})
     }
- )
+   
+catch(err)
+{
+    console.log(err)
+   }
+})
 //Update a User
  //Register a user
 router.post('/register', async (req,res) => {                       //register Investor

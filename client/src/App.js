@@ -21,13 +21,15 @@ import InProgressCases from './components/pages/InProgressCases'
 import SPCForm from './components/pages/SPCform'
 import form from './components/pages/form'
 import SSCForm from './components/pages/SSCForm'
+import SortSpecificUserCase from './components/pages/SortSpecificUserCase'
+import DropdownTrial from './components/form/DropdownNationalities'
+import DropdownCities from './components/form/DropdownCities'
+import DropdownGovernorates from './components/form/DropdownGovernorates'
 class App extends Component {
   render() {
     return (
       <Router>
-     
       <div>
-      
         <Route exact path="/" render={props=>(
            <LandingBody/>
         )}/>
@@ -41,8 +43,13 @@ class App extends Component {
       <Route path='/SPC' component={SPCForm}/>
       <Route path='/form' component={form}/>
       <Route path='/SSC' component={SSCForm}/>
+      <Route path='/SortByID' component={ SortSpecificUserCase}/>
+      <Route path='/dropDown' component={ DropdownTrial}/>
+      <Route path='/dropDownCity' component={ DropdownCities}/>
+      <Route path='/dropDownGovernorate' component={ DropdownGovernorates}/>
+      
       </div>
-          <Footer/>
+          {/* <Footer/> */}
       </Router>
         )}
   //     <div className="App">

@@ -27,6 +27,7 @@ import assignToReviewer from './components/pages/assignToReviewer'
 import GetCaseSpecified from './components/pages/GetCaseSpecified'
 import GetCaseReviewer from './components/pages/GetCaseReviewer'
 import AddCommentsLawyer from './components/pages/AddCommentsLawyer'
+import EditProfile from './components/pages/EditProfile'
 
 class App extends Component {
   render() {
@@ -48,15 +49,13 @@ class App extends Component {
       <Route path='/SPC' component={SPCForm}/>
       <Route path='/form' component={form}/>
       <Route path='/SSC' component={SSCForm}/>
-<<<<<<< HEAD
       <Route path='/unassignedForm' component={unassignedForm}/>
       <Route path='/lawyerAcceptedForms' component={assignToReviewer}/>
-=======
       {/* <Route path='/SortByID' component={ SortSpecificUserCase}/> */}
       <Route path='/Get' component={GetCaseSpecified}/>
       <Route path='/GetReviewer' component={GetCaseReviewer}/>
       <Route path='/Comments' component={AddCommentsLawyer}/>
->>>>>>> 9c31f1f44415cde21541a871feae07d0e58fd8bc
+      <Route path='/editprofile' component={EditProfile}/>
       </div>
           <Footer/>
       </Router>

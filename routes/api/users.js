@@ -293,7 +293,7 @@ router.put('/accept/:formId/:userId',async(req,res)=>{
     } 
     else
     {
-        return res.json({msg:'You can not accept it'})
+        return res.json({msg:'You already accepted this case'})
     }
     
 });
@@ -434,7 +434,7 @@ router.put('/lawyerComments/:userId/:formId', async(req, res) => {
     const userid=req.params.userId 
     const formid=req.params.formId
     const user= await userController.search('_id',userid)
-    console.log(user)
+   // console.log(user)
     const form = await formController.search('_id',formid) 
     //console.log(form)
     var comments = form.lawyerComments
@@ -443,15 +443,17 @@ router.put('/lawyerComments/:userId/:formId', async(req, res) => {
         var x = req.body.lawyerComments[i]
         comments.push(x)
     }
+    var updatedForm = null;
     for(i=0;i<user.forms.length;i++){
         if(user.forms[i]._id.equals(form._id))
         {
             console.log(i)
             user.forms[i] = await formController.update('_id',formid,{lawyerComments:comments})
+            updatedForm = user.forms[i]
         }
     }
     const returnedUser = await userController.update('_id',userid,{forms:user.forms})
-    if(req.body.lawyerComments!==undefined){
+    if(req.body.lawyerComments!==[] || req.body.lawyerComments!==undefined ){
         var notifyUser = await notifications.notifyUserForFormUpdates(user,updatedForm)
         return res.json({data:returnedUser,notification:notifyUser})
      }
@@ -471,19 +473,49 @@ router.put('/reviewerComments/:userId/:formId', async(req, res) => {
         var x = req.body.reviewerComments[i]
         comments.push(x)
     }
+    var updatedForm = null;
     for(i=0;i<user.forms.length;i++){
         if(user.forms[i]._id.equals(form._id))
         {
             user.forms[i] = await formController.update('_id',formid,{reviewerComments:comments})
+            updatedForm = user.forms[i]
         }
     }
     const returnedUser = await userController.update('_id',userid,{forms:user.forms})
-    if(req.body.reviewerComments!==undefined){
+    if(req.body.reviewerComments!==[] || req.body.reviewerComments!==undefined ){
         var notifyUser = await notifications.notifyUserForFormUpdates(user,updatedForm)
         return res.json({data:returnedUser,notification:notifyUser})
      }
 
      return res.json({data:returnedUser})
 });
+
+//get Array of Form 
+router.get('/getUserForms/:id', async(req, res)=>{
+    const userId = req.params.id
+    const user = await userController.search('_id',userId)
+    var userForms = user.forms
+    const arrayForms =[]
+    if(user.userType==='Lawyer'){
+        for(i=0;i<userForms.length;i++){
+            if(userForms[i].status==='In progress Lawyer' || userForms[i].status==='Lawyer accepted'){
+                arrayForms.push(userForms[i])
+            }
+        }
+        return res.json({data:arrayForms})
+    }
+    else if(user.userType==='Reviewer'){
+        for(i=0;i<userForms.length;i++){
+            if(userForms[i].status==='In progress Reviewer'){
+                arrayForms.push(userForms[i])
+            }
+        }
+        return res.json({data:arrayForms})
+    }
+    else{
+        return res.json({ msg:'Not a user'});
+    }
+})
+
 module.exports = router;
 

@@ -23,6 +23,11 @@ import form from './components/pages/form'
 import SSCForm from './components/pages/SSCForm'
 import unassignedForm from './components/pages/unassignedForm'
 import assignToReviewer from './components/pages/assignToReviewer'
+//import SortSpecificUserCase from './components/pages/SortSpecificUserCase'
+import GetCaseSpecified from './components/pages/GetCaseSpecified'
+import GetCaseReviewer from './components/pages/GetCaseReviewer'
+import AddCommentsLawyer from './components/pages/AddCommentsLawyer'
+
 class App extends Component {
   render() {
     return (
@@ -43,30 +48,20 @@ class App extends Component {
       <Route path='/SPC' component={SPCForm}/>
       <Route path='/form' component={form}/>
       <Route path='/SSC' component={SSCForm}/>
+<<<<<<< HEAD
       <Route path='/unassignedForm' component={unassignedForm}/>
       <Route path='/lawyerAcceptedForms' component={assignToReviewer}/>
+=======
+      {/* <Route path='/SortByID' component={ SortSpecificUserCase}/> */}
+      <Route path='/Get' component={GetCaseSpecified}/>
+      <Route path='/GetReviewer' component={GetCaseReviewer}/>
+      <Route path='/Comments' component={AddCommentsLawyer}/>
+>>>>>>> 9c31f1f44415cde21541a871feae07d0e58fd8bc
       </div>
           <Footer/>
       </Router>
         )}
-  //     <div className="App">
-  //       <header className="App-header">
-  //         <img src={logo} className="App-logo" alt="logo" />
-  //         <p>
-  //           Edit <code>src/App.js</code> and save to reload.
-  //         </p>
-  //         <a
-  //           className="App-link"
-  //           href="https://reactjs.org"
-  //           target="_blank"
-  //           rel="noopener noreferrer"
-  //         >
-  //           Learn React
-  //         </a>
-  //       </header>
-  //     </div>
-  //   );
-  // }
+ 
 }
 
 export default App;

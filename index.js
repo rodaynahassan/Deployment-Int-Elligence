@@ -6,11 +6,12 @@ const forms = require('./routes/api/forms')
 const admins = require('./routes/api/admins')
 const fakeServer = require('./routes/api/fakeServer')
 const externalentities=require('./routes/api/externalentities')
+const nationalities=require('./routes/api/nationalities')
+const governorates=require('./routes/api/governorates')
 const app = express()
 
 // DB Config
 const db = require('./config/keys').mongoURI
-
 
 // Connect to mongo
 mongoose
@@ -28,6 +29,7 @@ app.use(express.urlencoded({extended: false}))
 
 //app.use(express.multipart());
 app.use(cors())
+
 app.get('/', (req, res) => {
     res.send(`<h1>Welcome</h1>`);
 })
@@ -37,6 +39,9 @@ app.use('/routes/api/users', users)
 app.use('/routes/api/forms',forms)
 app.use('/routes/api/admins',admins)
 app.use('/routes/api/externalentities',externalentities)
+app.use('/routes/api/nationalities',nationalities)
+app.use('/routes/api/governorates',governorates)
+
 app.use('/routes/api/fakeServer',fakeServer)
 
 app.use(function(req, res, next) {

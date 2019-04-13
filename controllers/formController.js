@@ -77,9 +77,16 @@ exports.create = async function create(body)
             {
                 return {error: isValidated.error.details[0].message}
             }
-            const newSPCForm = await Form.create(body)   
-            return newSPCForm
+            const newSPCForm = await Form.create(body) 
+            .then(res=>{return res})
+            .catch(error =>{
+                console.log(error)
+                return {error: error}
+            })
+           console.log(newSPCForm)
+           return newSPCForm
         }
+        
     }
     catch(error) 
     {

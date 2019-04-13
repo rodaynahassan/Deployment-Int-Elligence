@@ -21,6 +21,10 @@ import InProgressCases from './components/pages/InProgressCases'
 import SPCForm from './components/pages/SPCform'
 import form from './components/pages/form'
 import SSCForm from './components/pages/SSCForm'
+import SortSpecificUserCase from './components/pages/SortSpecificUserCase'
+import DropdownTrial from './components/form/DropdownNationalities'
+import DropdownCities from './components/form/DropdownCities'
+import DropdownGovernorates from './components/form/DropdownGovernorates'
 import unassignedForm from './components/pages/unassignedForm'
 import assignToReviewer from './components/pages/assignToReviewer'
 //import SortSpecificUserCase from './components/pages/SortSpecificUserCase'
@@ -33,9 +37,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-     
       <div>
-      
         <Route exact path="/" render={props=>(
            <LandingBody/>
         )}/>
@@ -49,15 +51,23 @@ class App extends Component {
       <Route path='/SPC' component={SPCForm}/>
       <Route path='/form' component={form}/>
       <Route path='/SSC' component={SSCForm}/>
+
+      <Route path='/SortByID' component={ SortSpecificUserCase}/>
+      <Route path='/dropDown' component={ DropdownTrial}/>
+      <Route path='/dropDownCity' component={ DropdownCities}/>
+      <Route path='/dropDownGovernorate' component={ DropdownGovernorates}/>
+      
+
       <Route path='/unassignedForm' component={unassignedForm}/>
       <Route path='/lawyerAcceptedForms' component={assignToReviewer}/>
+
       {/* <Route path='/SortByID' component={ SortSpecificUserCase}/> */}
       <Route path='/Get' component={GetCaseSpecified}/>
       <Route path='/GetReviewer' component={GetCaseReviewer}/>
       <Route path='/Comments' component={AddCommentsLawyer}/>
       <Route path='/CompanyName' component={GetFormByCompanyName}/>
       </div>
-          <Footer/>
+          {/* <Footer/> */}
       </Router>
         )}
  

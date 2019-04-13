@@ -17,8 +17,14 @@ class Companies extends Component {
           this.setState({companies: res.data.data})
       }})}
 
-    
-
+      sort = () => {
+        axios.get('http://localhost:5000/routes/api/users/SpecificFormSortedByFormId/5ca6302c13e5d0343c6e2a10').then (res=> {
+               this.setState({forms:res.data.data})
+               alert('Cases have been sorted')
+            }).catch(err=>{console.log(err)});
+           
+     }    
+//ahsj
       tabRow(){
         return this.state.companies.map(function(company,i){
             return <GetAllReviewerForms company={company} key={i} />;
@@ -26,10 +32,12 @@ class Companies extends Component {
       }
       render(){
         return (
-             
-         <div>
+            
+          <div>
+          
            
           <Button variant="nada" block disabled><h1>specific reviewer cases</h1></Button>
+              <Button variant="dark" onClick={()=>this.sort()}>Sort the cases by ID </Button> 
             <Table stripped bordered hover variant='dark' size='sm'>
             <thead>
               <tr>

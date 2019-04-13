@@ -89,8 +89,11 @@ router.post('/CreatingForm/:id', async(req,res) =>{
     const userId = req.params.id        //userID
     req.body.userId=userId
     const newForm = await formController.create(req.body)
-    newForm.fees = 0
     const user = await userController.search('_id',userId)
+    //console.log(newForm)
+    if(newForm.error) return res.status(400).json(newForm.error)
+    if(!newForm) return res.json({msg:"Form is null"})
+    newForm.fees = 0
     if(user.userType === "Investor")
     {
         newForm.status = "Unassigned"
@@ -108,8 +111,7 @@ router.post('/CreatingForm/:id', async(req,res) =>{
     else{
         return res.json({msg:'You can not create a form'})
     }
-    if(newForm.error) return res.status(400).send(newForm.error)
-    if(!newForm) return res.json({msg:"Form is null"})
+    
     user.forms.push(newForm)
     const returnedUser = await userController.update('_id',userId,{forms:user.forms})
     return res.json({data:returnedUser})

@@ -6,7 +6,8 @@ import Footer from './components/layout/footer'
 import About from './components/pages/aboutContactUsPage'
 import Profile from './components/pages/profilePage'
 import * as serviceWorker from './serviceWorker';
-
+import UpdateSSCForm from './components/pages/UpdateSSCForm'
+import SSCForm from './components/pages/SSCForm'
 
 ReactDOM.render(<App />, document.getElementById('root'));
 // If you want your app to work offline and load faster, you can change

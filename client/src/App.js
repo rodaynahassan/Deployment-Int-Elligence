@@ -31,9 +31,14 @@ import assignToReviewer from './components/pages/assignToReviewer'
 import GetCaseSpecified from './components/pages/GetCaseSpecified'
 import GetCaseReviewer from './components/pages/GetCaseReviewer'
 import AddCommentsLawyer from './components/pages/AddCommentsLawyer'
+
 import EditProfile from './components/pages/EditProfile'
 import EditSPCForm from './components/pages/EditSPCForm'
 import ChangePassword from './components/pages/ChangePassword'
+
+import GetFormByCompanyName from './components/form/GetFormByCompanyName'
+
+
 class App extends Component {
   render() {
     return (
@@ -66,9 +71,11 @@ class App extends Component {
       <Route path='/Get' component={GetCaseSpecified}/>
       <Route path='/GetReviewer' component={GetCaseReviewer}/>
       <Route path='/Comments' component={AddCommentsLawyer}/>
+
       <Route path='/editprofile' component={EditProfile}/>
       <Route path='/editspcform' component={EditSPCForm}/>
-      <Route path='/changepassword' component={ChangePassword}/>
+       <Route path='/CompanyName' component={GetFormByCompanyName}/>
+
       </div>
           {/* <Footer/> */}
       </Router>

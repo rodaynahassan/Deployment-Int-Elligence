@@ -1,3 +1,4 @@
+
 const express = require('express');
 const Joi = require('joi');
 const router = express.Router();
@@ -10,7 +11,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 const tokenKey = require('../../config/keys_dev').secretOrKey
 const axios = require('axios');
-//   jj
+
 
 //sort all forms for a  by form creation date
 router.get('/AllformsSortedByformDate/', async(req, res) => {                    
@@ -86,11 +87,19 @@ router.get('/', async (req,res) => {
 
 //As a User i can Create a form
 router.post('/CreatingForm/:id', async(req,res) =>{
-    const userId = req.params.id        //userID
-    req.body.userId=userId
+    const id = req.params.id        //userID
+    req.body.userId=id
     const newForm = await formController.create(req.body)
-    newForm.fees = 0
+
+    const user = await userController.search('_id',id)
+    if(newForm.error) return res.status(400).send(newForm.error)
+    if(!newForm) return res.json({msg:"Form is null"})
+
     const user = await userController.search('_id',userId)
+    //console.log(newForm)
+    if(newForm.error) return res.status(400).json(newForm.error)
+    if(!newForm) return res.json({msg:"Form is null"})
+    newForm.fees = 0
     if(user.userType === "Investor")
     {
         newForm.status = "Unassigned"
@@ -108,10 +117,10 @@ router.post('/CreatingForm/:id', async(req,res) =>{
     else{
         return res.json({msg:'You can not create a form'})
     }
-    if(newForm.error) return res.status(400).send(newForm.error)
-    if(!newForm) return res.json({msg:"Form is null"})
+    
+
     user.forms.push(newForm)
-    const returnedUser = await userController.update('_id',userId,{forms:user.forms})
+    const returnedUser = await userController.update('_id',id,{forms:user.forms})
     return res.json({data:returnedUser})
 })
 //When you delete a specific user , you delete the unassigned forms only
@@ -353,15 +362,6 @@ router.put('/takingForm/:userId/:formId' ,  async (req,res) => {
    }
 })
 
-
-//update a user 
- router.put('/:id' , async (req,res) => {
-      var id = req.params.id  
-      const updateUser = await userController.update('_id',id,req.body)
-      if(!updateUser) return res.json({msg :'ID not there'})
-      if(updateUser.error) return res.status(400).send(updateUser)
-      return res.json({msg : 'User Updated Successfully',data: updateUser})
- })
 //as a lawyer/reviewer/investor I should be able to view my in progress cases
 router.get('/getInProgressCases/:id',async(req,res) => {
     const userid = req.params.id
@@ -517,4 +517,38 @@ router.get('/getUserForms/:id', async(req, res)=>{
     }
 })
 
+
+// change password
+router.post('/changePassword/:id', async (req,res) => { 
+    const userid = req.params.id  
+    const user = await userController.search('_id',userid)
+    const newPassword=req.body.newPassword;
+    const confirmPassword= req.body.confirmPassword;
+        if (newPassword===confirmPassword)
+        {
+        const salt = await bcrypt.genSalt(10);
+        newPasswordEnc= await bcrypt.hash(newPassword, salt); 
+        user.password=newPasswordEnc
+        await user.save();
+        return res.json({msg:'Password was updated successfully', data: user})
+        }
+        else 
+        return res.json({msg:'The passwords do not match!'})
+})
+
+
+//update a user 
+router.put('/:id' , async (req,res) => {
+    try{
+     var id = req.params.id  
+     const updateUser = await userController.update('_id',id,req.body)
+     if(!updateUser) return res.json({msg :'ID not there'})
+     if(updateUser.error) return res.status(400).json(updateUser)
+     return res.json({msg : 'User Updated Successfully',data: updateUser})
+    }
+    catch(error)
+   {
+       console.log(error)
+   }
+})
 module.exports = router;

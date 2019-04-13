@@ -83,8 +83,8 @@ router.post('/', async (req,res) => {
     {
         const id = req.params.id
         var form = await controller.update('_id',id,req.body)
+        if(form.error) return res.status(400).json(form.error)
         if(!form) return res.json({msg:"ID not found"})
-        if(form.error) return res.status(400).send(form)
         return res.json({msg:"Form Updated Successfully", data:form})
     }
     catch(error)

@@ -24,7 +24,9 @@ class EditSPCForm extends React.Component{
             companyFax:'',
             companyNameInEnglish:'',
             currency:'',
-            equityCapital:''
+            equityCapital:'',
+            governorate:[],
+            cities:[]
        };
 
       axios.get('http://localhost:5000/routes/api/forms/5ca7e31938bb992a848e06f7')
@@ -49,7 +51,13 @@ class EditSPCForm extends React.Component{
           })
       
     }
-    
+    componentDidMount(){
+        axios.get('http://localhost:5000/routes/api/governorates/')        
+          .then(res => {
+                this.setState({governorate: res.data.data})
+                
+            })
+      }
     
       handleClick(event){
         var apiBaseUrl = "http://localhost:5000/routes/api/forms/5ca7e31938bb992a848e06f7";
@@ -66,19 +74,28 @@ class EditSPCForm extends React.Component{
           }
         axios.put(apiBaseUrl, payload)
        .then(function (response) {
-         console.log(response);
-         if(response.data.code === 200){
-          alert('SPCForm Updated Succesfully') ;
-         }
+         alert('The SPC form has been updated successfully');
        })
-       .catch(function (error) {
-         alert('Something is wrong with your entries.Please check the constraints on each field again');
+       .catch((error)=>{
+         alert(error.response.data.errmsg||error.response.data);
+         console.log(error)
        });
       }
       
       changeHandler = event => {
         this.setState({ [event.target.name] :event.target.value});
       };
+      changeHandler2 = event => {
+      
+        this.setState({ [event.target.name] :event.target.value});
+        axios.get('http://localhost:5000/routes/api/governorates/getByGovernorateName/' + event.target.value)        
+        .then(res => {
+              this.setState({cities: res.data.data})
+              console.log(this.state.cities)
+          })
+    
+    };
+      
       validateForm() {
         return this.state.companyName.length <=50 
         && this.state.companyAddress.length >=5 && this.state.companyAddress.length <=50
@@ -125,8 +142,7 @@ class EditSPCForm extends React.Component{
                  type="text"
                  id="materialFormRegisterNameEx"
                  label="Company Telephone"
-                 
-               >
+                >
                <div className="valid-feedback">Looks good!</div>
               <div className="invalid-feedback">Note: It should be more than or equal 8 characters and less than or equal 15 characters</div>
                </MDBInput>
@@ -152,60 +168,39 @@ class EditSPCForm extends React.Component{
             </MDBCol>
             </MDBRow>
             <br/>
+<MDBRow>
+            <MDBCol>
+              <div className="form-group">
+                  <label htmlFor="companyGovernorate">Company Governorate</label>
+                  <select className="form-control"  
+                  id="exampleFormControlSelect1" name="companyGovernorate"
+                      onChange={this.changeHandler2} 
+                      value={this.state.companyGovernorate} >
+                      
+                      {this.state.governorate.map((gov)=>(
+            
+             <option value={gov.name}>{gov.name}</option>
+             ))};
+                      
+                  </select>
+                </div>
+              </MDBCol>
 
-            <MDBRow>
-           <MDBCol>
-        <div className="form-group">
-            <label htmlFor="companyGovernorate">Company Governorate</label>
-            <select className="form-control" 
-            //className={this.state.companyGovernorate.valid ? "is-valid" : "is-invalid"} 
-            id="exampleFormControlSelect1" name="companyGovernorate"
-                onChange={this.changeHandler} 
-                value={this.state.companyGovernorate}  >
-              <option>Alexandria</option>
-              <option>Cairo</option>
-              <option>Portsaid</option>
-              <option>Suez</option>
-            </select>
-          </div>
-          </MDBCol>
-          
-          <br/>
 
-          
-          <MDBCol>
-        <div className="form-group">
-            <label htmlFor="companyCity">Company City</label>
-            <select className="form-control" id="exampleFormControlSelect1" name="companyCity"
-                onChange={this.changeHandler} value={this.state.companyCity}>
-              <option>Agamy</option> 
-              <option>Bahary</option>
-              <option>Maamora</option>
-              <option>Montazah</option>
-              <option>Sidi Gaber</option>
-              <option>Stanly</option>
-
-              <option>Agouza</option>
-              <option>Dokki</option>
-              <option>El-Sheikh Zayed</option>
-              <option>Giza</option>
-              <option>Heliopolis</option>
-              <option>Maadi</option>
-              <option>Nasr City</option>
-              <option>New Cairo</option>
-
-              <option>Al Arab District</option>
-              <option>Al Dawahy District</option>
-              <option>Al Manakh District</option>
-              <option>Al Sharq District</option>
-              <option>Al Zohour District</option>
-              <option>Portfouad</option>
-
-              <option>Al Salam</option>
-            </select>
-            </div>
-            </MDBCol>
-           
+              <MDBCol>
+              <div className="form-group">
+                  <label htmlFor="companyCity">Company City</label>
+                  <select className="form-control"  
+                  id="exampleFormControlSelect1" name="companyCity"
+                      onChange={this.changeHandler} 
+                      value={this.state.companyCity} >
+                     
+                      {this.state.cities.map((city)=>(
+             <option value={city}>{city}</option>
+             ))};    
+                  </select>
+                </div>
+              </MDBCol>
             <br/>
 
              
@@ -231,6 +226,7 @@ class EditSPCForm extends React.Component{
               <br/>
 
                 <MDBRow>
+                    <br/>
                 <MDBCol>
                 <MDBInput
                   value={this.state.companyFax}
@@ -246,8 +242,6 @@ class EditSPCForm extends React.Component{
               <div className="invalid-feedback">Note: It should be more than or equal 5 characters and less than or equal 20 characters</div>
                 </MDBInput>
                 </MDBCol>
-               
-                <br/>
 
                
                 <MDBCol>              
@@ -285,11 +279,11 @@ class EditSPCForm extends React.Component{
                 </MDBInput>
                </MDBCol>
                </MDBRow>
-              <br/>
+              
             
                <RaisedButton label="Submit" primary={true} style={style}
                disabled={!this.validateForm()}
-               onClick={(event) => (this.handleClick(event) , alert('Your request to update has been submitted'))}/>
+               onClick={(event) => (this.handleClick(event) )}/>
            </div>
            </MuiThemeProvider>
         </div>
@@ -301,6 +295,7 @@ class EditSPCForm extends React.Component{
   };
 
   
+  ReactDOM.render(<EditSPCForm />, document.getElementById('root'));
 
 
 

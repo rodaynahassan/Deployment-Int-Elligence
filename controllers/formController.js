@@ -110,6 +110,11 @@ exports.update = async function update(att,value,body)
                     return {error: isValidated.error.details[0].message}
                 }
                 const x = await Form.findByIdAndUpdate(value,body)
+                .then(res=>{return res})
+                .catch(error=>{
+                    return {error:error}
+                })
+                if (x.error) return x
                 const updatedSSC = await Form.findById(value)
                 return updatedSSC
             }
@@ -125,6 +130,11 @@ exports.update = async function update(att,value,body)
                    return {error: isValidated.error.details[0].message}
                }
                const x = await Form.findByIdAndUpdate(value,body)
+               .then(res=>{return res})
+                .catch(error=>{
+                    return {error:error}
+                })
+                if(x.error) return x
                const updatedSPC = await Form.findById(value)
                return updatedSPC
             }

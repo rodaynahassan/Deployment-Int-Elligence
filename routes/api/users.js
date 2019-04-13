@@ -193,11 +193,17 @@ catch(e){}
 
 //update a user 
  router.put('/:id' , async (req,res) => {
+     try{
       var id = req.params.id  
       const updateUser = await userController.update('_id',id,req.body)
       if(!updateUser) return res.json({msg :'ID not there'})
-      if(updateUser.error) return res.status(400).send(updateUser)
+      if(updateUser.error) return res.status(400).json(updateUser)
       return res.json({msg : 'User Updated Successfully',data: updateUser})
+     }
+     catch(error)
+    {
+        console.log(error)
+    }
  })
 //as a lawyer/reviewer/investor I should be able to view my in progress cases
 router.get('/getInProgressCases/:id',async(req,res) => {

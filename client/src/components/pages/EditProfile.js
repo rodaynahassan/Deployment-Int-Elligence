@@ -6,7 +6,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-import { MDBRow, MDBCol, MDBInput, MDBBtn } from "mdbreact";
+import { MDBRow, MDBCol, MDBInput, MDBBtn, MDBSelect } from "mdbreact";
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 
@@ -26,7 +26,8 @@ class EditProfile extends React.Component{
             address:'',
             email:'',
             telephone:'',
-            fax:''
+            fax:'',
+            nationalities:[]
        };
 
       axios.get('http://localhost:5000/routes/api/users/CertainAttributes/5caf48d59197285f9c7587a2')
@@ -78,20 +79,27 @@ class EditProfile extends React.Component{
             
             axios.put(apiBaseUrl, payload)
            .then(function (response) {
-             console.log(response);
-             if(response.data.code === 200){
-              alert('Your profile has been updated successfully') ;
-             }
+           
+                alert('The profile has been updated successfully') ;
+               
            })
-           .catch(function (error) {
-            alert('Something is wrong with your entries.Please check the constraints on each field again');     
-               });
+           .catch((error)=>{
+            alert(error.response.data.errmsg||error.response.data);
+            console.log(error)
+          });
         
       }
       
       changeHandler = event => {
         this.setState({ [event.target.name]:  event.target.value });
       };
+      componentDidMount()
+    {
+        axios.get('http://localhost:5000/routes/api/nationalities')
+        .then(res=> {
+            this.setState({nationalities : res.data.data})
+        })
+    }
       validateForm() {
         return this.state.name.length >=3 && this.state.name.length <=50 
         && this.state.identificationType.length >=8 && this.state.identificationType.length <=20
@@ -147,17 +155,21 @@ class EditProfile extends React.Component{
             <MDBRow>
             <MDBCol>
             
-              <MDBInput
-                value={this.state.nationality}
-                name="nationality"
-                onChange={this.changeHandler}
-                type="text"
-                id="materialFormRegisterNameEx"
-                label="Nationality"
-                required
-              >
+            <div className="form-group">
+                  <label htmlFor="Nationality">Nationality</label>
+                  <select className="form-control"  
+                  id="exampleFormControlSelect1" name="nationality"
+                      onChange={this.changeHandler} 
+                      value={this.state.nationality} >
+                          {this.state.nationalities.map((nat)=>(
+            
+             <option value={nat.name}>{nat.name}</option>
+             ))};
+                      
+                  </select>
+                </div>
                
-              </MDBInput>
+              
             </MDBCol>
             </MDBRow>
             <br/>
@@ -302,7 +314,7 @@ class EditProfile extends React.Component{
             
                <RaisedButton label="Submit" primary={true} style={style}
                disabled={!this.validateForm()}
-               onClick={(event) => (this.handleClick(event) , alert('SSCForm Updated Succesfully'))}/>
+               onClick={(event) => (this.handleClick(event) , alert('Your request to update has been submitted'))}/>
            </div>
            </MuiThemeProvider>
         </div>

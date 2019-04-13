@@ -15,6 +15,7 @@ class SSCForm extends React.Component{
 
     constructor(props){
         super(props);
+        this.show = this.show.bind(this)
         this.state = {
             // userId: {
             //   value : '',
@@ -33,7 +34,7 @@ class SSCForm extends React.Component{
              },
             companyCity: {
               value:'',
-              valiid:false
+              valid:false
             },
             companyTelephone: '',
             companyFax: '',
@@ -47,6 +48,8 @@ class SSCForm extends React.Component{
               value : '',
               valid : false,
              },
+             SSCManagers:[{}],
+             index:1,
              SSCManagerName: {
                 value : '',
                 valid : false,
@@ -89,8 +92,8 @@ class SSCForm extends React.Component{
     
     
       handleClick(event){
-
-        var apiBaseUrl = "http://localhost:5000/routes/api/users/CreatingForm/" + mongoose.Types.ObjectId('5ca7b4c9de707c37f8113097');
+        console.log(this.state.SSCManagers)
+        var apiBaseUrl = "http://localhost:5000/routes/api/users/CreatingForm/" + mongoose.Types.ObjectId('5cb1e8ac44ca6b48f80a2efe');
         var payload={
          //"userId":mongoose.Types.ObjectId('5ca7b4748be2725704f230bc'),
           "companyName": this.state.companyName.value,
@@ -105,7 +108,7 @@ class SSCForm extends React.Component{
           "equityCapital" : this.state.equityCapital.value,
           "lawyerComments" : [],
           "reviewerComments" : [],
-          "SSCManagers":[{"name":this.state.SSCManagerName.value,"type":this.state.SSCManagerType.value,"gender":this.state.SSCManagerGender.value,"nationality":this.state.SSCManagerNationality.value,"identificationType":this.state.SSCManagerIdentificationType.value,"identificationNumber":this.state.SSCManagerIdentificationNumber.value,"birthdate":this.state.SSCManagerBirthdate.value,"address":this.state.SSCManagerAddress.value,"typeOfManagers":this.state.typeOfManagers.value}],
+          "SSCManagers":this.state.SSCManagers,
        
           "creationDate": "2018-4-7",
           "status" : "Unassigned"
@@ -126,11 +129,91 @@ class SSCForm extends React.Component{
       changeHandler = event => {
         this.setState({ [event.target.name]: { value: event.target.value, valid: !!event.target.value } });
       };
+      changeHandlerName = (i,event) => {
+        console.log(i)
+        this.state.SSCManagers[i].name = event.target.value
+        this.forceUpdate()
+      };
+      changeHandlerType = (i,event) => {
+        this.state.SSCManagers[i].type = event.target.value
+        this.forceUpdate()
+        
+      };
+      changeHandlerGender = (i,event) => {
+        this.state.SSCManagers[i].gender = event.target.value
+        this.forceUpdate()
+      };
+      changeHandlerNationality = (i,event) => {
+        this.state.SSCManagers[i].nationality = event.target.value
+        this.forceUpdate()
+      };
+      changeHandlerIdentificationType = (i,event) => {
+        this.state.SSCManagers[i].identificationType = event.target.value
+        this.forceUpdate()
+      };
+      changeHandlerIdentificationNumber = (i,event) => {
+        this.state.SSCManagers[i].identificationNumber = event.target.value
+        this.forceUpdate()
+      };
+      changeHandlerBirthdate = (i,event) => {
+        this.state.SSCManagers[i].birthdate = event.target.value
+        this.forceUpdate()
+      };
+      changeHandlerAddress = (i,event) => {
+        this.state.SSCManagers[i].address = event.target.value
+        this.forceUpdate()
+      };
+        show(i){
+          if(document.getElementById("ManagerAdd")){
+            var x = document.getElementById("ManagerAdd").innerHTML
+          x = x + "<h" + 0 + ">Manager " + (1+i) + "</h" + i + "> <br>  ";
+        x = x + 
+        'Manager Name <br>' +
+        '<input id = "Manager Name '+i+'" type="text" name="Manager Name" onkeypress=this.changeHandlerName;  > <br>' +
+       ' Manager Type <br> '+
+       '<input id = "Manager Type '+i+'" type="text" name="Manager Type" onkeypress=this.changeHandlerType;  > <br>'+
+       ' Manager Gender <br> '+
+       '<input id = "Manager Gender '+i+'" type="text" name="Manager Gender" onkeypress=this.changeHandlerGender;  > <br>'+
+       ' Manager Nationality <br> '+
+       '<input id = "Manager Nationality '+i+'" type="text" name="Manager Nationality" onkeypress=this.changeHandlerNationality;  > <br>'+
+       ' Manager IdentificationType <br> '+
+       '<input id = "Manager IdentificationType '+i+'" type="text" name="Manager IdentificationType" onkeypress=this.changeHandlerIdentificationType;  > <br>'+
+       ' Manager IdentificationNumber <br> '+
+       '<input id = "Manager IdentificationNumber '+i+'" type="text" name="Manager IdentificationNumber" onkeypress=this.changeHandlerIdentificationNumber;  > <br>'+
+       ' Manager Birthdate <br> '+
+       '<input id = "Manager Birthdate '+i+'" type="text" name="Manager Birthdate" onkeypress=this.changeHandlerBirthdate;  > <br>'+
+       ' Manager Address <br> '+
+       '<input id = "Manager Address '+i+'" type="text" name="Manager Address" onkeypress=this.changeHandlerAddress;  > <br>'+
+       ' Manager ManagerialType <br> '+
+       '<input id = "Manager ManagerialType '+i+'" type="text" name="Manager ManagerialType" onkeypress=this.changeHandlerManagerialType;  > <br>'
+       
+        document.getElementById("ManagerAdd").innerHTML = x
+        document.getElementById("Manager Name "+i).onchange = (e) => this.changeHandlerName(i, e)
+        document.getElementById("Manager Type "+i).onchange = (e) => this.changeHandlerType(i, e)
+        document.getElementById("Manager Gender "+i).onchange = (e) => this.changeHandlerGender(i, e)
+        document.getElementById("Manager Nationality "+i).onchange = (e) => this.changeHandlerNationality(i, e)
+        document.getElementById("Manager IdentificationType "+i).onchange = (e) => this.changeHandlerIdentificationType(i, e)
+        document.getElementById("Manager IdentificationNumber "+i).onchange = (e) => this.changeHandlerIdentificationNumber(i, e)
+        document.getElementById("Manager Birthdate "+i).onchange = (e) => this.changeHandlerBirthdate(i, e)
+        document.getElementById("Manager Address "+i).onchange = (e) => this.changeHandlerAddress(i, e)
+        document.getElementById("Manager ManagerialType "+i).onchange = (e) => this.changeHandlerManagerialType(i, e)
+        this.setState({index:this.state.index+1})
+        this.setState({
+          SSCManagers:[...this.state.SSCManagers,{}]
+        })
+        
+      }
+    }
+      changeHandlerManagerialType = (i,event) => {
+        this.state.SSCManagers[i].typeOfManagers = event.target.value
+        this.forceUpdate()
+      };
       validateForm() {
         return this.state.companyName.value.length >=3 && this.state.companyName.value.length <=50 
 
         }
 
+        
     render() {
       return (
         <div>
@@ -321,10 +404,10 @@ class SSCForm extends React.Component{
                <MDBCol>
               <MDBInput
                 label="Manager Name"                
-                value={this.state.SSCManagerName.value}
+                value={this.state.SSCManagers[0].name}
                 className={this.state.SSCManagerName.valid ? "is-valid" : "is-invalid"}
                 name="SSCManagerName"
-                onChange={this.changeHandler}
+                onChange={(e) => this.changeHandlerName(0, e)}
                 type="text"
                 id="materialFormRegisterNameEx" 
                 required
@@ -340,10 +423,10 @@ class SSCForm extends React.Component{
                
            <MDBInput
            label="Manager Type"                
-           value={this.state.SSCManagerType.value}
+           value={this.state.SSCManagers[0].type}
            className={this.state.SSCManagerType.valid ? "is-valid" : "is-invalid"}
            name="SSCManagerType"
-           onChange={this.changeHandler}
+           onChange={(e) => this.changeHandlerType(0, e)}
            type="text"
            id="materialFormRegisterNameEx" 
            required
@@ -357,10 +440,10 @@ class SSCForm extends React.Component{
             <br/>
             <MDBCol>
               <MDBInput
-                value={this.state.SSCManagerGender.value}
+                value={this.state.SSCManagers[0].gender}
                 className={this.state.SSCManagerGender.valid ? "is-valid" : "is-invalid"}
                 name="SSCManagerGender"
-                onChange={this.changeHandler}
+                onChange={(e) => this.changeHandlerGender(0, e)}
                 type="text"
                 id="materialFormRegisterNameEx"
                 label="Manager gender"
@@ -375,10 +458,10 @@ class SSCForm extends React.Component{
                <MDBCol>
               <MDBInput
                 label="Manager nationality"                
-                value={this.state.SSCManagerNationality.value}
+                value={this.state.SSCManagers[0].nationality}
                 className={this.state.SSCManagerNationality.valid ? "is-valid" : "is-invalid"}
                 name="SSCManagerNationality"
-                onChange={this.changeHandler}
+                onChange={(e) => this.changeHandlerNationality(0, e)}
                 type="text"
                 id="materialFormRegisterNameEx" 
                 required
@@ -394,10 +477,10 @@ class SSCForm extends React.Component{
                
            <MDBInput
            label="Manager Identification type"                
-           value={this.state.SSCManagerIdentificationType.value}
+           value={this.state.SSCManagers[0].identificationType}
            className={this.state.SSCManagerIdentificationType.valid ? "is-valid" : "is-invalid"}
            name="SSCManagerIdentificationType"
-           onChange={this.changeHandler}
+           onChange={(e) => this.changeHandlerIdentificationType(0, e)}
            type="text"
            id="materialFormRegisterNameEx" 
            required
@@ -410,10 +493,10 @@ class SSCForm extends React.Component{
             <br/>
             <MDBCol>
               <MDBInput
-                value={this.state.SSCManagerIdentificationNumber.value}
+                value={this.state.SSCManagers[0].identificationNumber}
                 className={this.state.SSCManagerIdentificationNumber.valid ? "is-valid" : "is-invalid"}
                 name="SSCManagerIdentificationNumber"
-                onChange={this.changeHandler}
+                onChange={(e) => this.changeHandlerIdentificationNumber(0, e)}
                 type="text"
                 id="materialFormRegisterNameEx"
                 label="Manager Identification number"
@@ -428,10 +511,10 @@ class SSCForm extends React.Component{
                <MDBCol>
               <MDBInput
                 label="Manager Birth date"                
-                value={this.state.SSCManagerBirthdate.value}
+                value={this.state.SSCManagers[0].birthdate}
                 className={this.state.SSCManagerBirthdate.valid ? "is-valid" : "is-invalid"}
                 name="SSCManagerBirthdate"
-                onChange={this.changeHandler}
+                onChange={(e) => this.changeHandlerBirthdate(0, e)}
                 type="text"
                 id="materialFormRegisterNameEx" 
                 required
@@ -447,10 +530,10 @@ class SSCForm extends React.Component{
                
            <MDBInput
            label="Manager Address"                
-           value={this.state.SSCManagerAddress.value}
+           value={this.state.SSCManagers[0].address}
            className={this.state.SSCManagerAddress.valid ? "is-valid" : "is-invalid"}
            name="SSCManagerAddress"
-           onChange={this.changeHandler}
+           onChange={(e) => this.changeHandlerAddress(0, e)}
            type="text"
            id="materialFormRegisterNameEx" 
            required
@@ -463,10 +546,10 @@ class SSCForm extends React.Component{
             <br/>
             <MDBCol>
               <MDBInput
-                value={this.state.typeOfManagers.value}
+                value={this.state.SSCManagers[0].typeOfManagers}
                 className={this.state.typeOfManagers.valid ? "is-valid" : "is-invalid"}
                 name="typeOfManagers"
-                onChange={this.changeHandler}
+                onChange={(e) => this.changeHandlerManagerialType(0, e)}
                 type="text"
                 id="materialFormRegisterNameEx"
                 label="Managerial Type"
@@ -477,9 +560,13 @@ class SSCForm extends React.Component{
               </MDBInput>
             </MDBCol>
             </MDBRow>
+            <div id = "ManagerAdd">
+            </div>
+            <button onClick={()=>this.show(this.state.index)}>Add more Managers</button>
                <RaisedButton label="Submit" primary={true} style={style}
                disabled={!this.validateForm()}
                onClick={(event) => (this.handleClick(event) , alert('SSCForm Created Succesfully'))}/>
+              
            </div>
            </MuiThemeProvider>
         </div>

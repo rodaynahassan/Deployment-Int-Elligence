@@ -159,6 +159,16 @@ class SSCForm extends React.Component{
         this.state.SSCManagers[i].birthdate = event.target.value
         this.forceUpdate()
       };
+      changeHandler2 = event => {
+      
+        this.setState({ [event.target.name] :event.target.value});
+        axios.get('http://localhost:5000/routes/api/governorates/getByGovernorateName/' + event.target.value)        
+        .then(res => {
+              this.setState({cities: res.data.data})
+              console.log(this.state.cities)
+          })
+    
+    };
       changeHandlerAddress = (i,event) => {
         this.state.SSCManagers[i].address = event.target.value
         this.forceUpdate()
@@ -277,60 +287,38 @@ class SSCForm extends React.Component{
             <MDBRow>
             
 
+            <MDBCol>
+              <div className="form-group">
+                  <label htmlFor="companyGovernorate">Company Governorate</label>
+                  <select className="form-control"  
+                  id="exampleFormControlSelect1" name="companyGovernorate"
+                      onChange={this.changeHandler2} 
+                      value={this.state.companyGovernorate} >
+                      
+                      {this.state.governorate.map((gov)=>(
             
-          <MDBCol>
-        <div className="form-group">
-            <label htmlFor="companyGovernorate">Company Governorate</label>
-            <select className="form-control" 
-            //className={this.state.companyGovernorate.valid ? "is-valid" : "is-invalid"} 
-            id="exampleFormControlSelect1" name="companyGovernorate"
-                onChange={this.changeHandler} 
-                value={this.state.companyGovernorate.value}  >
-              <option>Alexandria</option>
-              <option>Cairo</option>
-              <option>Portsaid</option>
-              <option>Suez</option>
-            </select>
-          </div>
-          </MDBCol>
+             <option value={gov.name}>{gov.name}</option>
+             ))};
+                      
+                  </select>
+                </div>
+              </MDBCol>
 
 
-          <MDBCol>
-        <div className="form-group">
-            <label htmlFor="companyCity">Company City</label>
-            <select className="form-control" id="exampleFormControlSelect1" name="companyCity"
-                onChange={this.changeHandler} value={this.state.companyCity.value}>
-              <option>Agamy</option> 
-              <option>Bahary</option>
-              <option>Maamora</option>
-              <option>Montazah</option>
-              <option>Sidi Gaber</option>
-              <option>Stanly</option>
-
-              <option>Agouza</option>
-              <option>Dokki</option>
-              <option>El-Sheikh Zayed</option>
-              <option>Giza</option>
-              <option>Heliopolis</option>
-              <option>Maadi</option>
-              <option>Nasr City</option>
-              <option>New Cairo</option>
-
-              <option>Al Arab District</option>
-              <option>Al Dawahy District</option>
-              <option>Al Manakh District</option>
-              <option>Al Sharq District</option>
-              <option>Al Zohour District</option>
-              <option>Portfouad</option>
-
-              <option>Al Salam</option>
-
-            </select>
-          </div>
-          </MDBCol>
-
-
-        
+              <MDBCol>
+              <div className="form-group">
+                  <label htmlFor="companyCity">Company City</label>
+                  <select className="form-control"  
+                  id="exampleFormControlSelect1" name="companyCity"
+                      onChange={this.changeHandler} 
+                      value={this.state.companyCity} >
+                     
+                      {this.state.cities.map((city)=>(
+             <option value={city}>{city}</option>
+             ))};    
+                  </select>
+                </div>
+              </MDBCol>
                <br/>
 
                <MDBCol>

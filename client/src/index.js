@@ -7,10 +7,9 @@ import About from './components/pages/aboutContactUsPage'
 import Profile from './components/pages/profilePage'
 import * as serviceWorker from './serviceWorker';
 import UpdateSSCForm from './components/pages/UpdateSSCForm'
-import UpdateSPCForm from './components/pages/UpdateSPCForm'
 import SSCForm from './components/pages/SSCForm'
 
-ReactDOM.render(<SSCForm />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA

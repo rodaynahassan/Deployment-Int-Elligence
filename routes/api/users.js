@@ -63,6 +63,15 @@ router.get('/:id', async(req, res) => {
     const searchUsers = await userController.search('_id',userid)
     return res.json({ data: searchUsers });
 })
+
+// view certain attributes of user
+router.get('/CertainAttributes/:id', async(req, res) => {
+    const userid=req.params.id
+    const searchUsers = await userController.search('_id',userid)
+    return res.json({ Username:searchUsers.name, Gender: searchUsers.gender, Nationality: searchUsers.nationality, IdentificationType : searchUsers.identificationType, IdentificationNumber: searchUsers.identificationNumber, Birthdate: searchUsers.birthdate, Address: searchUsers.address, Email: searchUsers.email, Password: searchUsers.password, Telephone: searchUsers.telephone, Fax: searchUsers.fax});
+})
+
+
 //view the financialBalance of an investor
 router.get('/getTheFinancialBalance/:id', async(req, res) => {
     const userid=req.params.id
@@ -87,9 +96,35 @@ router.post('/CreatingForm/:id', async(req,res) =>{
     const id = req.params.id        //userID
     req.body.userId=id
     const newForm = await formController.create(req.body)
+
     const user = await userController.search('_id',id)
     if(newForm.error) return res.status(400).send(newForm.error)
     if(!newForm) return res.json({msg:"Form is null"})
+
+    const user = await userController.search('_id',userId)
+    //console.log(newForm)
+    if(newForm.error) return res.status(400).json(newForm.error)
+    if(!newForm) return res.json({msg:"Form is null"})
+    newForm.fees = 0
+    if(user.userType === "Investor")
+    {
+        newForm.status = "Unassigned"
+        const formId = newForm._id
+        const returnedForm = await formController.update('_id',formId,{status:newForm.status,fees:newForm.fees})
+
+    }
+    else if(user.userType === "Lawyer")
+    {
+        newForm.status = "Lawyer accepted"
+        newForm.lawyerId=userId
+        const formId = newForm._id
+        const returnedForm = await formController.update('_id',formId,{status:newForm.status,lawyerId:userId,fees:newForm.fees})
+    }
+    else{
+        return res.json({msg:'You can not create a form'})
+    }
+    
+
     user.forms.push(newForm)
     const returnedUser = await userController.update('_id',id,{forms:user.forms})
     return res.json({data:returnedUser})
@@ -133,6 +168,26 @@ router.post('/register', async (req,res) => {                       //register I
    
      return res.json({msg:'Account was created successfully', data: newUser})
 })
+
+
+// change password
+router.post('/changePassword/:id', async (req,res) => { 
+    const userid = req.params.id  
+    const user = await userController.search('_id',userid)
+    const newPassword=req.body.newPassword;
+    const confirmPassword= req.body.confirmPassword;
+        if (newPassword===confirmPassword)
+        {
+        const salt = await bcrypt.genSalt(10);
+        newPasswordEnc= await bcrypt.hash(newPassword, salt); 
+        user.password=newPasswordEnc
+        await user.save();
+        return res.json({msg:'Password was updated successfully', data: user})
+        }
+        else 
+        return res.json({msg:'The passwords do not match!'})
+})
+
 //Login
 router.post('/login',async(req,res)=>{
     try{
@@ -164,11 +219,17 @@ catch(e){}
 
 //update a user 
  router.put('/:id' , async (req,res) => {
+     try{
       var id = req.params.id  
       const updateUser = await userController.update('_id',id,req.body)
       if(!updateUser) return res.json({msg :'ID not there'})
-      if(updateUser.error) return res.status(400).send(updateUser)
+      if(updateUser.error) return res.status(400).json(updateUser)
       return res.json({msg : 'User Updated Successfully',data: updateUser})
+     }
+     catch(error)
+    {
+        console.log(error)
+    }
  })
 //as a lawyer/reviewer/investor I should be able to view my in progress cases
 router.get('/getInProgressCases/:id',async(req,res) => {

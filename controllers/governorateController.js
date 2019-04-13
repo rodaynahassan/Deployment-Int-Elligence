@@ -10,10 +10,10 @@ exports.search=async function search (att,value)
         var governorates=await Governorate.find()
         return governorates
     }
-    if (att==='_id')
+    if (att==='name')
     {
-        var certainGovernorate=await Governorate.findById(value)
-        return certainGovernorate
+        var certainGovernorate=await Governorate.find({'name':value})
+        return certainGovernorate[0]
     }
  
 }

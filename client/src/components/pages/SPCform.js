@@ -6,9 +6,19 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-import { MDBRow, MDBCol, MDBInput, MDBBtn } from "mdbreact";
+import { MDBRow, MDBCol, MDBInput, MDBBtn,MDBDropdown,MDBDropdownToggle,MDBDropdownItem,MDBDropdownMenu } from "mdbreact";
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
+//import {Dropdown} from 'react-bootstrap';
+import {Dropdown} from 'semantic-ui-react';
+
+import DropdownItem from 'react-bootstrap/DropdownItem';
+
+// import {MDBSelect} from 'mdbreact';
+
+
+
+
 var mongoose = require('mongoose')
 
 class SPCform extends React.Component{
@@ -19,55 +29,46 @@ class SPCform extends React.Component{
             // userId: {
             //   value : '',
             //  },
-            companyName:{
-             value : '',
-             valid : false,
-            },
-            companyGovernorate:{
-              value : '',
-              valid : false,
-             },
-            companyAddress:{
-              value : '',
-              valid : false,
-             },
-            companyCity: {
-              value:'',
-              valiid:false
-            },
+            companyName:'',
+            companyGovernorate:'',
+            companyAddress:'',
+            companyCity:'' ,
             companyTelephone: '',
             companyFax: '',
             companyNameInEnglish: '',
-            currency: {
-              value : '',
-              valid : false,
-             },
+            currency: '',
             type:'',
-            equityCapital:{
-              value : '',
-              valid : false,
-             }
-             
+            equityCapital:'',
+            governorate:[],
+            cities:[]
+
         };
-        
+
     }
-    
+    componentDidMount(){
+      axios.get('http://localhost:5000/routes/api/governorates/')        
+        .then(res => {
+              this.setState({governorate: res.data.data})
+              
+          })
+    }
+
     
       handleClick(event){
 
         var apiBaseUrl = "http://localhost:5000/routes/api/users/CreatingForm/" + mongoose.Types.ObjectId('5ca7b4748be2725704f230bc');
         var payload={
          //"userId":mongoose.Types.ObjectId('5ca7b4748be2725704f230bc'),
-          "companyName": this.state.companyName.value,
-          "companyGovernorate": this.state.companyGovernorate.value,
-          "companyAddress": this.state.companyAddress.value,
-          "companyCity": this.state.companyCity.value,
-          "companyTelephone": this.state.companyTelephone.value,
-          "companyFax": this.state.companyFax.value,
-          "companyNameInEnglish": this.state.companyNameInEnglish.value,
-          "currency": this.state.currency.value,
+          "companyName": this.state.companyName,
+          "companyGovernorate": this.state.companyGovernorate,
+          "companyAddress": this.state.companyAddress,
+          "companyCity": this.state.companyCity,
+          "companyTelephone": this.state.companyTelephone,
+          "companyFax": this.state.companyFax,
+          "companyNameInEnglish": this.state.companyNameInEnglish,
+          "currency": this.state.currency,
           "type" : 'SPCForm',
-          "equityCapital" : this.state.equityCapital.value,
+          "equityCapital" : this.state.equityCapital,
           "lawyerComments" : [],
           "reviewerComments" : [],
           "creationDate": "2018-4-7",
@@ -77,21 +78,35 @@ class SPCform extends React.Component{
         axios.post(apiBaseUrl, payload)
        .then(function (response) {
          console.log(response);
-         if(response.data.code === 200){
-          alert('SPCForm Created Succesfully') ;
-         }
+         
+          alert('SPCForm Created Successfully') ;
+
        })
-       .catch(function (error) {
-         console.log(error);
+       .catch((error)=> {
+         alert(error.response.data.errmsg||error.response.data);
+         console.log(error.response)
        });
       }
       
       changeHandler = event => {
-        this.setState({ [event.target.name]: { value: event.target.value, valid: !!event.target.value } });
+        
+          this.setState({ [event.target.name] :event.target.value});
+      
       };
+      changeHandler2 = event => {
+      
+        this.setState({ [event.target.name] :event.target.value});
+        axios.get('http://localhost:5000/routes/api/governorates/getByGovernorateName/' + event.target.value)        
+        .then(res => {
+              this.setState({cities: res.data.data})
+          })
+    
+    };
       validateForm() {
-        return this.state.companyName.value.length >=3 && this.state.companyName.value.length <=50 
-
+        return this.state.companyName.length >=3 &&
+        this.state.companyName.length <=50 
+        && this.state.companyAddress.length >=5 && this.state.companyAddress.length <=50
+        && this.state.companyNameInEnglish.length <=50
         }
 
     render() {
@@ -101,14 +116,15 @@ class SPCform extends React.Component{
             <div>
             <AppBar
                title="Create your SPCForm"
-             />
+               />
+               
                <br/>
                <MDBRow>
                <MDBCol>
               <MDBInput
                 label="Company Name"                
-                value={this.state.companyName.value}
-                className={this.state.companyName.valid ? "is-valid" : "is-invalid"}
+                value={this.state.companyName}
+                className={this.state.companyName.length >=3 &&this.state.companyName.length <=50 ? "is-valid" : "is-invalid"}
                 name="companyName"
                 onChange={this.changeHandler}
                 type="text"
@@ -116,7 +132,7 @@ class SPCform extends React.Component{
                 required
               >
               <div className="valid-feedback">Looks good!</div>
-             <div className="invalid-feedback">Provide a valid name!</div>
+             <div className="invalid-feedback">name must be in arabic and min 3 characters!</div>
               </MDBInput>
               
             </MDBCol>
@@ -125,22 +141,28 @@ class SPCform extends React.Component{
            <MDBCol>
                
                <MDBInput
-                 value={this.state.companyTelephone.value}
+                 value={this.state.companyTelephone}
+                 className={this.state.companyTelephone.length<=15 && 
+                  this.state.companyTelephone.length>=8?"is-valid" : "is-invalid"}
                  name="companyTelephone"
                  onChange={this.changeHandler}
                  type="text"
                  id="materialFormRegisterNameEx"
                  label="Company Telephone"
-                 required
+       
                >
+                <div className="valid-feedback">Looks good!</div>
+              <div className="invalid-feedback">Note: It should be more than or equal 8 
+              characters and less than or equal 15 characters</div>
                </MDBInput>
              </MDBCol>
 
             <br/>
             <MDBCol>
               <MDBInput
-                value={this.state.companyAddress.value}
-                className={this.state.companyAddress.valid ? "is-valid" : "is-invalid"}
+                value={this.state.companyAddress}
+                className={this.state.companyAddress.length<=50 && 
+                  this.state.companyAddress.length>=5?"is-valid" : "is-invalid"}
                 name="companyAddress"
                 onChange={this.changeHandler}
                 type="text"
@@ -148,8 +170,9 @@ class SPCform extends React.Component{
                 label="Company Address"
                 required
               >
-                <div className="valid-feedback">Looks good!</div>
-                <div className="invalid-feedback">Provide a valid Address!</div>
+                 <div className="valid-feedback">Looks good!</div>
+              <div className="invalid-feedback">Note: It should be more than or equal 5 characters 
+              and less than or equal 50 characters</div>
               </MDBInput>
             </MDBCol>
             </MDBRow>
@@ -157,60 +180,42 @@ class SPCform extends React.Component{
             <MDBRow>
             
 
+
+              
+              <MDBCol>
+              <div className="form-group">
+                  <label htmlFor="companyGovernorate">Company Governorate</label>
+                  <select className="form-control"  
+                  id="exampleFormControlSelect1" name="companyGovernorate"
+                      onChange={this.changeHandler2} 
+                      value={this.state.companyGovernorate} >
+                      
+                      {this.state.governorate.map((gov)=>(
             
-          <MDBCol>
-        <div className="form-group">
-            <label htmlFor="companyGovernorate">Company Governorate</label>
-            <select className="form-control" 
-            //className={this.state.companyGovernorate.valid ? "is-valid" : "is-invalid"} 
-            id="exampleFormControlSelect1" name="companyGovernorate"
-                onChange={this.changeHandler} 
-                value={this.state.companyGovernorate.value}  >
-              <option>Alexandria</option>
-              <option>Cairo</option>
-              <option>Portsaid</option>
-              <option>Suez</option>
-            </select>
-          </div>
-          </MDBCol>
+             <option value={gov.name}>{gov.name}</option>
+             ))};
+                      
+                  </select>
+                </div>
+              </MDBCol>
 
 
-          <MDBCol>
-        <div className="form-group">
-            <label htmlFor="companyCity">Company City</label>
-            <select className="form-control" id="exampleFormControlSelect1" name="companyCity"
-                onChange={this.changeHandler} value={this.state.companyCity.value}>
-              <option>Agamy</option> 
-              <option>Bahary</option>
-              <option>Maamora</option>
-              <option>Montazah</option>
-              <option>Sidi Gaber</option>
-              <option>Stanly</option>
-
-              <option>Agouza</option>
-              <option>Dokki</option>
-              <option>El-Sheikh Zayed</option>
-              <option>Giza</option>
-              <option>Heliopolis</option>
-              <option>Maadi</option>
-              <option>Nasr City</option>
-              <option>New Cairo</option>
-
-              <option>Al Arab District</option>
-              <option>Al Dawahy District</option>
-              <option>Al Manakh District</option>
-              <option>Al Sharq District</option>
-              <option>Al Zohour District</option>
-              <option>Portfouad</option>
-
-              <option>Al Salam</option>
-
-            </select>
-          </div>
-          </MDBCol>
+              <MDBCol>
+              <div className="form-group">
+                  <label htmlFor="companyCity">Company City</label>
+                  <select className="form-control"  
+                  id="exampleFormControlSelect1" name="companyCity"
+                      onChange={this.changeHandler} 
+                      value={this.state.companyCity} >
+                     
+                      {this.state.cities.map((city)=>(
+             <option value={city}>{city}</option>
+             ))};    
+                  </select>
+                </div>
+              </MDBCol>
 
 
-        
                <br/>
 
                <MDBCol>
@@ -219,7 +224,7 @@ class SPCform extends React.Component{
                   <select className="form-control"  
                   id="exampleFormControlSelect1" name="currency"
                       onChange={this.changeHandler} 
-                      value={this.state.currency.value}  >
+                      value={this.state.currency}  >
                     <option>Euro</option>
                     <option>Egp</option>
                     <option>Pound</option>
@@ -239,19 +244,24 @@ class SPCform extends React.Component{
                <MDBCol>
 
                 <MDBInput
-                  value={this.state.companyFax.value}
+                  value={this.state.companyFax}
                   name="companyFax"
+                  className={this.state.companyFax.length<=20 && this.state.companyFax.length>=5?"is-valid" : "is-invalid"}
                   onChange={this.changeHandler}
                   type="text"
                   id="materialFormRegisterNameEx"
                   label="Company Fax"
                   required
                 >
+                <div className="valid-feedback">Looks good!</div>
+              <div className="invalid-feedback">Note: It should be more than or equal 5 
+              characters and less than or equal 20 characters</div>
                 </MDBInput>
                 </MDBCol>
                <MDBCol>              
                <MDBInput
-                 value={this.state.companyNameInEnglish.value}
+                 value={this.state.companyNameInEnglish}
+                 className={this.state.companyNameInEnglish.length<=50?"is-valid" : "is-invalid"}
                  name="companyNameInEnglish"
                  onChange={this.changeHandler}
                  type="text"
@@ -259,6 +269,8 @@ class SPCform extends React.Component{
                  label="Company Name In English"
                  required
                >
+                <div className="valid-feedback">Looks good!</div>
+              <div className="invalid-feedback">Note: It should be less than or equal 50 characters</div>
                </MDBInput>
                </MDBCol>
 
@@ -266,8 +278,8 @@ class SPCform extends React.Component{
 
                <MDBCol>              
                <MDBInput
-                 value={this.state.equityCapital.value}
-                 className={this.state.equityCapital.valid ? "is-valid" : "is-invalid"}
+                 value={this.state.equityCapital}
+                 className={this.state.equityCapital<100000?"is-valid" : "is-valid"}
                  name="equityCapital"
                  onChange={this.changeHandler}
                  type="text"
@@ -275,14 +287,15 @@ class SPCform extends React.Component{
                  label="Equity Capital"
                  required
                >
-                 <div className="valid-feedback">Looks good!</div>
-                 <div className="invalid-feedback">Provide a valid equity!</div>
+                 <div className="valid-feedback">Note: if you are not Egyptian,
+                  the equity capital should be more than or equal 10000</div>
                </MDBInput>
                </MDBCol>
                </MDBRow>
+
                <RaisedButton label="Submit" primary={true} style={style}
                disabled={!this.validateForm()}
-               onClick={(event) => (this.handleClick(event) , alert('SPCForm Created Succesfully'))}/>
+               onClick={(event) => (this.handleClick(event) )}/>
            </div>
            </MuiThemeProvider>
         </div>

@@ -31,6 +31,7 @@ import assignToReviewer from './components/pages/assignToReviewer'
 import GetCaseSpecified from './components/pages/GetCaseSpecified'
 import GetCaseReviewer from './components/pages/GetCaseReviewer'
 import AddCommentsLawyer from './components/pages/AddCommentsLawyer'
+import GetFormByCompanyName from './components/form/GetFormByCompanyName'
 
 class App extends Component {
   render() {
@@ -64,7 +65,7 @@ class App extends Component {
       <Route path='/Get' component={GetCaseSpecified}/>
       <Route path='/GetReviewer' component={GetCaseReviewer}/>
       <Route path='/Comments' component={AddCommentsLawyer}/>
-
+      <Route path='/CompanyName' component={GetFormByCompanyName}/>
       </div>
           {/* <Footer/> */}
       </Router>

@@ -12,11 +12,10 @@ router.get('/', async (req,res) => {
     res.json({data: governorates})
 })
 //get all governoratesCities
-router.get('/getByGovernorateName/:id', async (req,res) => {
-    const id = req.params.id
-    const govRequested = await governorateController.search('_id',id)
-    var x = govRequested.cities
-   return res.json({data: x})
+router.get('/getByGovernorateName/:name', async (req,res) => {
+    const name2 = req.params.name
+    const govRequested = await governorateController.search('name',name2)
+    return res.json({data: govRequested.cities})
 })
 
 //create a new governorate

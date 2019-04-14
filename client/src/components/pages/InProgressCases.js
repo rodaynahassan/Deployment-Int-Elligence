@@ -5,6 +5,8 @@ import InProgressCasesComponents from '../user/InProgressCasesComponents';
 import Table from 'react-bootstrap/Table'
 import Navbar from 'react-bootstrap/Navbar'
 import Badge from 'react-bootstrap/Badge'
+import trans from '../translations/inProgressTranslation'
+
 class InProgressCases extends Component {
     state = {
       inProgressCases:[]
@@ -21,34 +23,33 @@ class InProgressCases extends Component {
         });
       }
       render(){
+        trans.setLanguage(this.props.lang)
         return (
-          <div>
-          <h2 align="center"><Badge variant="dark">Your In progress Cases</Badge></h2>
-          <Navbar bg='dark'> 
-          <Table striped bordered hover variant="dark">
+          <div style={{ paddingLeft:'60px',justifyItems:"center"}}>
+      <div style={{backgroundColor:"#123456" , textAlign:"center", fontSize:"50px" , color:"white" , width:"100%" }} >{trans.title}</div>
+          <Table striped bordered hover variant="gamed">
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Name In English</th>
-                <th>Type</th>
-                <th>Governorate</th>
-                <th>City</th>
-                <th>Address</th>
-                <th>Telephone</th>
-                <th>Fax</th>
-                <th>Currency</th>
-                <th>Capital</th>
-                <th>Type</th>
-                <th>Creation Date</th>
-                <th>Lawyer Comments</th>
-                <th>Reviewer Comments</th>
+                <th>{trans.name}</th>
+                <th>{trans.nameInEnglish}</th>
+                <th>{trans.type}</th>
+                <th>{trans.governorate}</th>
+                <th>{trans.city}</th>
+                <th>{trans.address}</th>
+                <th>{trans.telephone}</th>
+                <th>{trans.fax}</th>
+                <th>{trans.currency}</th>
+                <th>{trans.capital}</th>
+                <th>{trans.type}</th>
+                <th>{trans.date}</th>
+                <th>{trans.lawyerComments}</th>
+                <th>{trans.reviewerComments}</th>
               </tr>
             </thead>
             <tbody>
               { this.tabRow() }
             </tbody>
           </Table>
-          </Navbar>
           </div>
           )
       }

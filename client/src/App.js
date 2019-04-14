@@ -17,33 +17,57 @@ import Profile from './components/pages/profilePage'
 import About from './components/pages/aboutContactUsPage'
 import ApprovedCompanies from './components/pages/ApprovedCompanies'
 import InProgressCases from './components/pages/InProgressCases'
- import Footer from './components/layout/footer'
+import Footer from './components/layout/footer'
 import SPCForm from './components/pages/SPCform'
-import form from './components/pages/form'
+import FForm from './components/pages/form'
 import SSCForm from './components/pages/SSCForm'
+import FlippingCard from './components/form/FlippingCard'
+import Companies from './components/pages/Companies'
+import Side from './components/layout/Side'
+
+
+
+
+
 class App extends Component {
+  constructor(){
+    super()
+    localStorage.setItem('lang',localStorage.getItem('lang')||'en')
+  }
+  state={lang:localStorage.getItem('lang')} 
+  changelang = (lang) =>
+    {
+      localStorage.setItem('lang',lang)
+      this.setState({lang:lang})
+      console.log(lang)
+    }
   render() {
     return (
-      <Router>
      
-      <div>
+      <Router>
+    
       
+     <Side changelang={this.changelang}  />
+      <div>
+     
+
         <Route exact path="/" render={props=>(
-           <LandingBody/>
+           <LandingBody lang={this.state.lang}/>
         )}/>
-      {/* <Route path='/home' component={LandingBody}/> */}
-      <Route path='/login' component={Login}/>
-      <Route path='/register' component={Register}/>
-      <Route path='/profile' component={Profile}/>
-      <Route path='/about' component={About}/>
-      <Route path='/approvedCompanies' component={ApprovedCompanies}/>
-      <Route path='/inProgressCases' component={InProgressCases}/>
-      <Route path='/SPC' component={SPCForm}/>
-      <Route path='/form' component={form}/>
-      <Route path='/SSC' component={SSCForm}/>
+      <Route path='/login' render={(props) => <Login {...props}   lang={this.state.lang}/>}/>
+      <Route path='/register' render={(props) => <Register {...props}  lang={this.state.lang}/>}/>
+      <Route path='/profile' render={(props) => <Profile {...props}  lang={this.state.lang}/>}/>
+      <Route path='/about' render={(props) => <About {...props}  lang={this.state.lang}/>}/>
+      <Route path='/approvedCompanies' render={(props) => <ApprovedCompanies {...props}  lang={this.state.lang}/>}/>
+      <Route path='/inProgressCases' render={(props) => <InProgressCases {...props}  lang={this.state.lang}/>}/>
+      <Route path='/SPC' render={(props) => <SPCForm {...props}  lang={this.state.lang}/>}/>
+      <Route path='/form' render={(props) => <FForm {...props}  lang={this.state.lang}/>}/>
+      <Route path='/SSC' render={(props) => <SSCForm {...props}  lang={this.state.lang}/>}/>
+      <Route path='/journal' render={(props) => <Companies {...props}  lang={this.state.lang}/>}/>
       </div>
-          <Footer/>
+       <Footer/>
       </Router>
+  
         )}
   //     <div className="App">
   //       <header className="App-header">

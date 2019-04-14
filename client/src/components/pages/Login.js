@@ -4,6 +4,7 @@ import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import UploadScreen from './UploadScreen'
+import trans from '../translations/loginTranslation'
 const axios = require('axios');
 
 
@@ -23,30 +24,30 @@ constructor(props){
  }
 
 render() {
-
+  trans.setLanguage(this.props.lang)
     return (
-      <div>
-        <MuiThemeProvider>
-          <div>
-          {/* <AppBar
-             title="Login"
-           /> */}
+      <div style={{paddingLeft:'60px',display:"flex" , flexWrap:"wrap",alignItems:"center" , justifyContent:"center"}} >
+    <div style={{backgroundColor:"#123456" , textAlign:"center", fontSize:"50px" , color:"white" , width:"100%" }} >{trans.loginTitle}</div>
+    <MuiThemeProvider>
+          <div style={{paddingBottom:"25.4%"}}>
+          
+
            <TextField
-             hintText="Enter your Email"
-             floatingLabelText="Email"
+             hintText={trans.hintemail}
+             floatingLabelText={trans.email}
              type="email"
              onChange = {(event,newValue) => this.setState({email:newValue})}
              />
            <br/>
              <TextField
                type="password"
-               hintText="Enter your Password"
-               floatingLabelText="Password"
+               hintText={trans.hintpassword}
+               floatingLabelText={trans.password}
                onChange = {(event,newValue) => this.setState({password:newValue})}
                />
              <br/>
              
-             <RaisedButton label="Sign in" primary={true} style={style} 
+             <RaisedButton label={trans.loginbutton} primary={true} style={{paddingLeft:"30%"}} 
              disabled={!this.validateForm()}
              onClick={(event) => this.handleClick(event)}
              />

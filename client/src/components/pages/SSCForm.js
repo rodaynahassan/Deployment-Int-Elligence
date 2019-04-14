@@ -9,6 +9,7 @@ import TextField from 'material-ui/TextField';
 import { MDBRow, MDBCol, MDBInput, MDBBtn } from "mdbreact";
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
+import trans from '../translations/sscTranslation'
 var mongoose = require('mongoose')
 
 class SSCForm extends React.Component{
@@ -126,24 +127,25 @@ class SSCForm extends React.Component{
       changeHandler = event => {
         this.setState({ [event.target.name]: { value: event.target.value, valid: !!event.target.value } });
       };
+      
       validateForm() {
         return this.state.companyName.value.length >=3 && this.state.companyName.value.length <=50 
 
         }
 
     render() {
+      // console.log(this.props)
+      //  trans.setLanguage(this.props.lang)
       return (
-        <div>
-          <MuiThemeProvider>
-            <div>
-            <AppBar
-               title="Create your SSCForm"
-             />
+        <div style={{ paddingLeft:'64px',justifyItems:"center"}} >
+          <MuiThemeProvider >
+            <div >
+            <div style={{backgroundColor:"#123456" , textAlign:"center", fontSize:"50px" , color:"white" }} >{trans.title}</div>
                <br/>
-               <MDBRow>
+               <MDBRow >
                <MDBCol>
               <MDBInput
-                label="Company Name"                
+                label={trans.name}              
                 value={this.state.companyName.value}
                 className={this.state.companyName.valid ? "is-valid" : "is-invalid"}
                 name="companyName"
@@ -167,7 +169,7 @@ class SSCForm extends React.Component{
                  onChange={this.changeHandler}
                  type="text"
                  id="materialFormRegisterNameEx"
-                 label="Company Telephone"
+                 label={trans.telephone}
                  required
                >
                </MDBInput>
@@ -182,7 +184,7 @@ class SSCForm extends React.Component{
                 onChange={this.changeHandler}
                 type="text"
                 id="materialFormRegisterNameEx"
-                label="Company Address"
+                label={trans.address}
                 required
               >
                 <div className="valid-feedback">Looks good!</div>
@@ -197,7 +199,7 @@ class SSCForm extends React.Component{
             
           <MDBCol>
         <div className="form-group">
-            <label htmlFor="companyGovernorate">Company Governorate</label>
+            <label htmlFor="companyGovernorate">{trans.governorate}</label>
             <select className="form-control" 
             //className={this.state.companyGovernorate.valid ? "is-valid" : "is-invalid"} 
             id="exampleFormControlSelect1" name="companyGovernorate"
@@ -214,7 +216,7 @@ class SSCForm extends React.Component{
 
           <MDBCol>
         <div className="form-group">
-            <label htmlFor="companyCity">Company City</label>
+            <label htmlFor="companyCity">{trans.city}</label>
             <select className="form-control" id="exampleFormControlSelect1" name="companyCity"
                 onChange={this.changeHandler} value={this.state.companyCity.value}>
               <option>Agamy</option> 
@@ -252,7 +254,7 @@ class SSCForm extends React.Component{
 
                <MDBCol>
               <div className="form-group">
-                  <label htmlFor="currency">Currency</label>
+                  <label htmlFor="currency">{trans.currency}</label>
                   <select className="form-control"  
                   id="exampleFormControlSelect1" name="currency"
                       onChange={this.changeHandler} 
@@ -281,7 +283,7 @@ class SSCForm extends React.Component{
                   onChange={this.changeHandler}
                   type="text"
                   id="materialFormRegisterNameEx"
-                  label="Company Fax"
+                  label={trans.fax}
                   required
                 >
                 </MDBInput>
@@ -293,7 +295,7 @@ class SSCForm extends React.Component{
                  onChange={this.changeHandler}
                  type="text"
                  id="materialFormRegisterNameEx"
-                 label="Company Name In English"
+                 label={trans.nameInEnglish}
                  required
                >
                </MDBInput>
@@ -309,7 +311,7 @@ class SSCForm extends React.Component{
                  onChange={this.changeHandler}
                  type="text"
                  id="materialFormRegisterNameEx"
-                 label="Equity Capital"
+                 label={trans.capital}
                  required
                >
                  <div className="valid-feedback">Looks good!</div>
@@ -320,7 +322,7 @@ class SSCForm extends React.Component{
                <MDBRow>
                <MDBCol>
               <MDBInput
-                label="Manager Name"                
+                label={trans.managerName}              
                 value={this.state.SSCManagerName.value}
                 className={this.state.SSCManagerName.valid ? "is-valid" : "is-invalid"}
                 name="SSCManagerName"
@@ -339,7 +341,7 @@ class SSCForm extends React.Component{
            <MDBCol>
                
            <MDBInput
-           label="Manager Type"                
+           label={trans.managerType}                
            value={this.state.SSCManagerType.value}
            className={this.state.SSCManagerType.valid ? "is-valid" : "is-invalid"}
            name="SSCManagerType"
@@ -359,7 +361,7 @@ class SSCForm extends React.Component{
               <MDBInput
                 value={this.state.SSCManagerGender.value}
                 className={this.state.SSCManagerGender.valid ? "is-valid" : "is-invalid"}
-                name="SSCManagerGender"
+                name={trans.managerGender}
                 onChange={this.changeHandler}
                 type="text"
                 id="materialFormRegisterNameEx"
@@ -374,7 +376,7 @@ class SSCForm extends React.Component{
             <MDBRow>
                <MDBCol>
               <MDBInput
-                label="Manager nationality"                
+                label={trans.managerNationality}               
                 value={this.state.SSCManagerNationality.value}
                 className={this.state.SSCManagerNationality.valid ? "is-valid" : "is-invalid"}
                 name="SSCManagerNationality"
@@ -393,7 +395,7 @@ class SSCForm extends React.Component{
            <MDBCol>
                
            <MDBInput
-           label="Manager Identification type"                
+           label={trans.managerIdentityType}              
            value={this.state.SSCManagerIdentificationType.value}
            className={this.state.SSCManagerIdentificationType.valid ? "is-valid" : "is-invalid"}
            name="SSCManagerIdentificationType"
@@ -416,7 +418,7 @@ class SSCForm extends React.Component{
                 onChange={this.changeHandler}
                 type="text"
                 id="materialFormRegisterNameEx"
-                label="Manager Identification number"
+                label={trans.managerIdentityNumber}
                 required
               >
                 <div className="valid-feedback">Looks good!</div>
@@ -427,7 +429,7 @@ class SSCForm extends React.Component{
             <MDBRow>
                <MDBCol>
               <MDBInput
-                label="Manager Birth date"                
+                label={trans.birthdate}             
                 value={this.state.SSCManagerBirthdate.value}
                 className={this.state.SSCManagerBirthdate.valid ? "is-valid" : "is-invalid"}
                 name="SSCManagerBirthdate"
@@ -446,7 +448,7 @@ class SSCForm extends React.Component{
            <MDBCol>
                
            <MDBInput
-           label="Manager Address"                
+           label={trans.managerAddress}            
            value={this.state.SSCManagerAddress.value}
            className={this.state.SSCManagerAddress.valid ? "is-valid" : "is-invalid"}
            name="SSCManagerAddress"
@@ -469,7 +471,7 @@ class SSCForm extends React.Component{
                 onChange={this.changeHandler}
                 type="text"
                 id="materialFormRegisterNameEx"
-                label="Managerial Type"
+                label={trans.managerialType}
                 required
               >
                 <div className="valid-feedback">Looks good!</div>
@@ -477,7 +479,7 @@ class SSCForm extends React.Component{
               </MDBInput>
             </MDBCol>
             </MDBRow>
-               <RaisedButton label="Submit" primary={true} style={style}
+               <RaisedButton label={trans.button} primary={true} style={style}
                disabled={!this.validateForm()}
                onClick={(event) => (this.handleClick(event) , alert('SSCForm Created Succesfully'))}/>
            </div>

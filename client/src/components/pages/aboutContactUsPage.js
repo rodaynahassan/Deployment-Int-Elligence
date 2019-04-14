@@ -8,6 +8,7 @@ import {Row,Col,Container,Image} from 'react-bootstrap'
 import { MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBCol } from 'mdbreact';
 //import Header from '../layout/header'
 import background from '../../backkk.jpeg'
+import trans from '../translations/aboutContactTranslation'
 class About extends Component{
 
     constructor()
@@ -17,17 +18,16 @@ class About extends Component{
 
      render()
      {
+      trans.setLanguage(this.props.lang)
          return (
-             <section style={{ width:"100%" ,height:"800px", backgroundImage:"url("+background+")",backgroundRepeat:"no-repeat",backgroundSize:"100% 100%"}}>   
+             <section style={{ paddingLeft:'60px',display:"flex", justifyContent: 'center',width:"100%" ,height:"800px", backgroundImage:"url("+background+")",backgroundRepeat:"no-repeat",backgroundSize:"100% 100%",alignItems:"center"}}>   
       
-        <br />
         <Card bg="light" text="grey" style={{ width: '30rem',height:'20rem' }}>
-        <Card.Header>About Us</Card.Header>
+        <Card.Header>{trans.about}</Card.Header>
         <Card.Body>
-        <Card.Title>Info</Card.Title>
+        <Card.Title>{trans.info}</Card.Title>
         <Card.Text>
-        Some quick example text to build on the card title and make up the bulk
-        of the card's content.
+       {trans.infoText}
       </Card.Text>
         <Form>
         </Form>
@@ -41,5 +41,4 @@ class About extends Component{
     
 }
 
-ReactDOM.render(<About />, document.getElementById('root'));
 export default About

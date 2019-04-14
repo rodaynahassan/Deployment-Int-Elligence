@@ -13,25 +13,58 @@ import {Redirect} from 'react-router-dom'
 import Header from '../layout/header'
 import ReactDOM from 'react-dom';
 import Companies from '../pages/Companies'
+import Footer from '../layout/footer'
+import { Animate, AnimateGroup } from 'react-simple-animate';
+import Egypt from '../layout/Egypt.jpg'
+import trans from '../translations/landingTranslation'
 
 class LandingBody extends Component {
+   props = {
+    startStyle: { opacity: 0 },
+    endStyle: { opacity: 1 }
+  };
 
+  
   render() {
+    trans.setLanguage(this.props.lang)
     return (
        
         <Carousel>
-        <Carousel.Item>
-            <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop" width="100%">
+        <Carousel.Item > 
+          <div style={{position: "fixed", top: "0", zIndex: "-1",width:"100%"}}>
+            <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop" width="100%" object-fit="cover">
                  <source src={egypt} type="video/mp4"></source>
             </video>
+          </div>
+          <br/>
+          <br/>
+          <AnimateGroup play style={{display:"flex"}}>
+         
+     
+          <view style={{display:"flex", justifyContent:'center' , alignItems:'center'}}>
+
+       <Animate delaySeconds="0.1" durationSeconds= "0.6"  endStyle={{ opacity: 1, transform: 'translateY(-10px)' }}
+        startStyle={{ opacity: 0, transform: 'translateY(0)' }} sequenceIndex={3} ><h1 style={{fontSize:"100px", textShadow: '-2px 0 white, 0 2px white, 2px 0 white, 0 -2px white'}}>G&nbsp;</h1></Animate>    
+        <Animate durationSeconds= "0.6" endStyle={{ opacity: 1, transform: 'translateY(-10px)' }}
+        startStyle={{ opacity: 0, transform: 'translateY(0)' }} sequenceIndex={4}><h1 style={{fontSize:"100px", textShadow: '-2px 0 white, 0 2px white, 2px 0 white, 0 -2px white' }}>A&nbsp;</h1></Animate>
+        <Animate durationSeconds= "0.6" endStyle={{ opacity: 1, transform: 'translateY(-10px)' }}
+        startStyle={{ opacity: 0, transform: 'translateY(0)' }} sequenceIndex={5} ><h1 style={{fontSize:"100px", textShadow: '-2px 0 white, 0 2px white, 2px 0 white, 0 -2px white' }}>F&nbsp;</h1></Animate>
+        <Animate durationSeconds= "0.6" endStyle={{ opacity: 1, transform: 'translateY(-10px)' }} 
+        startStyle={{ opacity: 0, transform: 'translateY(0)' }} sequenceIndex={6} ><h1 style={{fontSize:"100px", textShadow: '-2px 0 white, 0 2px white, 2px 0 white, 0 -2px white' }}>I&nbsp;</h1></Animate>
+         <Animate durationSeconds= "0.6" endStyle={{ opacity: 1, transform: 'translateY(-10px)' }} 
+        startStyle={{ opacity: 0, transform: 'translateY(0)' }} sequenceIndex={7} ><img src={Egypt} height="50px" width="80px" /></Animate>
+  </view>
+  </AnimateGroup>
+          <div style={{height:"570px"}}>
           <Carousel.Caption>
-            <h1>Invest in Egypt</h1>
-              <Button variant="outline-light" size="lg"  href="/register">Sign Up</Button> <Button variant="outline-light" size="lg" href="/login">Sign In</Button>
+            <h1>{trans.invest}</h1>
+              <Button variant="outline-light" size="lg"  href="/register">{trans.signup}</Button> <Button variant="outline-light" size="lg" href="/login">{trans.signin}</Button> <Button variant="outline-light" size="lg" href="/journal">{trans.electronicjournal}</Button>
           </Carousel.Caption>
+          </div>
         </Carousel.Item>
-         <Carousel.Item>
+         {/* <Carousel.Item>
           <Companies/>
-          </Carousel.Item>
+          </Carousel.Item> */}
         {/*<Carousel.Item>
           <img
             className="d-block w-100"

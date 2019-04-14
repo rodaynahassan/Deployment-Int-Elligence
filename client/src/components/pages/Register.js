@@ -14,6 +14,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
+import trans from '../translations/registerTranslation'
 
 
 
@@ -133,14 +134,15 @@ class Register extends Component {
 
   
   render() {
-
+    
+    trans.setLanguage(this.props.lang)
     return (
-      <div>
-        <MuiThemeProvider>
-          <div>
-          <AppBar
+      <div style={{paddingLeft:"60px",display:"flex" , flexWrap:"wrap",alignItems:"center" , justifyContent:"center"}}>
+        <MuiThemeProvider >
+          <div >
+          {/* <AppBar
              title="Register"
-           />
+           /> */}
            {/* <TextField
              hintText="Enter your Type"
              floatingLabelText="Investor Type"
@@ -148,9 +150,9 @@ class Register extends Component {
              />
            <br/> */}
            <TextField
-             
-             hintText="Enter your Name"
-             floatingLabelText="Name"
+             style={{alignSelf:"center"}}
+             hintText={trans.hintname}
+             floatingLabelText={trans.name}
              onChange = {(event,newValue) => this.setState({name:newValue})}
              />
            
@@ -158,7 +160,7 @@ class Register extends Component {
            <br/>
           <br/>
 
-           <InputLabel htmlFor="demo-controlled-open-select">Nationality</InputLabel>
+           <InputLabel htmlFor="demo-controlled-open-select">{trans.nationality}</InputLabel>
            <br/>
            <DropDownMenu 
             value={this.state.nationality} 
@@ -176,7 +178,7 @@ class Register extends Component {
            
             <br/>
            <br/>
-           <InputLabel htmlFor="demo-controlled-open-select">Gender</InputLabel>
+           <InputLabel htmlFor="demo-controlled-open-select">{trans.gender}</InputLabel>
            <br/>
            <DropDownMenu 
             value={this.state.gender} 
@@ -192,7 +194,7 @@ class Register extends Component {
         
             <br/>
            <br/>
-           <InputLabel htmlFor="demo-controlled-open-select">Identification Type</InputLabel>
+           <InputLabel htmlFor="demo-controlled-open-select">{trans.identificationType}</InputLabel>
            <br/>
            <DropDownMenu 
             value={this.state.identificationType} 
@@ -208,52 +210,52 @@ class Register extends Component {
            <br/>
 
            <TextField
-             hintText="Enter your Identification Number"
-             floatingLabelText="Identification Number"
+             hintText={trans.hintNum}
+             floatingLabelText={trans.identificationNumber}
              onChange = {(event,newValue) => this.setState({identificationNumber:newValue})}
              />
            <br/>
            <TextField
-             hintText="Enter your Birthdate"
-             floatingLabelText="Birthdate"
+             hintText={trans.hintBirth}
+             floatingLabelText={trans.birthdate}
              onChange = {(event,newValue) => this.setState({birthdate:newValue})}
              />
            <br/>
            <TextField
-             hintText="Enter your Address"
-             floatingLabelText="Address"
+             hintText={trans.hintAddress}
+             floatingLabelText={trans.address}
              onChange = {(event,newValue) => this.setState({address:newValue})}
              />
            <br/>
            <TextField
-             hintText="Enter your Email"
+             hintText={trans.hintEmail}
              type="email"
-             floatingLabelText="Email"
+             floatingLabelText={trans.email}
              onChange = {(event,newValue) => this.setState({email:newValue})}
              />
            <br/>
            <TextField
              type = "password"
-             hintText="Enter your Password"
-             floatingLabelText="Password"
+             hintText={trans.hintPass}
+             floatingLabelText={trans.password}
              onChange = {(event,newValue) => this.setState({password:newValue})}
              />
            <br/>
            <TextField
-             hintText="Enter your Telephone"
-             floatingLabelText="Telephone"
+             hintText={trans.hintTele}
+             floatingLabelText={trans.telephone}
              onChange = {(event,newValue) => this.setState({telephone:newValue})}
              />
            <br/>
            <TextField
-             hintText="Enter your Fax"
-             floatingLabelText="Fax"
+             hintText={trans.hintFax}
+             floatingLabelText={trans.fax}
              onChange = {(event,newValue) => this.setState({fax:newValue})}
              />
            <br/>
            <br/>
            <br/>
-           <InputLabel htmlFor="demo-controlled-open-select">Investor Type</InputLabel>
+           <InputLabel htmlFor="demo-controlled-open-select">{trans.investorType}</InputLabel>
            <br/>
            <DropDownMenu 
             value={this.state.investorType} 
@@ -267,7 +269,7 @@ class Register extends Component {
 
         </DropDownMenu> 
            <br/>
-           <RaisedButton label="Submit" 
+           <RaisedButton label={trans.button} 
            primary={true} 
            style={style} 
            disabled={!this.validateForm()}

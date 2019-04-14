@@ -5,6 +5,7 @@ import ApprovedCompaniesFields from '../user/ApprovedCompaniesFields';
 import Table from 'react-bootstrap/Table'
 import Navbar from 'react-bootstrap/Navbar'
 import {Badge} from 'react-bootstrap'
+import trans from '../translations/approvedTranslation'
 
 class ApprovedCompanies extends Component {
     state = {
@@ -26,31 +27,31 @@ class ApprovedCompanies extends Component {
         )
       }
       render(){
+        trans.setLanguage(this.props.lang)
         return (
-          <div>
-          <h2 align="center"><Badge variant="dark">Your Approved Companies</Badge></h2>
-          <Navbar bg='dark'>
-          <Table striped bordered hover variant="dark" size="sm">
+          <div  style={{paddingLeft:'60px',flexDirection: 'row', justifyContent: 'flex-end'}} >
+           <div style={{backgroundColor:"#123456" , textAlign:"center", fontSize:"50px" , color:"white" }} >{trans.title}</div>
+          <Table striped bordered hover variant="gamed" size="sm">
             <thead>
               <tr>
-                <th>Company's Name</th>
-                <th>Company's Name In English</th>
-                <th>Company's Governorate</th>
-                <th>Company's City</th>
-                <th>Company's Address</th>
-                <th>Company's Telephone</th>
-                <th>Company's Fax</th>
-                <th>Company's Currency</th>
-                <th>Company's Capital</th>
-                <th>Company's Type</th>
-                <th>Company's Creation Date</th>
+                <th>{trans.name}</th>
+                <th>{trans.nameInEnglish}</th>
+                <th>{trans.governorate}</th>
+                <th>{trans.city}</th>
+                <th>{trans.address}</th>
+                <th>{trans.telephone}</th>
+                <th>{trans.fax}</th>
+                <th>{trans.currency}</th>
+                <th>{trans.capital}</th>
+                <th>{trans.type}</th>
+                <th>{trans.date}</th>
               </tr>
               </thead>
               <tbody>
               {this.tabRow()}
             </tbody>
           </Table>
-          </Navbar>
+        
           </div>
           )
       }

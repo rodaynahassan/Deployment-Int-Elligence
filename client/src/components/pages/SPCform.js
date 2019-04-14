@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.css'
-import React from 'react';
+import React , {Component} from 'react';
 import ReactDOM from 'react-dom';
 import axios from "axios";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -9,9 +9,10 @@ import TextField from 'material-ui/TextField';
 import { MDBRow, MDBCol, MDBInput, MDBBtn } from "mdbreact";
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
+import trans from '../translations/spcTranslation'
 var mongoose = require('mongoose')
 
-class SPCform extends React.Component{
+class SPCform extends Component{
 
     constructor(props){
         super(props);
@@ -91,22 +92,22 @@ class SPCform extends React.Component{
       };
       validateForm() {
         return this.state.companyName.value.length >=3 && this.state.companyName.value.length <=50 
-
-        }
+        };
 
     render() {
+    //  trans.setLanguage(this.props.lang)
       return (
-        <div>
+        <div style={{ paddingLeft:'60px',justifyItems:"center"}}>
           <MuiThemeProvider>
             <div>
-            <AppBar
-               title="Create your SPCForm"
-             />
+            {/* <AppBar
+               title={trans.title}
+             /> */}
                <br/>
                <MDBRow>
                <MDBCol>
               <MDBInput
-                label="Company Name"                
+                label={trans.name}              
                 value={this.state.companyName.value}
                 className={this.state.companyName.valid ? "is-valid" : "is-invalid"}
                 name="companyName"
@@ -126,7 +127,7 @@ class SPCform extends React.Component{
                
                <MDBInput
                  value={this.state.companyTelephone.value}
-                 name="companyTelephone"
+                 name={trans.telephone}
                  onChange={this.changeHandler}
                  type="text"
                  id="materialFormRegisterNameEx"
@@ -141,7 +142,7 @@ class SPCform extends React.Component{
               <MDBInput
                 value={this.state.companyAddress.value}
                 className={this.state.companyAddress.valid ? "is-valid" : "is-invalid"}
-                name="companyAddress"
+                name={trans.address}
                 onChange={this.changeHandler}
                 type="text"
                 id="materialFormRegisterNameEx"
@@ -160,7 +161,7 @@ class SPCform extends React.Component{
             
           <MDBCol>
         <div className="form-group">
-            <label htmlFor="companyGovernorate">Company Governorate</label>
+            <label htmlFor="companyGovernorate">{trans.governorate}</label>
             <select className="form-control" 
             //className={this.state.companyGovernorate.valid ? "is-valid" : "is-invalid"} 
             id="exampleFormControlSelect1" name="companyGovernorate"
@@ -177,7 +178,7 @@ class SPCform extends React.Component{
 
           <MDBCol>
         <div className="form-group">
-            <label htmlFor="companyCity">Company City</label>
+            <label htmlFor="companyCity">{trans.city}</label>
             <select className="form-control" id="exampleFormControlSelect1" name="companyCity"
                 onChange={this.changeHandler} value={this.state.companyCity.value}>
               <option>Agamy</option> 
@@ -215,7 +216,7 @@ class SPCform extends React.Component{
 
                <MDBCol>
               <div className="form-group">
-                  <label htmlFor="currency">Currency</label>
+                  <label htmlFor="currency">{trans.currency}</label>
                   <select className="form-control"  
                   id="exampleFormControlSelect1" name="currency"
                       onChange={this.changeHandler} 
@@ -240,7 +241,7 @@ class SPCform extends React.Component{
 
                 <MDBInput
                   value={this.state.companyFax.value}
-                  name="companyFax"
+                  name={trans.fax}
                   onChange={this.changeHandler}
                   type="text"
                   id="materialFormRegisterNameEx"
@@ -252,7 +253,7 @@ class SPCform extends React.Component{
                <MDBCol>              
                <MDBInput
                  value={this.state.companyNameInEnglish.value}
-                 name="companyNameInEnglish"
+                 name={trans.nameInEnglish}
                  onChange={this.changeHandler}
                  type="text"
                  id="materialFormRegisterNameEx"
@@ -268,7 +269,7 @@ class SPCform extends React.Component{
                <MDBInput
                  value={this.state.equityCapital.value}
                  className={this.state.equityCapital.valid ? "is-valid" : "is-invalid"}
-                 name="equityCapital"
+                 name={trans.capital}
                  onChange={this.changeHandler}
                  type="text"
                  id="materialFormRegisterNameEx"
@@ -280,7 +281,7 @@ class SPCform extends React.Component{
                </MDBInput>
                </MDBCol>
                </MDBRow>
-               <RaisedButton label="Submit" primary={true} style={style}
+               <RaisedButton label={trans.button} primary={true} style={style}
                disabled={!this.validateForm()}
                onClick={(event) => (this.handleClick(event) , alert('SPCForm Created Succesfully'))}/>
            </div>

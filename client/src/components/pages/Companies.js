@@ -1,10 +1,10 @@
 import  React, { Component } from 'react';
 import axios from 'axios';
 import '../../App.css';
-import GetAllCompanies from '../form/GetAllCompanies';
-import Table from 'react-bootstrap/Table';
 import {Button} from 'react-bootstrap';
 import "mdbreact/dist/css/mdb.css";
+import FlippingCard from '../form/FlippingCard'
+import trans from '../translations/companiesTranslation'
 class Companies extends Component {
     state = {
       companies:[]
@@ -15,48 +15,21 @@ class Companies extends Component {
         if(Array.isArray(res.data.data)){
           this.setState({companies: res.data.data})
       }})}
-      tabRow(){
-        return this.state.companies.map(function(company,i){
-            return <GetAllCompanies company={company} key={i} />;
+      tabRow = () => {
+        return this.state.companies.map((company,i)=>{
+          return <FlippingCard lang={this.props.lang} company={company} key={i}/>  // return <GetAllCompanies company={company} key={i} />;
         });
       }
       render(){
-        return (
-          
-       
-
-
-
-             
-         <div>
-           
-          <Button variant="nada" block disabled><h1>Electronic Journal</h1></Button>
-            <Table stripped bordered hover variant='dark' size='sm'>
-            <thead>
-              <tr>
-              
-                <th>Name</th>
-                <th>Name In English </th>
-                <th>Governorate</th>
-                <th>City </th>
-                <th>Address </th>
-                <th>Telephone </th>
-                <th>Fax </th>
-                <th>Currency </th>
-                <th>Capital </th>
-                <th>Type </th>
-                <th>Creation Date </th>
-              </tr>
-
-            </thead>
-            <tbody>
-
+        trans.setLanguage(this.props.lang)
+        return ( 
+         <div >
+          <div style={{backgroundColor:"#123456" , textAlign:"center", fontSize:"50px" , color:"white" ,paddingLeft:'60px',flexDirection: 'row', justifyContent: 'flex-end'}} >{trans.title}</div>  
+            <div style={{display:"flex" , flexWrap:"wrap",alignItems:"right" , justifyContent:"right"}}>
               {this.tabRow()}
-            </tbody>
-          </Table> 
+            </div>
          </div>
-        )
-          
+        )  
       }
     }
 export default Companies

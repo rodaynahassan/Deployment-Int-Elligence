@@ -12,7 +12,11 @@ class InProgressCases extends Component {
       inProgressCases:[]
     }
     componentDidMount(){
-      axios.get('http://localhost:5000/routes/api/users/getInProgressCases/5ca8b5f050bb3e4ce80c54ea')
+
+
+  
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
+      axios.get('http://localhost:5000/routes/api/users/getInProgressCases',{headers: { "Authorization": localStorage.getItem('jwtToken') }})
       .then(res => {
         if(Array.isArray(res.data.data)){
           this.setState({inProgressCases: res.data.data})

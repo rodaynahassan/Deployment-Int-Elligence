@@ -6,7 +6,39 @@ import React,{ Component } from 'react';
 import NavLink from 'react-bootstrap/NavLink';
 import Journal from './Journal1.png'
 class Side extends Component{
+    logOut(){
+        localStorage.setItem('isLoggedIn','false')
+        localStorage.setItem('jwtToken','')
+        localStorage.setItem('type','')
+        document.location.href='/'
+    }
 render(){ 
+     
+    var profile = <NavItem eventKey="home">
+        <NavIcon>
+        <a href="/profile">
+            <i className="far fa-user" style={{ fontSize: '1.75em'  }} ></i>
+            </a>
+        </NavIcon>
+        <NavText >
+            <a href="/profile">
+            My Page
+            </a>
+        </NavText>
+    </NavItem>
+   
+    var signout = <NavItem eventKey="home">
+    <NavIcon>
+    <a onClick={this.logOut}>
+        <i className=" 	fas fa-sign-in-alt" style={{ fontSize: '1.75em'  }} ></i>
+        </a>
+    </NavIcon>
+    <NavText >
+        <a onClick={this.logOut}>
+        Logout
+        </a>
+    </NavText>
+</NavItem>
     return(
 <SideNav
     onSelect={(selected) => {
@@ -41,16 +73,7 @@ render(){
             </NavText>
             
             
-            {/* <NavItem eventKey="charts/linechart">
-                <NavLink>
-                    Line Chart
-                </NavLink>
-            </NavItem>
-            <NavItem eventKey="charts/barchart">
-                <NavText>
-                    Bar Chart
-                </NavText>
-            </NavItem> */}
+            
         </NavItem>
         <NavItem eventKey="home">
             <NavIcon>
@@ -93,6 +116,8 @@ render(){
             </NavText>
         </NavItem>
         </NavItem>
+        {localStorage.getItem('isLoggedIn')==='true'? profile:null}
+        {localStorage.getItem('isLoggedIn')==='true'? signout:null}
     </SideNav.Nav>
 </SideNav>
 )

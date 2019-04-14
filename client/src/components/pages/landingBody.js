@@ -23,9 +23,15 @@ class LandingBody extends Component {
     startStyle: { opacity: 0 },
     endStyle: { opacity: 1 }
   };
-
-  
+  logOut(){
+    localStorage.setItem('isLoggedIn','false')
+    localStorage.setItem('jwtToken','')
+    localStorage.setItem('type','')
+    document.location.href='/'
+}
   render() {
+    var loggedIn = <div><Button variant="outline-light" size="lg"  onClick={this.logOut}>Signout</Button><Button variant="outline-light" size="lg" href="/journal">{trans.electronicjournal}</Button></div>
+    var notloggedIn =  <div><Button variant="outline-light" size="lg"  href="/register">{trans.signup}</Button> <Button variant="outline-light" size="lg" href="/login">{trans.signin}</Button><Button variant="outline-light" size="lg" href="/journal">{trans.electronicjournal}</Button></div>
     trans.setLanguage(this.props.lang)
     return (
        
@@ -58,7 +64,7 @@ class LandingBody extends Component {
           <div style={{height:"570px"}}>
           <Carousel.Caption>
             <h1>{trans.invest}</h1>
-              <Button variant="outline-light" size="lg"  href="/register">{trans.signup}</Button> <Button variant="outline-light" size="lg" href="/login">{trans.signin}</Button> <Button variant="outline-light" size="lg" href="/journal">{trans.electronicjournal}</Button>
+             {localStorage.getItem('isLoggedIn')==='true'?loggedIn:notloggedIn} 
           </Carousel.Caption>
           </div>
         </Carousel.Item>

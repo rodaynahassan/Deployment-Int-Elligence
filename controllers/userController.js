@@ -13,10 +13,10 @@ exports.compareByDate=function compareByDate(a,b){
 }
 //creating Investor
 exports.registerInvestor=async function registerInvestor(body){                      
-    const { error1 } = userValidator.createValidationI(body)            
+    const { error } = userValidator.createValidationI(body)            
     
-    if (error1) {
-        return error1.details[0].message;
+    if (error) {
+        return {error:error.details[0].message};
     }
     
     let user = await User.findOne({ email: body.email });
@@ -91,10 +91,20 @@ exports.update = async function update(att, value, body){
        }
        if(att ==='_id' ){
         var updatedUser = await User.findByIdAndUpdate(value,body)
+        .then(res=>{return res})
+       .catch(error=>{
+           return {error:error}
+       })
+       if (updatedUser.error) return updatedUser
         var x = await User.findById(value)
         return x
        }
        var updatedUser = User.updateMany({att:value},body)
+       .then(res=>{return res})
+       .catch(error=>{
+           return {error:error}
+       })
+       if (updatedUser.error) return updatedUser
        var x = await User.findById(value)
        return x
        }

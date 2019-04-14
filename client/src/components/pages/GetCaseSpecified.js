@@ -1,41 +1,48 @@
 import  React, { Component } from 'react';
 import axios from 'axios';
 import '../../App.css';
-import GetAllCompanies from '../form/GetAllCompanies';
 import Table from 'react-bootstrap/Table';
 import {Button} from 'react-bootstrap';
 import "mdbreact/dist/css/mdb.css";
+import GetAllUserForms from '../form/GetAllUserForms';
+
 class Companies extends Component {
     state = {
       companies:[]
     }
+
+
+   
     componentDidMount(){
 
-
-     
-
-      
-      axios.get('http://localhost:5000/routes/api/forms/getApprovedCompany')
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
+      axios.get('http://localhost:5000/routes/api/users/getUserForms',{headers: { "Authorization": localStorage.getItem('jwtToken') }} )
       .then(res => {
         if(Array.isArray(res.data.data)){
           this.setState({companies: res.data.data})
       }})}
+
+      sort = () => {
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
+        axios.get('http://localhost:5000/routes/api/users/SpecificFormSortedByFormId',{headers: { "Authorization": localStorage.getItem('jwtToken') }}).then (res=> {
+               this.setState({forms:res.data.data})
+               alert('Cases have been sorted')
+            }).catch(err=>{console.log(err)});
+          }
+    
+
       tabRow(){
         return this.state.companies.map(function(company,i){
-            return <GetAllCompanies company={company} key={i} />;
+            return <GetAllUserForms company={company} key={i} />;
         });
       }
       render(){
         return (
-          
-       
-
-
-
              
          <div>
            
-          <Button variant="nada" block disabled><h1>Electronic Journal</h1></Button>
+          <Button variant="nada" block disabled><h1>specific lawyer cases</h1></Button>
+          <Button variant="dark" onClick={()=>this.sort()}>Sort the cases by ID </Button> 
             <Table stripped bordered hover variant='dark' size='sm'>
             <thead>
               <tr>
@@ -51,6 +58,10 @@ class Companies extends Component {
                 <th>Capital </th>
                 <th>Type </th>
                 <th>Creation Date </th>
+                <th>Fees</th>
+                <th>Accept Case</th>
+                <th>Add Comments</th>
+                <th>Calculate The Fees</th>
               </tr>
 
             </thead>

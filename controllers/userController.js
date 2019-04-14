@@ -91,10 +91,20 @@ exports.update = async function update(att, value, body){
        }
        if(att ==='_id' ){
         var updatedUser = await User.findByIdAndUpdate(value,body)
+        .then(res=>{return res})
+       .catch(error=>{
+           return {error:error}
+       })
+       if (updatedUser.error) return updatedUser
         var x = await User.findById(value)
         return x
        }
        var updatedUser = User.updateMany({att:value},body)
+       .then(res=>{return res})
+       .catch(error=>{
+           return {error:error}
+       })
+       if (updatedUser.error) return updatedUser
        var x = await User.findById(value)
        return x
        }

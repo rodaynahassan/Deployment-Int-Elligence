@@ -33,7 +33,7 @@ require('../../config/passport')(passport)
 
 
 //get all forms
-router.get('/getAllForms' ,async (req,res) => {
+router.get('/getAllForms' , async (req,res) => {
     const forms  = await controller.search()
     return res.json({data:forms})
 })
@@ -43,51 +43,62 @@ router.get('/getApprovedCompany', async (req,res) => {
     return res.json({data:form})  
 })
 //get rejected form
-router.get('/getRejectedCompany', async (req,res) => {
+router.get('/getRejectedCompany',passport.authenticate('jwt', {session: false}) , async (req,res) => {
     const form = await controller.search('status','Rejected')
     return res.json({data:form})
 })
 //get In progress Lawyer form
-router.get('/getInProgressLawyerCompany', async (req,res) => {
+router.get('/getInProgressLawyerCompany',passport.authenticate('jwt', {session: false}) , async (req,res) => {
     const form = await controller.search('status','In progress Lawyer')
     return res.json({data:form})
 })
 //get In progress Reviewer form
-router.get('/getInProgressReviewerCompany', async (req,res) => {
+router.get('/getInProgressReviewerCompany',passport.authenticate('jwt', {session: false}) , async (req,res) => {
     const form = await controller.search('status','In progress Reviewer')
     return res.json({data:form})
 })
 //get un assigned form 
-router.get('/getUnAssignedForm', async (req,res) => {
+router.get('/getUnAssignedForm',passport.authenticate('jwt', {session: false}) , async (req,res) => {
     const form = await controller.search('status','Unassigned')
     return res.json({data:form})
 })
-
+//get Lawyer Acceptedform 
+router.get('/getLawyerAccepted',passport.authenticate('jwt', {session: false}) , async (req,res) => {
+    if (req.user.userType === "Reviewer" || req.user.userType === "Lawyer") {    
+    const form = await controller.search('status','Lawyer accepted')
+    return res.json({data:form})
+    }
+    else{
+        return res.json({ msg:'Non Authorized'});
+    }
+})
 //get Reviewer's comments
-router.get('/getReviewerComments/:id', async(req, res)=>{
+router.get('/getReviewerComments/:id',passport.authenticate('jwt', {session: false}) , async(req, res)=>{
+    if (req.user.userType === "Lawyer"|| req.user.userType === "Reviewer") { 
     const formId = req.params.id
     const formComment = await controller.search('_id',formId)
     var arrayReviewerComments = formComment.reviewerComments
     return res.json({ data: arrayReviewerComments});
-
+    }
+    else{
+        return res.json({ msg:'Non Authorized'});
+    }
 })
 //get Lawyer's comments
-router.get('/getLawyerComments/:id', async(req, res)=>{
+router.get('/getLawyerComments/:id', passport.authenticate('jwt', {session: false}) ,async(req, res)=>{
+    if (req.user.userType === "Investor"|| req.user.userType === "Lawyer") {
     const formId = req.params.id
     const formComment = await controller.search('_id',formId)
     var arrayLawyerComments = formComment.lawyerComments
     return res.json({ data: arrayLawyerComments});
+    }
+    else{
+        return res.json({ msg:'Non Authorized'});
+    }
+})
 
-})
- //get Reviewer's comments
- router.get('/getReviewerComments/:id', async(req, res)=>{
-    const formId = req.params.id
-    const formComment = await controller.search('_id',formId)
-    var arrayReviewerComments = formComment.reviewerComments
-    return res.json({ data: arrayReviewerComments});
-})
 //get a form by id
-router.get('/:id', async (req,res) => {
+router.get('getSpecificform/:id',  passport.authenticate('jwt', {session: false}) ,async (req,res) => {
         const id = req.params.id
         const form = await controller.search('_id',id)
         return res.json({data:form})
@@ -95,19 +106,19 @@ router.get('/:id', async (req,res) => {
 })
 
 //create a form
-router.post('/', async (req,res) => {
+router.post('/', passport.authenticate('jwt', {session: false}) , async (req,res) => {
     const newForm = await controller.create(req.body)
     return res.json({data:newForm})
     })
 
 //update a form
- router.put('/:id', async (req,res) => {
+ router.put('/:id', passport.authenticate('jwt', {session: false}) , async (req,res) => {
     try
     {
         const id = req.params.id
         var form = await controller.update('_id',id,req.body)
+        if(form.error) return res.status(400).json(form.error)
         if(!form) return res.json({msg:"ID not found"})
-        if(form.error) return res.status(400).send(form)
         return res.json({msg:"Form Updated Successfully", data:form})
     }
     catch(error)
@@ -117,7 +128,7 @@ router.post('/', async (req,res) => {
  })
 
 //delete a form
- router.delete('/:id', async (req,res) => {
+ router.delete('/:id', passport.authenticate('jwt', {session: false}) , async (req,res) => {
     try {
      const id = req.params.id
      const deletedForm= await controller.remove('_id',id)

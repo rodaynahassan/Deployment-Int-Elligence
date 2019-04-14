@@ -1,3 +1,4 @@
+
 const express = require('express');
 const Joi = require('joi');
 const router = express.Router();
@@ -54,13 +55,20 @@ require('../../config/passport')(passport)
 
 
 
+const axios = require('axios');
 
 
 //sort all forms for a  by form creation date
-router.get('/AllformsSortedByformDate/', async (req, res) => {
+router.get('/AllformsSortedByformDate/', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    if (req.user.userType === "Lawyer" || req.user.userType === "Reviewer") {
     var forms = await formController.search()
     forms.sort(userController.compareByDate)
     return res.json({ data: forms });
+    }
+    else{
+        return res.json({msg:'Non Authorized'})
+    }    
+
 })
 
 
@@ -79,18 +87,23 @@ router.get('/AllformsSortedByformDate/', async (req, res) => {
 
 
 
-//sort forms by id as a lawyer 
-router.get('/formSortedByformId/', async (req, res) => { // sort forms by form id
-    var forms = await Forms.find()
-    forms.sort(compareById)
-    return res.json({ data: forms });
-})
+// //sort forms by id as a lawyer 
+// router.get('/formSortedByformId/', async (req, res) => { // sort forms by form id
+//     var forms = await Forms.find()
+//     forms.sort(compareById)
+//     return res.json({ data: forms });
+// })
 
 
 //sort all forms by id as a lawyer 
-router.get('/AllFormSortedByFormId/', async (req, res) => {  // sort all forms by form id
+router.get('/AllFormSortedByFormId/', passport.authenticate('jwt', { session: false }), async (req, res) => {  // sort all forms by form id
+    if (req.user.userType === "Lawyer" || req.user.userType === "Reviewer") {
     const forms = await formController.search()
     forms.sort(userController.compareById)
+    }
+    else{
+        return res.json({ msg: "Non Authorized" });
+    }
 })
 
 
@@ -163,7 +176,12 @@ router.get('/CertainUser', passport.authenticate('jwt', { session: false }), asy
 })
 
 
+router.get('/CertainAttributes',  passport.authenticate('jwt', { session: false }),async(req,res)=>{
 
+    const userid=req.user.id
+    const searchUsers=await userController.search('_id',userid)
+    return res.json({Username:searchUsers.name,Gender:searchUsers.gender,Nationality: searchUsers.nationality,IdentificationType:searchUsers.identificationType,IdentificationNumber:searchUsers.identificationNumber,Birthdate:searchUsers.birthdate,Address:searchUsers.address,Email:searchUsers.email,Password:searchUsers.password,Telephone:searchUsers.telephone,Fax:searchUsers.fax})
+})
 
 
 
@@ -259,6 +277,8 @@ router.post('/CreatingForm', passport.authenticate('jwt', { session: false }), a
     if (req.user.userType === "Investor" || req.user.userType === "Lawyer") {
         const newForm = await formController.create(req.body)
         const user = await userController.search('_id', userId)
+        if (newForm.error) return res.status(400).send(newForm.error)
+        if (!newForm) return res.json({ msg: "Form is null" })
         if (user.userType === "Investor") {
             newForm.status = "Unassigned"
             const formId = newForm._id
@@ -274,8 +294,7 @@ router.post('/CreatingForm', passport.authenticate('jwt', { session: false }), a
         else {
             return res.json({ msg: 'You can not create a form' })
         }
-        if (newForm.error) return res.status(400).send(newForm.error)
-        if (!newForm) return res.json({ msg: "Form is null" })
+
         user.forms.push(newForm)
         const returnedUser = await userController.update('_id', userId, { forms: user.forms })
         return res.json({ data: returnedUser })
@@ -293,66 +312,66 @@ router.post('/CreatingForm', passport.authenticate('jwt', { session: false }), a
 
 
 
-//add a form to the array of forms of the lawyer/reviewer
-router.put('/takingForm/:formId', passport.authenticate('jwt', { session: false }), async (req, res) => {
-    const userid = req.user.userId
-    if (req.user.userType === "Reviewer" || req.user.userType === "Lawyer") {
-        const formid = req.params.formId
-        const user = await userController.search('_id', userid)
-        const form = await formController.search('_id', formid)
-        if (form.status === 'Unassigned' && user.userType === 'Lawyer') {
-            form.status = 'In progress Lawyer'
-            const id = form.userId
-            const investor = await userController.search('_id', id)
-            const investorForms = investor.forms
-            for (i = 0; i < investorForms.length; i++) {
-                if (investorForms[i]._id.equals(formid)) {
-                    investorForms.remove(investorForms[i])
-                }
-            }
-            const returnedForm = await formController.update('_id', formid, { status: form.status, lawyerId: userid })
-            user.forms.push(returnedForm)
-            investor.forms.push(returnedForm)
-            const returnedUser = await userController.update('_id', userid, { forms: user.forms })
-            const returnedInvestor = await userController.update('_id', id, { forms: investor.forms })
-            return res.json({ data: returnedUser })
-        }
-        else if (form.status === 'Lawyer accepted' && user.userType === 'Reviewer') {
-            form.status = 'In progress Reviewer'
-            const id = form.userId
-            const investor = await userController.search('_id', id)
-            const investorForms = investor.forms
-            for (i = 0; i < investorForms.length; i++) {
-                if (investorForms[i]._id.equals(formid)) {
-                    investorForms.remove(investorForms[i])
-                }
-            }
-            const lawyerid = form.lawyerId
-            const lawyer = await userController.search('_id', lawyerid)
-            const lawyerForms = lawyer.forms
-            for (i = 0; i < lawyerForms.length; i++) {
-                if (lawyerForms[i]._id.equals(formid)) {
-                    lawyerForms.remove(lawyerForms[i])
-                }
-            }
-            const returnedForm = await formController.update('_id', formid, { status: form.status })
-            user.forms.push(returnedForm)
-            investor.forms.push(returnedForm)
-            lawyer.forms.push(returnedForm)
-            const returnedUser = await userController.update('_id', userid, { forms: user.forms })
-            const returnedInvestor = await userController.update('_id', id, { forms: investor.forms })
-            const returnedLawyer = await userController.update('_id', lawyerid, { forms: lawyer.forms })
-            return res.json({ data: returnedUser })
-        }
-        else {
-            return res.json({ msg: 'You can not take it :)' })
-        }
-    }
-    else {
-        return res.json({ msg: 'Non Authorized' })
-    }
+// //add a form to the array of forms of the lawyer/reviewer
+// router.put('/takingForm/:formId', passport.authenticate('jwt', { session: false }), async (req, res) => {
+//     const userid = req.user.userId
+//     if (req.user.userType === "Reviewer" || req.user.userType === "Lawyer") {
+//         const formid = req.params.formId
+//         const user = await userController.search('_id', userid)
+//         const form = await formController.search('_id', formid)
+//         if (form.status === 'Unassigned' && user.userType === 'Lawyer') {
+//             form.status = 'In progress Lawyer'
+//             const id = form.userId
+//             const investor = await userController.search('_id', id)
+//             const investorForms = investor.forms
+//             for (i = 0; i < investorForms.length; i++) {
+//                 if (investorForms[i]._id.equals(formid)) {
+//                     investorForms.remove(investorForms[i])
+//                 }
+//             }
+//             const returnedForm = await formController.update('_id', formid, { status: form.status, lawyerId: userid })
+//             user.forms.push(returnedForm)
+//             investor.forms.push(returnedForm)
+//             const returnedUser = await userController.update('_id', userid, { forms: user.forms })
+//             const returnedInvestor = await userController.update('_id', id, { forms: investor.forms })
+//             return res.json({ data: returnedUser })
+//         }
+//         else if (form.status === 'Lawyer accepted' && user.userType === 'Reviewer') {
+//             form.status = 'In progress Reviewer'
+//             const id = form.userId
+//             const investor = await userController.search('_id', id)
+//             const investorForms = investor.forms
+//             for (i = 0; i < investorForms.length; i++) {
+//                 if (investorForms[i]._id.equals(formid)) {
+//                     investorForms.remove(investorForms[i])
+//                 }
+//             }
+//             const lawyerid = form.lawyerId
+//             const lawyer = await userController.search('_id', lawyerid)
+//             const lawyerForms = lawyer.forms
+//             for (i = 0; i < lawyerForms.length; i++) {
+//                 if (lawyerForms[i]._id.equals(formid)) {
+//                     lawyerForms.remove(lawyerForms[i])
+//                 }
+//             }
+//             const returnedForm = await formController.update('_id', formid, { status: form.status })
+//             user.forms.push(returnedForm)
+//             investor.forms.push(returnedForm)
+//             lawyer.forms.push(returnedForm)
+//             const returnedUser = await userController.update('_id', userid, { forms: user.forms })
+//             const returnedInvestor = await userController.update('_id', id, { forms: investor.forms })
+//             const returnedLawyer = await userController.update('_id', lawyerid, { forms: lawyer.forms })
+//             return res.json({ data: returnedUser })
+//         }
+//         else {
+//             return res.json({ msg: 'You can not take it :)' })
+//         }
+//     }
+//     else {
+//         return res.json({ msg: 'Non Authorized' })
+//     }
 
-})
+// })
 
 
 
@@ -373,20 +392,20 @@ router.put('/takingForm/:formId', passport.authenticate('jwt', { session: false 
 
 //When you delete a specific user , you delete the unassigned forms only
 //Delete a user
-router.delete('delete/:id', async (req, res) => {
+router.delete('/delete',  passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
-        const id = req.params.id
+        
+        const id = req.user.id
         var SpecificUser = await userController.search('_id', id)
         if (!SpecificUser) return res.json({ msg: 'This user doesnt exist' })
         for (i = 0; i < SpecificUser.forms.length; i++) {
-            //var deletedForm = SpecificUser.forms[i].status
             if (SpecificUser.forms[i].status === 'Unassigned') {
                 var formId = SpecificUser.forms[i]._id
                 await formController.remove('_id', formId)
             }
+            const deletedUser = await userController.remove('_id', id)
+            res.json({ msg: 'User was deleted successfully', data: deletedUser })
         }
-        const deletedUser = await userController.remove('_id', id)
-        res.json({ msg: 'User was deleted successfully', data: deletedUser })
     }
     catch (error) {
         console.log(error)
@@ -395,26 +414,31 @@ router.delete('delete/:id', async (req, res) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-router.post('/register', async (req, res) => {                       //register Investor
+//Register a user
+router.post('/register', async (req, res) => {                       
     const newUser = await userController.registerInvestor(req.body)
     if (newUser.error) return res.status(400).send(newUser)
-
+    if (newUser.userType === 'Investor') {
+        newUser.financialBalance = 0
+        returnedUser = await userController.update('_id', newUser._id, { financialBalance: newUser.financialBalance })
+        return res.json({ msg: 'Account was created successfully', data: returnedUser })
+    }
     return res.json({ msg: 'Account was created successfully', data: newUser })
+
+
+
 })
+
+
+
+
+
+// router.post('/register', async (req, res) => {                       //register Investor
+//     const newUser = await userController.registerInvestor(req.body)
+//     if (newUser.error) return res.status(400).send(newUser)
+
+//     return res.json({ msg: 'Account was created successfully', data: newUser })
+// })
 
 
 
@@ -464,8 +488,181 @@ router.post('/login', async (req, res) => {
     catch (e) { console.log(e) }
 })
 
+//Calculating fees as a lawyer
+router.put('/CalculatingFees/:formId' ,passport.authenticate('jwt', { session: false }),  async (req, res) => {
+    if (req.user.userType === "Lawyer"){
+    var equation = await axios.get('http://localhost:5000/routes/api/fakeServer/ReturningEquation')
+    const formid = req.params.formId
+    const form = await formController.search('_id', formid)
+    var capital = form.equityCapital
+    var calculatedFees = (equation.data.data.m * capital) + (equation.data.data.c)
+    const returnedFees = calculatedFees
+    const updatedForm = await formController.update('_id', formid, { fees: returnedFees })
+    const investorid = updatedForm.userId
+    const lawyerid = updatedForm.lawyerId
+    const investor = await userController.search('_id', investorid)
+    const lawyer = await userController.search('_id', lawyerid)
+    const investorForms = investor.forms
+    for (i = 0; i < investorForms.length; i++) {
+        if (investorForms[i]._id.equals(formid)) {
+            investorForms.remove(investorForms[i])
+        }
+    }
+    const lawyerForms = lawyer.forms
+    for (i = 0; i < lawyerForms.length; i++) {
+        if (lawyerForms[i]._id.equals(formid)) {
+            lawyerForms.remove(lawyerForms[i])
+        }
+    }
+    lawyer.forms.push(updatedForm)
+    investor.forms.push(updatedForm)
+    const returnedLawyer = await userController.update('_id', lawyerid, { forms: lawyer.forms })
+    const returnedInvestor = await userController.update('_id', investorid, { forms: investor.forms })
+    res.json({ data: updatedForm })
+    }else{
+        return res.json({ msg: 'Non Authorized' })
+    }
+})
 
+//Accepting and updating financial balance of the investor
+router.put('/accept/:formId',passport.authenticate('jwt', { session: false }), async (req, res) => {
+    if (req.user.userType === "Lawyer"){
+    const userid = req.user.id;
+    const formid = req.params.formId;
+    const user = await userController.search('_id', userid)
+    const form = await formController.search('_id', formid)
+    if (form.status === 'In progress Lawyer' && user.userType === 'Lawyer') {
+        form.status = 'Lawyer accepted'
+        const investorid = form.userId
+        const investor = await userController.search('_id', investorid)
+        const investorForms = investor.forms
+        for (i = 0; i < investorForms.length; i++) {
+            if (investorForms[i]._id.equals(formid)) {
+                investorForms.remove(investorForms[i])
+            }
+        }
+        const lawyerForms = user.forms
+        for (i = 0; i < lawyerForms.length; i++) {
+            if (lawyerForms[i]._id.equals(formid)) {
+                lawyerForms.remove(lawyerForms[i])
+            }
+        }
+        const returnedForm = await formController.update('_id', formid, { status: form.status })
+        user.forms.push(returnedForm)
+        investor.forms.push(returnedForm)
+        const returnedLawyer = await userController.update('_id', userid, { forms: user.forms })
+        const returnedInvestor = await userController.update('_id', investorid, { forms: investor.forms })
+        return res.json({ data: returnedLawyer })
+    }
+    else if (form.status === 'In progress Reviewer' && user.userType === 'Reviewer') {
+        form.status = 'Approved'
+        const investorid = form.userId
+        const investor = await userController.search('_id', investorid)
+        const investorForms = investor.forms
+        for (i = 0; i < investorForms.length; i++) {
+            if (investorForms[i]._id.equals(formid)) {
+                investorForms.remove(investorForms[i])
+            }
+        }
+        const lawyerid = form.lawyerId
+        const lawyer = await userController.search('_id', lawyerid)
+        const lawyerForms = lawyer.forms
+        for (i = 0; i < lawyerForms.length; i++) {
+            if (lawyerForms[i]._id.equals(formid)) {
+                lawyerForms.remove(lawyerForms[i])
+            }
+        }
+        const reviewerForms = user.forms
+        for (i = 0; i < reviewerForms.length; i++) {
+            if (reviewerForms[i]._id.equals(formid)) {
+                reviewerForms.remove(reviewerForms[i])
+            }
+        }
 
+        const returnedForm = await formController.update('_id', formid, { status: form.status })
+        user.forms = reviewerForms
+        lawyer.forms = lawyerForms
+        investor.forms.push(returnedForm)
+        if (investorid.equals(lawyerid)) {
+            const returnedInvestor = await userController.update('_id', investorid, { forms: investor.forms })
+            const returnedReviewer = await userController.update('_id', userid, { forms: user.forms })
+            return res.json({ data: returnedReviewer })
+        }
+        else {
+            const updatedFinancialBalance = form.fees + investor.financialBalance
+            const returnedInvestor = await userController.update('_id', investorid, { forms: investor.forms, financialBalance: updatedFinancialBalance })
+            const returnedReviewer = await userController.update('_id', userid, { forms: user.forms })
+            const returnedLawyer = await userController.update('_id', lawyerid, { forms: lawyer.forms })
+            return res.json({ data: returnedReviewer })
+        }
+    }
+    else {
+        return res.json({ msg: 'You already accepted this case' })
+    }
+}
+else{
+    return res.json({msg: 'Non Authorized'})
+}
+});
+
+//add a form to the array of forms of the lawyer/reviewer
+router.put('/takingForm/:formId', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    if (req.user.userType === "Reviewer" || req.user.userType === "Lawyer") {
+    const userid = req.user.id
+    const formid = req.params.formId
+    const user = await userController.search('_id', userid)
+    const form = await formController.search('_id', formid)
+    if (form.status === 'Unassigned' && user.userType === 'Lawyer') {
+        form.status = 'In progress Lawyer'
+        const id = form.userId
+        const investor = await userController.search('_id', id)
+        const investorForms = investor.forms
+        for (i = 0; i < investorForms.length; i++) {
+            if (investorForms[i]._id.equals(formid)) {
+                investorForms.remove(investorForms[i])
+            }
+        }
+        const returnedForm = await formController.update('_id', formid, { status: form.status, lawyerId: userid })
+        user.forms.push(returnedForm)
+        investor.forms.push(returnedForm)
+        const returnedUser = await userController.update('_id', userid, { forms: user.forms })
+        const returnedInvestor = await userController.update('_id', id, { forms: investor.forms })
+        return res.json({ data: returnedUser })
+    }
+    else if (form.status === 'Lawyer accepted' && user.userType === 'Reviewer') {
+        form.status = 'In progress Reviewer'
+        const id = form.userId
+        const investor = await userController.search('_id', id)
+        const investorForms = investor.forms
+        for (i = 0; i < investorForms.length; i++) {
+            if (investorForms[i]._id.equals(formid)) {
+                investorForms.remove(investorForms[i])
+            }
+        }
+        const lawyerid = form.lawyerId
+        const lawyer = await userController.search('_id', lawyerid)
+        const lawyerForms = lawyer.forms
+        for (i = 0; i < lawyerForms.length; i++) {
+            if (lawyerForms[i]._id.equals(formid)) {
+                lawyerForms.remove(lawyerForms[i])
+            }
+        }
+        const returnedForm = await formController.update('_id', formid, { status: form.status })
+        user.forms.push(returnedForm)
+        investor.forms.push(returnedForm)
+        lawyer.forms.push(returnedForm)
+        const returnedUser = await userController.update('_id', userid, { forms: user.forms })
+        const returnedInvestor = await userController.update('_id', id, { forms: investor.forms })
+        const returnedLawyer = await userController.update('_id', lawyerid, { forms: lawyer.forms })
+        return res.json({ data: returnedUser })
+    }
+    else {
+        return res.json({ msg: 'You can not take it :)' })
+    }
+}else{
+    return res.json({msg:'Non Authorized'})
+}
+})
 
 
 
@@ -476,7 +673,7 @@ router.put('/updateUser', passport.authenticate('jwt', { session: false }), asyn
     var id = req.user.id
     const updateUser = await userController.update('_id', id, req.body)
     if (!updateUser) return res.json({ msg: 'ID not there' })
-    if (updateUser.error) return res.status(400).send(updateUser)
+    if (updateUser.error) return res.status(400).json(updateUser)
     return res.json({ msg: 'User Updated Successfully', data: updateUser })
 })
 
@@ -512,20 +709,19 @@ router.get('/getInProgressCases', passport.authenticate('jwt', { session: false 
 
 
 
-
-
-
-
-
-
 //Update a user's form
 router.put('/updateForm/:formId', passport.authenticate('jwt', { session: false }), async (req, res) => {
-    var userid = req.user.userId
+    var userid = req.user.id
     if (req.user.userType === "Investor" || req.user.userType === "Lawyer") {
         var formid = req.params.formId
         var user = await userController.search('_id', userid)
         var updatedForm = await formController.update('_id', formid, req.body)
-        user.forms = updatedForm
+        const userForms = user.forms
+        for (i = 0; i < user.forms.length; i++) {
+            if (userForms[i]._id.equals(formid)) {
+                userForms[i] = updatedForm
+            }
+        }
         const returnedUser = await userController.update('_id', userid, { forms: user.forms })
         if (req.body.status) {
             if (req.body.status === 'Approved') {
@@ -545,14 +741,6 @@ router.put('/updateForm/:formId', passport.authenticate('jwt', { session: false 
     }
 
 })
-
-
-
-
-
-
-
-
 
 
 
@@ -621,12 +809,12 @@ router.get('/getforms', passport.authenticate('jwt', { session: false }), async 
 
 // as a lawyer i can make a comment
 router.put('/lawyerComments/:formId', passport.authenticate('jwt', { session: false }), async (req, res) => {
-    const userid = req.user.userId
+    const userid = req.user.id
     if (req.user.userType === "Lawyer") {
 
         const formid = req.params.formId
         const user = await userController.search('_id', userid)
-        console.log(user)
+        //console.log(user)
         const form = await formController.search('_id', formid)
         //console.log(form)
         var comments = form.lawyerComments
@@ -634,14 +822,16 @@ router.put('/lawyerComments/:formId', passport.authenticate('jwt', { session: fa
             var x = req.body.lawyerComments[i]
             comments.push(x)
         }
+        var updatedForm = null;
         for (i = 0; i < user.forms.length; i++) {
             if (user.forms[i]._id.equals(form._id)) {
-                console.log(i)
+                //console.log(i)
                 user.forms[i] = await formController.update('_id', formid, { lawyerComments: comments })
+                updatedForm = user.forms[i]
             }
         }
         const returnedUser = await userController.update('_id', userid, { forms: user.forms })
-        if (req.body.lawyerComments !== undefined) {
+        if (req.body.lawyerComments !== [] || req.body.lawyerComments !== undefined) {
             var notifyUser = await notifications.notifyUserForFormUpdates(user, updatedForm)
             return res.json({ data: returnedUser, notification: notifyUser })
         }
@@ -666,7 +856,7 @@ router.put('/lawyerComments/:formId', passport.authenticate('jwt', { session: fa
 
 //as a reviewer i can make a comment
 router.put('/reviewerComments/:formId', passport.authenticate('jwt', { session: false }), async (req, res) => {
-    const userid = req.user.userId
+    const userid = req.user.id
     if (req.user.userType === "Reviewer") {
         const formid = req.params.formId
         const user = await userController.search('_id', userid)
@@ -676,9 +866,11 @@ router.put('/reviewerComments/:formId', passport.authenticate('jwt', { session: 
             var x = req.body.reviewerComments[i]
             comments.push(x)
         }
+        var updatedForm = null;
         for (i = 0; i < user.forms.length; i++) {
             if (user.forms[i]._id.equals(form._id)) {
                 user.forms[i] = await formController.update('_id', formid, { reviewerComments: comments })
+                updatedForm = user.forms[i]
             }
         }
         const returnedUser = await userController.update('_id', userid, { forms: user.forms })
@@ -694,11 +886,70 @@ router.put('/reviewerComments/:formId', passport.authenticate('jwt', { session: 
     }
 });
 
+//get Array of Form 
+router.get('/getUserForms', passport.authenticate('jwt', { session: false }),async (req, res) => {
+    if (req.user.userType === "Reviewer"||req.user.userType === "Lawyer") {
+    const userId = req.user.id
+    const user = await userController.search('_id', userId)
+    var userForms = user.forms
+    const arrayForms = []
+    if (user.userType === 'Lawyer') {
+        for (i = 0; i < userForms.length; i++) {
+            if (userForms[i].status === 'In progress Lawyer' || userForms[i].status === 'Lawyer accepted') {
+                arrayForms.push(userForms[i])
+            }
+        }
+        return res.json({ data: arrayForms })
+    }
+    else if (user.userType === 'Reviewer') {
+        for (i = 0; i < userForms.length; i++) {
+            if (userForms[i].status === 'In progress Reviewer') {
+                arrayForms.push(userForms[i])
+            }
+        }
+        return res.json({ data: arrayForms })
+    }
+    else {
+        return res.json({ msg: 'Not a user' });
+    }
+}
+else{
+    return res.json({ msg: 'Non Authorized' });
+
+}
+})
 
 
+// change password
+router.post('/changePassword', passport.authenticate('jwt', { session: false }) ,async (req, res) => {
+    const userid = req.user.id
+    const user = await userController.search('_id', userid)
+    const newPassword = req.body.newPassword;
+    const confirmPassword = req.body.confirmPassword;
+    if (newPassword === confirmPassword) {
+        const salt = await bcrypt.genSalt(10);
+        newPasswordEnc = await bcrypt.hash(newPassword, salt);
+        user.password = newPasswordEnc
+        await user.save();
+        return res.json({ msg: 'Password was updated successfully', data: user })
+    }
+    else
+        return res.json({ msg: 'The passwords do not match!' })
+})
 
 
-
-
+// //update a user 
+// router.put('/:id' , async (req,res) => {
+//     try{
+//      var id = req.params.id  
+//      const updateUser = await userController.update('_id',id,req.body)
+//      if(!updateUser) return res.json({msg :'ID not there'})
+//      if(updateUser.error) return res.status(400).json(updateUser)
+//      return res.json({msg : 'User Updated Successfully',data: updateUser})
+//     }
+//     catch(error)
+//    {
+//        console.log(error)
+//    }
+// })
 module.exports = router;
-

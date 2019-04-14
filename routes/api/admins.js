@@ -131,10 +131,8 @@ router.put('/updateAdmin', passport.authenticate('jwt', { session: false }), asy
     else {
         return res.json({ msg: 'Non Authorized' })
     }
-
-
-
 })
+
 //delete an admin               //redundant
 router.delete('/:id', async (req, res) => {
     try {

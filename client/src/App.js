@@ -19,7 +19,7 @@ import Footer from './components/layout/footer'
 import SPCForm from './components/pages/SPCform'
 import form from './components/pages/form'
 import SSCForm from './components/pages/SSCForm'
-import SortSpecificUserCase from './components/form/SortByDate'
+import SortSpecificUserCaseDate from './components/form/SortByDate'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar1 from './components/NavBar';
 import adminPage from './components/pages/adminPage'
@@ -39,6 +39,22 @@ import Register1 from './components/Register';
 import Login1 from './components/Login2';
 import Home from './components/Home';
 
+import SortSpecificUserCase from './components/pages/SortSpecificUserCase'
+import DropdownTrial from './components/form/DropdownNationalities'
+import DropdownCities from './components/form/DropdownCities'
+import DropdownGovernorates from './components/form/DropdownGovernorates'
+import unassignedForm from './components/pages/unassignedForm'
+import assignToReviewer from './components/pages/assignToReviewer'
+//import SortSpecificUserCase from './components/pages/SortSpecificUserCase'
+import GetCaseSpecified from './components/pages/GetCaseSpecified'
+import GetCaseReviewer from './components/pages/GetCaseReviewer'
+import AddCommentsLawyer from './components/pages/AddCommentsLawyer'
+
+import EditProfile from './components/pages/EditProfile'
+import EditSPCForm from './components/pages/EditSPCForm'
+import ChangePassword from './components/pages/ChangePassword'
+
+import GetFormByCompanyName from './components/form/GetFormByCompanyName'
 
 
 class App extends Component {
@@ -48,7 +64,6 @@ class App extends Component {
       <Router>
      <Navbar1 />
       <div>
-      
         <Route exact path="/" render={props=>(
            <LandingBody/>
         )}/>
@@ -60,35 +75,36 @@ class App extends Component {
       <Route path='/SPC' component={SPCForm}/>
       <Route path='/form' component={form}/>
       <Route path='/SSC' component={SSCForm}/>
-      <Route path='/SortByDate' component={ SortSpecificUserCase}/>
+      <Route path='/SortByDate' component={ SortSpecificUserCaseDate}/>
       <Route path='/Home' component={Home}/>
       <Route path='/Register1' component={ Register1}/>
       <Route path='/Login1' component={ Login1}/>
       <Route path='/AdminPage' component={ adminPage}/>
 
+      <Route path='/SortByID' component={ SortSpecificUserCase}/>
+      <Route path='/dropDown' component={ DropdownTrial}/>
+      <Route path='/dropDownCity' component={ DropdownCities}/>
+      <Route path='/dropDownGovernorate' component={ DropdownGovernorates}/>
+      
+
+      <Route path='/unassignedForm' component={unassignedForm}/>
+      <Route path='/lawyerAcceptedForms' component={assignToReviewer}/>
+
+      {/* <Route path='/SortByID' component={ SortSpecificUserCase}/> */}
+      <Route path='/Get' component={GetCaseSpecified}/>
+      <Route path='/GetReviewer' component={GetCaseReviewer}/>
+      <Route path='/Comments' component={AddCommentsLawyer}/>
+
+      <Route path='/editprofile' component={EditProfile}/>
+      <Route path='/editspcform' component={EditSPCForm}/>
+       <Route path='/CompanyName' component={GetFormByCompanyName}/>
+
       </div>
-          <Footer/>
+          {/* <Footer/> */}
       </Router>
       </Provider>
         )}
-  //     <div className="App">
-  //       <header className="App-header">
-  //         <img src={logo} className="App-logo" alt="logo" />
-  //         <p>
-  //           Edit <code>src/App.js</code> and save to reload.
-  //         </p>
-  //         <a
-  //           className="App-link"
-  //           href="https://reactjs.org"
-  //           target="_blank"
-  //           rel="noopener noreferrer"
-  //         >
-  //           Learn React
-  //         </a>
-  //       </header>
-  //     </div>
-  //   );
-  // }
+ 
 }
 
 export default App;

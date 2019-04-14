@@ -7,6 +7,8 @@ module.exports = {
     createValidationSSC: request => {
         const SSCFormSchema = {
             userId:Joi.objectId().required(),
+            lawyerId:Joi.objectId(),
+            fees:Joi.number(),
             companyName: Joi.string().required().max(50).regex(/^[\u0621-\u064A]/),
             companyGovernorate: Joi.string().required().min(3).max(20),
             companyAddress: Joi.string().required().min(5).max(50),
@@ -18,7 +20,7 @@ module.exports = {
             equityCapital: Joi.number().required().min(50000),
             type: Joi.string().required(),
             SSCManagers: Joi.array().required(),
-            status: Joi.string().valid('Unassigned','Rejected','In progress Lawyer','In progress Reviewer','Approved'),
+            status: Joi.string().valid('Unassigned','Rejected','In progress Lawyer','Lawyer accepted','In progress Reviewer','Approved'),
             creationDate: Joi.date().required(),
             lawyerComments: Joi.array().items(Joi.string()),
             //lawyerApprove: Joi.boolean(),
@@ -30,6 +32,8 @@ module.exports = {
     updateValidationSSC: request => {
         const updateSSCFormSchema = {
             companyName: Joi.string().max(50).regex(/^[\u0621-\u064A]/),
+            lawyerId:Joi.objectId(),
+            fees:Joi.number(),
             companyGovernorate: Joi.string().min(3).max(20),
             companyAddress: Joi.string().min(5).max(50),
             companyCity: Joi.string().min(3).max(20),
@@ -39,7 +43,7 @@ module.exports = {
             currency: Joi.string().min(2).max(10),
             equityCapital: Joi.number().min(50000),
             SSCManagers: Joi.array(),
-            status: Joi.string().valid('Unassigned','Rejected','In progress Lawyer','In progress Reviewer','Approved'),
+            status: Joi.string().valid('Unassigned','Rejected','In progress Lawyer','Lawyer accepted','In progress Reviewer','Approved'),
             creationDate: Joi.date(),
             lawyerComments: Joi.array().items(Joi.string()), //must insert an object , syntax -> {} , it doesn't accept null
             reviewerComments: Joi.array().items(Joi.string()),
@@ -52,6 +56,8 @@ module.exports = {
     createValidationSPC: request => {
         const SPCSchema ={
             userId:Joi.objectId().required(),
+            lawyerId:Joi.objectId(),
+            fees:Joi.number(),
             companyName: Joi.string().required().max(50).regex(/^[\u0621-\u064A]/),
             companyGovernorate: Joi.string().required().min(3).max(20),
             companyAddress: Joi.string().required().min(5).max(50),
@@ -61,7 +67,7 @@ module.exports = {
             companyNameInEnglish: Joi.string().max(50),
             currency: Joi.string().required().min(2).max(10),
             type: Joi.string().required(),
-            status: Joi.string().valid('Unassigned','Rejected','In progress Lawyer','In progress Reviewer','Approved'),
+            status: Joi.string().valid('Unassigned','Rejected','In progress Lawyer','Lawyer accepted','In progress Reviewer','Approved'),
             creationDate: Joi.date().required(),
             lawyerComments: Joi.array().items(Joi.string()),
             reviewerComments: Joi.array().items(Joi.string()),
@@ -78,6 +84,8 @@ module.exports = {
     updateValidationSPC: request => {
         const updateSPCFormSchema = {
             userId: Joi.objectId(),
+            lawyerId:Joi.objectId(),
+            fees:Joi.number(),
             companyName: Joi.string().max(50).regex(/^[\u0621-\u064A]/),
             companyGovernorate: Joi.string().min(3).max(20),
             companyAddress: Joi.string().min(5).max(50),
@@ -87,7 +95,7 @@ module.exports = {
             companyNameInEnglish: Joi.string().max(50),
             currency: Joi.string().min(2).max(10),
             equityCapital: Joi.number(),
-            status: Joi.string().valid('Unassigned','Rejected','In progress Lawyer','In progress Reviewer','Approved'),
+            status: Joi.string().valid('Unassigned','Rejected','In progress Lawyer','Lawyer accepted','In progress Reviewer','Approved'),
             creationDate: Joi.date(),
             lawyerComments: Joi.array().items(Joi.string()), //must insert an object , syntax -> {} , it doesn't accept null
             reviewerComments: Joi.array().items(Joi.string()),

@@ -6,63 +6,62 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-import { MDBRow, MDBCol, MDBInput, MDBBtn,MDBDropdown,MDBDropdownToggle,MDBDropdownItem,MDBDropdownMenu } from "mdbreact";
+import { MDBRow, MDBCol, MDBInput, MDBBtn } from "mdbreact";
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
-//import {Dropdown} from 'react-bootstrap';
-import {Dropdown} from 'semantic-ui-react';
-
-import DropdownItem from 'react-bootstrap/DropdownItem';
-
-// import {MDBSelect} from 'mdbreact';
-
-
-
-
 var mongoose = require('mongoose')
 
-class SPCform extends React.Component{
+class EditSPCForm extends React.Component{
 
     constructor(props){
         super(props);
         this.state = {
-            // userId: {
-            //   value : '',
-            //  },
             companyName:'',
             companyGovernorate:'',
             companyAddress:'',
-            companyCity:'' ,
-            companyTelephone: '',
-            companyFax: '',
-            companyNameInEnglish: '',
-            currency: '',
-            type:'',
+            companyCity:'',
+            companyTelephone:'',
+            companyFax:'',
+            companyNameInEnglish:'',
+            currency:'',
             equityCapital:'',
             governorate:[],
             cities:[]
+       };
 
-        };
+      axios.get('http://localhost:5000/routes/api/forms/5ca7e31938bb992a848e06f7')
+          .then(response => {
+                    
+              this.setState({ 
+                
+                companyName: response.data.data.companyName, 
+                companyGovernorate: response.data.data.companyGovernorate,
+                companyAddress: response.data.data.companyAddress,
+                companyCity: response.data.data.companyCity,
+                companyTelephone: response.data.data.companyTelephone,
+                companyFax: response.data.data.companyFax,
+                companyNameInEnglish: response.data.data.companyNameInEnglish,
+                currency: response.data.data.currency,
+                equityCapital: response.data.data.equityCapital
 
+             });
+            
+          })
+          .catch(function (error) {
+          })
+      
     }
     componentDidMount(){
-      axios.get('http://localhost:5000/routes/api/governorates/')        
-        .then(res => {
-              this.setState({governorate: res.data.data})
-              
-          })
-    }
-
+        axios.get('http://localhost:5000/routes/api/governorates/')        
+          .then(res => {
+                this.setState({governorate: res.data.data})
+                
+            })
+      }
     
       handleClick(event){
-
-
-      
-
- 
-        var apiBaseUrl = "http://localhost:5000/routes/api/users/CreatingForm";
+        var apiBaseUrl = "http://localhost:5000/routes/api/forms/5ca7e31938bb992a848e06f7";
         var payload={
-         //"userId":mongoose.Types.ObjectId('5ca7b4748be2725704f230bc'),
           "companyName": this.state.companyName,
           "companyGovernorate": this.state.companyGovernorate,
           "companyAddress": this.state.companyAddress,
@@ -71,32 +70,20 @@ class SPCform extends React.Component{
           "companyFax": this.state.companyFax,
           "companyNameInEnglish": this.state.companyNameInEnglish,
           "currency": this.state.currency,
-          "type" : 'SPCForm',
-          "equityCapital" : this.state.equityCapital,
-          "lawyerComments" : [],
-          "reviewerComments" : [],
-          "creationDate": "2018-4-7",
-          "status" : "Unassigned"
-        }
-        
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
-        axios.post(apiBaseUrl, payload,{headers: { "Authorization": localStorage.getItem('jwtToken') }})
+          "equityCapital" : this.state.equityCapital
+          }
+        axios.put(apiBaseUrl, payload)
        .then(function (response) {
-         console.log(response);
-         
-          alert('SPCForm Created Successfully') ;
-
+         alert('The SPC form has been updated successfully');
        })
-       .catch((error)=> {
+       .catch((error)=>{
          alert(error.response.data.errmsg||error.response.data);
-         console.log(error.response)
+         console.log(error)
        });
       }
       
       changeHandler = event => {
-        
-          this.setState({ [event.target.name] :event.target.value});
-      
+        this.setState({ [event.target.name] :event.target.value});
       };
       changeHandler2 = event => {
       
@@ -104,70 +91,70 @@ class SPCform extends React.Component{
         axios.get('http://localhost:5000/routes/api/governorates/getByGovernorateName/' + event.target.value)        
         .then(res => {
               this.setState({cities: res.data.data})
+              console.log(this.state.cities)
           })
     
     };
+      
       validateForm() {
-        return this.state.companyName.length >=3 &&
-        this.state.companyName.length <=50 
+        return this.state.companyName.length <=50 
         && this.state.companyAddress.length >=5 && this.state.companyAddress.length <=50
         && this.state.companyNameInEnglish.length <=50
-        }
+      }
 
     render() {
       return (
+        
         <div>
-          <MuiThemeProvider>
-            <div>
+          <MuiThemeProvider >
+            <div >
             <AppBar
-               title="Create your SPCForm"
-               />
-               
+               title="Update your SPCForm"
+      
+
+             />
                <br/>
                <MDBRow>
                <MDBCol>
               <MDBInput
                 label="Company Name"                
                 value={this.state.companyName}
-                className={this.state.companyName.length >=3 &&this.state.companyName.length <=50 ? "is-valid" : "is-invalid"}
                 name="companyName"
+                className={this.state.companyName.length<=50?"is-valid" : "is-invalid"}
                 onChange={this.changeHandler}
                 type="text"
                 id="materialFormRegisterNameEx" 
                 required
               >
-              <div className="valid-feedback">Looks good!</div>
-             <div className="invalid-feedback">name must be in arabic and min 3 characters!</div>
+              <div className="valid-feedback">It should be in Arabic</div>
+              <div className="invalid-feedback">Note: It should be in Arabic and less than or equal 50 characters</div>
               </MDBInput>
-              
-            </MDBCol>
+              </MDBCol>
+             
            <br/>
-              
-           <MDBCol>
                
+               <MDBCol> 
                <MDBInput
                  value={this.state.companyTelephone}
-                 className={this.state.companyTelephone.length<=15 && 
-                  this.state.companyTelephone.length>=8?"is-valid" : "is-invalid"}
+                 className={this.state.companyTelephone.length<=15 && this.state.companyTelephone.length>=8?"is-valid" : "is-invalid"}
                  name="companyTelephone"
                  onChange={this.changeHandler}
                  type="text"
                  id="materialFormRegisterNameEx"
                  label="Company Telephone"
-       
-               >
-                <div className="valid-feedback">Looks good!</div>
-              <div className="invalid-feedback">Note: It should be more than or equal 8 
-              characters and less than or equal 15 characters</div>
+                >
+               <div className="valid-feedback">Looks good!</div>
+              <div className="invalid-feedback">Note: It should be more than or equal 8 characters and less than or equal 15 characters</div>
                </MDBInput>
-             </MDBCol>
-
+               </MDBCol>
+              
             <br/>
-            <MDBCol>
+
+              
+              <MDBCol>
               <MDBInput
                 value={this.state.companyAddress}
-                className={this.state.companyAddress.length<=50 && 
-                  this.state.companyAddress.length>=5?"is-valid" : "is-invalid"}
+                className={this.state.companyAddress.length<=50 && this.state.companyAddress.length>=5?"is-valid" : "is-invalid"}
                 name="companyAddress"
                 onChange={this.changeHandler}
                 type="text"
@@ -175,19 +162,14 @@ class SPCform extends React.Component{
                 label="Company Address"
                 required
               >
-                 <div className="valid-feedback">Looks good!</div>
-              <div className="invalid-feedback">Note: It should be more than or equal 5 characters 
-              and less than or equal 50 characters</div>
+               <div className="valid-feedback">Looks good!</div>
+              <div className="invalid-feedback">Note: It should be more than or equal 5 characters and less than or equal 50 characters</div>
               </MDBInput>
             </MDBCol>
             </MDBRow>
             <br/>
-            <MDBRow>
-            
-
-
-              
-              <MDBCol>
+<MDBRow>
+            <MDBCol>
               <div className="form-group">
                   <label htmlFor="companyGovernorate">Company Governorate</label>
                   <select className="form-control"  
@@ -219,11 +201,10 @@ class SPCform extends React.Component{
                   </select>
                 </div>
               </MDBCol>
+            <br/>
 
-
-               <br/>
-
-               <MDBCol>
+             
+              <MDBCol>
               <div className="form-group">
                   <label htmlFor="currency">Currency</label>
                   <select className="form-control"  
@@ -244,10 +225,9 @@ class SPCform extends React.Component{
               </MDBRow>
               <br/>
 
-              <MDBRow>
-               <br/>
-               <MDBCol>
-
+                <MDBRow>
+                    <br/>
+                <MDBCol>
                 <MDBInput
                   value={this.state.companyFax}
                   name="companyFax"
@@ -259,30 +239,32 @@ class SPCform extends React.Component{
                   required
                 >
                 <div className="valid-feedback">Looks good!</div>
-              <div className="invalid-feedback">Note: It should be more than or equal 5 
-              characters and less than or equal 20 characters</div>
+              <div className="invalid-feedback">Note: It should be more than or equal 5 characters and less than or equal 20 characters</div>
                 </MDBInput>
                 </MDBCol>
-               <MDBCol>              
-               <MDBInput
-                 value={this.state.companyNameInEnglish}
-                 className={this.state.companyNameInEnglish.length<=50?"is-valid" : "is-invalid"}
-                 name="companyNameInEnglish"
-                 onChange={this.changeHandler}
-                 type="text"
-                 id="materialFormRegisterNameEx"
-                 label="Company Name In English"
-                 required
+
+               
+                <MDBCol>              
+                <MDBInput
+                  value={this.state.companyNameInEnglish}
+                  name="companyNameInEnglish"
+                  className={this.state.companyNameInEnglish.length<=50?"is-valid" : "is-invalid"}
+                  onChange={this.changeHandler}
+                  type="text"
+                  id="materialFormRegisterNameEx"
+                  label="Company Name In English"
+                  required
                >
-                <div className="valid-feedback">Looks good!</div>
+               <div className="valid-feedback">Looks good!</div>
               <div className="invalid-feedback">Note: It should be less than or equal 50 characters</div>
                </MDBInput>
                </MDBCol>
-
+              
                 <br/>
 
-               <MDBCol>              
-               <MDBInput
+                
+                <MDBCol>              
+                <MDBInput
                  value={this.state.equityCapital}
                  className={this.state.equityCapital<100000?"is-valid" : "is-valid"}
                  name="equityCapital"
@@ -292,12 +274,13 @@ class SPCform extends React.Component{
                  label="Equity Capital"
                  required
                >
-                 <div className="valid-feedback">Note: if you are not Egyptian,
-                  the equity capital should be more than or equal 10000</div>
-               </MDBInput>
+              
+              <div className="valid-feedback">Note: if you are not Egyptian, the equity capital should be more than or equal 10000</div>
+                </MDBInput>
                </MDBCol>
                </MDBRow>
-
+              
+            
                <RaisedButton label="Submit" primary={true} style={style}
                disabled={!this.validateForm()}
                onClick={(event) => (this.handleClick(event) )}/>
@@ -312,8 +295,8 @@ class SPCform extends React.Component{
   };
 
   
+  ReactDOM.render(<EditSPCForm />, document.getElementById('root'));
 
-ReactDOM.render(<SPCform />, document.getElementById('root'));
 
 
-export default SPCform;
+export default EditSPCForm;

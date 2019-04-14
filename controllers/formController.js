@@ -13,8 +13,10 @@ exports.create = async function create(body)
             var found=false;
             const userId=body.userId;
             const form=await Form.findOne({userId})
-            if (form!==null)
+            if (form!==null){
+                console.log("hhhh")    
             return {error: 'Sorry you have already created a SSC Company before'}
+        }
             else{
             const SpecificUser= User.findById(userId)
             if (SpecificUser.nationality ==='Egyptian')   
@@ -24,6 +26,8 @@ exports.create = async function create(body)
                 const SSCMValidated=validator.createValidationSSCManagers(body.SSCManagers[i])
                 if(SSCMValidated.error)
                 {       
+                    console.log(SSCMValidated.error.details[0].message)
+                
                     return {error: SSCMValidated.error.details[0].message}
                 }
             }
@@ -35,6 +39,8 @@ exports.create = async function create(body)
                 const SSCMValidated=validator.createValidationSSCManagers(body.SSCManagers[j])
                 if(SSCMValidated.error)
                 {       
+                    console.log(SSCMValidated.error.details[0].message)
+                
                     return {error: SSCMValidated.error.details[0].message}
                 }
                 if(body.SSCManagers[j].nationality==='Egyptian'){
@@ -43,6 +49,8 @@ exports.create = async function create(body)
             }
             if (!found)
             {
+                console.log("aaaa")
+                
                 return {error: 'You must have an egyptian manager'}  
             }
 
@@ -51,11 +59,15 @@ exports.create = async function create(body)
         const isValidated = validator.createValidationSSC(body)
             if (isValidated.error)
             {
-                return "There is sth worong with your entries"
+                console.log(isValidated.error.details[0].message)
+                
+         return  {error: isValidated.error.details[0].message }  //'There is sth wrong with your entries'
             } 
+            else{
             const newSSCForm = await Form.create(body)
             return newSSCForm
     }
+}
     }
              
         if(body.type==='SPCForm')
@@ -65,9 +77,16 @@ exports.create = async function create(body)
             {
                 return {error: isValidated.error.details[0].message}
             }
-            const newSPCForm = await Form.create(body)   
-            return newSPCForm
+            const newSPCForm = await Form.create(body) 
+            .then(res=>{return res})
+            .catch(error =>{
+                console.log(error)
+                return {error: error}
+            })
+           console.log(newSPCForm)
+           return newSPCForm
         }
+        
     }
     catch(error) 
     {
@@ -98,6 +117,11 @@ exports.update = async function update(att,value,body)
                     return {error: isValidated.error.details[0].message}
                 }
                 const x = await Form.findByIdAndUpdate(value,body)
+                .then(res=>{return res})
+                .catch(error=>{
+                    return {error:error}
+                })
+                if (x.error) return x
                 const updatedSSC = await Form.findById(value)
                 return updatedSSC
             }
@@ -113,6 +137,11 @@ exports.update = async function update(att,value,body)
                    return {error: isValidated.error.details[0].message}
                }
                const x = await Form.findByIdAndUpdate(value,body)
+               .then(res=>{return res})
+                .catch(error=>{
+                    return {error:error}
+                })
+                if(x.error) return x
                const updatedSPC = await Form.findById(value)
                return updatedSPC
             }
@@ -149,9 +178,6 @@ exports.search=async function search(att,value)
     var values=await Form.find({'companyName':value})
     return values
     }
-    
-    
-   
 }
 //Deleting
 exports.remove=async function remove(att,value)

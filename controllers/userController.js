@@ -3,9 +3,6 @@ const User = require('../Models/User')
 const userValidator = require('../Validation/UserValidation')
 const bcrypt = require('bcrypt');
 
-
-
-
  //comparing between creation dates
 exports.compareByDate=function compareByDate(a,b){                                               
     if(Date.parse(a.creationDate)>Date.parse(b.creationDate)) return 1;
@@ -16,10 +13,10 @@ exports.compareByDate=function compareByDate(a,b){
 }
 //creating Investor
 exports.registerInvestor=async function registerInvestor(body){                      
-    const { error1 } = userValidator.createValidationI(body)            
+    const { error } = userValidator.createValidationI(body)            
     
-    if (error1) {
-        return error1.details[0].message;
+    if (error) {
+        return {error:error.details[0].message};
     }
     
     let user = await User.findOne({ email: body.email });
@@ -45,11 +42,11 @@ exports.search = async function search(att ,value ){
         var values = await User.findById(value)
         return values
     }
-    // if(att ==='Lawyer')
-    // {
-    // var values=await Form.find({'Lawyer':value})
-    // return values
-    // }
+    if(att ==='userType')
+    {
+        var values=await User.find({'userType':value})
+        return values
+    }
 
     var values = User.find({att:value})
     return values
@@ -94,10 +91,20 @@ exports.update = async function update(att, value, body){
        }
        if(att ==='_id' ){
         var updatedUser = await User.findByIdAndUpdate(value,body)
+        .then(res=>{return res})
+       .catch(error=>{
+           return {error:error}
+       })
+       if (updatedUser.error) return updatedUser
         var x = await User.findById(value)
         return x
        }
        var updatedUser = User.updateMany({att:value},body)
+       .then(res=>{return res})
+       .catch(error=>{
+           return {error:error}
+       })
+       if (updatedUser.error) return updatedUser
        var x = await User.findById(value)
        return x
        }

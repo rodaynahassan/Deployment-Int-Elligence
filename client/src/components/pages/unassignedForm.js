@@ -11,7 +11,12 @@ class unassignedForm extends Component
         unassignedForms:[]
     }
     componentDidMount(){
-        axios.get('http://localhost:5000/routes/api/forms/getUnAssignedForm')
+
+
+
+     
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
+        axios.get('http://localhost:5000/routes/api/forms/getUnAssignedForm',{headers: { "Authorization": localStorage.getItem('jwtToken') }})
         .then(res => {
           if(Array.isArray(res.data.data)){
             this.setState({unassignedForms: res.data.data})

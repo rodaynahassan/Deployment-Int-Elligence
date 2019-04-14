@@ -93,7 +93,7 @@ class SSCForm extends React.Component{
     
       handleClick(event){
         console.log(this.state.SSCManagers)
-        var apiBaseUrl = "http://localhost:5000/routes/api/users/CreatingForm/" + mongoose.Types.ObjectId('5cb1e8ac44ca6b48f80a2efe');
+        var apiBaseUrl = "http://localhost:5000/routes/api/users/CreatingForm" ;
         var payload={
          //"userId":mongoose.Types.ObjectId('5ca7b4748be2725704f230bc'),
           "companyName": this.state.companyName.value,
@@ -114,7 +114,10 @@ class SSCForm extends React.Component{
           "status" : "Unassigned"
           }
         
-        axios.post(apiBaseUrl, payload)
+
+
+          axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
+        axios.post(apiBaseUrl, payload,{headers: { "Authorization": localStorage.getItem('jwtToken') }})
        .then(function (response) {
          console.log(response);
          if(response.data.code === 200){

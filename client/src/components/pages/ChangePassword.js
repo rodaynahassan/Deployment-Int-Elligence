@@ -26,13 +26,18 @@ class ChangePassword extends React.Component{
     
     handleClick(event){
 
-        var apiBaseUrl = "http://localhost:5000/routes/api/users/changePassword/5caf48d59197285f9c7587a2";
+
+ 
+
+
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
+        var apiBaseUrl = "http://localhost:5000/routes/api/users/changePassword";
         var payload={
             "newPassword": this.state.newPassword.value,
             "confirmPassword":this.state.confirmPassword.value
           }
             
-            axios.post(apiBaseUrl, payload)
+            axios.post(apiBaseUrl, payload,{headers: { "Authorization": localStorage.getItem('jwtToken') }})
            .then(function (response) {
              console.log(response);
              if(response.data.code === 200){

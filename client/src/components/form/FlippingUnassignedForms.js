@@ -6,7 +6,12 @@ import comp1 from '../layout/comp2.jpg'
 import Flippy , {FrontSide , BackSide} from 'react-flippy'
 const mongoose = require('mongoose');
 class FlippingUnassignedForms extends Component {
-    AssignCase = (formId) => {axios.put('http://localhost:5000/routes/api/users/takingForm/'+ mongoose.Types.ObjectId('5cb0d52cabcd7f2820f50bfd') +'/'+mongoose.Types.ObjectId(formId))
+  
+  
+  
+  AssignCase = (formId) => {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
+      axios.put('http://localhost:5000/routes/api/users/takingForm/'+mongoose.Types.ObjectId(formId),{headers: { "Authorization": localStorage.getItem('jwtToken') }})
     }
     render()
     {

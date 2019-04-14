@@ -11,7 +11,13 @@ class assignToReviewer extends Component
         assignReviewers:[]
       }
       componentDidMount(){
-        axios.get('http://localhost:5000/routes/api/forms/getLawyerAccepted')
+
+
+      
+
+
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
+        axios.get('http://localhost:5000/routes/api/forms/getLawyerAccepted',{headers: { "Authorization": localStorage.getItem('jwtToken') }})
         .then(res => {
           if(Array.isArray(res.data.data)){
             this.setState({assignReviewers: res.data.data})

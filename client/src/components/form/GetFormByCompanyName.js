@@ -24,6 +24,9 @@ class MyCompany extends Component {
         companies:[],
         viewedComp:[]
       }
+
+      //do you mean get all forms?
+
       
       componentDidMount(){
         axios.get('http://localhost:5000/routes/api/forms/')        
@@ -44,8 +47,12 @@ class MyCompany extends Component {
 
     handleClick(event){
 
+               
+     
+      
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
       var apiBaseUrl = "http://localhost:5000/routes/api/admins/getByCompanyName/";
-      axios.get(apiBaseUrl + this.state.companyName.value)        
+      axios.get(apiBaseUrl + this.state.companyName.value,{headers: { "Authorization": localStorage.getItem('jwtToken') }})        
       .then(res => {
             this.setState({viewedComp: res.data.data})
         })

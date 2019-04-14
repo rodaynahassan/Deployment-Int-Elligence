@@ -50,11 +50,17 @@ class AddCommentsReviewer extends Component{
     //if the id belongs to a lawyer
     handleClick = (formId,event) =>
     {
-        var apiBaseUrl =('http://localhost:5000/routes/api/users/reviewerComments/'+mongoose.Types.ObjectId('5cad2bfc9b67f60ce098a60e')+'/'+mongoose.Types.ObjectId(formId))
+
+      
+
+
+     
+        var apiBaseUrl =('http://localhost:5000/routes/api/users/reviewerComments/'+mongoose.Types.ObjectId(formId))
         var payload={
             "reviewerComments": this.state.reviewerComments.value
         }
-        axios.put(apiBaseUrl, payload)
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
+        axios.put(apiBaseUrl, payload, {headers: { "Authorization": localStorage.getItem('jwtToken') }})
        .then(function (response) {
          console.log(response);
        })

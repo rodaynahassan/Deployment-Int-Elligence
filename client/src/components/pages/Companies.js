@@ -10,7 +10,12 @@ class Companies extends Component {
       companies:[]
     }
     componentDidMount(){
-      axios.get('http://localhost:5000/routes/api/forms/')
+
+
+     
+
+      
+      axios.get('http://localhost:5000/routes/api/forms/getApprovedCompany')
       .then(res => {
         if(Array.isArray(res.data.data)){
           this.setState({companies: res.data.data})

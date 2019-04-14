@@ -16,7 +16,7 @@ exports.registerInvestor=async function registerInvestor(body){
     const { error } = userValidator.createValidationI(body)            
     
     if (error) {
-        return error.details[0].message;
+        return {error:error.details[0].message};
     }
     
     let user = await User.findOne({ email: body.email });

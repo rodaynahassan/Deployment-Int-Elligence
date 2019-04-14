@@ -11,7 +11,10 @@ class ApprovedCompanies extends Component {
       approvedCompanies:[]
     }
     componentDidMount(){
-      axios.get('http://localhost:5000/routes/api/users/getApprovedCompanies/5ca6300113e5d0343c6e2a01')
+
+
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
+      axios.get('http://localhost:5000/routes/api/users/getApprovedCompanies',{headers: { "Authorization": localStorage.getItem('jwtToken') }})
       .then(res => {
         if(Array.isArray(res.data.data)){
           this.setState({approvedCompanies: res.data.data,sscManagers:[]})

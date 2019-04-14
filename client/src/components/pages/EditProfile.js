@@ -30,7 +30,12 @@ class EditProfile extends React.Component{
             nationalities:[]
        };
 
-      axios.get('http://localhost:5000/routes/api/users/CertainAttributes/5caf48d59197285f9c7587a2')
+       
+
+
+
+       axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
+      axios.get('http://localhost:5000/routes/api/users/CertainAttributes',{headers: { "Authorization": localStorage.getItem('jwtToken') }})
           .then(response => {
                     
               this.setState({ 
@@ -64,7 +69,7 @@ class EditProfile extends React.Component{
           telephone: this.state.telephone,
           fax: this.state.fax
         };
-        var apiBaseUrl = "http://localhost:5000/routes/api/users/5caf48d59197285f9c7587a2";
+        var apiBaseUrl = "http://localhost:5000/routes/api/users/updateUser";
             var payload={
               "name": this.state.name,
               "gender": this.state.gender,
@@ -76,8 +81,10 @@ class EditProfile extends React.Component{
               "telephone" : this.state.telephone,
               "fax" : this.state.fax
             }
-            
-            axios.put(apiBaseUrl, payload)
+
+
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
+            axios.put(apiBaseUrl, payload,{headers: { "Authorization": localStorage.getItem('jwtToken') }})
            .then(function (response) {
            
                 alert('The profile has been updated successfully') ;

@@ -26,16 +26,23 @@ class GetAllUserForms extends Component {
          }
 
         }
+
+
+
+
         accept = (formId) => {
-            axios.put('http://localhost:5000/routes/api/users/accept/'+mongoose.Types.ObjectId(formId) +'/'+ mongoose.Types.ObjectId('5cb0c8d77268387578d1530d'))
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
+            axios.put('http://localhost:5000/routes/api/users/accept/'+mongoose.Types.ObjectId(formId),{headers: { "Authorization": localStorage.getItem('jwtToken') }})
             }
     
         addComment = (formId) => {
-            axios.put('http://localhost:5000/routes/api/users/lawyerComments/' + mongoose.Types.ObjectId('5cb0c8d77268387578d1530d') +'/' + mongoose.Types.ObjectId(formId))
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
+            axios.put('http://localhost:5000/routes/api/users/lawyerComments/'+mongoose.Types.ObjectId(formId),{headers: { "Authorization": localStorage.getItem('jwtToken') }})
             } 
             
         calculateFees = (formId) => {
-            axios.put('http://localhost:5000/routes/api/users/CalculatingFees/' + mongoose.Types.ObjectId(formId))
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
+            axios.put('http://localhost:5000/routes/api/users/CalculatingFees/'+ mongoose.Types.ObjectId(formId),{headers: { "Authorization": localStorage.getItem('jwtToken') }})
         } 
    
     render()

@@ -11,20 +11,27 @@ class Companies extends Component {
       companies:[]
     }
     componentDidMount(){
-      axios.get('http://localhost:5000/routes/api/users/getUserForms/5cad2bfc9b67f60ce098a60e')
+
+
+    
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
+      axios.get('http://localhost:5000/routes/api/users/getUserForms',{headers: { "Authorization": localStorage.getItem('jwtToken') }})
       .then(res => {
         if(Array.isArray(res.data.data)){
           this.setState({companies: res.data.data})
       }})}
 
       sort = () => {
-        axios.get('http://localhost:5000/routes/api/users/SpecificFormSortedByFormId/5ca6302c13e5d0343c6e2a10').then (res=> {
+
+      
+        
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
+        axios.get('http://localhost:5000/routes/api/users/SpecificFormSortedByFormId',{headers: { "Authorization": localStorage.getItem('jwtToken') }}).then (res=> {
                this.setState({forms:res.data.data})
                alert('Cases have been sorted')
             }).catch(err=>{console.log(err)});
            
      }    
-//ahsj
       tabRow(){
         return this.state.companies.map(function(company,i){
             return <GetAllReviewerForms company={company} key={i} />;

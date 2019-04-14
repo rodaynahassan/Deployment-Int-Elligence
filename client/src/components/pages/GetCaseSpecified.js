@@ -10,15 +10,21 @@ class Companies extends Component {
     state = {
       companies:[]
     }
+
+
+   
     componentDidMount(){
-      axios.get('http://localhost:5000/routes/api/users/getUserForms/5cb0c8d77268387578d1530d')
+
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
+      axios.get('http://localhost:5000/routes/api/users/getUserForms',{headers: { "Authorization": localStorage.getItem('jwtToken') }} )
       .then(res => {
         if(Array.isArray(res.data.data)){
           this.setState({companies: res.data.data})
       }})}
 
       sort = () => {
-        axios.get('http://localhost:5000/routes/api/users/SpecificFormSortedByFormId/5ca6302c13e5d0343c6e2a10').then (res=> {
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
+        axios.get('http://localhost:5000/routes/api/users/SpecificFormSortedByFormId',{headers: { "Authorization": localStorage.getItem('jwtToken') }}).then (res=> {
                this.setState({forms:res.data.data})
                alert('Cases have been sorted')
             }).catch(err=>{console.log(err)});

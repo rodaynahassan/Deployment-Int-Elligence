@@ -24,12 +24,16 @@ class GetAllReviewerForms extends Component {
 
         }
 
+ 
+
         accept = (formId) => {
-            axios.put('http://localhost:5000/routes/api/users/accept/' + mongoose.Types.ObjectId(formId) +'/' + mongoose.Types.ObjectId('5ca6302c13e5d0343c6e2a10'))
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
+            axios.put('http://localhost:5000/routes/api/users/accept/'+mongoose.Types.ObjectId(formId),{headers: { "Authorization": localStorage.getItem('jwtToken') }}  )
             }
 
         reject = (formId) => {
-            axios.put('http://localhost:5000/routes/api/users/reject/' + mongoose.Types.ObjectId(formId) +'/' + mongoose.Types.ObjectId('5cad2bfc9b67f60ce098a60e'))
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
+            axios.put('http://localhost:5000/routes/api/users/reject/' + mongoose.Types.ObjectId(formId),{headers: { "Authorization": localStorage.getItem('jwtToken') }} )
         }    
     
    

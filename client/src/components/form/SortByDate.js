@@ -1,48 +1,55 @@
+
 import React from 'react';
 import axios from 'axios';
-import GetSpecificUserCase from '../form/GetSpecificUserCase';
+import SortPage from '../pages/SortPage';
 import Table from 'react-bootstrap/Table';
 import {Button} from 'react-bootstrap';
 import "mdbreact/dist/css/mdb.css";
+import  setAuthToken from '../../setAuthToken'
 
-export default class SortSpecificUserCase extends React.Component{
-    constructor(props) {
+
+
+
+class SortByDate extends React.Component{
+    constructor(props){
         super(props)
-        this.state = {
-            forms: []
+        this.state={
+            forms:[]
         }
+        
     }
-sort = () => {
 
+    sort(){
+        console.log(localStorage.getItem('jwtToken'));
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
 
-
-    
-    axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
-    axios.get('http://localhost:5000/routes/api/users/SpecificFormSortedByFormId',{headers: { "Authorization": localStorage.getItem('jwtToken') }}).then (res=> {
-           this.setState({forms:res.data.data})
-           alert('Cases have been sorted')
-        }).catch(err=>{console.log(err)});
+        axios.get('http://localhost:5000/routes/api/users/SpecificformsSortedByformDate',{headers: { "Authorization": localStorage.getItem('jwtToken') }}).then (res=> {
        
- }
+            this.setState({forms:res.data.data})
+
+         }).catch(err=>{console.log(err)});
+    }
+
+
 
     tabRow(){
         return this.state.forms.map(function(form,i){
-            return <GetSpecificUserCase form={form} key={i} />;
-            
+            return <SortPage form={form} key={i} />;
         });
     }
 
-  render()
+
+
+    render()
     {
         return (
             <div>
                  <br/>
-                <Button variant="dark" onClick={()=>this.sort()}>Sort the cases by ID </Button> 
-                
+                <Button variant="dark" onClick={()=>this.sort()}>Sort the cases by Date </Button> 
                 <Table  bordered hover variant='dark' size='sm'>
             <thead>
               <tr>
-                <th>ID</th>
+
                 <th>Name</th>
                 <th>Name In English </th>
                 <th>Governorate</th>
@@ -59,11 +66,24 @@ sort = () => {
             </thead>
             <tbody>
               {this.tabRow()}
-              
-              
             </tbody>
            </Table> 
                </div>
                )}
-              
-   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ }
+export default SortByDate
+

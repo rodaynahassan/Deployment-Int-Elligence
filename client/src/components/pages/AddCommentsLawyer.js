@@ -50,7 +50,11 @@ class AddCommentsLawyer extends Component{
     handleClick = (formId,event) =>
     {
       console.log(formId)
-        var apiBaseUrl =('http://localhost:5000/routes/api/users/lawyerComments/'+mongoose.Types.ObjectId('5cb0c8d77268387578d1530d')+'/'+mongoose.Types.ObjectId(formId))
+
+
+
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
+        var apiBaseUrl =('http://localhost:5000/routes/api/users/lawyerComments/'+mongoose.Types.ObjectId(formId),{headers: { "Authorization": localStorage.getItem('jwtToken') }})
         var payload={
             "lawyerComments": this.state.lawyerComments.value
         }
@@ -109,16 +113,6 @@ class AddCommentsLawyer extends Component{
                 <Button variant='red' onClick={this.props.onHide}>Close</Button>
                 </Modal.Footer>
             </Modal>
-           
-    
-        {/* <input type="text" placeholder='Enter Your Comment' onChange={ this.changeHandler} />
-        <Button
-          type="button"
-          block
-          variant="dark"
-          value="Add Comment"
-          onClick={() => (this.handleClick() , alert('Comments added Succesfully'))}
-        >Add Comment</Button> */}
            </div>
           )
     }

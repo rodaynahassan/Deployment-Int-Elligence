@@ -7,9 +7,13 @@ import comp2 from '../layout/comp2.jpg'
 import Flippy , {FrontSide , BackSide} from "react-flippy";
 class FlippingAssignReviewer extends Component
  {
+
+  
+
     AssignReviewer = (formId) => 
     {
-        axios.put('http://localhost:5000/routes/api/users/takingForm/'+Mongoose.Types.ObjectId('5cb0ae38f5081445302a3016') +'/'+Mongoose.Types.ObjectId(formId))
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
+        axios.put('http://localhost:5000/routes/api/users/takingForm/'+Mongoose.Types.ObjectId(formId),{headers: { "Authorization": localStorage.getItem('jwtToken') }})
     }
     render()
     {

@@ -110,21 +110,43 @@ exports.compare = function compare(a,b){
 
 
 
-exports.registerLawyerOrReviewer=async function registerLawyerOrReviewer(body){                      //creating Lawyer or Reviewer
-    const { error1 } = userValidator.createValidationL(body)            
-    const { error2 } = userValidator.createValidationR(body)
-    if (error1) {
-        return error1.details[0].message;
+exports.registerLawyer=async function registerLawyer(body){                      //creating Lawyer or Reviewer
+    const { error } = userValidator.createValidationL(body)            
+   
+    if (error) {
+        return error.details[0].message;
     }
-    if (error2){
-        return error2.details[0].message;
+   
+    let user = await User.findOne({ email: body.email });
+    // const user = await User.findOne({body:email})
+    if(user) return {error: 'Account already exists'}
+    
+   
+    const newUser = await User.create(body).then(res=>{return res}).catch(err=>{return {error:error}})
+    if(newUser.error) return newUser
+    const salt = await bcrypt.genSalt(10);
+    newUser.password = await bcrypt.hash(newUser.password, salt);
+    await newUser.save();
+
+    return newUser
+
+}
+
+exports.registerReviewer=async function registerReviewer(body){                      //creating Lawyer or Reviewer
+    const { error } = userValidator.createValidationR(body)            
+   
+    if (error) {
+        return error.details[0].message;
     }
+   
     let user = await User.findOne({ email: body.email });
     // const user = await User.findOne({body:email})
     if(user) return {error: 'Account already exists'}
     
    
     const newUser = await User.create(body)
+    .then(res=>{return res}).catch(err=>{return {error:error}})
+    if(newUser.error) return newUser
     const salt = await bcrypt.genSalt(10);
     newUser.password = await bcrypt.hash(newUser.password, salt);
     await newUser.save();

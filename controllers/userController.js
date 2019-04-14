@@ -13,10 +13,10 @@ exports.compareByDate=function compareByDate(a,b){
 }
 //creating Investor
 exports.registerInvestor=async function registerInvestor(body){                      
-    const { error1 } = userValidator.createValidationI(body)            
+    const { error } = userValidator.createValidationI(body)            
     
-    if (error1) {
-        return error1.details[0].message;
+    if (error) {
+        return {error:error.details[0].message};
     }
     
     let user = await User.findOne({ email: body.email });

@@ -4,9 +4,36 @@ const mongoose = require('mongoose')
 const Form = require('../../Models/Form')
 const validator = require('../../Validation/formValidations')
 const controller = require('../../controllers/formController')
+const passport = require('passport')
+require('../../config/passport')(passport)
+
+
+
+
+
+
+
+
+
+// //       for testing!!!!!!!!
+// router.get('/getInvestorName',passport.authenticate('jwt', {session: false}) ,async (req,res) => {
+//     // You can access the logged in user through req.user
+//     // Add your authorization rules accordingly
+//     const userid=req.user.id
+//     const user= await userController.search('_id',userid)
+//     const name= user.name
+//     return res.json({ data: name  });
+
+//     // return res.json({data: req.user})
+
+// })
+
+
+
+
 
 //get all forms
-router.get('/', async (req,res) => {
+router.get('/getAllForms' ,async (req,res) => {
     const forms  = await controller.search()
     return res.json({data:forms})
 })

@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const Admin = new Schema({
+  userType:{type: String,enum:['Admin']},
   name: { type: String, required: true},
   gender: { type: String, required: true},
   nationality: { type: String, required: true},

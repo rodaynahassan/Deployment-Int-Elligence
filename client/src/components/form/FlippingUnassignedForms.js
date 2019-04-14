@@ -10,8 +10,10 @@ class FlippingUnassignedForms extends Component {
   
   
   AssignCase = (formId) => {
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
+      axios.defaults.headers.common['Authorization'] =  localStorage.getItem('jwtToken');
       axios.put('http://localhost:5000/routes/api/users/takingForm/'+mongoose.Types.ObjectId(formId),{headers: { "Authorization": localStorage.getItem('jwtToken') }})
+      .then(res=>console.log(res))
+      .catch(err=>console.log(err))
     }
     render()
     {

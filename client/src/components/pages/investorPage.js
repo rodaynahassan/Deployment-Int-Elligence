@@ -25,5 +25,4 @@ class Investor extends Component {
     }
 
 }
-ReactDOM.render(<Investor />, document.getElementById('root'));
 export default Investor

@@ -12,7 +12,7 @@ class FlippingAssignReviewer extends Component
 
     AssignReviewer = (formId) => 
     {
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
+        axios.defaults.headers.common['Authorization'] =  localStorage.getItem('jwtToken');
         axios.put('http://localhost:5000/routes/api/users/takingForm/'+Mongoose.Types.ObjectId(formId),{headers: { "Authorization": localStorage.getItem('jwtToken') }})
     }
     render()

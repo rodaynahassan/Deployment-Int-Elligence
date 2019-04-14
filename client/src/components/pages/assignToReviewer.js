@@ -16,7 +16,7 @@ class assignToReviewer extends Component
       
 
 
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
+        axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
         axios.get('http://localhost:5000/routes/api/forms/getLawyerAccepted',{headers: { "Authorization": localStorage.getItem('jwtToken') }})
         .then(res => {
           if(Array.isArray(res.data.data)){

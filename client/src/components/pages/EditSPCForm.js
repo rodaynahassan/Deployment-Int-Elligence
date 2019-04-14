@@ -25,15 +25,20 @@ class EditSPCForm extends React.Component{
             companyNameInEnglish:'',
             currency:'',
             equityCapital:'',
+            formId:'',
             governorate:[],
             cities:[]
        };
-
-      axios.get('http://localhost:5000/routes/api/forms/5ca7e31938bb992a848e06f7')
+       
+      
+    }
+    componentDidMount(){
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken')
+      axios.get('http://localhost:5000/routes/api/forms/'+ mongoose.Types.ObjectId(this.props.formId._id),{headers: { "Authorization": localStorage.getItem('jwtToken') }})
           .then(response => {
                     
               this.setState({ 
-                
+                formId:response.data.data._id,
                 companyName: response.data.data.companyName, 
                 companyGovernorate: response.data.data.companyGovernorate,
                 companyAddress: response.data.data.companyAddress,
@@ -49,9 +54,6 @@ class EditSPCForm extends React.Component{
           })
           .catch(function (error) {
           })
-      
-    }
-    componentDidMount(){
         axios.get('http://localhost:5000/routes/api/governorates/')        
           .then(res => {
                 this.setState({governorate: res.data.data})
@@ -59,8 +61,9 @@ class EditSPCForm extends React.Component{
             })
       }
     
-      handleClick(event){
-        var apiBaseUrl = "http://localhost:5000/routes/api/forms/5ca7e31938bb992a848e06f7";
+      handleClick(formId){
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
+        var apiBaseUrl = ("http://localhost:5000/routes/api/users/"+mongoose.Types.ObjectId(formId)) ;
         var payload={
           "companyName": this.state.companyName,
           "companyGovernorate": this.state.companyGovernorate,
@@ -72,7 +75,7 @@ class EditSPCForm extends React.Component{
           "currency": this.state.currency,
           "equityCapital" : this.state.equityCapital
           }
-        axios.put(apiBaseUrl, payload)
+        axios.put(apiBaseUrl, payload,{headers: { "Authorization": localStorage.getItem('jwtToken') }})
        .then(function (response) {
          alert('The SPC form has been updated successfully');
        })
@@ -97,7 +100,7 @@ class EditSPCForm extends React.Component{
     };
       
       validateForm() {
-        return this.state.companyName.length <=50 
+        return this.state.companyName.length <=50 && this.state.companyName.length >=3
         && this.state.companyAddress.length >=5 && this.state.companyAddress.length <=50
         && this.state.companyNameInEnglish.length <=50
       }
@@ -105,7 +108,7 @@ class EditSPCForm extends React.Component{
     render() {
       return (
         
-        <div>
+        <div style={{ paddingLeft:'60px',justifyItems:"center"}}> 
           <MuiThemeProvider >
             <div >
             <AppBar
@@ -283,7 +286,7 @@ class EditSPCForm extends React.Component{
             
                <RaisedButton label="Submit" primary={true} style={style}
                disabled={!this.validateForm()}
-               onClick={(event) => (this.handleClick(event) )}/>
+               onClick={() => (this.handleClick(this.state.formId._id) )}/>
            </div>
            </MuiThemeProvider>
         </div>
@@ -295,7 +298,6 @@ class EditSPCForm extends React.Component{
   };
 
   
-  ReactDOM.render(<EditSPCForm />, document.getElementById('root'));
 
 
 

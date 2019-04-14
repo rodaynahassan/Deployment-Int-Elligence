@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.css'
-import React from 'react';
+import React , {Component} from 'react';
 import ReactDOM from 'react-dom';
 import axios from "axios";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -9,6 +9,7 @@ import TextField from 'material-ui/TextField';
 import { MDBRow, MDBCol, MDBInput, MDBBtn,MDBDropdown,MDBDropdownToggle,MDBDropdownItem,MDBDropdownMenu } from "mdbreact";
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
+import trans from '../translations/spcTranslation'
 //import {Dropdown} from 'react-bootstrap';
 import {Dropdown} from 'semantic-ui-react';
 
@@ -21,7 +22,7 @@ import DropdownItem from 'react-bootstrap/DropdownItem';
 
 var mongoose = require('mongoose')
 
-class SPCform extends React.Component{
+class SPCform extends Component{
 
     constructor(props){
         super(props);
@@ -115,19 +116,23 @@ class SPCform extends React.Component{
         }
 
     render() {
+    //  trans.setLanguage(this.props.lang)
       return (
-        <div>
+        <div style={{ paddingLeft:'60px',justifyItems:"center"}}>
           <MuiThemeProvider>
             <div>
-            <AppBar
+            {/* <AppBar
+               title={trans.title}
+             /> */}
+            {/* <AppBar
                title="Create your SPCForm"
-               />
+               /> */}
                
                <br/>
                <MDBRow>
                <MDBCol>
               <MDBInput
-                label="Company Name"                
+                label={trans.name}                 
                 value={this.state.companyName}
                 className={this.state.companyName.length >=3 &&this.state.companyName.length <=50 ? "is-valid" : "is-invalid"}
                 name="companyName"
@@ -189,7 +194,7 @@ class SPCform extends React.Component{
               
               <MDBCol>
               <div className="form-group">
-                  <label htmlFor="companyGovernorate">Company Governorate</label>
+                  <label htmlFor="companyGovernorate">{trans.governorate}</label>
                   <select className="form-control"  
                   id="exampleFormControlSelect1" name="companyGovernorate"
                       onChange={this.changeHandler2} 
@@ -207,7 +212,7 @@ class SPCform extends React.Component{
 
               <MDBCol>
               <div className="form-group">
-                  <label htmlFor="companyCity">Company City</label>
+                  <label htmlFor="companyCity">{trans.city}</label>
                   <select className="form-control"  
                   id="exampleFormControlSelect1" name="companyCity"
                       onChange={this.changeHandler} 
@@ -225,7 +230,7 @@ class SPCform extends React.Component{
 
                <MDBCol>
               <div className="form-group">
-                  <label htmlFor="currency">Currency</label>
+                  <label htmlFor="currency">{trans.currency}</label>
                   <select className="form-control"  
                   id="exampleFormControlSelect1" name="currency"
                       onChange={this.changeHandler} 
@@ -298,7 +303,7 @@ class SPCform extends React.Component{
                </MDBCol>
                </MDBRow>
 
-               <RaisedButton label="Submit" primary={true} style={style}
+               <RaisedButton label={trans.button} primary={true} style={style}
                disabled={!this.validateForm()}
                onClick={(event) => (this.handleClick(event) )}/>
            </div>

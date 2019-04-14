@@ -59,10 +59,22 @@ class ChangePassword extends React.Component{
 
     render() {
       return (
-        <div>
-          <MuiThemeProvider>
-            <div>
-            <AppBar title="Update your password"/>
+        <div style={{ paddingLeft:'60px',justifyItems:"center"}}>
+              
+        <div
+   style={{
+     backgroundColor: "#123456",
+     textAlign: "center",
+     fontSize: "50px",
+     color: "white",
+     width: "100%"
+   }}
+ >
+   Your Profile
+ </div>
+          <MuiThemeProvider >
+            <div style={{paddingLeft:'30px'}}>
+           
 
                <br/>
                <MDBRow>
@@ -99,10 +111,11 @@ class ChangePassword extends React.Component{
               </MDBInput>
               </MDBCol>
               </MDBRow>
-
+              <div style={{paddingLeft:"50%"}}>
               <RaisedButton label="Submit" primary={true} style={style}
                disabled={!this.validatePassword()}
                onClick={(event) => (this.handleClick(event) , alert('The password has been updated successfully'))}/>
+           </div>
            </div>
            </MuiThemeProvider>
         </div>

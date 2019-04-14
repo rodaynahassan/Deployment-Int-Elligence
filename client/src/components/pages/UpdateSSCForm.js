@@ -18,7 +18,6 @@ class UpdateSSCForm extends React.Component{
         super(props);
         this.show = this.show.bind(this)
         this.changeHandlerName = this.changeHandlerName.bind(this)
-        const testID = mongoose.Types.ObjectId('5cb239df17fad32e5481883a')
         this.state = {
             companyName:'',
             companyGovernorate:'',
@@ -43,8 +42,8 @@ class UpdateSSCForm extends React.Component{
              lawyerComments:'',
              reviewerComments:''
        };
-
-      axios.get('http://localhost:5000/routes/api/forms/'+ testID)
+       axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken')
+      axios.get('http://localhost:5000/routes/api/forms/'+mongoose.Types.ObjectId(this.props.formId._id),{headers: { "Authorization": localStorage.getItem('jwtToken') }})
           .then(response => {
                     
               this.setState({ 
@@ -81,7 +80,8 @@ class UpdateSSCForm extends React.Component{
           })
           .catch(function (error) {
           })
-          axios.get('http://localhost:5000/routes/api/forms/'+ testID)
+          axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken')
+          axios.get('http://localhost:5000/routes/api/forms/'+mongoose.Types.ObjectId(this.props.formId._id),{headers: { "Authorization": localStorage.getItem('jwtToken') }})
           .then(response => {
             let test = []
             let i
@@ -123,7 +123,7 @@ class UpdateSSCForm extends React.Component{
   
   };
       handleClick(event){
-        var apiBaseUrl = "http://localhost:5000/routes/api/forms/" + mongoose.Types.ObjectId('5cb239df17fad32e5481883a');
+        var apiBaseUrl = "http://localhost:5000/routes/api/users/"+mongoose.Types.ObjectId(this.props.formId._id);
         var payload={
           "companyName": this.state.companyName,
           "companyGovernorate": this.state.companyGovernorate,
@@ -238,7 +238,7 @@ class UpdateSSCForm extends React.Component{
         }
     render() {
       return (
-        <div>
+        <div style={{ paddingLeft:'60px',justifyItems:"center"}}>
           <MuiThemeProvider>
             <div>
             <AppBar
@@ -576,7 +576,6 @@ class UpdateSSCForm extends React.Component{
 
   
 
-ReactDOM.render(<UpdateSSCForm />, document.getElementById('root'));
 
 
 export default UpdateSSCForm;

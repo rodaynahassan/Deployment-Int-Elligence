@@ -11,7 +11,6 @@ import { MDBRow, MDBCol, MDBInput, MDBBtn,MDBIcon } from "mdbreact";
 
 //import { Dropdown } from 'semantic-ui-react';
 import axios from 'axios';
-import GetAllCompanies from './GetAllCompanies';
 
 var mongoose = require('mongoose')
 
@@ -63,10 +62,10 @@ class MyCompany extends Component {
     {
         return (
 
-          <div>
+          <div style={{paddingLeft:"60px"}}>
              
           <MDBCol>
-          <MDBRow>
+          <MDBRow style={{paddingLeft:"41%"}}>
            
             <MDBInput
             icon="search" 
@@ -82,12 +81,12 @@ class MyCompany extends Component {
             </MDBRow>
             </MDBCol>
 
-
-            <MuiThemeProvider>
+          <div style={{paddingLeft:"45%"}}>
+            <MuiThemeProvider >
             <RaisedButton label="Search" primary={true} style={style}
             onClick={(event) => (this.handleClick(event))} />
             </MuiThemeProvider>
-
+            </div>
             <div>
 
                 {this.state.viewedComp.map(el => {

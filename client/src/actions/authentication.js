@@ -1,6 +1,6 @@
 
 
-
+import React, { Component } from 'react';
 import axios from 'axios';
 import { GET_ERRORS, SET_CURRENT_USER } from './types';
 import setAuthToken from '../setAuthToken';
@@ -47,12 +47,24 @@ export const loginUser = (user) => dispatch => {
             localStorage.setItem('jwtToken', token);
             const { type } = res.data
             localStorage.setItem('type', type)
+            localStorage.setItem('isLoggedIn',true)
             setAuthToken(token);
             const decoded = jwt_decode(token);
             dispatch(setCurrentUser(decoded));
             console.log(res.data)
+
+                console.log(localStorage.getItem("isLoggedIn"))
+                if(localStorage.getItem("isLoggedIn")==='true') {
+                    // this.props.history.replace('/profile')
+                    // this.props.history.go(1)
+                    document.location.href = "/profile"
+                }
         })
-        .catch(err => console.log(err)
+        .catch(
+            err =>{ console.log(err)
+                localStorage.setItem('isLoggedIn',false)
+                return err
+            }
             // {
             // dispatch({
             //     type: GET_ERRORS,

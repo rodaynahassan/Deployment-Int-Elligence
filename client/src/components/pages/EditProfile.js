@@ -117,14 +117,24 @@ class EditProfile extends React.Component{
 
     render() {
       return (
-        <div>
+            <div style={{ paddingLeft:'60px',justifyItems:"center"}}>
+              
+              <div
+         style={{
+           backgroundColor: "#123456",
+           textAlign: "center",
+           fontSize: "50px",
+           color: "white",
+           width: "100%"
+         }}
+       >
+         Your Profile
+       </div>
           <MuiThemeProvider>
             <div>
-            <AppBar
-               title="Update your profile"
-             />
+            
                <br/>
-               <MDBRow>
+               <MDBRow style={{ paddingLeft:'30px',justifyItems:"center"}}>
                <MDBCol>
               <MDBInput
                 label="Name"                
@@ -143,7 +153,7 @@ class EditProfile extends React.Component{
             </MDBRow>
            <br/>
 
-           <MDBRow>
+            <MDBRow style={{ paddingLeft:'30px',justifyItems:"center"}}>
            <MDBCol>
            <div className="form-group">
             <label htmlFor="gender">Gender</label>
@@ -159,7 +169,7 @@ class EditProfile extends React.Component{
              </MDBRow>
             <br/>
            
-            <MDBRow>
+             <MDBRow style={{ paddingLeft:'30px',justifyItems:"center"}}>
             <MDBCol>
             
             <div className="form-group">
@@ -182,7 +192,7 @@ class EditProfile extends React.Component{
             <br/>
 
 
-            <MDBRow>
+             <MDBRow style={{ paddingLeft:'30px',justifyItems:"center"}}>
             
 
             
@@ -205,7 +215,7 @@ class EditProfile extends React.Component{
             <br/>
 
 
-            <MDBRow>
+             <MDBRow style={{ paddingLeft:'30px',justifyItems:"center"}}>
      
             <MDBCol>
             <MDBInput
@@ -224,7 +234,7 @@ class EditProfile extends React.Component{
             </MDBCol>
             </MDBRow>
             <br/>
-            <MDBRow>
+             <MDBRow style={{ paddingLeft:'30px',justifyItems:"center"}}>
      
      <MDBCol>
      <MDBInput
@@ -242,7 +252,7 @@ class EditProfile extends React.Component{
             </MDBCol>
             </MDBRow>
             <br/>
-            <MDBRow>
+             <MDBRow style={{ paddingLeft:'30px',justifyItems:"center"}}>
      
      <MDBCol>
      <MDBInput
@@ -262,7 +272,7 @@ class EditProfile extends React.Component{
             </MDBCol>
             </MDBRow>
             <br/>
-            <MDBRow>
+             <MDBRow style={{ paddingLeft:'30px',justifyItems:"center"}}>
             <MDBCol>
             <MDBInput
                  value={this.state.address}
@@ -279,7 +289,7 @@ class EditProfile extends React.Component{
             </MDBRow>
             <br/>
 
-            <MDBRow>
+             <MDBRow style={{ paddingLeft:'30px',justifyItems:"center"}}>
             <MDBCol>
             <MDBInput
                  value={this.state.telephone}
@@ -297,7 +307,7 @@ class EditProfile extends React.Component{
             </MDBCol>
             </MDBRow>
             <br/>
-            <MDBRow>
+             <MDBRow style={{ paddingLeft:'30px',justifyItems:"center"}}>
      
      <MDBCol>
      <MDBInput
@@ -318,10 +328,12 @@ class EditProfile extends React.Component{
 
                
            
-            
+            <div style={{paddingLeft:'50%'}}>
+
                <RaisedButton label="Submit" primary={true} style={style}
                disabled={!this.validateForm()}
                onClick={(event) => (this.handleClick(event) , alert('Your request to update has been submitted'))}/>
+               </div>
            </div>
            </MuiThemeProvider>
         </div>
@@ -329,7 +341,7 @@ class EditProfile extends React.Component{
     }
   }
   const style = {
-   margin: 15,
+   margin: 15
   };
 
   

@@ -112,10 +112,11 @@ router.get('/AllFormSortedByFormId/', passport.authenticate('jwt', { session: fa
 //sort by form creation date for a specific user
 router.get('/SpecificformsSortedByformDate', passport.authenticate('jwt', { session: false }), async (req, res) => {
     const userid = req.user.id
-    console.log(req.headers)
+    //console.log(req.headers)
     if (req.user.userType === "Lawyer" || req.user.userType === "Reviewer") {
         var SpecificUser = await userController.search('_id', userid)
         SpecificUser.forms.sort(userController.compareByDate)
+        console.log("hi")
         return res.json({ data: SpecificUser.forms });
     }
     else {
@@ -165,9 +166,103 @@ router.get('/getAllReviewers', async (req, res) => {
 
 
 
+router.get('/getInProgressSPCCases/',passport.authenticate('jwt', { session: false }),async(req,res) => {
+    const userid = req.user.id
+    if(req.user.userType==='Investor'||req.user.userType==='Lawyer'){
+    var user = await userController.search('_id',userid)
+    var userForms = user.forms
+    var inprogressForms = []
+    for(i=0;i<userForms.length;i++){
+        if((userForms[i].type==='SPCForm'&&(userForms[i].status==='In progress Lawyer')||(userForms[i].status==='In progress Reviewer')))
+            inprogressForms.push(userForms[i])
+    }
+    res.json({data:inprogressForms})
+    }
+    else {
+        return res.json({ msg: "Non Authorized" })
+    }
+})
+router.get('/getInProgressSSCCases/',passport.authenticate('jwt', { session: false }),async(req,res) => {
+    const userid = req.user.id
+    if(req.user.userType==='Investor'||req.user.userType==='Lawyer'){
+    var user = await userController.search('_id',userid)
+    var userForms = user.forms
+    var inprogressForms = []
+    for(i=0;i<userForms.length;i++){
+        if((userForms[i].type==='SSCForm'&&(userForms[i].status==='In progress Lawyer')||(userForms[i].status==='In progress Reviewer')))
+            inprogressForms.push(userForms[i])
+    }
+    res.json({data:inprogressForms})
+}
+else {
+    return res.json({ msg: "Non Authorized" })
+}
+})
+
+//get Array of Form 
+router.get('/getUserFormsSSC/',passport.authenticate('jwt', { session: false }), async(req, res)=>{
+    const userId = req.user.id
+    if(req.user.userType==='Lawyer'|| req.user.userType==='Reviewer'){
+    const user = await userController.search('_id',userId)
+    var userForms = user.forms
+    const arrayForms =[]
+    if(user.userType==='Lawyer'){
+        for(i=0;i<userForms.length;i++){
+            if(userForms[i].type==='SSCForm' &&(userForms[i].status==='In progress Lawyer' || userForms[i].status==='Lawyer accepted')){
+                arrayForms.push(userForms[i])
+            }
+        }
+        return res.json({data:arrayForms})
+    }
+    else if(user.userType==='Reviewer'){
+        for(i=0;i<userForms.length;i++){
+            if(userForms[i].status==='In progress Reviewer'){
+                arrayForms.push(userForms[i])
+            }
+        }
+        return res.json({data:arrayForms})
+    }
+    else{
+        return res.json({ msg:'Not a user'});
+    }
+}
+else {
+    return res.json({ msg: "Non Authorized" })
+}
+
+})
 
 
-
+router.get('/getUserFormsSPC/', passport.authenticate('jwt', { session: false }),async(req, res)=>{
+    const userId = req.user.id
+    if(req.user.userType==='Lawyer'|| req.user.userType==='Reviewer'){
+    const user = await userController.search('_id',userId)
+    var userForms = user.forms
+    const arrayForms =[]
+    if(user.userType==='Lawyer'){
+        for(i=0;i<userForms.length;i++){
+            if(userForms[i].type==='SPCForm' &&(userForms[i].status==='In progress Lawyer' || userForms[i].status==='Lawyer accepted')){
+                arrayForms.push(userForms[i])
+            }
+        }
+        return res.json({data:arrayForms})
+    }
+    else if(user.userType==='Reviewer'){
+        for(i=0;i<userForms.length;i++){
+            if(userForms[i].status==='In progress Reviewer'){
+                arrayForms.push(userForms[i])
+            }
+        }
+        return res.json({data:arrayForms})
+    }
+    else{
+        return res.json({ msg:'Not a user'});
+    }
+}
+else {
+    return res.json({ msg: "Non Authorized" })
+}
+})
 // view a certain user
 router.get('/CertainUser', passport.authenticate('jwt', { session: false }), async (req, res) => {
     const userid = req.user.id
@@ -492,6 +587,7 @@ router.post('/login', async (req, res) => {
 router.put('/CalculatingFees/:formId' ,passport.authenticate('jwt', { session: false }),  async (req, res) => {
     if (req.user.userType === "Lawyer"){
     var equation = await axios.get('http://localhost:5000/routes/api/fakeServer/ReturningEquation')
+    console.log(equation)
     const formid = req.params.formId
     const form = await formController.search('_id', formid)
     var capital = form.equityCapital
@@ -886,38 +982,6 @@ router.put('/reviewerComments/:formId', passport.authenticate('jwt', { session: 
     }
 });
 
-//get Array of Form 
-router.get('/getUserForms', passport.authenticate('jwt', { session: false }),async (req, res) => {
-    if (req.user.userType === "Reviewer"||req.user.userType === "Lawyer") {
-    const userId = req.user.id
-    const user = await userController.search('_id', userId)
-    var userForms = user.forms
-    const arrayForms = []
-    if (user.userType === 'Lawyer') {
-        for (i = 0; i < userForms.length; i++) {
-            if (userForms[i].status === 'In progress Lawyer' || userForms[i].status === 'Lawyer accepted') {
-                arrayForms.push(userForms[i])
-            }
-        }
-        return res.json({ data: arrayForms })
-    }
-    else if (user.userType === 'Reviewer') {
-        for (i = 0; i < userForms.length; i++) {
-            if (userForms[i].status === 'In progress Reviewer') {
-                arrayForms.push(userForms[i])
-            }
-        }
-        return res.json({ data: arrayForms })
-    }
-    else {
-        return res.json({ msg: 'Not a user' });
-    }
-}
-else{
-    return res.json({ msg: 'Non Authorized' });
-
-}
-})
 
 
 // change password

@@ -46,10 +46,6 @@ app.use(cors())
 
 
 
-app.get('/', (req, res) => {
-    res.send(`<h1>Welcome</h1>`);
-})
-
 // Direct routes to appropriate files 
 app.use('/routes/api/users', users)
 app.use('/routes/api/forms',forms)

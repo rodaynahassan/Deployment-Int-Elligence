@@ -15,27 +15,6 @@ const tokenKey = require('../../config/keys_dev').secretOrKey
 const passport = require('passport')
 require('../../config/passport')(passport)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // //       for testing!!!!!!!!
 // router.get('/getInvestorName',passport.authenticate('jwt', {session: false}) ,async (req,res) => {
 //     // You can access the logged in user through req.user
@@ -48,12 +27,6 @@ require('../../config/passport')(passport)
 //     // return res.json({data: req.user})
 
 // })
-
-
-
-
-
-
 
 const axios = require('axios');
 
@@ -70,21 +43,6 @@ router.get('/AllformsSortedByformDate/', passport.authenticate('jwt', { session:
     }    
 
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // //sort forms by id as a lawyer 
@@ -105,8 +63,6 @@ router.get('/AllFormSortedByFormId/', passport.authenticate('jwt', { session: fa
         return res.json({ msg: "Non Authorized" });
     }
 })
-
-
 
 
 //sort by form creation date for a specific user
@@ -136,15 +92,6 @@ router.get('/SpecificFormSortedByFormId', passport.authenticate('jwt', { session
     }
 
 })
-
-
-
-
-
-
-
-
-
 
 
 //get all lawyers 
@@ -294,14 +241,6 @@ router.get('/getTheFinancialBalance', passport.authenticate('jwt', { session: fa
         return res.json({ msg: "Non Authorized" })
     }
 })
-
-
-
-
-
-
-
-
 
 
 // View lawyer comments of specific form of investor 

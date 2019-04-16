@@ -16,35 +16,26 @@ const db = require('./config/keys').mongoURI
 
 // Connect to mongo
 mongoose
-
     .connect('mongodb+srv://ScrumMaster:26312215@int-elligence-s1doh.mongodb.net/local_library?retryWrites=true')
     .then(() => console.log('Connected to MongoDB'))
     .catch(err => console.log(err))
     { useNewUrlParser: true }
 
 
-// if(process.env.NODE_ENV==='production'){
-//     app.use(express.static('client/build'));
-//     app.get('*',(req,res)=> {
+if(process.env.NODE_ENV==='production'){
+    app.use(express.static('client/build'));
+    app.get('*',(req,res)=> {
 
-//         res.sendFile(path.resolve(__dirname,'client','build','index.html'));
-//     });
-// }
-
+        res.sendFile(path.resolve(__dirname,'client','build','index.html'));
+  });
+}
 
 // Init middleware
-
 app.use(express.json())
-
 app.use(express.urlencoded({extended: false}))
 
-//app.use(express.multipart());
+app.use(express.multipart());
 app.use(cors())
-
-
-
-
-
 
 // Direct routes to appropriate files 
 app.use('/routes/api/users', users)
@@ -53,7 +44,6 @@ app.use('/routes/api/admins',admins)
 app.use('/routes/api/externalentities',externalentities)
 app.use('/routes/api/nationalities',nationalities)
 app.use('/routes/api/governorates',governorates)
-
 app.use('/routes/api/fakeServer',fakeServer)
 
 app.use(function(req, res, next) {

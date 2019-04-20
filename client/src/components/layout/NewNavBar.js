@@ -9,10 +9,6 @@ import { Button } from 'mdbreact';
 import { red100 } from 'material-ui/styles/colors';
 import { blue100 } from 'material-ui/styles/colors';
 import { blue200 } from 'material-ui/styles/colors';
-import G from '../layout/G1.jpg'
-import F from '../layout/F1.jpg'
-import A from '../layout/A1.jpg'
-import I from '../layout/Gafii.jpg'
 import berry from '../layout/saint.png'
 import {Dropdown} from 'react-bootstrap';
 var $ = require("jquery")(window);
@@ -31,12 +27,7 @@ class NewNavBar extends Component{
         var Investor = (
             <div>
                 <nav class="navbar navbar-expand-sm bg-dark navbar-dark"style={{position:"absolute",padding:"0.5px",listStyle: "none", margin:" 0 auto",left:"0" ,top: "0",zIndex:"1",width:"100%"}}>
-                
-                {/* <img src={berry} width="70" alt=""></img> */}
-                <img src={A} width="25" alt=""></img>
-                <img src={F} width="25" alt=""></img>
-                <img src={I} width="25" alt=""></img>
-               
+                <img src={berry} width="80" style={{color:blue100}} alt=""></img>
                     <ul class="navbar-nav nav-fill w-100">
                         <li class="nav-item" color="white" >
                             <a class="nav-link" className="fa fa-home" href='/' title="Home" style={{color:blue100,paddingTop:"15px" , fontSize:"1.5em"}} ></a>
@@ -99,9 +90,6 @@ class NewNavBar extends Component{
             <div>
                 <nav class="navbar navbar-expand-sm bg-dark navbar-dark"style={{position:"absolute",padding:"0.5px",listStyle: "none", margin:" 0 auto",left:"0" ,top: "0",zIndex:"1",width:"100%"}}>
                 <img src={berry} width="80" style={{color:blue100}} alt=""></img>
-                {/* <img src={A} width="25" alt=""></img>
-                <img src={F} width="25" alt=""></img>
-                <img src={I} width="25" alt=""></img> */}
                     <ul class="navbar-nav nav-fill w-100">
                 
                         <li class="nav-item" color="white" >
@@ -173,9 +161,6 @@ class NewNavBar extends Component{
             <div>
             <nav class="navbar navbar-expand-sm bg-dark navbar-dark"style={{position:"absolute",padding:"0.5px",listStyle: "none", margin:" 0 auto",left:"0" ,top: "0",zIndex:"1",width:"100%"}}>
             <img src={berry} width="80" alt=""></img>
-                {/* <img src={A} width="25" height="56" alt=""></img>
-                <img src={F} width="25" height="56" alt=""></img>
-                <img src={I} width="25" height="56" alt=""></img> */}
                 <ul class="navbar-nav nav-fill w-100">
                     <li class="nav-item" color="white" >
                         <a class="nav-link" className="fa fa-home" href='/' title="Home" style={{color:blue100,paddingTop:"15px" , fontSize:"1.5em"}} ></a>
@@ -243,9 +228,6 @@ class NewNavBar extends Component{
             <div>
             <nav class="navbar navbar-expand-sm bg-dark navbar-dark"style={{position:"absolute",padding:"0.5px",listStyle: "none", margin:" 0 auto",left:"0" ,top: "0",zIndex:"1",width:"100%"}}>
             <img src={berry} width="70" alt=""></img>
-                {/* <img src={A} width="50" alt=""></img>
-                <img src={F} width="50" alt=""></img>
-                <img src={I} width="50" alt=""></img> */}
                 <ul class="navbar-nav nav-fill w-100">
                     <li class="nav-item" color="white" >
                         <a class="nav-link" className="fa fa-home" href='/' title="Home" style={{color:blue100,paddingTop:"15px" , fontSize:"1.5em"}} ></a>

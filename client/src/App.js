@@ -48,6 +48,8 @@ import InProgressSPCCases from './components/pages/inProgressSPCCases';
 import GetCaseLawyerSPC from './components/pages/getCaseLawyerSPC'
 import GetCaseLawyerSSC from './components/pages/getCaseLawyerSSC'
 
+import Try from './components/try';
+
 
 class App extends Component {
   constructor(){
@@ -117,6 +119,8 @@ class App extends Component {
       <Route path='/companyName' render={(props) => <GetFormByCompanyName {...props}  lang={this.state.lang} />}/>
       <Route path='/getCaseLawyerSSC' render={(props) => <GetCaseLawyerSSC {...props}  lang={this.state.lang} />}/>
       <Route path='/getCaseLawyerSPC' render={(props) => <GetCaseLawyerSPC {...props}  lang={this.state.lang} />}/>
+
+      <Route path='/try' render={(props) => <Try {...props}  lang={this.state.lang}/>}/>
       </div>
           <Footer/>
       </Router>

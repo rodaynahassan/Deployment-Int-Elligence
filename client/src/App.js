@@ -75,9 +75,13 @@ class App extends Component {
     }
   render() {
     return (
+      <body style={{position: "relative",
+        minHeight: "100vh",}}>
 <Provider store = { store }>
+<div style = {{paddingBottom: "7rem"}}>
       <Router>
     
+      
       
      <Side changelang={this.changelang}  />
       <div>
@@ -118,9 +122,12 @@ class App extends Component {
       <Route path='/getCaseLawyerSSC' render={(props) => <GetCaseLawyerSSC {...props}  lang={this.state.lang} />}/>
       <Route path='/getCaseLawyerSPC' render={(props) => <GetCaseLawyerSPC {...props}  lang={this.state.lang} />}/>
       </div>
+      
           <Footer/>
       </Router>
+      </div>
       </Provider>
+      </body>
         )}
  
 }

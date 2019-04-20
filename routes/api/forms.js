@@ -39,7 +39,7 @@ router.get('/getAllForms' , async (req,res) => {
 })
 //get company aka status=approved
 router.get('/getApprovedCompany', async (req,res) => {
-    const form = await Controller.search('status','Approved')
+    const form = await controller.search('status','Approved')
     return res.json({data:form})  
 })
 //get rejected form
@@ -98,7 +98,7 @@ router.get('/getLawyerComments/:id', passport.authenticate('jwt', {session: fals
 })
 
 //get a form by id
-router.get('getSpecificform/:id',  passport.authenticate('jwt', {session: false}) ,async (req,res) => {
+router.get('/getSpecificform/:id',  passport.authenticate('jwt', {session: false}) ,async (req,res) => {
         const id = req.params.id
         const form = await controller.search('_id',id)
         return res.json({data:form})

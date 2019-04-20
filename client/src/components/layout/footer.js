@@ -10,7 +10,10 @@ class Footer extends Component {
 
 render () {
   return (
-      <div style={{marginTop: '0px',backgroundColor:"#123456" , paddingLeft:"4.55%" , width:"100%" , alignItems:"center",justifyContent:"center"}}>
+      <div class="wrapper" style={{position: "absolute",
+        bottom: 0,
+        width: "100%",
+        height: "8rem",backgroundColor:"#123456" , paddingLeft:"4.55%" , width:"100%" , alignItems:"center",justifyContent:"center"}}>
      
     <MDBFooter  className="font-small pt-4" >
       <MDBContainer className="text-center text-md-left">

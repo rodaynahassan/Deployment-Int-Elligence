@@ -4,7 +4,7 @@ const functions = {
     postAdmin: async (name1,gender1,nationality1,identificationType1,identificationNumber1,password1,birthdate1,address1,email1) => {
          await axios({
             method:'post',
-            url:'http://localhost:3000/routes/api/admins/',
+            url:'http://localhost:5000/routes/api/admins/',
             data: {
             name: name1,
             gender: gender1,
@@ -21,7 +21,7 @@ const functions = {
         loginAdmin: async (password1,email1) => {
             await axios({
                method:'post',
-               url:'http://localhost:3000/routes/api/admins/login',
+               url:'http://localhost:5000/routes/api/admins/login',
                data: {
                password: password1,
                email:email1
@@ -29,25 +29,25 @@ const functions = {
                })
            },
            deleteAdmin: async (DeleteID) => {
-            await axios.delete('http://localhost:/routes/api/admins/'+ DeleteID)
+            await axios.delete('http://localhost:5000/routes/api/admins/'+ DeleteID)
             
         },
     
             getAdmins: async() =>{
-                const admins = await axios.get('http://localhost:3000/routes/api/admins/')
+                const admins = await axios.get('http://localhost:5000/routes/api/admins/')
                   return admins
             },
             getAdminByID: async(AdminID) =>{
                 admin = await axios({
                     method:'get',
-                    url:'http://localhost:3000/routes/api/admins/'+AdminID
+                    url:'http://localhost:5000/routes/api/admins/'+AdminID
                   })
                   return admin
             },
             createForm : async (companyName1,companyGovernorate1,companyCity1,companyAddress1,currency1,equityCapital1,type1,creationDate1,userId1,SSCManagers1) => {
                 await axios({    
                      method :'post',
-                     url :'http://localhost:3000/routes/api/forms/',
+                     url :'http://localhost:5000/routes/api/forms/',
                      data : {
                          companyName : companyName1,
                          companyGovernorate : companyGovernorate1,
@@ -65,7 +65,7 @@ const functions = {
                  GetFormByCompanyName : async (companyName) => { 
                  const forms = await axios({
                  method : 'get',
-                 url:'http://localhost:3000/routes/api/admins/getByCompanyName/'+companyName ,
+                 url:'http://localhost:5000/routes/api/admins/getByCompanyName/'+companyName ,
                  //headers:{'Content-Type':'application/json'}
          
              });
@@ -74,7 +74,7 @@ const functions = {
                  getAllForms: async () => { 
                  const forms = await axios({
                  method : 'get',
-                 url:'http://localhost:3000/routes/api/forms/',
+                 url:'http://localhost:5000/routes/api/forms/',
          
              });
              return forms 

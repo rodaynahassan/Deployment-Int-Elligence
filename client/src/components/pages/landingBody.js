@@ -37,7 +37,7 @@ class LandingBody extends Component {
        
         <Carousel>
         <Carousel.Item > 
-          <div style={{position: "fixed", top: "0", zIndex: "-1",width:"100%"}}>
+          <div style={{position: "fixed", top: "0", zIndex: "0",width:"100%"}}>
             <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop" width="100%" object-fit="cover">
                  <source src={egypt} type="video/mp4"></source>
             </video>

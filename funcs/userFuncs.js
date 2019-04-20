@@ -9,30 +9,9 @@ const User= require('../Models/User')
 
 const functions = {
 
-
-   CreateReviewerOrLawyer: async(userType1,name1,gender1,nationality1,identificationType1,identificationNumber1,birthdate1,address1,email1,password1) =>{  
-           await axios({
-            method:'post',
-            url:'http://localhost:5000/routes/api/admins/register',
-            //url:'http://desolate-oasis-18053.herokuapp.com/routes/api/admins/register',
-            data:{ 
-            userType:userType1,
-            name: name1,
-            gender:gender1 ,
-            nationality:nationality1 ,
-            identificationType:identificationType1 ,
-            identificationNumber: identificationNumber1 ,
-            birthdate: birthdate1,
-            address:address1 ,
-            email:email1,
-            password:password1,
-           
-            }
-        })
-    },
     
     createLawyerOrReviewer: async(userType1,name1,gender1,nationality1,identificationType1,identificationNumber1,birthdate1,address1,email1,password1,telephone1) =>{  
-         await axios({
+         return await axios({
             method:'post',
             url:'http://localhost:5000/routes/api/admins/register',
             //url:'http://desolate-oasis-18053.herokuapp.com/routes/api/admins/register',
@@ -50,13 +29,18 @@ const functions = {
             telephone:telephone1
            
             }
-        })
+        }) .then(res => {
+            return res;
+          })
+          .catch(err => {
+            return { error: err };
+          });
       
       
     },
 
-    createInvestor: async(userType1,name1,gender1,nationality1,identificationType1,identificationNumber1,birthdate1,address1,email1,password1) =>{  
-        await axios({
+    createInvestor: async(userType1,name1,gender1,nationality1,identificationType1,identificationNumber1,birthdate1,address1,email1,password1,investorType1) =>{  
+        return await axios({
            method:'post',
            url:'http://localhost:5000/routes/api/users/register',
            //url:'http://desolate-oasis-18053.herokuapp.com/routes/api/admins/register',
@@ -70,115 +54,143 @@ const functions = {
            birthdate: birthdate1,
            address:address1 ,
            email: email1 ,
-           password:password1
+           password:password1,
+           investorType:investorType1
            }
-
        })
-      
+       .then(res => {
+        return res;
+      })
+      .catch(err => {
+        return { error: err };
+      });
    },
+   loginUser: async (password1, email1) => {
+    return await axios({
+      method: "post",
+      url: "http://localhost:5000/routes/api/users/login",
+      data: {
+        password: password1,
+        email: email1
+      }
+    })
+    .then(res => {
+        return res;
+      })
+      .catch(err => {
+        return { error: err };
+      });
+  },
 
-   GetAllUsers : async() => {   // get all users
-
-       users= await axios({
-           method : 'get',
-           url:'http://localhost:5000/routes/api/users/'
-       })
-       return users
-   },
-
-
-   GetUserById : async(UserId) => {    // get certain user
-       
-       user= await axios({
-           method : 'get',
-           url:'http://localhost:5000/routes/api/users/'+ UserId
-       })
-       return user
-   },
-
-   CreateInvestor: async(userType1,name1,gender1,nationality1,identificationType1,identificationNumber1,birthdate1,address1,email1,password1,financialBalance1) =>{  
-    await axios({
-       method:'post',
-       url:'http://localhost:5000/routes/api/users/register',
-       data:{ 
-       userType:userType1,
-       name: name1,
-       gender:gender1 ,
-       nationality:nationality1 ,
-       identificationType:identificationType1 ,
-       identificationNumber: identificationNumber1 ,
-       birthdate: birthdate1,
-       address:address1 ,
-       email: email1 ,
-       password:password1,
-       financialBalance : financialBalance1
-       }
-
+   getAllUsers : async() => {
+    return await axios({
+        method : 'get',
+        url:'http://localhost:5000/routes/api/users//getAllUsers'
+    })
+    .then(res => {
+     return res;
    })
-  
+   .catch(err => {
+     return { error: err };
+   });
 },
 
-UpdateUser: async(UserId) =>{     // update a certain user
+
+   getUserById : async(token) => {    // get certain user
+       
+       return await axios({
+           method : 'get',
+           url:'http://localhost:5000/routes/api/users/CertainUser/',
+           headers:{ "Authorization":token}
+       }).then(res => {
+        return res;
+      })
+      .catch(err => {
+        return { error: err };
+      });
+   },
+updateUser: async(token) =>{     // update a certain user
     return await axios({
         method:'put',
-        url : 'http://localhost:5000/routes/api/users/' + UserId,
-        data: {
-
-            name: 'ALI EL SEBAIE2',
-            nationality:'Masry',
-        }
-      
-    
-    })
+        url : 'http://localhost:5000/routes/api/users/updateUser',
+        headers:{ "Authorization":token}
+    }).then(res => {
+        return res;
+      })
+      .catch(err => {
+        return { error: err };
+      });
    
   
 },
 
-UpdateFormInUser: async(UserId,FormId) =>{     // update a form in a certain user
+updateFormInUser: async(FormId,token) =>{     // update a form in a certain user
     return await axios({
         method:'put',
-        url : 'http://localhost:5000/routes/api/users/' + UserId + '/' + FormId,
-        data: {
-            companyName: 'sebaie200 company',
-            companyNameInEnglish: 'Irish comp'
-        }
-    })
+        url : 'http://localhost:5000/routes/api/users/updateForm/' + FormId,
+        headers:{ "Authorization":token}
+    }).then(res => {
+        return res;
+      })
+      .catch(err => {
+        return { error: err };
+      });
   
 },
            
     
-    DeleteUser: async(deleteID) =>{   
-        const user= await axios.delete('http://localhost:5000/routes/api/users/'+deleteID)
+deleteUser: async(token) =>{   
+    return await axios({
+        method:'delete',
+        url:'http://localhost:5000/routes/api/users/delete',
+        headers: { "Authorization": token }
+    })
+    .then(res => {
+        return res;
+      })
+      .catch(err => {
+        return { error: err };
+      });
+
+},
+
+
+
+    getFormById : async(FormId,token) => {    // get certain form
        
-        //const user= await axios.delete('http://desolate-oasis-18053.herokuapp.com/routes/api/users/'+deleteID)
-        return user
-
-    },
-
-
-    GetFormById : async(FormId) => {    // get certain form
-       
-        form = await axios({
+        return await axios({
             method : 'get',
-            url:'http://localhost:5000/routes/api/forms/'+ FormId
+            url:'http://localhost:5000/routes/api/forms/getSpecificform/'+FormId,
+            headers: { "Authorization": token }
         })
-    
-        return form 
+        .then(res => {
+            return res;
+          })
+          .catch(err => {
+            return { error: err };
+          });
     },
     
     
-    GetAllForms : async() => {   // get all forms
+    getAllForms : async() => {   // get all forms
     
-        forms= await axios({
+        return await axios({
             method : 'get',
-            url:'http://localhost:5000/routes/api/forms/'
+            url:'http://localhost:5000/routes/api/forms/getAllForms',
+            headers: { "Authorization": token }
         })
-        return forms
+        .then(res => {
+            return res;
+          })
+          .catch(err => {
+            return { error: err };
+          });
     },
+  
     
 };
 
 
 
-jest.setTimeout(40000)
+jest.setTimeout(60000)
 module.exports = functions;

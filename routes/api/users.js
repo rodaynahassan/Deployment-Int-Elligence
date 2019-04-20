@@ -490,17 +490,16 @@ router.post('/CreatingForm', passport.authenticate('jwt', { session: false }), a
 router.delete('/delete',  passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
         
-        const id = req.user.id
-        var SpecificUser = await userController.search('_id', id)
+        var SpecificUser = await userController.search('_id', req.user.id)
         if (!SpecificUser) return res.json({ msg: 'This user doesnt exist' })
         for (i = 0; i < SpecificUser.forms.length; i++) {
             if (SpecificUser.forms[i].status === 'Unassigned') {
                 var formId = SpecificUser.forms[i]._id
                 await formController.remove('_id', formId)
             }
-            const deletedUser = await userController.remove('_id', id)
-            res.json({ msg: 'User was deleted successfully', data: deletedUser })
         }
+        const deletedUser = await userController.remove('_id', req.user.id)
+        res.json({ msg: 'User was deleted successfully', data: deletedUser })
     }
     catch (error) {
         console.log(error)
@@ -1000,6 +999,21 @@ router.post('/changePassword', passport.authenticate('jwt', { session: false }) 
     else
         return res.json({ msg: 'The passwords do not match!' })
 })
+
+//Paying fees
+router.put('/PayingFees',async(req,res)=>{
+    const user = await  userController.search('_id', req.body.id)
+    const newValue = user.financialBalance - req.body.financialBalance
+    if(newValue < 0){
+        return res.json({msg: "Amount is greater than the required"})
+    } else{
+    const returnedUser = await userController.update('_id',req.body.id, { financialBalance: newValue })
+    return res.json({msg : 'Amount Payed Successfully',data: returnedUser})
+    }
+})
+
+
+
 
 
 // //update a user 

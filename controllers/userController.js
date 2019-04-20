@@ -83,6 +83,7 @@ exports.update = async function update(att, value, body){
         }
         if(body.userType==='Investor'){
             const isValidated = validator.updateValidationI(body)
+            
              if (isValidated.error) return { error: isValidated.error.details[0].message }
         }
         if(body.userType==='Reviewer'){

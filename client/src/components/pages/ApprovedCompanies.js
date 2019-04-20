@@ -32,7 +32,7 @@ class ApprovedCompanies extends Component {
       render(){
         trans.setLanguage(this.props.lang)
         return (
-          <div  style={{paddingLeft:'60px',flexDirection: 'row', justifyContent: 'flex-end'}} >
+          <div  style={{marginTop:'80px',flexDirection: 'row', justifyContent: 'flex-end'}} >
            <div style={{backgroundColor:"#123456" , textAlign:"center", fontSize:"50px" , color:"white" }} >{trans.title}</div>
           <Table striped bordered hover variant="gamed" size="sm">
             <thead>

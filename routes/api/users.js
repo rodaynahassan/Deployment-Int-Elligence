@@ -275,7 +275,7 @@ router.get('/CertainAttributes',  passport.authenticate('jwt', { session: false 
 
     const userid=req.user.id
     const searchUsers=await userController.search('_id',userid)
-    return res.json({Username:searchUsers.name,Gender:searchUsers.gender,Nationality: searchUsers.nationality,IdentificationType:searchUsers.identificationType,IdentificationNumber:searchUsers.identificationNumber,Birthdate:searchUsers.birthdate,Address:searchUsers.address,Email:searchUsers.email,Password:searchUsers.password,Telephone:searchUsers.telephone,Fax:searchUsers.fax})
+    return res.json({Username:searchUsers.name,Gender:searchUsers.gender,Nationality: searchUsers.nationality,IdentificationType:searchUsers.identificationType,IdentificationNumber:searchUsers.identificationNumber,Birthdate:searchUsers.birthdate,Address:searchUsers.address,Email:searchUsers.email,Password:searchUsers.password,Telephone:searchUsers.telephone,Fax:searchUsers.fax,FinancialBalance:searchUsers.financialBalance})
 })
 
 

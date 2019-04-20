@@ -1,3 +1,4 @@
+
 import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 
 // Be sure to include styles at some point, probably during your bootstraping
@@ -13,7 +14,7 @@ class Side extends Component{
         document.location.href='/'
     }
 render(){ 
-     
+    
     var profile = <NavItem eventKey="home">
         <NavIcon>
         <a href="/profile">
@@ -30,7 +31,7 @@ render(){
     var signout = <NavItem eventKey="home">
     <NavIcon>
     <a onClick={this.logOut}>
-        <i className=" 	fas fa-sign-in-alt" style={{ fontSize: '1.75em'  }} ></i>
+        <i className="  fas fa-sign-in-alt" style={{ fontSize: '1.75em'  }} ></i>
         </a>
     </NavIcon>
     <NavText >
@@ -44,9 +45,9 @@ render(){
     onSelect={(selected) => {
         
     }}
-    style={{backgroundColor:"#123456", height:"100%" , position:"fixed"}}
+    style={{backgroundColor:"dark", height:"100%" , marginRight:"20%",position:"absolute",left:"96%",right:"0",zIndex:"2"}}
 >
-    <SideNav.Toggle />
+    {/* <SideNav.Toggle  /> */}
     <SideNav.Nav >
         <NavItem eventKey="home">
             <NavIcon>
@@ -59,6 +60,7 @@ render(){
                 Home
                 </a>
             </NavText>
+            <NavItem/>
         </NavItem>
         <NavItem eventKey="electronic journal">
             <NavIcon>
@@ -118,6 +120,7 @@ render(){
         </NavItem>
         {localStorage.getItem('isLoggedIn')==='true'? profile:null}
         {localStorage.getItem('isLoggedIn')==='true'? signout:null}
+       
     </SideNav.Nav>
 </SideNav>
 )
@@ -125,3 +128,4 @@ render(){
 }
 
 export default Side
+

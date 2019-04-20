@@ -20,6 +20,7 @@ import SSCForm from './components/pages/SSCForm'
 import FlippingCard from './components/form/FlippingCard'
 import Companies from './components/pages/Companies'
 import Side from './components/layout/Side'
+import NewNavBar from './components/layout/NewNavBar'
 import SortSpecificUserCaseDate from './components/form/SortByDate'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar1 from './components/NavBar';
@@ -74,12 +75,14 @@ class App extends Component {
         document.location.href='/editspcform'
     }
   render() {
+    var currentLocation = window.location.pathname;
     return (
+
 <Provider store = { store }>
       <Router>
     
       
-     <Side changelang={this.changelang}  />
+     
       <div>
      
 
@@ -87,7 +90,6 @@ class App extends Component {
            <LandingBody {...props} lang={this.state.lang}/>
         )}/>
       <Route path='/login' render={(props) => <Login {...props}  lang={this.state.lang}/>}/>
-     
       <Route path='/profile' render={(props) => <Profile {...props}  lang={this.state.lang}/>}/>
       <Route path='/profileI' render={(props) => <ShowProfileI {...props}  lang={this.state.lang}/>}/>
       <Route path='/profileLR' render={(props) => <ShowProfileLR {...props}  lang={this.state.lang}/>}/>
@@ -106,9 +108,7 @@ class App extends Component {
       <Route path='/dropDownGovernorate' component={ DropdownGovernorates}/>
       <Route path='/unassignedForm'  render={(props) => <UnassignedForm {...props}  lang={this.state.lang}/>}/>
       <Route path='/lawyerAcceptedForms'  render={(props) => <AssignToReviewer {...props}  lang={this.state.lang}/>}/>
-  
       <Route path='/GetReviewer' component={GetCaseReviewer}/>
-      
       <Route path='/editprofile'  render={(props) => <EditProfile {...props}  lang={this.state.lang}/>}/>
       <Route path='/editspcform' render={(props) => <EditSPCForm {...props}  formId={this.state.formId}/>}/>
       <Route path='/editsscform' render={(props) => <EditSSCForm {...props}  formId={this.state.formId}/>}/>
@@ -118,7 +118,9 @@ class App extends Component {
       <Route path='/getCaseLawyerSSC' render={(props) => <GetCaseLawyerSSC {...props}  lang={this.state.lang} />}/>
       <Route path='/getCaseLawyerSPC' render={(props) => <GetCaseLawyerSPC {...props}  lang={this.state.lang} />}/>
       </div>
-          <Footer/>
+    
+    {currentLocation==='/'?<Side changelang={this.changelang}  />:<NewNavBar changelang={this.changelang}/>}
+    <Footer/>
       </Router>
       </Provider>
         )}

@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
-const Admin = require('../Models/Admin');
-const adminValidator = require('../Validation/adminValidations')
-const userValidator = require('../Validation/UserValidation')
-const User = require('../Models/User')
+const Admin = require('../models/Admin');
+const adminValidator = require('../validations/adminValidations')
+const userValidator = require('../validations/userValidations')
+const User = require('../models/User')
 const bcrypt = require('bcrypt');
 
 
@@ -43,24 +43,32 @@ exports.create=async function create(body)
 
 
 exports.update = async function update(att,value,body){
-    var isValidated = undefined
-    isValidated = adminValidator.updateValidation(body)
-    if(isValidated.error) return {error: isValidated.error.details[0].message}
+    try{
+    // var isValidated = undefined
+    
     if(!att){
         return null
     }
     if(att==='id'){
-        
-        const  admin1= await Admin.findByIdAndUpdate(value,body)
-        const admin = await Admin.findById(value)
-        return admin
+        var isValidated = adminValidator.updateValidation(body)
+        if(isValidated.error) return {error: isValidated.error.details[0].message}
+        var updatedAdmin = await Admin.findByIdAndUpdate(value,body)
+        .then(res=>{return res})
+        .catch(error=>{
+           return {error:error}
+       })
+       if (updatedAdmin.error) return updatedAdmin
+        var returnedAdmin = await Admin.findById(value)
+        return returnedAdmin
     }
     else{
         const  admins = await Admin.updateMany({ att: value },body)
         return admins
     }
-    
-
+}
+    catch(error){
+        console.log(error)
+    }
 }
 exports.remove = async function remove(att,value){
     if(!att){

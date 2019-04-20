@@ -1,6 +1,4 @@
 const Joi = require('joi')
-//const Form = require('../Validations/formValidations')
-//require('mongoose-type-url');
 
 
 module.exports = {

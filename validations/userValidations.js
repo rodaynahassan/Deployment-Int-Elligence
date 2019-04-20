@@ -73,6 +73,7 @@ module.exports = {
 
     updateValidationL: request => {                                     //update for lawyer
         const updateSchema = {
+            userType: Joi.string().valid('Lawyer'),
             name: Joi.string().max(50).min(3),
             gender:Joi.string().max(6).min(4),
             nationality: Joi.string().max(50),
@@ -95,6 +96,7 @@ module.exports = {
 
     updateValidationI: request => {                                     //update for investor
         const updateSchema = {
+            userType: Joi.string().valid('Investor'),
             name: Joi.string().max(50).min(3),
             gender:   Joi.string().max(6).min(4),
             nationality: Joi.string().max(50),
@@ -115,6 +117,7 @@ module.exports = {
     }, 
     updateValidationR: request => {                                             //update for reviewer
         const updateSchema = {
+            userType: Joi.string().valid('Reviewer'),
         name: Joi.string().max(50).min(3),
         gender:   Joi.string().max(6).min(4),
         nationality: Joi.string().max(50),

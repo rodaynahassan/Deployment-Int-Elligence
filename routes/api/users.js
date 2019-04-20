@@ -1,12 +1,11 @@
-
 const express = require('express');
 const Joi = require('joi');
 const router = express.Router();
 const formController = require('../../controllers/formController')
 const userController = require('../../controllers/userController')
-const User = require('../../Models/User')
-const Admin = require('../../Models/Admin')
-const validator = require('../../Validation/UserValidation')
+const User = require('../../models/User')
+const Admin = require('../../models/Admin')
+const validator = require('../../validations/userValidations')
 const notifications = require('../../helpers/notifications')
 
 const bcrypt = require('bcrypt');
@@ -14,27 +13,6 @@ const jwt = require('jsonwebtoken')
 const tokenKey = require('../../config/keys_dev').secretOrKey
 const passport = require('passport')
 require('../../config/passport')(passport)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // //       for testing!!!!!!!!
 // router.get('/getInvestorName',passport.authenticate('jwt', {session: false}) ,async (req,res) => {
@@ -490,17 +468,17 @@ router.post('/CreatingForm', passport.authenticate('jwt', { session: false }), a
 router.delete('/delete',  passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
         
-        const id = req.user.id
-        var SpecificUser = await userController.search('_id', id)
+        //const id = req.user.id
+        var SpecificUser = await userController.search('_id', req.user.id)
         if (!SpecificUser) return res.json({ msg: 'This user doesnt exist' })
         for (i = 0; i < SpecificUser.forms.length; i++) {
             if (SpecificUser.forms[i].status === 'Unassigned') {
                 var formId = SpecificUser.forms[i]._id
                 await formController.remove('_id', formId)
             }
-            const deletedUser = await userController.remove('_id', id)
-            res.json({ msg: 'User was deleted successfully', data: deletedUser })
         }
+        const deletedUser = await userController.remove('_id', req.user.id)
+        res.json({ msg: 'User was deleted successfully', data: deletedUser })
     }
     catch (error) {
         console.log(error)
@@ -519,9 +497,6 @@ router.post('/register', async (req, res) => {
         return res.json({ msg: 'Account was created successfully', data: returnedUser })
     }
     return res.json({ msg: 'Account was created successfully', data: newUser })
-
-
-
 })
 
 

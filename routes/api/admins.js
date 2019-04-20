@@ -2,15 +2,14 @@
 const express = require('express');
 const uuid = require('uuid');
 const router = express.Router();
-const validator = require('../../Validation/adminValidations')
+const validator = require('../../validations/adminValidations')
 const adminController = require('../../controllers/adminController')
 const formController = require('../../controllers/formController')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 const tokenKey = require('../../config/keys').secretOrKey
-// Models
-const Admin = require('../../Models/Admin');
-const Forms = require('../../Models/Form');
+const Admin = require('../../models/Admin');
+const Forms = require('../../models/Form');
 
 const passport = require('passport')
 require('../../config/passport')(passport)
@@ -36,19 +35,11 @@ require('../../config/passport')(passport)
 
 // })
 
-
-
-
-
-
-
-
 //get by ID
-router.get('/getById', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.get('/getById/', passport.authenticate('jwt', { session: false }), async (req, res) => {
     var admin = await adminController.search("id", req.user.id)
     return res.json({ data: admin });
 })
-
 
 // get all admins
 router.get('/', async (req, res) =>                                //redundant
@@ -59,20 +50,9 @@ router.get('/', async (req, res) =>                                //redundant
 
 //create admin           //not sure about it
 router.post('/createAdmin', async (req, res) => {
-
-
-
     const newAdmin = await adminController.create(req.body)
     return res.json({ data: newAdmin });
-
 })
-
-
-
-
-
-
-
 
 // sort cases by id
 router.get('/CasesSortedById', passport.authenticate('jwt', { session: false }), async (req, res) => {
@@ -86,9 +66,6 @@ router.get('/CasesSortedById', passport.authenticate('jwt', { session: false }),
     }
 })
 
-
-
-
 // sort cases by creation date
 router.get('/CasesSortedByCreationDate', passport.authenticate('jwt', { session: false }), async (req, res) => {
     if (req.user.userType === "Admin") {
@@ -101,15 +78,12 @@ router.get('/CasesSortedByCreationDate', passport.authenticate('jwt', { session:
     }
 })
 
-
-
-
 //get case/form by company name
 router.get('/getByCompanyName/:companyName', passport.authenticate('jwt', { session: false }), async (req, res) => {
     if (req.user.userType === "Admin") {
         const companyname = req.params.companyName
         const formRequested = await formController.search('companyName', companyname)
-        return res.json({ data: formRequested })
+        return res.json({data: formRequested })
     }
     else {
         return res.json({ msg: 'Non Authorized' })
@@ -118,9 +92,6 @@ router.get('/getByCompanyName/:companyName', passport.authenticate('jwt', { sess
 
 // update an admin
 router.put('/updateAdmin', passport.authenticate('jwt', { session: false }), async (req, res) => {
-
-
-
     const id = req.user.id
     if (req.user.userType === "Admin") {
         var admin = await adminController.update('id', id, req.body)

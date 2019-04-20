@@ -49,7 +49,7 @@ import GetCaseLawyerSPC from './components/pages/getCaseLawyerSPC'
 import GetCaseLawyerSSC from './components/pages/getCaseLawyerSSC'
 
 import Try from './components/try';
-
+import Aboutt from './components/pages/about'
 
 class App extends Component {
   constructor(){
@@ -81,7 +81,7 @@ class App extends Component {
       <Router>
     
       
-     <Side changelang={this.changelang}  />
+     {/* <Side changelang={this.changelang}  /> */}
       <div>
      
 
@@ -121,6 +121,7 @@ class App extends Component {
       <Route path='/getCaseLawyerSPC' render={(props) => <GetCaseLawyerSPC {...props}  lang={this.state.lang} />}/>
 
       <Route path='/try' render={(props) => <Try {...props}  lang={this.state.lang}/>}/>
+      <Route path='/aboutt' render={(props) => <Aboutt {...props}  lang={this.state.lang}/>}/>
       </div>
           <Footer/>
       </Router>

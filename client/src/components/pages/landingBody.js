@@ -15,7 +15,7 @@ import ReactDOM from 'react-dom';
 import Companies from '../pages/Companies'
 import Footer from '../layout/footer'
 import { Animate, AnimateGroup } from 'react-simple-animate';
-import Egypt from '../layout/Egypt.jpg'
+import egypt1 from '../layout/egypt.gif'
 import trans from '../translations/landingTranslation'
 
 class LandingBody extends Component {
@@ -58,7 +58,7 @@ class LandingBody extends Component {
         <Animate durationSeconds= "0.6" endStyle={{ opacity: 1, transform: 'translateY(-10px)' }} 
         startStyle={{ opacity: 0, transform: 'translateY(0)' }} sequenceIndex={6} ><h1 style={{fontSize:"100px", textShadow: '-2px 0 white, 0 2px white, 2px 0 white, 0 -2px white' }}>I&nbsp;</h1></Animate>
          <Animate durationSeconds= "0.6" endStyle={{ opacity: 1, transform: 'translateY(-10px)' }} 
-        startStyle={{ opacity: 0, transform: 'translateY(0)' }} sequenceIndex={7} ><img src={Egypt} height="50px" width="80px" /></Animate>
+        startStyle={{ opacity: 0, transform: 'translateY(0)' }} sequenceIndex={7} ><img src={egypt1} height="50px" width="80px" /></Animate>
   </view>
   </AnimateGroup>
           <div style={{height:"570px"}}>

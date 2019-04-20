@@ -1,10 +1,10 @@
 import  React, { Component } from 'react';
 import axios from 'axios';
 import '../../App.css';
-//import Table from 'react-bootstrap/Table';
 import {Button} from 'react-bootstrap';
 import "mdbreact/dist/css/mdb.css";
 import FlippingUnassignedForms from '../form/FlippingUnassignedForms';
+import trans from '../translations/unassignedTranslation'
 class unassignedForm extends Component 
 {
     state={
@@ -28,11 +28,11 @@ class unassignedForm extends Component
           }
         render(){
             return (
-               
+              <div>
+              <div style={{backgroundColor:"#96aab3" , textAlign:"center", fontSize:"50px" , color:"white" ,paddingLeft:'60px',flexDirection: 'row', justifyContent: 'flex-end'}} >{trans.title}</div>   
              <div  style={{display:"flex" , flexWrap:"wrap",alignItems:"right" , justifyContent:"right"}}>
-              <Button variant="nada" block disabled><h1>unassigned Tasks to PICK  </h1></Button>
-             
-                  {this.tabRow()} 
+              {this.tabRow()} 
+             </div>
              </div>
             )
               

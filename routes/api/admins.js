@@ -14,16 +14,7 @@ const Forms = require('../../Models/Form');
 
 const passport = require('passport')
 require('../../config/passport')(passport)
-
-
-
-
-
-
-
-
-
-// //       for testing!!!!!!!!
+ //       for testing!!!!!!!!
 // router.get('/getInvestorName',passport.authenticate('jwt', {session: false}) ,async (req,res) => {
 //     // You can access the logged in user through req.user
 //     // Add your authorization rules accordingly
@@ -35,13 +26,6 @@ require('../../config/passport')(passport)
 //     // return res.json({data: req.user})
 
 // })
-
-
-
-
-
-
-
 
 //get by ID
 router.get('/getById', passport.authenticate('jwt', { session: false }), async (req, res) => {
@@ -67,13 +51,6 @@ router.post('/createAdmin', async (req, res) => {
 
 })
 
-
-
-
-
-
-
-
 // sort cases by id
 router.get('/CasesSortedById', passport.authenticate('jwt', { session: false }), async (req, res) => {
     if (req.user.userType === "Admin") {
@@ -86,9 +63,6 @@ router.get('/CasesSortedById', passport.authenticate('jwt', { session: false }),
     }
 })
 
-
-
-
 // sort cases by creation date
 router.get('/CasesSortedByCreationDate', passport.authenticate('jwt', { session: false }), async (req, res) => {
     if (req.user.userType === "Admin") {
@@ -100,10 +74,6 @@ router.get('/CasesSortedByCreationDate', passport.authenticate('jwt', { session:
         return res.json({ msg: 'Non Authorized' })
     }
 })
-
-
-
-
 //get case/form by company name
 router.get('/getByCompanyName/:companyName', passport.authenticate('jwt', { session: false }), async (req, res) => {
     if (req.user.userType === "Admin") {

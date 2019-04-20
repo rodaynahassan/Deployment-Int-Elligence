@@ -8,22 +8,7 @@ import { MDBRow, MDBCol } from "mdbreact";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import axios from 'axios';
 
-
-
-
-
-
-
 class Register extends Component {
-
-
-
-
-
-
-
-
-
     constructor(props) {
         super(props);
         this.state = {
@@ -59,10 +44,6 @@ class Register extends Component {
             [e.target.name]: e.target.value
         })
     }
-
-
- 
-
     handleSubmit(e) {
         e.preventDefault();
         var payload = {
@@ -82,9 +63,6 @@ class Register extends Component {
 
         }
         this.props.registerUser(payload,this.props.history);
-       
-
-
     }
 
     componentWillReceiveProps(nextProps) {
@@ -102,11 +80,6 @@ class Register extends Component {
             this.setState({nationalities : res.data.data})
         })
     }
-
-
-
-
-
     validateForm() {
 
         return this.state.email.length >= 3 && this.state.email.length <= 50
@@ -118,10 +91,6 @@ class Register extends Component {
             && this.state.password === this.state.password_confirm
 
     }
-
-
-
-
     render() {
         const { errors } = this.state;
 
@@ -180,10 +149,6 @@ class Register extends Component {
                       
                   </select>
                 </div>
-             
-
-
-
                     <MDBRow>
                             <MDBCol>
                                 <div className="form-group">
@@ -336,10 +301,7 @@ class Register extends Component {
                         />
                         {errors.fax && (<div className="invalid-feedback">{errors.fax}</div>)}
                     </div>
-
-
-                
-                         <MDBRow>
+                    <MDBRow>
                             <MDBCol>
                                 <div className="form-group">
                                     <label htmlFor="investorType">Investor Type</label>

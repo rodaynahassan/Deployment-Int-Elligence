@@ -32,10 +32,7 @@ test('Test getting all forms ', async () => {
      await funcs.deleteForm(res.data.data[res.data.data.length-1]._id) 
      }
      catch(error){
-        
-  
-
-      }
+    }
 }
 )
 //testing getting specific form

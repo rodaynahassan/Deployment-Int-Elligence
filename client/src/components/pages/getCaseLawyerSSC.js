@@ -5,6 +5,8 @@ import Table from 'react-bootstrap/Table';
 import {Button} from 'react-bootstrap';
 import "mdbreact/dist/css/mdb.css";
 import GetAllUserForms from '../form/GetAllUserForms';
+import {Dropdown} from 'react-bootstrap';
+var $ = require("jquery")(window);
 
 class Companies extends Component {
     state = {
@@ -41,12 +43,22 @@ class Companies extends Component {
       render(){
         return (
              
-          <div style={{paddingLeft:"60px"}}>
+          <div>
            
-          <Button variant="nada" block disabled><h1>specific lawyer cases</h1></Button>
-          <Button variant="dark" onClick={()=>this.sort()}>Sort the cases by ID </Button> 
-          <Button variant="dark" onClick={()=>this.sortByCreationDate()}>Sort the cases by CreationDate </Button> 
-           
+           <div >
+          <div style={{backgroundColor:"#96aab3" , textAlign:"center", fontSize:"50px" , color:"white" ,paddingLeft:'60px',flexDirection: 'row', justifyContent: 'flex-end'}} >Specific lawyer case <br/>
+          <Dropdown>
+            <Dropdown.Toggle variant="omar" id="dropdown-basic">
+              Sort the Cases
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={()=>this.sort()} style={{textAlign:'left'}}>By ID</Dropdown.Item>
+              <Dropdown.Divider/>
+              <Dropdown.Item onClick={()=>this.sortByCreationDate()} style={{textAlign:'center'}}>By Creation Date</Dropdown.Item>
+            </Dropdown.Menu>
+            </Dropdown>
+            </div>
+            </div>
             <Table stripped bordered hover variant='dark' size='sm'>
             <thead>
               <tr>

@@ -3,7 +3,6 @@ import {Button} from 'react-bootstrap';
 import Mongoose from 'mongoose';
 import axios from 'axios';
 import "mdbreact/dist/css/mdb.css";
-import comp2 from '../layout/comp2.jpg'
 import Flippy , {FrontSide , BackSide} from "react-flippy";
 class FlippingAssignReviewer extends Component
  {
@@ -19,42 +18,41 @@ class FlippingAssignReviewer extends Component
     {
         return(
         <Flippy
-            flipOnHover={true} 
+            flipOnHover={false} 
             flipOnClick={true} 
             flipDirection="horizontal" 
             ref={(r) => this.flippy = r} 
-            style={{ width: "450px" , height: '400px' }} 
+            style={{ width: "100%" , height: '425px' }} 
           >
             <FrontSide
                style={{
                 borderStyle: 'solid',
                 borderWidth:'5px',
-                backgroundImage: "url(" +  comp2  + ")",
                 backgroundSize: "464px 400px"
                }}
              >
              <div style={{textAlign:'center' ,fontSize:'50px' , textShadow:'-2px 0 white, 0 2px white, 2px 0 white, 0 -2px white'}}>
+             <h1 style = {{textShadow:'-1px 0 white, 0 1px white, 1px 0 white, 0 -1px white', fontSize:'100px'}}>{this.props.assignToReviewer.companyName} </h1><br/>
+             <h5 style={{textShadow:'-1px 0 white, 0 1px white, 1px 0 white, 0 -1px white', color:'#2e5a7c'}}>Press here to view details</h5> 
+             <Button type="button" variant="omar" onClick={()=>(this.AssignReviewer(this.props.assignToReviewer._id), alert('This Case is assigned to YOU!!'))}class="btn btn-info">Pick Case</Button>
             
-               {this.props.assignToReviewer.companyName} <br/> <br/><br/> <br/> 
-               <h5 style={{textShadow:'-1px 0 white, 0 1px white, 1px 0 white, 0 -1px white'}}>Hover here to Pick Case</h5> 
-               </div>
+             </div>
             </FrontSide>
             <BackSide
-               style={{ backgroundColor: '#e8e6da', borderStyle: 'solid',borderWidth:'5px'}}>
-                <div style={{textAlign:'center'}}>
-                Name In English : {this.props.assignToReviewer.companyNameInEnglish} <br/>
-                Governate : {this.props.assignToReviewer.companyGovernorate} <br/>
-                City : {this.props.assignToReviewer.companyCity} <br/>
-                Address : {this.props.assignToReviewer.companyAddress} <br/>
-                Telephone : {this.props.assignToReviewer.companyTelephone} <br/>
-                Fax : {this.props.assignToReviewer.companyFax} <br/>
-                Currency : {this.props.assignToReviewer.currency} <br/>
-                Equity Capital : {this.props.assignToReviewer.equityCapital}<br/>
-                Type : {this.props.assignToReviewer.type}<br/>
-                Creation Date : {this.props.assignToReviewer.creationDate}<br/>
-                <Button variant="nada" block onClick={()=>(this.AssignReviewer(this.props.assignToReviewer._id), alert('You can Review this Case'))}><h3>PICK CASE</h3></Button>
-                       
-                 </div>
+              style={{ backgroundColor: '#e8e6da', borderStyle: 'solid',borderWidth:'5px' , paddingLeft:'60px'}}>
+              {/* <div style={{textAlign:'center'}}> */}
+            <h3><i class="fas fa-genderless"></i> Name In English :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#2e5a7c'}}>{this.props.assignToReviewer.companyNameInEnglish}</span> </h3> 
+            <h5> <i class="fas fa-genderless"></i>Governorate :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#2e5a7c'}}>{this.props.assignToReviewer.companyGovernorate}</span> </h5>
+            <h5> <i class="fas fa-genderless"></i>City :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#2e5a7c'}}>{this.props.assignToReviewer.companyCity}</span> </h5>
+            <h5><i class="fas fa-genderless"></i> Address :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#2e5a7c'}}>{this.props.assignToReviewer.companyAddress}</span> </h5>
+            <h5><i class="fas fa-genderless"></i> Telephone :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#2e5a7c'}}>{this.props.assignToReviewer.companyTelephone}</span> </h5>
+            <h5><i class="fas fa-genderless"></i> Fax :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#2e5a7c'}}>{this.props.assignToReviewer.companyFax}</span> </h5>
+            <h5><i class="fas fa-genderless"></i> Currency :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#2e5a7c'}}>{this.props.assignToReviewer.currency}</span> </h5>
+            <h5><i class="fas fa-genderless"></i> Equity Capital :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#2e5a7c'}}>{this.props.assignToReviewer.equityCapital}</span> </h5>
+            <h5> <i class="fas fa-genderless"></i>Type :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#2e5a7c'}}>{this.props.assignToReviewer.type}</span> </h5>
+            <h5> <i class="fas fa-genderless"></i>creation Date :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#2e5a7c'}}>{this.props.assignToReviewer.creationDate}</span> </h5>
+ {/* borderInLineStartWidth */}
+           {/* </div> */}
             </BackSide>
           </Flippy>
         )

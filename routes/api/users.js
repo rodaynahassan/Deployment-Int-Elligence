@@ -14,20 +14,6 @@ const jwt = require('jsonwebtoken')
 const tokenKey = require('../../config/keys_dev').secretOrKey
 const passport = require('passport')
 require('../../config/passport')(passport)
-
-// //       for testing!!!!!!!!
-// router.get('/getInvestorName',passport.authenticate('jwt', {session: false}) ,async (req,res) => {
-//     // You can access the logged in user through req.user
-//     // Add your authorization rules accordingly
-//     const userid=req.user.id
-//     const user= await userController.search('_id',userid)
-//     const name= user.name
-//     return res.json({ data: name  });
-
-//     // return res.json({data: req.user})
-
-// })
-
 const axios = require('axios');
 
 
@@ -44,15 +30,6 @@ router.get('/AllformsSortedByformDate/', passport.authenticate('jwt', { session:
 
 })
 
-
-// //sort forms by id as a lawyer 
-// router.get('/formSortedByformId/', async (req, res) => { // sort forms by form id
-//     var forms = await Forms.find()
-//     forms.sort(compareById)
-//     return res.json({ data: forms });
-// })
-
-
 //sort all forms by id as a lawyer 
 router.get('/AllFormSortedByFormId/', passport.authenticate('jwt', { session: false }), async (req, res) => {  // sort all forms by form id
     if (req.user.userType === "Lawyer" || req.user.userType === "Reviewer") {
@@ -63,8 +40,6 @@ router.get('/AllFormSortedByFormId/', passport.authenticate('jwt', { session: fa
         return res.json({ msg: "Non Authorized" });
     }
 })
-
-
 //sort by form creation date for a specific user
 router.get('/SpecificformsSortedByformDate', passport.authenticate('jwt', { session: false }), async (req, res) => {
     const userid = req.user.id
@@ -92,8 +67,6 @@ router.get('/SpecificFormSortedByFormId', passport.authenticate('jwt', { session
     }
 
 })
-
-
 //get all lawyers 
 router.get('/getAllLawyers', async (req, res) => {
     const userType = await userController.search('userType', 'Lawyer')
@@ -109,10 +82,6 @@ router.get('/getAllReviewers', async (req, res) => {
     const userType = await userController.search('userType', 'Reviewer')
     return res.json({ data: userType })
 })
-
-
-
-
 router.get('/getInProgressSPCCases/',passport.authenticate('jwt', { session: false }),async(req,res) => {
     const userid = req.user.id
     if(req.user.userType==='Investor'||req.user.userType==='Lawyer'){
@@ -178,8 +147,6 @@ else {
 }
 
 })
-
-
 router.get('/getUserFormsSPC/', passport.authenticate('jwt', { session: false }),async(req, res)=>{
     const userId = req.user.id
     if(req.user.userType==='Lawyer'|| req.user.userType==='Reviewer'){
@@ -222,12 +189,8 @@ router.get('/CertainAttributes',  passport.authenticate('jwt', { session: false 
 
     const userid=req.user.id
     const searchUsers=await userController.search('_id',userid)
-    return res.json({Username:searchUsers.name,Gender:searchUsers.gender,Nationality: searchUsers.nationality,IdentificationType:searchUsers.identificationType,IdentificationNumber:searchUsers.identificationNumber,Birthdate:searchUsers.birthdate,Address:searchUsers.address,Email:searchUsers.email,Password:searchUsers.password,Telephone:searchUsers.telephone,Fax:searchUsers.fax})
+    return res.json({Username:searchUsers.name,Gender:searchUsers.gender,Nationality: searchUsers.nationality,IdentificationType:searchUsers.identificationType,IdentificationNumber:searchUsers.identificationNumber,Birthdate:searchUsers.birthdate,Address:searchUsers.address,Email:searchUsers.email,Password:searchUsers.password,Telephone:searchUsers.telephone,Fax:searchUsers.fax,FinancialBalance:searchUsers.financialBalance})
 })
-
-
-
-
 
 //view the financialBalance of an investor
 router.get('/getTheFinancialBalance', passport.authenticate('jwt', { session: false }), async (req, res) => {
@@ -241,8 +204,6 @@ router.get('/getTheFinancialBalance', passport.authenticate('jwt', { session: fa
         return res.json({ msg: "Non Authorized" })
     }
 })
-
-
 // View lawyer comments of specific form of investor 
 router.get('/getLaywerCommentsOfInvestorsform', passport.authenticate('jwt', { session: false }), async (req, res) => {
     var userid = req.user.id
@@ -413,16 +374,6 @@ router.post('/register', async (req, res) => {
 
 
 })
-
-
-// router.post('/register', async (req, res) => {                       //register Investor
-//     const newUser = await userController.registerInvestor(req.body)
-//     if (newUser.error) return res.status(400).send(newUser)
-
-//     return res.json({ msg: 'Account was created successfully', data: newUser })
-// })
-
-
 //Login
 router.post('/login', async (req, res) => {
     try {
@@ -562,8 +513,12 @@ router.put('/accept/:formId',passport.authenticate('jwt', { session: false }), a
         user.forms = reviewerForms
         lawyer.forms = lawyerForms
         investorForms.push(returnedForm)
-        investor.forms = investorForms
+        investor.form= investorForms
+        
+        
+        
          if (investorid.equals(lawyerid)) {
+            investor.forms = investorForms
             const returnedInvestor = await userController.update('_id', investorid, { forms: investor.forms })
             const returnedReviewer = await userController.update('_id', userid, { forms: user.forms })
             return res.json({ data: returnedReviewer,returnedInvestor })
@@ -710,13 +665,6 @@ router.put('/updateForm/:formId', passport.authenticate('jwt', { session: false 
     }
 
 })
-
-
-
-
-
-
-
 //as an investor i should be able to view my companies
 router.get('/getApprovedCompanies', passport.authenticate('jwt', { session: false }), async (req, res) => {
     const userid = req.user.id
@@ -739,18 +687,6 @@ router.get('/getApprovedCompanies', passport.authenticate('jwt', { session: fals
         res.json({ msg: 'Non Authorized' })
     }
 })
-
-
-
-
-
-
-
-
-
-
-
-
 //get the form of the lawyer/Reviewer 
 router.get('/getforms', passport.authenticate('jwt', { session: false }), async (req, res) => {
     const userid = req.user.id
@@ -763,19 +699,6 @@ router.get('/getforms', passport.authenticate('jwt', { session: false }), async 
         return res.json({ msg: 'Non Authorized' })
     }
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
 // as a lawyer i can make a comment
 router.put('/lawyerComments/:formId', passport.authenticate('jwt', { session: false }), async (req, res) => {
     const userid = req.user.id
@@ -811,18 +734,6 @@ router.put('/lawyerComments/:formId', passport.authenticate('jwt', { session: fa
         return res.json({ msg: 'Non Authorized' })
     }
 });
-
-
-
-
-
-
-
-
-
-
-
-
 //as a reviewer i can make a comment
 router.put('/reviewerComments/:formId', passport.authenticate('jwt', { session: false }), async (req, res) => {
     const userid = req.user.id

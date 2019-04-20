@@ -10,11 +10,6 @@ class Companies extends Component {
       companies:[]
     }
     componentDidMount(){
-
-
-     
-
-      
       axios.get('http://localhost:5000/routes/api/forms/getApprovedCompany')
       .then(res => {
         if(Array.isArray(res.data.data)){
@@ -22,14 +17,15 @@ class Companies extends Component {
       }})}
       tabRow = () => {
         return this.state.companies.map((company,i)=>{
-          return <FlippingCard lang={this.props.lang} company={company} key={i}/>  // return <GetAllCompanies company={company} key={i} />;
+          return <FlippingCard lang={this.props.lang} company={company} key={i}/>  
+          // return <GetAllCompanies company={company} key={i} />;
         });
       }
       render(){
         trans.setLanguage(this.props.lang)
         return ( 
          <div >
-          <div style={{backgroundColor:"#123456" , textAlign:"center", fontSize:"50px" , color:"white" ,paddingLeft:'60px',flexDirection: 'row', justifyContent: 'flex-end'}} >{trans.title}</div>  
+          <div style={{backgroundColor:"#96aab3" , textAlign:"center", fontSize:"50px" , color:"white" ,paddingLeft:'60px',flexDirection: 'row', justifyContent: 'flex-end'}} >{trans.title}</div>  
             <div style={{display:"flex" , flexWrap:"wrap",alignItems:"right" , justifyContent:"right"}}>
               {this.tabRow()}
             </div>

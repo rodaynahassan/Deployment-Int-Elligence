@@ -44,7 +44,7 @@ class EditProfile extends React.Component{
                 nationality: response.data.Nationality,
                 identificationType: response.data.IdentificationType,
                 identificationNumber: response.data.IdentificationNumber,
-                birthdate: response.data.Birthdate,
+                birthdate: response.data.Birthdate.substring(0,9),
                 address: response.data.Address,
                 email:response.data.Email,
                 telephone: response.data.Telephone,

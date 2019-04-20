@@ -2,15 +2,15 @@ import React from "react";
 import { MDBCard, MDBCardTitle, MDBCardGroup, MDBCardImage, MDBCardText, MDBCardBody } from "mdbreact";
 import back from '../../backkk.jpeg'
 import pillar from '../../pillars.jpeg'
-import first from '../../1st.jpeg'
-import second from '../../2nd.jpeg'
-import third from '../../3rd.jpeg'
+import first from '../../1stt.jpeg'
+import second from '../../2ndd.jpeg'
+import third from '../../3rdd.jpeg'
 
 const CardExample = () => {
   return (
     <MDBCardGroup>
       <MDBCard>
-        <MDBCardImage src={first} alt="MDBCard image cap" top hover
+        <MDBCardImage src={third} alt="MDBCard image cap" top hover
           overlay="white-slight" />
         <MDBCardBody>
           <MDBCardTitle tag="h3">Who We Are</MDBCardTitle>
@@ -36,7 +36,7 @@ const CardExample = () => {
       </MDBCard>
 
       <MDBCard>
-        <MDBCardImage src={third} alt="MDBCard image cap" top hover
+        <MDBCardImage src={first} alt="MDBCard image cap" top hover
           overlay="white-slight" />
         <MDBCardBody>
           <MDBCardTitle tag="h3">Five Main Pillars</MDBCardTitle>

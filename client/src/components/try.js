@@ -313,7 +313,7 @@ class Register extends React.Component {
         var Submit = <div>
             <form>
                 <div className="form-group">
-                        <button type="submit"
+                <button type="submit"
                         disabled={!this.validateForm()}
                         onClick={(e) => (this.handleSubmit(e), alert('The Account has been created successfully'))}
                         className="btn blue-gradient btn-block btn-rounded z-depth-1a"
@@ -351,7 +351,7 @@ class Register extends React.Component {
                {this.state.activeStep===2?Submit:null}
 
                   <div>
-                    <button
+                  <button
                       disabled={activeStep === 0}
                       onClick={this.handleBack}
                     // className={classes.button}

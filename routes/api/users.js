@@ -218,31 +218,11 @@ router.get('/getLaywerCommentsOfInvestorsform', passport.authenticate('jwt', { s
 })
 
 
-
-
-
-
-
-
-
-
-
-
-
 //get all users
 router.get('/getAllUsers', async (req, res) => {
     const searchUsers = await userController.search()
     res.json({ data: searchUsers })
 })
-
-
-
-
-
-
-
-
-
 
 // //As a User i can Create a form
 // router.post('/CreatingForm', passport.authenticate('jwt', { session: false }), async (req, res) => {
@@ -256,13 +236,6 @@ router.get('/getAllUsers', async (req, res) => {
 //     const returnedUser = await userController.update('_id', id, { forms: user.forms })
 //     return res.json({ data: returnedUser })
 // })
-
-
-
-
-
-
-
 
 //As a User i can Create a form
 router.post('/CreatingForm', passport.authenticate('jwt', { session: false }), async (req, res) => {
@@ -298,12 +271,6 @@ router.post('/CreatingForm', passport.authenticate('jwt', { session: false }), a
         return res.json({ msg: 'Non Authorized' })
     }
 })
-
-
-
-
-
-
 
 
 
@@ -367,22 +334,6 @@ router.post('/CreatingForm', passport.authenticate('jwt', { session: false }), a
 //     }
 
 // })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //When you delete a specific user , you delete the unassigned forms only
@@ -505,7 +456,7 @@ router.put('/CalculatingFees/:formId' ,passport.authenticate('jwt', { session: f
 
 //Accepting and updating financial balance of the investor
 router.put('/accept/:formId',passport.authenticate('jwt', { session: false }), async (req, res) => {
-    if (req.user.userType === "Lawyer" || req.user.userType === "Reviewer" ){
+    if ( req.user.userType === "Reviewer" || req.user.userType === "Lawyer" ){
     const userid = req.user.id;
     const formid = req.params.formId;
     const user = await userController.search('_id', userid)
@@ -564,17 +515,20 @@ router.put('/accept/:formId',passport.authenticate('jwt', { session: false }), a
         investorForms.push(returnedForm)
         investor.form= investorForms
         
-        if (investorid.equals(lawyerid)) {
+        
+        
+         if (investorid.equals(lawyerid)) {
+            investor.forms = investorForms
             const returnedInvestor = await userController.update('_id', investorid, { forms: investor.forms })
             const returnedReviewer = await userController.update('_id', userid, { forms: user.forms })
-            return res.json({ data: returnedReviewer })
+            return res.json({ data: returnedReviewer,returnedInvestor })
         }
         else {
             const updatedFinancialBalance = form.fees + investor.financialBalance
             const returnedInvestor = await userController.update('_id', investorid, { forms: investor.forms, financialBalance: updatedFinancialBalance })
             const returnedReviewer = await userController.update('_id', userid, { forms: user.forms })
             const returnedLawyer = await userController.update('_id', lawyerid, { forms: lawyer.forms })
-            return res.json({ data: returnedReviewer })
+            return res.json({ data: returnedReviewer,returnedInvestor })
         }
     }
     else {
@@ -657,17 +611,6 @@ router.put('/updateUser', passport.authenticate('jwt', { session: false }), asyn
     if (updateUser.error) return res.status(400).json(updateUser)
     return res.json({ msg: 'User Updated Successfully', data: updateUser })
 })
-
-
-
-
-
-
-
-
-
-
-
 
 
 //as a lawyer/reviewer/investor I should be able to view my in progress cases

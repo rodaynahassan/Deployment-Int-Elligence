@@ -11,9 +11,6 @@ class unassignedForm extends Component
         unassignedForms:[]
     }
     componentDidMount(){
-
-
-
      
       axios.defaults.headers.common['Authorization'] =  localStorage.getItem('jwtToken');
         axios.get('http://localhost:5000/routes/api/forms/getUnAssignedForm',{headers: { "Authorization": localStorage.getItem('jwtToken') }})
@@ -29,7 +26,7 @@ class unassignedForm extends Component
         render(){
             return (
               <div>
-              <div style={{backgroundColor:"#96aab3" , textAlign:"center", fontSize:"50px" , color:"white" ,paddingLeft:'60px',flexDirection: 'row', justifyContent: 'flex-end'}} >{trans.title}</div>   
+              <div style={{backgroundColor:"#96aab3" ,marginTop:"90px", textAlign:"center", fontSize:"50px" , color:"white" ,paddingLeft:'60px',flexDirection: 'row', justifyContent: 'flex-end'}} >{trans.title}</div>   
              <div  style={{display:"flex" , flexWrap:"wrap",alignItems:"right" , justifyContent:"right"}}>
               {this.tabRow()} 
              </div>

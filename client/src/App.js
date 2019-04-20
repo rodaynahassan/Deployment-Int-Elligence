@@ -28,7 +28,6 @@ import DropdownCities from './components/form/DropdownCities'
 import DropdownGovernorates from './components/form/DropdownGovernorates'
 import UnassignedForm from './components/pages/unassignedForm'
 import AssignToReviewer from './components/pages/assignToReviewer'
-import GetCaseSpecified from './components/pages/GetCaseSpecified'
 import GetCaseReviewer from './components/pages/GetCaseReviewer'
 import AddCommentsLawyer from './components/pages/AddCommentsLawyer'
 import EditProfile from './components/pages/EditProfile'
@@ -42,6 +41,8 @@ import InProgressSSCCases from './components/pages/inProgressSSCCases';
 import InProgressSPCCases from './components/pages/inProgressSPCCases';
 import GetCaseLawyerSPC from './components/pages/getCaseLawyerSPC'
 import GetCaseLawyerSSC from './components/pages/getCaseLawyerSSC'
+
+import Try from './components/try';
 
 
 class App extends Component {
@@ -105,11 +106,13 @@ class App extends Component {
       <Route path='/editprofile'  render={(props) => <EditProfile {...props}  lang={this.state.lang}/>}  /> 
       <Route path='/editspcform' render={(props) => <EditSPCForm {...props}  formId={this.state.formId}/>}/> 
       <Route path='/editsscform' render={(props) => <EditSSCForm {...props}  formId={this.state.formId}/>}/>
-      <Route path='/showsscform' render={(props) => <InProgressSSCCases {...props}  lang={this.state.lang} setFormId={this.setFormId}/>}/> 
-      <Route path='/showspcform' render={(props) => <InProgressSPCCases {...props}  lang={this.state.lang} setFormId={this.setFormId} />}/> 
-      <Route path='/companyName' render={(props) => <GetFormByCompanyName {...props}  lang={this.state.lang} />}/> 
-      <Route path='/getCaseLawyerSSC' render={(props) => <GetCaseLawyerSSC {...props}  lang={this.state.lang} />}/> 
-      <Route path='/getCaseLawyerSPC' render={(props) => <GetCaseLawyerSPC {...props}  lang={this.state.lang} />}/> 
+      <Route path='/showsscform' render={(props) => <InProgressSSCCases {...props}  lang={this.state.lang} setFormId={this.setFormId}/>}/>
+      <Route path='/showspcform' render={(props) => <InProgressSPCCases {...props}  lang={this.state.lang} setFormId={this.setFormId} />}/>
+      <Route path='/companyName' render={(props) => <GetFormByCompanyName {...props}  lang={this.state.lang} />}/>
+      <Route path='/getCaseLawyerSSC' render={(props) => <GetCaseLawyerSSC {...props}  lang={this.state.lang} />}/>
+      <Route path='/getCaseLawyerSPC' render={(props) => <GetCaseLawyerSPC {...props}  lang={this.state.lang} />}/>
+
+      <Route path='/try' render={(props) => <Try {...props}  lang={this.state.lang}/>}/>
       </div>
           <Footer/>
       </Router>

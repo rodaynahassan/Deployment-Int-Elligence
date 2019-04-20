@@ -9,12 +9,6 @@ require('../../config/passport')(passport)
 
 
 
-
-
-
-
-
-
 // //       for testing!!!!!!!!
 // router.get('/getInvestorName',passport.authenticate('jwt', {session: false}) ,async (req,res) => {
 //     // You can access the logged in user through req.user
@@ -27,9 +21,6 @@ require('../../config/passport')(passport)
 //     // return res.json({data: req.user})
 
 // })
-
-
-
 
 
 //get all forms

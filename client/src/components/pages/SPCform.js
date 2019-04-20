@@ -15,11 +15,6 @@ import {Dropdown} from 'semantic-ui-react';
 
 import DropdownItem from 'react-bootstrap/DropdownItem';
 
-// import {MDBSelect} from 'mdbreact';
-
-
-
-
 var mongoose = require('mongoose')
 
 class SPCform extends Component{
@@ -27,9 +22,6 @@ class SPCform extends Component{
     constructor(props){
         super(props);
         this.state = {
-            // userId: {
-            //   value : '',
-            //  },
             companyName:'',
             companyGovernorate:'',
             companyAddress:'',

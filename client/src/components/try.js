@@ -313,12 +313,13 @@ class Register extends React.Component {
         var Submit = <div>
             <form>
                 <div className="form-group">
-                        <Button type="submit"
+                <button type="submit"
                         disabled={!this.validateForm()}
                         onClick={(e) => (this.handleSubmit(e), alert('The Account has been created successfully'))}
-                        className="btn btn-primary" color="primary" variant="contained">
+                        className="btn blue-gradient btn-block btn-rounded z-depth-1a"
+                        style={{width:"200px"}} >
                         Submit
-                    </Button>
+                    </button>
                 </div>
                 </form>
         </div>
@@ -341,22 +342,26 @@ class Register extends React.Component {
                {this.state.activeStep===2?Submit:null}
 
                   <div>
-                    <Button
+                  <button
                       disabled={activeStep === 0}
                       onClick={this.handleBack}
-                      className={classes.button}
-                      variant="contained"
+                    // className={classes.button}
+                      className="btn blue-gradient btn-block btn-rounded z-depth-1a"
+                      style={{width:"100px"}}
+                      //variant="contained"
                     >
                       Back
-                    </Button>
-                    <Button
-                      variant="contained"
+                    </button>
+                    <button
+                      //variant="contained"
                       onClick={this.handleNext}
-                      className={classes.button}
-                      color="primary"
+                      // className={classes.button}
+                      className="btn blue-gradient btn-block btn-rounded z-depth-1a"
+                      style={{width:"100px"}}
+                     // color="primary"
                     >
                       {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                    </Button>
+                    </button>
                   </div>
                 </div>
               </StepContent>

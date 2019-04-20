@@ -2,12 +2,7 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';       //new stuff
 import store from './store';                //new stuff
 import {BrowserRouter as Router, Route} from 'react-router-dom'
-import Navbar from 'react-bootstrap/Navbar'
-import Nav from 'react-bootstrap/Nav'
-import NavDropdown from 'react-bootstrap/NavDropdown'
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
-import FormControl from 'react-bootstrap/FormControl'
+
 import './App.scss'
 import LandingBody from './components/pages/landingBody'
 import Profile from './components/pages/profilePage'
@@ -34,7 +29,6 @@ import DropdownCities from './components/form/DropdownCities'
 import DropdownGovernorates from './components/form/DropdownGovernorates'
 import UnassignedForm from './components/pages/unassignedForm'
 import AssignToReviewer from './components/pages/assignToReviewer'
-import GetCaseSpecified from './components/pages/GetCaseSpecified'
 import GetCaseReviewer from './components/pages/GetCaseReviewer'
 import AddCommentsLawyer from './components/pages/AddCommentsLawyer'
 import EditProfile from './components/pages/EditProfile'
@@ -106,13 +100,13 @@ class App extends Component {
       <Route path='/registerAdmin' component={ adminPage}/>
       <Route path='/SortByID' component={ SortSpecificUserCase}/>
       <Route path='/dropDown' component={ DropdownTrial}/>
-      <Route path='/dropDownCity' component={ DropdownCities}/>
-      <Route path='/dropDownGovernorate' component={ DropdownGovernorates}/>
-      <Route path='/unassignedForm'  render={(props) => <UnassignedForm {...props}  lang={this.state.lang}/>}/>
-      <Route path='/lawyerAcceptedForms'  render={(props) => <AssignToReviewer {...props}  lang={this.state.lang}/>}/>
-      <Route path='/GetReviewer' component={GetCaseReviewer}/>
-      <Route path='/editprofile'  render={(props) => <EditProfile {...props}  lang={this.state.lang}/>}/>
-      <Route path='/editspcform' render={(props) => <EditSPCForm {...props}  formId={this.state.formId}/>}/>
+      <Route path='/dropDownCity' component={ DropdownCities}/> 
+      <Route path='/dropDownGovernorate' component={ DropdownGovernorates}/> 
+      <Route path='/unassignedForm'  render={(props) => <UnassignedForm {...props}  lang={this.state.lang}/>}/> 
+      <Route path='/lawyerAcceptedForms'  render={(props) => <AssignToReviewer {...props}  lang={this.state.lang}/>}/> 
+      <Route path='/GetReviewer' component={GetCaseReviewer}/>  
+      <Route path='/editprofile'  render={(props) => <EditProfile {...props}  lang={this.state.lang}/>}  /> 
+      <Route path='/editspcform' render={(props) => <EditSPCForm {...props}  formId={this.state.formId}/>}/> 
       <Route path='/editsscform' render={(props) => <EditSSCForm {...props}  formId={this.state.formId}/>}/>
       <Route path='/showsscform' render={(props) => <InProgressSSCCases {...props}  lang={this.state.lang} setFormId={this.setFormId}/>}/>
       <Route path='/showspcform' render={(props) => <InProgressSPCCases {...props}  lang={this.state.lang} setFormId={this.setFormId} />}/>

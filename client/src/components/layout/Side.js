@@ -4,17 +4,122 @@ import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/rea
 // Be sure to include styles at some point, probably during your bootstraping
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import React,{ Component } from 'react';
+import { Redirect } from 'react-router-dom'
+import IconButton from '@material-ui/core/IconButton';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import { Link } from 'react-router-dom'
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import NavLink from 'react-bootstrap/NavLink';
 import Journal from './Journal1.png'
+
+const options = [
+    'Home',
+    'Electronic Journal',
+    'About Us',
+    'Language',
+    'My Page',
+    'Logout',
+  ];
+
 class Side extends Component{
+
+    constructor(props)
+    {
+        super(props);
+        this.state = 
+        {
+            anchorEl: null,
+            option : '',
+        };
+        
+    }
+
     logOut(){
         localStorage.setItem('isLoggedIn','false')
         localStorage.setItem('jwtToken','')
         localStorage.setItem('type','')
         document.location.href='/'
     }
-render(){ 
+
+      // handleClick = event => {
+      //   this.setState({ anchorEl: event.currentTarget });
+      // };
     
+      // handleClose = () => {
+      //   this.setState({ anchorEl: null });
+      // };
+      
+    //   setRoute = (options) => {
+    //       this.setState({option:options})
+    //     if(options === "Home")
+    //       document.location.href="/home"
+    //     else if(options === "Electronic Journal")
+    //       document.location.href='/journal'
+    //   }
+
+    //   setRedirect = () => {
+    //     this.setState({
+    //       redirect: true
+    //     })
+    //   }
+    //   renderRedirectHome = () => {
+    //     if (this.state.redirect) {
+    //       return <Redirect to='/home' />
+    //     }
+    //   }
+    //   renderRedirectAbout = () => {
+    //     if (this.state.redirect) {
+    //       return <Redirect to='/about' />
+    //     }
+    //   }
+      
+// render(){ 
+
+//     const { anchorEl } = this.state;
+//     const open = Boolean(anchorEl);
+//        return(
+//            <div>
+//         <IconButton
+//             className ="fas fa-align-justify" 
+//             aria-owns={open ? 'long-menu' : undefined}
+//             aria-haspopup="true"
+//             onClick={this.handleClick}
+//         >
+//         </IconButton>
+//         <Menu
+//           id="long-menu"
+//           anchorEl={anchorEl}
+//           open={open}
+//           onClose={this.handleClose}
+//           PaperProps={{
+//             style: {
+//               width: 200,
+//             },
+//           }}
+
+          
+//         >
+       
+//          {/* selected={option === 'About Us'}
+//                selected={option === 'My Page'} href='/profile'
+//                selected={option === 'Language'} href='/profile'>  */}
+//           {/* {options.map(option => (
+//             <MenuItem key={option} selected={option ==='Home'} 
+//                selected={option === 'Electronic Journal'} >
+//                {option} 
+//                </MenuItem>           
+//           ))} */}
+//           <MenuItem ><a href="/"></a> Home</MenuItem>
+//           <MenuItem ><a href="/journal"></a>Electronic Journal</MenuItem>
+//            </Menu>
+//            </div>
+      
+//     )
+        render()
+       {
+            
+          
     var profile = <NavItem eventKey="home">
         <NavIcon>
         <a href="/profile">
@@ -45,7 +150,7 @@ render(){
     onSelect={(selected) => {
         
     }}
-    style={{backgroundColor:"dark", height:"100%" , marginRight:"20%",position:"absolute",left:"96%",right:"0",zIndex:"2"}}
+    style={{backgroundColor:"#0000", height:"100%" , marginRight:"20%",position:"absolute",left:"96%",right:"0"}}
 >
     {/* <SideNav.Toggle  /> */}
     <SideNav.Nav >
@@ -123,9 +228,7 @@ render(){
        
     </SideNav.Nav>
 </SideNav>
-)
+    )
 }
 }
-
 export default Side
-

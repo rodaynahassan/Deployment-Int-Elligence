@@ -50,13 +50,13 @@ class LandingBody extends Component {
           <view style={{display:"flex", justifyContent:'center' , alignItems:'center'}}>
 
        <Animate delaySeconds="0.1" durationSeconds= "0.6"  endStyle={{ opacity: 1, transform: 'translateY(-10px)' }}
-        startStyle={{ opacity: 0, transform: 'translateY(0)' }} sequenceIndex={3} ><h1 style={{fontSize:"100px", textShadow: '-2px 0 white, 0 2px white, 2px 0 white, 0 -2px white'}}>G&nbsp;</h1></Animate>    
+        startStyle={{ opacity: 0, transform: 'translateY(0)' }} sequenceIndex={3} ><h1 style={{fontSize:"100px", textShadow: '-2px 0 black, 0 2px black, 2px 0 black, 0 -2px black',color:"white"}}>G&nbsp;</h1></Animate>    
         <Animate durationSeconds= "0.6" endStyle={{ opacity: 1, transform: 'translateY(-10px)' }}
-        startStyle={{ opacity: 0, transform: 'translateY(0)' }} sequenceIndex={4}><h1 style={{fontSize:"100px", textShadow: '-2px 0 white, 0 2px white, 2px 0 white, 0 -2px white' }}>A&nbsp;</h1></Animate>
+        startStyle={{ opacity: 0, transform: 'translateY(0)' }} sequenceIndex={4}><h1 style={{fontSize:"100px", textShadow: '-2px 0 black, 0 2px black, 2px 0 black, 0 -2px black' ,color:"white"}}>A&nbsp;</h1></Animate>
         <Animate durationSeconds= "0.6" endStyle={{ opacity: 1, transform: 'translateY(-10px)' }}
-        startStyle={{ opacity: 0, transform: 'translateY(0)' }} sequenceIndex={5} ><h1 style={{fontSize:"100px", textShadow: '-2px 0 white, 0 2px white, 2px 0 white, 0 -2px white' }}>F&nbsp;</h1></Animate>
+        startStyle={{ opacity: 0, transform: 'translateY(0)' }} sequenceIndex={5} ><h1 style={{fontSize:"100px", textShadow: '-2px 0 black, 0 2px black, 2px 0 black, 0 -2px black' ,color:"white"}}>F&nbsp;</h1></Animate>
         <Animate durationSeconds= "0.6" endStyle={{ opacity: 1, transform: 'translateY(-10px)' }} 
-        startStyle={{ opacity: 0, transform: 'translateY(0)' }} sequenceIndex={6} ><h1 style={{fontSize:"100px", textShadow: '-2px 0 white, 0 2px white, 2px 0 white, 0 -2px white' }}>I&nbsp;</h1></Animate>
+        startStyle={{ opacity: 0, transform: 'translateY(0)' }} sequenceIndex={6} ><h1 style={{fontSize:"100px", textShadow: '-2px 0 black, 0 2px black, 2px 0 black, 0 -2px black',color:"white" }}>I&nbsp;</h1></Animate>
          <Animate durationSeconds= "0.6" endStyle={{ opacity: 1, transform: 'translateY(-10px)' }} 
         startStyle={{ opacity: 0, transform: 'translateY(0)' }} sequenceIndex={7} ><img src={Egypt} height="50px" width="80px" /></Animate>
   </view>

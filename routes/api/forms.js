@@ -39,7 +39,7 @@ router.get('/getAllForms' , async (req,res) => {
 })
 //get company aka status=approved
 router.get('/getApprovedCompany', async (req,res) => {
-    const form = await Controller.search('status','Approved')
+    const form = await controller.search('status','Approved')
     return res.json({data:form})  
 })
 //get rejected form

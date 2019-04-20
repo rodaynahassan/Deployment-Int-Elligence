@@ -2,8 +2,9 @@ import  React, { Component } from 'react';
 import axios from 'axios';
 import '../../App.css';
 import Table from 'react-bootstrap/Table';
-import {Button} from 'react-bootstrap';
+import {Button,Container} from 'react-bootstrap';
 import "mdbreact/dist/css/mdb.css";
+import Card from '../form/Card'
 import GetAllUserForms from '../form/GetAllUserForms';
 
 class Companies extends Component {
@@ -33,47 +34,27 @@ class Companies extends Component {
               }
     
 
-      tabRow(){
-        return this.state.companies.map(function(company,i){
-            return <GetAllUserForms company={company} key={i} />;
-        });
-      }
+      // tabRow(){
+      //   return this.state.companies.map(function(company,i){
+      //       return <GetAllUserForms company={company} key={i} />;
+      //   });
+      // }
+
+      tabRow = () => {
+        return this.state.companies.map((company,i)=>{
+            return <Card company={company} key={i}/>  
+         })
+        }
+
       render(){
         return (
-             
           <div style={{paddingLeft:"60px"}}>
-           
           <Button variant="nada" block disabled><h1>specific lawyer cases</h1></Button>
+          <Container >
           <Button variant="dark" onClick={()=>this.sort()}>Sort the cases by ID </Button> 
           <Button variant="dark" onClick={()=>this.sortByCreationDate()}>Sort the cases by CreationDate </Button> 
-           
-            <Table stripped bordered hover variant='dark' size='sm'>
-            <thead>
-              <tr>
-              
-                <th>Name</th>
-                <th>Name In English </th>
-                <th>Governorate</th>
-                <th>City </th>
-                <th>Address </th>
-                <th>Telephone </th>
-                <th>Fax </th>
-                <th>Currency </th>
-                <th>Capital </th>
-                <th>Type </th>
-                <th>Creation Date </th>
-                <th>Fees</th>
-                <th>Accept Case</th>
-                <th>Add Comments</th>
-                <th>Calculate The Fees</th>
-              </tr>
-
-            </thead>
-            <tbody>
-
-              {this.tabRow()}
-            </tbody>
-          </Table> 
+           {this.tabRow()}
+           </Container >
          </div>
         )
           

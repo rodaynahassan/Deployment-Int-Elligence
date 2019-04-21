@@ -55,16 +55,6 @@ exports.create = async (body, status, investorId, lawyerId) => {
 
 exports.update = async (att, value, body) => {
   //delete body.formType ;
-  var temp = new obj.constructor();
-  for (var key in body) temp[key] = clone(body[key]);
-  delete body.lawyerComments;
-  delete body.reviewerComments;
-  delete body.status;
-  delete body.fees;
-  delete body.investorId;
-  delete body.lawyerId;
-  delete body.reviewerId;
-  delete body.creationDate;
   const isValidated = await validator
     .updateValidation(body)
     .then(res => {
@@ -81,7 +71,7 @@ exports.update = async (att, value, body) => {
     };
   }
   if (att === "_id") {
-    var dynamicForm = await DynamicForm.findByIdAndUpdate(value, temp)
+    var dynamicForm = await DynamicForm.findByIdAndUpdate(value, body)
       .then(res => {
         return res;
       })

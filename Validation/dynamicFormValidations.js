@@ -1,7 +1,8 @@
-const Joi = require("joi");
+var Joi = require("joi");
 const FormType = require("../Models/FormType");
 const DynamicForm = require("../Models/DynamicForm");
 const Dependencies = require("../Models/Dependencies");
+Joi.objectId = require("joi-objectid")(Joi);
 
 module.exports = {
   createValidation: async request => {
@@ -122,21 +123,64 @@ module.exports = {
               constraints[2] !== "" &&
               constraints[3] === ""
             )
-              createSchema[prop] = Joi.string()
-                .min(parseInt(constraints[2], 10));
+              createSchema[prop] = Joi.string().min(
+                parseInt(constraints[2], 10)
+              );
             if (
               constraints[1] !== "required" &&
               constraints[2] === "" &&
               constraints[3] === ""
             )
               createSchema[prop] = Joi.string();
-            
-            if(depends){
-              if(depends[5]!=='') createSchema[prop]= Joi.when(depends[0],{is:depends[1],then:Joi.string().length(parseInt(depends[5])),otherwise:createSchema[prop]})
-              if(depends[5]==='' && depends[4]!=='') createSchema[prop]= Joi.when(depends[0],{is:depends[1],then:Joi.string().valid(depends[4]),otherwise:createSchema[prop]})
-              if(depends[5]==='' && depends[4]==='' && depends[3]!=='' && depends[2]!=='') createSchema[prop]= Joi.when(depends[0],{is:depends[1],then:Joi.string().min(parseInt(depends[2])).max(parseInt(depends[3])),otherwise:createSchema[prop]})
-              if(depends[5]==='' && depends[4]==='' && depends[3]==='' && depends[2]!=='') createSchema[prop]= Joi.when(depends[0],{is:depends[1],then:Joi.string().min(parseInt(depends[2])),otherwise:createSchema[prop]})
-              if(depends[5]==='' && depends[4]==='' && depends[3]!=='' && depends[2]==='') createSchema[prop]= Joi.when(depends[0],{is:depends[1],then:Joi.string().max(parseInt(depends[3])),otherwise:createSchema[prop]})
+
+            if (depends) {
+              if (depends[5] !== "")
+                createSchema[prop] = Joi.when(depends[0], {
+                  is: depends[1],
+                  then: Joi.string().length(parseInt(depends[5])),
+                  otherwise: createSchema[prop]
+                });
+              if (depends[5] === "" && depends[4] !== "")
+                createSchema[prop] = Joi.when(depends[0], {
+                  is: depends[1],
+                  then: Joi.string().valid(depends[4]),
+                  otherwise: createSchema[prop]
+                });
+              if (
+                depends[5] === "" &&
+                depends[4] === "" &&
+                depends[3] !== "" &&
+                depends[2] !== ""
+              )
+                createSchema[prop] = Joi.when(depends[0], {
+                  is: depends[1],
+                  then: Joi.string()
+                    .min(parseInt(depends[2]))
+                    .max(parseInt(depends[3])),
+                  otherwise: createSchema[prop]
+                });
+              if (
+                depends[5] === "" &&
+                depends[4] === "" &&
+                depends[3] === "" &&
+                depends[2] !== ""
+              )
+                createSchema[prop] = Joi.when(depends[0], {
+                  is: depends[1],
+                  then: Joi.string().min(parseInt(depends[2])),
+                  otherwise: createSchema[prop]
+                });
+              if (
+                depends[5] === "" &&
+                depends[4] === "" &&
+                depends[3] !== "" &&
+                depends[2] === ""
+              )
+                createSchema[prop] = Joi.when(depends[0], {
+                  is: depends[1],
+                  then: Joi.string().max(parseInt(depends[3])),
+                  otherwise: createSchema[prop]
+                });
             }
 
             break;
@@ -203,13 +247,55 @@ module.exports = {
             )
               createSchema[prop] = Joi.number();
 
-              if(depends){
-                if(depends[5]!=='') createSchema[prop]= Joi.when(depends[0],{is:depends[1],then:Joi.number().length(parseInt(depends[5])),otherwise:createSchema[prop]})
-                if(depends[5]==='' && depends[4]!=='') createSchema[prop]= Joi.when(depends[0],{is:depends[1],then:Joi.number().equal(parseInt(depends[4])),otherwise:createSchema[prop]})
-                if(depends[5]==='' && depends[4]==='' && depends[3]!=='' && depends[2]!=='') createSchema[prop]= Joi.when(depends[0],{is:depends[1],then:Joi.number().min(parseInt(depends[2])).max(parseInt(depends[3])),otherwise:createSchema[prop]})
-                if(depends[5]==='' && depends[4]==='' && depends[3]==='' && depends[2]!=='') createSchema[prop]= Joi.when(depends[0],{is:depends[1],then:Joi.number().min(parseInt(depends[2])),otherwise:createSchema[prop]})
-                if(depends[5]==='' && depends[4]==='' && depends[3]!=='' && depends[2]==='') createSchema[prop]= Joi.when(depends[0],{is:depends[1],then:Joi.number().max(parseInt(depends[3])),otherwise:createSchema[prop]})
-              }
+            if (depends) {
+              if (depends[5] !== "")
+                createSchema[prop] = Joi.when(depends[0], {
+                  is: depends[1],
+                  then: Joi.number().length(parseInt(depends[5])),
+                  otherwise: createSchema[prop]
+                });
+              if (depends[5] === "" && depends[4] !== "")
+                createSchema[prop] = Joi.when(depends[0], {
+                  is: depends[1],
+                  then: Joi.number().equal(parseInt(depends[4])),
+                  otherwise: createSchema[prop]
+                });
+              if (
+                depends[5] === "" &&
+                depends[4] === "" &&
+                depends[3] !== "" &&
+                depends[2] !== ""
+              )
+                createSchema[prop] = Joi.when(depends[0], {
+                  is: depends[1],
+                  then: Joi.number()
+                    .min(parseInt(depends[2]))
+                    .max(parseInt(depends[3])),
+                  otherwise: createSchema[prop]
+                });
+              if (
+                depends[5] === "" &&
+                depends[4] === "" &&
+                depends[3] === "" &&
+                depends[2] !== ""
+              )
+                createSchema[prop] = Joi.when(depends[0], {
+                  is: depends[1],
+                  then: Joi.number().min(parseInt(depends[2])),
+                  otherwise: createSchema[prop]
+                });
+              if (
+                depends[5] === "" &&
+                depends[4] === "" &&
+                depends[3] !== "" &&
+                depends[2] === ""
+              )
+                createSchema[prop] = Joi.when(depends[0], {
+                  is: depends[1],
+                  then: Joi.number().max(parseInt(depends[3])),
+                  otherwise: createSchema[prop]
+                });
+            }
             break;
           case "date":
             if (constraints[1] === "required")
@@ -393,7 +479,7 @@ module.exports = {
                         childCreateSchema[childProp] = Joi.number();
                       break;
                     case "date":
-                     // console.log(childConstraints[1]);
+                      // console.log(childConstraints[1]);
                       if (childConstraints[1] === "required")
                         childCreateSchema[childProp] = Joi.date().required();
                       else childCreateSchema[childProp] = Joi.date();
@@ -422,7 +508,7 @@ module.exports = {
             else createSchema[prop] = Joi.object();
             break;
           case "objectId":
-            createSchema[prop] = Joi.objectId();
+            createSchema[prop] = Joi.object();
             break;
         }
       }
@@ -437,8 +523,20 @@ module.exports = {
   },
 
   updateValidation: async request => {
-    let updateSchema = {formType:Joi.string().required()};
-    let formType = request.formType;
+    let updateSchema = {
+      formType: Joi.string().required(),
+      _id: Joi.object(),
+      lawyerComments: Joi.array(),
+      reviewerComments: Joi.array(),
+      status:Joi.string(),
+      fees:Joi.number(),
+      investorId:Joi.object().allow(null),
+      reviewerId:Joi.object().allow(null),
+      lawyerId:Joi.object().allow(null),
+      creationDate:Joi.date(),
+      __v:Joi.number()
+    };
+    let formType = request.toJSON().formType;
     let validations = await FormType.find({ formType: formType })
       .then(res => {
         return res;
@@ -447,20 +545,23 @@ module.exports = {
         return { error: err };
       });
     if (validations.error) return validations;
+    // console.log(validations)
+    if (validations === [])
+      return { error: "This is not a valid type of Form" };
     validations = validations[0];
     // console.log(validations)
     validations = validations.toJSON();
     let dependencies = await Dependencies.find({ formType: formType })
-    .then(res => {
-      return res;
-    })
-    .catch(err => {
-      return { error: err };
-    });
-  if (dependencies === []) dependencies = {};
-  else {
-    dependencies = dependencies[0].toJSON();
-  }
+      .then(res => {
+        return res;
+      })
+      .catch(err => {
+        return { error: err };
+      });
+    if (dependencies === []) dependencies = {};
+    else {
+      dependencies = dependencies[0].toJSON();
+    }
     for (var prop in validations) {
       if (
         validations.hasOwnProperty(prop) &&
@@ -472,7 +573,7 @@ module.exports = {
         if (dependencies["" + prop]) {
           depends = dependencies["" + prop].split(",");
         }
-       // console.log(depends)
+        // console.log(depends)
         if (constraints[4] === "unique") {
           let queryparam = {};
           if (request[prop]) {
@@ -513,14 +614,55 @@ module.exports = {
             if (constraints[2] === "" && constraints[3] === "")
               updateSchema[prop] = Joi.string();
 
-              if(depends){
-                if(depends[5]!=='') updateSchema[prop]= Joi.when(depends[0],{is:depends[1],then:Joi.string().length(parseInt(depends[5])),otherwise:updateSchema[prop]})
-                if(depends[5]==='' && depends[4]!=='') updateSchema[prop]= Joi.when(depends[0],{is:depends[1],then:Joi.string().valid(depends[4]),otherwise:updateSchema[prop]})
-                if(depends[5]==='' && depends[4]==='' && depends[3]!=='' && depends[2]!=='') updateSchema[prop]= Joi.when(depends[0],{is:depends[1],then:Joi.string().min(parseInt(depends[2])).max(parseInt(depends[3])),otherwise:updateSchema[prop]})
-                if(depends[5]==='' && depends[4]==='' && depends[3]==='' && depends[2]!=='') updateSchema[prop]= Joi.when(depends[0],{is:depends[1],then:Joi.string().min(parseInt(depends[2])),otherwise:updateSchema[prop]})
-                if(depends[5]==='' && depends[4]==='' && depends[3]!=='' && depends[2]==='') updateSchema[prop]= Joi.when(depends[0],{is:depends[1],then:Joi.string().max(parseInt(depends[3])),otherwise:updateSchema[prop]})
-              }
-
+            if (depends) {
+              if (depends[5] !== "")
+                updateSchema[prop] = Joi.when(depends[0], {
+                  is: depends[1],
+                  then: Joi.string().length(parseInt(depends[5])),
+                  otherwise: updateSchema[prop]
+                });
+              if (depends[5] === "" && depends[4] !== "")
+                updateSchema[prop] = Joi.when(depends[0], {
+                  is: depends[1],
+                  then: Joi.string().valid(depends[4]),
+                  otherwise: updateSchema[prop]
+                });
+              if (
+                depends[5] === "" &&
+                depends[4] === "" &&
+                depends[3] !== "" &&
+                depends[2] !== ""
+              )
+                updateSchema[prop] = Joi.when(depends[0], {
+                  is: depends[1],
+                  then: Joi.string()
+                    .min(parseInt(depends[2]))
+                    .max(parseInt(depends[3])),
+                  otherwise: updateSchema[prop]
+                });
+              if (
+                depends[5] === "" &&
+                depends[4] === "" &&
+                depends[3] === "" &&
+                depends[2] !== ""
+              )
+                updateSchema[prop] = Joi.when(depends[0], {
+                  is: depends[1],
+                  then: Joi.string().min(parseInt(depends[2])),
+                  otherwise: updateSchema[prop]
+                });
+              if (
+                depends[5] === "" &&
+                depends[4] === "" &&
+                depends[3] !== "" &&
+                depends[2] === ""
+              )
+                updateSchema[prop] = Joi.when(depends[0], {
+                  is: depends[1],
+                  then: Joi.string().max(parseInt(depends[3])),
+                  otherwise: updateSchema[prop]
+                });
+            }
 
             break;
           case "number":
@@ -533,20 +675,63 @@ module.exports = {
                 parseInt(constraints[3], 10)
               );
             if (constraints[2] !== "" && constraints[3] === "")
-              updateSchema[prop] = Joi.number()
-                .min(parseInt(constraints[2], 10));
+              updateSchema[prop] = Joi.number().min(
+                parseInt(constraints[2], 10)
+              );
             if (constraints[2] === "" && constraints[3] === "")
               updateSchema[prop] = Joi.number();
 
-              if(depends){
-               // console.log(depends[4])
-               // console.log(depends[1])
-                if(depends[5]!=='') updateSchema[prop]= Joi.when(depends[0],{is:depends[1],then:Joi.number().length(parseInt(depends[5])),otherwise:updateSchema[prop]})
-                if(depends[5]==='' && depends[4]!=='') updateSchema[prop]= Joi.when(depends[0],{is:depends[1],then:Joi.number().equal(parseInt(depends[4])),otherwise:updateSchema[prop]})
-                if(depends[5]==='' && depends[4]==='' && depends[3]!=='' && depends[2]!=='') updateSchema[prop]= Joi.when(depends[0],{is:depends[1],then:Joi.number().min(parseInt(depends[2])).max(parseInt(depends[3])),otherwise:updateSchema[prop]})
-                if(depends[5]==='' && depends[4]==='' && depends[3]==='' && depends[2]!=='') updateSchema[prop]= Joi.when(depends[0],{is:depends[1],then:Joi.number().min(parseInt(depends[2])),otherwise:updateSchema[prop]})
-                if(depends[5]==='' && depends[4]==='' && depends[3]!=='' && depends[2]==='') updateSchema[prop]= Joi.when(depends[0],{is:depends[1],then:Joi.number().max(parseInt(depends[3])),otherwise:updateSchema[prop]})
-              }
+            if (depends) {
+              // console.log(depends[4])
+              // console.log(depends[1])
+              if (depends[5] !== "")
+                updateSchema[prop] = Joi.when(depends[0], {
+                  is: depends[1],
+                  then: Joi.number().length(parseInt(depends[5])),
+                  otherwise: updateSchema[prop]
+                });
+              if (depends[5] === "" && depends[4] !== "")
+                updateSchema[prop] = Joi.when(depends[0], {
+                  is: depends[1],
+                  then: Joi.number().equal(parseInt(depends[4])),
+                  otherwise: updateSchema[prop]
+                });
+              if (
+                depends[5] === "" &&
+                depends[4] === "" &&
+                depends[3] !== "" &&
+                depends[2] !== ""
+              )
+                updateSchema[prop] = Joi.when(depends[0], {
+                  is: depends[1],
+                  then: Joi.number()
+                    .min(parseInt(depends[2]))
+                    .max(parseInt(depends[3])),
+                  otherwise: updateSchema[prop]
+                });
+              if (
+                depends[5] === "" &&
+                depends[4] === "" &&
+                depends[3] === "" &&
+                depends[2] !== ""
+              )
+                updateSchema[prop] = Joi.when(depends[0], {
+                  is: depends[1],
+                  then: Joi.number().min(parseInt(depends[2])),
+                  otherwise: updateSchema[prop]
+                });
+              if (
+                depends[5] === "" &&
+                depends[4] === "" &&
+                depends[3] !== "" &&
+                depends[2] === ""
+              )
+                updateSchema[prop] = Joi.when(depends[0], {
+                  is: depends[1],
+                  then: Joi.number().max(parseInt(depends[3])),
+                  otherwise: updateSchema[prop]
+                });
+            }
             break;
           case "date":
             updateSchema[prop] = Joi.date();
@@ -555,7 +740,7 @@ module.exports = {
             updateSchema[prop] = Joi.object();
             break;
           case "objectId":
-            updateSchema[prop] = Joi.objectId();
+            updateSchema[prop] = Joi.object();
             break;
           case "array":
             updateSchema[prop] = Joi.array().items(
@@ -575,14 +760,15 @@ module.exports = {
               });
             let array = request[prop];
             childValidations = childValidations[0].toJSON();
-           // console.log(childValidations)
+            // console.log(childValidations)
             for (i = 0; i < array.length; i++) {
               let childUpdateSchema = {};
               if (childValidations.error) return childValidations;
               for (var childProp in childValidations) {
                 if (
                   childValidations.hasOwnProperty(childProp) &&
-                  childProp !== "formType" && childProp !== '_id'
+                  childProp !== "formType" &&
+                  childProp !== "_id"
                 ) {
                   //console.log(childProp)
                   //console.log(childValidations[childProp])
@@ -743,14 +929,26 @@ module.exports = {
                   }
                 }
               }
-              let v = await Joi.validate(array[i], childUpdateSchema).then(res=>{return res}).catch(err=>{return{error:err}});
+              let v = await Joi.validate(array[i], childUpdateSchema)
+                .then(res => {
+                  return res;
+                })
+                .catch(err => {
+                  return { error: err };
+                });
               if (v.error) return v;
             }
         }
       }
     }
-    let x = await Joi.validate(request, updateSchema).then(res=>{return res}).catch(err=>{return{error:err}});
-    console.log(x)
-    return x
+    let x = await Joi.validate(request.toJSON(), updateSchema)
+      .then(res => {
+        return res;
+      })
+      .catch(err => {
+        return { error: err };
+      });
+    console.log(x);
+    return x;
   }
 };

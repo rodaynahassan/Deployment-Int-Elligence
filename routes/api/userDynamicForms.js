@@ -7,7 +7,6 @@ const User = require("../../Models/User");
 const Admin = require("../../Models/Admin");
 const validator = require("../../Validation/UserValidation");
 const notifications = require("../../helpers/notifications");
-
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const tokenKey = require("../../config/keys_dev").secretOrKey;
@@ -56,14 +55,25 @@ router.get(
     const userid = req.user.id;
     if (req.user.userType === "Lawyer") {
       var forms = await dynamicFormController.search("lawyerId", userid);
-      if (forms.error) return res.status(400).json({ error: forms.error });
-      forms.sort(userController.compareByDate);
-      return res.json({ data: forms });
+      var inProgressForms = [];
+      for (i = 0; i < forms.length; i++) {
+        if (forms[i].status === "In progress Lawyer")
+          inProgressForms.push(forms[i]);
+      }
+      if (inProgressForms.error)
+        return res.status(400).json({ error: forms.error });
+      inProgressForms.sort(userController.compareByDate);
+      return res.json({ data: inProgressForms });
     } else if (req.user.userType === "Reviewer") {
       var forms = await dynamicFormController.search("reviewerId", userid);
-      if (forms.error) return res.status(400).json({ error: forms.error });
-      forms.sort(userController.compareByDate);
-      return res.json({ data: forms });
+      for (i = 0; i < forms.length; i++) {
+        if (forms[i].status === "In progress Reviewer")
+          inProgressForms.push(forms[i]);
+      }
+      if (inProgressForms.error)
+        return res.status(400).json({ error: forms.error });
+      inProgressForms.sort(userController.compareByDate);
+      return res.json({ data: inProgressForms });
     } else {
       return res.status(401).json({ msg: "Non Authorized" });
     }
@@ -78,14 +88,25 @@ router.get(
     const userid = req.user.id;
     if (req.user.userType === "Lawyer") {
       var forms = await dynamicFormController.search("lawyerId", userid);
-      if (forms.error) return res.status(400).json({ error: forms.error });
-      forms.sort(userController.compareById);
-      return res.json({ data: forms });
+      var inProgressForms = [];
+      for (i = 0; i < forms.length; i++) {
+        if (forms[i].status === "In progress Lawyer")
+          inProgressForms.push(forms[i]);
+      }
+      if (inProgressForms.error)
+        return res.status(400).json({ error: forms.error });
+      inProgressForms.sort(userController.compareById);
+      return res.json({ data: inProgressForms });
     } else if (req.user.userType === "Reviewer") {
       var forms = await dynamicFormController.search("reviewerId", userid);
-      if (forms.error) return res.status(400).json({ error: forms.error });
-      forms.sort(userController.compareById);
-      return res.json({ data: forms });
+      for (i = 0; i < forms.length; i++) {
+        if (forms[i].status === "In progress Reviewer")
+          inProgressForms.push(forms[i]);
+      }
+      if (inProgressForms.error)
+        return res.status(400).json({ error: forms.error });
+      inProgressForms.sort(userController.compareById);
+      return res.json({ data: inProgressForms });
     } else {
       return res.status(401).json({ msg: "Non Authorized" });
     }
@@ -104,7 +125,7 @@ router.get(
       if (forms.error) return res.status(400).json({ error: forms.error });
       var inProgressForms = [];
       for (i = 0; i < forms.length; i++) {
-        if (forms[i].status !== "Accepted") inProgressForms.push(forms[i]);
+        if (forms[i].status !== "Approved") inProgressForms.push(forms[i]);
       }
       return res.json({ data: inProgressForms });
     } else {
@@ -147,7 +168,7 @@ router.get(
       for (i = 0; i < forms.length; i++) {
         if (
           forms[i].status === "Unassigned" ||
-          form[i].status === "Reviewer rejected"
+          forms[i].status === "Reviewer rejected"
         )
           lawyerPicks.push(forms[i]);
       }
@@ -221,7 +242,7 @@ router.get(
 );
 
 router.post(
-  "CreatingForm",
+  "/CreatingForm",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     const userid = req.user.id;
@@ -298,11 +319,14 @@ router.put(
   async (req, res) => {
     if (req.user.userType === "Lawyer") {
       const formid = req.params.formId;
-      const form = await dynamicFormController.search("_id", formid);
+      var form = await dynamicFormController.search("_id", formid);
       if (form.error) return res.status(400).json({ error: form.error });
+      form=form[0]
+     // console.log(form.status)
+     // console.log(req.user.id)
       if (
-        form.status === "In progress Laywer" &&
-        form.lawyerId === req.user.id
+        form.status === "In progress Lawyer" &&
+        form.lawyerId.equals(req.user.id)
       ) {
         form.status = "Lawyer accepted";
         const returnedForm = await dynamicFormController.update(
@@ -333,7 +357,7 @@ router.put(
       if (form.error) return res.status(400).json({ error: form.error });
       if (
         form.status === "In progress Reviewer" &&
-        form.reviewerId === req.user.id
+        form.reviewerId.equals(req.user.id)
       ) {
         form.status = "Approved";
         const returnedForm = await dynamicFormController.update(
@@ -380,8 +404,11 @@ router.put(
   async (req, res) => {
     if (req.user.userType === "Lawyer") {
       const formid = req.params.formId;
-      const form = await dynamicFormController.search("_id", formid);
+      var form = await dynamicFormController.search("_id", formid);
       if (form.error) return res.status(400).json({ error: form.error });
+      form = form[0];
+   
+     // console.log(req.user.id)
       if (form.status === "Unassigned" || form.status === "Reviewer Rejected") {
         form.status = "In progress Lawyer";
         form.lawyerId = req.user.id;
@@ -390,9 +417,12 @@ router.put(
           formid,
           form
         );
+        // console.log(returnedForm.error)
         if (returnedForm.error)
           return res.status(400).json({ error: returnedForm.error });
+       // console.log(form.investorId);
         var investor = await userController.search("_id", form.investorId);
+       // console.log(investor);
         if (investor.error)
           return res.status(400).json({ error: investor.error });
         var notifyUser = await notifications.notifyUserForFormUpdates(
@@ -409,8 +439,9 @@ router.put(
       }
     } else if (req.user.userType === "Reviewer") {
       const formid = req.params.formId;
-      const form = await dynamicFormController.search("_id", formid);
+      var form = await dynamicFormController.search("_id", formid);
       if (form.error) return res.status(400).json({ error: form.error });
+      form = form[0];
       if (form.status === "Lawyer Accepted") {
         form.status = "In progress Reviewer";
         form.reviewerId = req.user.id;
@@ -471,16 +502,19 @@ router.put(
       const formid = req.params.formId;
       var form = await dynamicFormController.search("_id", formid);
       if (form.error) return res.status(400).json({ error: form.error });
+      form = form[0]
       var comments = form.lawyerComments;
-      for (i = 0; i < req.body.lawyerComments.length; i++) {
-        comments.push(req.body.lawyerComments[i]);
+      for (i = 0; i < req.body[Object.keys(req.body)].length; i++) {
+        comments.push(req.body[Object.keys(req.body)][i]);
       }
       form.lawyerComments = comments;
+      form.status = "Lawyer rejected";
       var updatedForm = await dynamicFormController.update("_id", formid, form);
-      var lawyer = await userController.search("_id", req.user.id);
-      if (lawyer.error) return res.status(400).json({ error: lawyer.error });
+      //console.log(updatedForm)
+      var investor = await userController.search("_id", form.investorId);
+      if (investor.error) return res.status(400).json({ error: investor.error });
       var notifyUser = await notifications.notifyUserForFormUpdates(
-        lawyer,
+        investor,
         updatedForm
       );
       return res.json({ data: updatedForm, notifications: notifyUser });
@@ -504,15 +538,47 @@ router.put(
         comments.push(req.body.reviewerComments[i]);
       }
       form.reviewerComments = comments;
+      form.status = "Reviewer rejected";
       var updatedForm = await dynamicFormController.update("_id", formid, form);
-      var reviewer = await userController.search("_id", req.user.id);
-      if (reviewer.error)
-        return res.status(400).json({ error: reviewer.error });
+      var investor = await userController.search("_id", form.investorId);
+      if (investor.error)
+        return res.status(400).json({ error: investor.error });
       var notifyUser = await notifications.notifyUserForFormUpdates(
-        reviewer,
+       investor,
         updatedForm
       );
       return res.json({ data: updatedForm, notifications: notifyUser });
+    } else {
+      return res.status(401).json({ msg: "Non Authorized" });
+    }
+  }
+);
+
+//When the lawyer adds comments , the investor should edit the form and make the status of it "In progress lawyer"
+router.put(
+  "/investorEditForm/:formId",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    if (req.user.userType === "Investor") {
+      const formid = req.params.formId;
+      var form = await dynamicFormController.search("_id", formid);
+      form = form[0]
+      console.log(form)
+      if (form.error) return res.status(400).json({ error: form.error });
+      if(form.status==="Unassigned" || form.status==="Lawyer rejected"){
+       
+          for(var prop in req.body){
+         
+          form[prop]=req.body[prop]
+        }
+        form.status="In progress Lawyer"
+        var updatedForm = await dynamicFormController.update("_id", formid, form);
+        if(updatedForm.error) return res.status(400).json({error:updatedForm.error})
+        return res.json({msg:"Form updated Successfully",data:updatedForm})
+      }
+      else{
+        return res.status(400).json({error:"You can't edit this form"})
+      }
     } else {
       return res.status(401).json({ msg: "Non Authorized" });
     }

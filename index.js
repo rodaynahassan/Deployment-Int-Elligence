@@ -10,6 +10,7 @@ const nationalities = require("./routes/api/nationalities");
 const governorates = require("./routes/api/governorates");
 const dynamicForms = require("./routes/api/dynamicForms");
 const userDynamicForms = require("./routes/api/userDynamicForms");
+const formTypes = require("./routes/api/formTypes");
 const app = express();
 
 // DB Config
@@ -50,6 +51,7 @@ app.use("/routes/api/governorates", governorates);
 app.use("/routes/api/dynamicForms", dynamicForms);
 app.use("/routes/api/fakeServer", fakeServer);
 app.use("/routes/api/userDynamicForms", userDynamicForms);
+app.use("/routes/api/formTypes", formTypes);
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");

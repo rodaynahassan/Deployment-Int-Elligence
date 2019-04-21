@@ -36,7 +36,6 @@ router.get('/getByExternalEntityApi/:Api', async (req,res) => {
 //create an external entity 
 router.post('/', async (req,res) => {
    var newExternalEntity=await controller.create(req.body)
-   if(newExternalEntity.error) res.status(400).send({error:error})
    return res.json({data:newExternalEntity})
  })
 
@@ -45,13 +44,14 @@ router.post('/', async (req,res) => {
     try {
      const id = req.params.id
      var externalentity = await controller.update('id',id,req.body)
-     if(!externalentity) return res.status(404).send({error: 'External Entity does not exist'})
+     if(!externalentity) return res.json({msg: 'External Entity does not exist'})
      if (externalentity.error) return res.status(400).send(externalentity)
-     return res.json({msg: 'External Entity updated successfully',data:externalentity })
+     else{return res.json({msg: 'External Entity updated successfully',data:externalentity })
+     }
     }
     catch(error) {
        
-        console.log("Sorry we can't update what you're asking for")
+        console.log(error)
     }  
  })
 //delete an external entity 

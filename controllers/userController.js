@@ -39,7 +39,7 @@ exports.search = async function search(att ,value ){
     }
     
     if(att === '_id'){
-        var values = await User.findById(value)
+        var values = await User.findById(value).then(res=>{return res}).catch(err=>{return {error:err}})
         return values
     }
     if(att ==='userType')

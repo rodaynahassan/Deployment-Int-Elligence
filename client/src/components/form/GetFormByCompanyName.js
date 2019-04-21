@@ -13,9 +13,7 @@ import { MDBRow, MDBCol, MDBInput, MDBBtn,MDBIcon } from "mdbreact";
 import axios from 'axios';
 
 var mongoose = require('mongoose')
-
-
-                
+               
 class MyCompany extends Component {
 
     state = {

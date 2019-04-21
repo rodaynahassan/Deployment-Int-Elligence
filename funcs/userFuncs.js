@@ -13,7 +13,7 @@ const functions = {
    CreateReviewerOrLawyer: async(userType1,name1,gender1,nationality1,identificationType1,identificationNumber1,birthdate1,address1,email1,password1) =>{  
            await axios({
             method:'post',
-            url:'http://localhost:5000/routes/api/admins/register',
+            url:'http://localhost:5000/routes/api/admins/registerR',
             //url:'http://desolate-oasis-18053.herokuapp.com/routes/api/admins/register',
             data:{ 
             userType:userType1,
@@ -32,9 +32,9 @@ const functions = {
     },
     
     createLawyerOrReviewer: async(userType1,name1,gender1,nationality1,identificationType1,identificationNumber1,birthdate1,address1,email1,password1,telephone1) =>{  
-         await axios({
+     return  await axios({
             method:'post',
-            url:'http://localhost:5000/routes/api/admins/register',
+            url:'http://localhost:5000/routes/api/admins/registerLawyer',
             //url:'http://desolate-oasis-18053.herokuapp.com/routes/api/admins/register',
             data:{ 
             userType:userType1,
@@ -50,7 +50,13 @@ const functions = {
             telephone:telephone1
            
             }
+        }) .then(response =>{
+            return response
         })
+        .catch(error => {
+            console.log(error)
+    return error
+        });
       
       
     },
@@ -81,7 +87,7 @@ const functions = {
 
        users= await axios({
            method : 'get',
-           url:'http://localhost:5000/routes/api/users/'
+           url:'http://localhost:5000/routes/api/users/getAllUsers'
        })
        return users
    },
@@ -148,10 +154,15 @@ UpdateFormInUser: async(UserId,FormId) =>{     // update a form in a certain use
            
     
     DeleteUser: async(deleteID) =>{   
-        const user= await axios.delete('http://localhost:5000/routes/api/users/'+deleteID)
-       
+        return await axios.delete('http://localhost:5000/routes/api/users/deleteU/'+mongoose.Types.ObjectId(deleteID))
         //const user= await axios.delete('http://desolate-oasis-18053.herokuapp.com/routes/api/users/'+deleteID)
-        return user
+        .then(response =>{
+            console.log(response)
+            return response
+        })
+        .catch(error => {
+        console.log(error)
+        });
 
     },
 

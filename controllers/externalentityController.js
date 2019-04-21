@@ -54,8 +54,14 @@ exports.update=async function update(att,value,body)
    }
  if(att==='id')  
  {
-     const externalentity=await ExternalEntity.findByIdAndUpdate(value,body)
-     return externalentity
+    var updatedExternalEntity = await ExternalEntity.findByIdAndUpdate(value,body)
+        .then(res=>{return res})
+        .catch(error=>{
+           return {error:error}
+       })
+       if (updatedExternalEntity.error) return updatedExternalEntity
+        var returnedExternalEntity = await ExternalEntity.findById(value)
+        return returnedExternalEntity
  }
  else
  {

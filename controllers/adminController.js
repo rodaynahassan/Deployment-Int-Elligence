@@ -120,14 +120,11 @@ exports.registerLawyer=async function registerLawyer(body){                     
     let user = await User.findOne({ email: body.email });
     // const user = await User.findOne({body:email})
     if(user) return {error: 'Account already exists'}
-    
-   
     const newUser = await User.create(body).then(res=>{return res}).catch(err=>{return {error:error}})
     if(newUser.error) return newUser
     const salt = await bcrypt.genSalt(10);
     newUser.password = await bcrypt.hash(newUser.password, salt);
     await newUser.save();
-
     return newUser
 
 }

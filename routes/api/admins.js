@@ -44,8 +44,6 @@ router.get('/', async (req, res) =>                                //redundant
 //create admin           //not sure about it
 router.post('/createAdmin', async (req, res) => {
 
-
-
     const newAdmin = await adminController.create(req.body)
     return res.json({ data: newAdmin });
 
@@ -88,8 +86,6 @@ router.get('/getByCompanyName/:companyName', passport.authenticate('jwt', { sess
 
 // update an admin
 router.put('/updateAdmin', passport.authenticate('jwt', { session: false }), async (req, res) => {
-
-
 
     const id = req.user.id
     if (req.user.userType === "Admin") {
@@ -141,6 +137,15 @@ router.post('/registerL', passport.authenticate('jwt', { session: false }), asyn
     else {
         return res.json({ msg: 'Non Authorized' })
     }
+
+})
+//Just for testing without authentication and authorization
+router.post('/registerLawyer', async (req, res) => {                       //register lawyer or reviewer
+ 
+        const newUser = await adminController.registerLawyer(req.body)
+        if (newUser.error) return res.status(400).json(newUser.error)
+        return res.json({ msg: 'Account was created successfully', data: newUser })
+    
 
 })
 

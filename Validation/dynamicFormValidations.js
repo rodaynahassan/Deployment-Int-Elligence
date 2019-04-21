@@ -27,7 +27,8 @@ module.exports = {
       .catch(err => {
         return { error: err };
       });
-    if (dependencies === []) dependencies = {};
+      console.log(dependencies)
+    if (dependencies.length===0) dependencies ={};
     else {
       dependencies = dependencies[0].toJSON();
     }
@@ -312,7 +313,7 @@ module.exports = {
             // console.log(prop)
             // console.log(createSchema[prop])
             let childValidations = await FormType.find({
-              formType: constraints[2]
+              formTypeArray: constraints[2]
             })
               .then(res => {
                 return res;
@@ -321,7 +322,8 @@ module.exports = {
                 return { error: err };
               });
             let array = request[prop];
-            // console.log(array)
+            
+             console.log(array)
             childValidations = childValidations[0].toJSON();
             for (i = 0; i < array.length; i++) {
               let childCreateSchema = {};
@@ -329,7 +331,7 @@ module.exports = {
               for (var childProp in childValidations) {
                 if (
                   childValidations.hasOwnProperty(childProp) &&
-                  childProp !== "formType" &&
+                  childProp !== "formTypeArray" &&
                   childProp !== "_id"
                 ) {
                   // console.log(childProp)
@@ -558,7 +560,8 @@ module.exports = {
       .catch(err => {
         return { error: err };
       });
-    if (dependencies === []) dependencies = {};
+     // console.log(dependencies)
+    if (!dependencies || dependencies.length===0) dependencies = {};
     else {
       dependencies = dependencies[0].toJSON();
     }
@@ -750,7 +753,7 @@ module.exports = {
               Joi.date()
             );
             let childValidations = await FormType.find({
-              formType: constraints[2]
+              formTypeArray: constraints[2]
             })
               .then(res => {
                 return res;
@@ -758,7 +761,8 @@ module.exports = {
               .catch(err => {
                 return { error: err };
               });
-            let array = request[prop];
+              console.log(request)
+            let array = request.toJSON()[""+prop];
             childValidations = childValidations[0].toJSON();
             // console.log(childValidations)
             for (i = 0; i < array.length; i++) {
@@ -767,7 +771,7 @@ module.exports = {
               for (var childProp in childValidations) {
                 if (
                   childValidations.hasOwnProperty(childProp) &&
-                  childProp !== "formType" &&
+                  childProp !== "formTypeArray" &&
                   childProp !== "_id"
                 ) {
                   //console.log(childProp)

@@ -56,6 +56,14 @@ class App extends Component {
 	constructor() {
 		super();
 		localStorage.setItem('lang', localStorage.getItem('lang') || 'en');
+		this.connecToServer = this.connecToServer.bind(this);
+	}
+	connecToServer() {
+		fetch('/');
+	}
+
+	componentDidMount() {
+		this.connecToServer();
 	}
 	state = {
 		lang: localStorage.getItem('lang'),

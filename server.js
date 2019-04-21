@@ -23,8 +23,8 @@ mongoose
 	useNewUrlParser: true;
 }
 
-// //Static file declaration
-// app.use(express.static(path.join(__dirname, 'client/build')));
+//Static file declaration
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 //production mode
 if (process.env.NODE_ENV === 'production') {

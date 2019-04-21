@@ -23,6 +23,23 @@ mongoose
 	useNewUrlParser: true;
 }
 
+//Static file declaration
+app.use(express.static(path.join(__dirname, 'client/build')));
+
+//production mode
+if (process.env.NODE_ENV === 'production') {
+	app.use(express.static(path.join(__dirname, 'client/build')));
+	//
+	app.get('*', (req, res) => {
+		res.sendfile(path.join((__dirname = 'client/build/index.html')));
+	});
+}
+
+//build mode
+app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname + '/client/public/index.html'));
+});
+
 // app.get('*', (req, res) => {
 // 	res.sendFile(path.resolve(where, the, index.html, is));
 // });
@@ -34,21 +51,21 @@ mongoose
 // 	res.sendFile('index.html');
 // });
 
-app.use(express.static(path.join(__dirname, 'client/build')));
+// app.use(express.static(path.join(__dirname, 'client/build')));
 
-//production mode
-if (process.env.NODE_ENV === 'production') {
-	app.use(express.static(path.join(__dirname, 'client/build')));
-	//
-	app.get('*', (req, res) => {
-		res.sendFile(path.join(((__dirname = 'client'), 'build', 'index.html')));
-	});
-}
+// //production mode
+// if (process.env.NODE_ENV === 'production') {
+// 	app.use(express.static(path.join(__dirname, 'client/build')));
+// 	//
+// 	app.get('*', (req, res) => {
+// 		res.sendFile(path.join(((__dirname = 'client'), 'build', 'index.html')));
+// 	});
+// }
 
-//build mode
-app.get('*', (req, res) => {
-	res.sendFile(path.join(__dirname + '/client/public/index.html'));
-});
+// //build mode
+// app.get('*', (req, res) => {
+// 	res.sendFile(path.join(__dirname + '/client/public/index.html'));
+// });
 
 app.use(function(req, res, next) {
 	res.header('Access-Control-Allow-Origin', '*');

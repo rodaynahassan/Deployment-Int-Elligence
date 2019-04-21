@@ -1,7 +1,6 @@
 import  React, { Component } from 'react';
 import axios from 'axios';
 import '../../App.css';
-import {Button} from 'react-bootstrap';
 import "mdbreact/dist/css/mdb.css";
 import FlippingAssignReviewer from '../form/FlippingAssignReviewer ';
 import trans from '../translations/unassignedRevTranslation'
@@ -11,10 +10,6 @@ class assignToReviewer extends Component
         assignReviewers:[]
       }
       componentDidMount(){
-
-
-      
-
 
         axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
         axios.get('http://localhost:5000/routes/api/forms/getLawyerAccepted',{headers: { "Authorization": localStorage.getItem('jwtToken') }})
@@ -30,8 +25,8 @@ class assignToReviewer extends Component
         render(){
             return (
               <div>
-              <div style={{backgroundColor:"#96aab3" , textAlign:"center", fontSize:"50px" , color:"white" ,paddingLeft:'60px',flexDirection: 'row', justifyContent: 'flex-end'}} >{trans.title}</div>   
-             <div  style={{display:"flex" , flexWrap:"wrap",alignItems:"right" , justifyContent:"right"}}>
+              <div style={{backgroundColor:"#a3dbf1" ,marginTop:"80px",paddingBottom:"20px", paddingTop:"20px",textAlign:"center", fontSize:"60px" , color:"dark" ,flexDirection: 'row', justifyContent: 'flex-end'}} ><h2 style={{fontSize:"50px"}}>{trans.title}</h2></div>            
+               <div  style={{display:"flex" , flexWrap:"wrap",alignItems:"right" , justifyContent:"right"}}>
               {this.tabRow()} 
              </div>
              </div>

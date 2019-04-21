@@ -39,17 +39,17 @@ class Cardd extends Component{
             <Card.Header style={{fontSize:'35px'}}><h1>{this.props.company.companyName}</h1> </Card.Header>
             <Card.Body>
                <div  style={{textAlign:'left'}}>
-                <h3><i class="fas fa-genderless"></i> Name in English : {this.props.company.companyNameInEnglish}</h3>
-                <h3><i class="fas fa-genderless"></i> Governorate : {this.props.company.companyGovernorate} </h3>
-                <h3><i class="fas fa-genderless"></i> City : {this.props.company.companyCity} </h3>
-                <h3><i class="fas fa-genderless"></i> Address : {this.props.company.companyAddress} </h3>
-                <h3><i class="fas fa-genderless"></i> Telephone : {this.props.company.companyTelephone} </h3>
-                <h3><i class="fas fa-genderless"></i> Fax : {this.props.company.companyFax} </h3>
-                <h3><i class="fas fa-genderless"></i> Currency : {this.props.company.currency} </h3>
-                <h3><i class="fas fa-genderless"></i> Equity Capital : {this.props.company.equityCapital}</h3>
-                <h3><i class="fas fa-genderless"></i> Type : {this.props.company.type}</h3>
-                <h3><i class="fas fa-genderless"></i> Creation Date : {this.props.company.creationDate}</h3>
-                <h3><i class="fas fa-genderless"></i> Fees :{this.props.company.fees}</h3>
+                <h3><i class="fas fa-circle"></i> Name in English : {this.props.company.companyNameInEnglish}</h3>
+                <h3><i class="fas fa-circle"></i> Governorate : {this.props.company.companyGovernorate} </h3>
+                <h3><i class="fas fa-circle"></i> City : {this.props.company.companyCity} </h3>
+                <h3><i class="fas fa-circle"></i> Address : {this.props.company.companyAddress} </h3>
+                <h3><i class="fas fa-circle"></i> Telephone : {this.props.company.companyTelephone} </h3>
+                <h3><i class="fas fa-circle"></i> Fax : {this.props.company.companyFax} </h3>
+                <h3><i class="fas fa-circle"></i> Currency : {this.props.company.currency} </h3>
+                <h3><i class="fas fa-circle"></i> Equity Capital : {this.props.company.equityCapital}</h3>
+                <h3><i class="fas fa-circle"></i> Type : {this.props.company.type}</h3>
+                <h3><i class="fas fa-circle"></i> Creation Date : {this.props.company.creationDate}</h3>
+                <h3><i class="fas fa-circle"></i> Fees :{this.props.company.fees}</h3>
                 </div>
                 <div  style={{textAlign:'right'}}>
                 <ButtonGroup size="sm" className="mt-3">

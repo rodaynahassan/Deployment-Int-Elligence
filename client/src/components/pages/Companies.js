@@ -18,14 +18,14 @@ class Companies extends Component {
       tabRow = () => {
         return this.state.companies.map((company,i)=>{
           return <FlippingCard lang={this.props.lang} company={company} key={i}/>  
-          // return <GetAllCompanies company={company} key={i} />;
+       
         });
       }
       render(){
         trans.setLanguage(this.props.lang)
         return ( 
          <div >
-          <div style={{backgroundColor:"#96aab3" , textAlign:"center", fontSize:"50px" , color:"white" ,paddingLeft:'60px',flexDirection: 'row', justifyContent: 'flex-end'}} >{trans.title}</div>  
+          <div style={{backgroundColor:"#a3dbf1" , textAlign:"center", fontSize:"50px" , color:"white" ,paddingLeft:'60px',flexDirection: 'row', justifyContent: 'flex-end'}} ><h2 style={{fontSize:"50px"}}>{trans.title}</h2></div>  
             <div style={{display:"flex" , flexWrap:"wrap",alignItems:"right" , justifyContent:"right"}}>
               {this.tabRow()}
             </div>

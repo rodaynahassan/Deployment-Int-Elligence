@@ -54,9 +54,12 @@ class Companies extends Component {
           <div>
            
            <div >
-          <div style={{backgroundColor:"#96aab3" ,marginTop:"90px", textAlign:"center", fontSize:"50px" , color:"white" ,paddingLeft:'60px',flexDirection: 'row', justifyContent: 'flex-end'}} >Specific lawyer case <br/>
+          <div style={{backgroundColor:"#a3dbf1" ,marginTop:"90px", textAlign:"center", fontSize:"50px" , color:"dark" ,paddingLeft:'60px',flexDirection: 'row', justifyContent: 'flex-end'}} ><h2 style={{fontSize:'50px'}}> SSC Cases</h2>
           <Dropdown>
-            <Dropdown.Toggle className="btn blue-gradient btn-block btn-rounded z-depth-1a" variant="omar" id="dropdown-basic"style={{width:"150px"}}>
+            {/* <Dropdown.Toggle className="btn blue-gradient btn-block btn-rounded z-depth-1a" variant="omar" id="dropdown-basic"style={{width:"150px"}}>
+              Sort the Cases
+            </Dropdown.Toggle> */}
+            <Dropdown.Toggle variant="dark dark" id="dropdown-basic"style={{width:"150px"}}>
               Sort the Cases
             </Dropdown.Toggle>
             <Dropdown.Menu>

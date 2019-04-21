@@ -13,9 +13,6 @@ class Companies extends Component {
       companies:[]
     }
     componentDidMount(){
-
-
-    
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
       axios.get('http://localhost:5000/routes/api/users/getUserFormsSPC',{headers: { "Authorization": localStorage.getItem('jwtToken') }})
       .then(res => {
@@ -31,6 +28,13 @@ class Companies extends Component {
             }).catch(err=>{console.log(err)});
            
      }   
+     sortByCreationDate = () => {
+      axios.defaults.headers.common['Authorization'] =  localStorage.getItem('jwtToken');
+      axios.get('http://localhost:5000/routes/api/users/SpecificformsSortedByformDate',{headers: { "Authorization": localStorage.getItem('jwtToken') }}).then (res=> {
+             this.setState({companies:res.data.data})
+             alert('Cases have been sorted')
+          }).catch(err=>{console.log(err)});
+        }
       tabRow = () => {
         return this.state.companies.map((company,i)=>{
             return <CardReviewer company={company} key={i}/>  
@@ -41,12 +45,14 @@ class Companies extends Component {
             
           <div>
           <div >
-          <div style={{backgroundColor:"#96aab3" ,marginTop:"90px",textAlign:"center", fontSize:"50px" , color:"white" ,paddingLeft:'60px',flexDirection: 'row', justifyContent: 'flex-end'}} >Specific Reviewer Cases<br/>
+          <div style={{ backgroundColor:"#a3dbf1" ,marginTop:"80px", textAlign:"center", fontSize:"50px" , color:"dark " ,paddingLeft:'60px',flexDirection: 'row', justifyContent: 'flex-end'}} ><h2 style={{fontSize:'50px'}}>Specific Reviewer Cases</h2>
           <Dropdown>
-            <Dropdown.Toggle className="btn blue-gradient btn-block btn-rounded z-depth-1a" variant="omar" id="dropdown-basic"style={{width:"150px"}}>
+            {/* <Dropdown.Toggle className="btn blue-gradient btn-block btn-rounded z-depth-1a" variant="omar" id="dropdown-basic"style={{width:"150px"}}>
+              Sort the Cases
+            </Dropdown.Toggle> */}
+            <Dropdown.Toggle variant="dark dark" id="dropdown-basic"style={{width:"150px"}}>
               Sort the Cases
             </Dropdown.Toggle>
-
             <Dropdown.Menu>
               <Dropdown.Item onClick={()=>this.sort()} style={{textAlign:'left'}}>By ID</Dropdown.Item>
               <Dropdown.Item onClick={()=>this.sortByCreationDate()} style={{textAlign:'center'}}>By Creation Date</Dropdown.Item>

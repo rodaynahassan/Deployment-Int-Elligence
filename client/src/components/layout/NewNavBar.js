@@ -9,7 +9,7 @@ import { Button } from 'mdbreact';
 import { red100 } from 'material-ui/styles/colors';
 import { blue100 } from 'material-ui/styles/colors';
 import { blue200 } from 'material-ui/styles/colors';
-import berry from '../layout/saint.png'
+import berry from '../layout/berry.png'
 import {Dropdown} from 'react-bootstrap';
 var $ = require("jquery")(window);
 
@@ -129,6 +129,8 @@ class NewNavBar extends Component{
                                 <Dropdown.Item href='/getCaseLawyerSPC'style={{textAlign:'left',color:blue200}} > Track your forms</Dropdown.Item>
                                 <Dropdown.Divider/>
                                 <Dropdown.Item href='/unassignedForm'style={{textAlign:'left',color:blue200}}> Pick a Task</Dropdown.Item>
+                                <Dropdown.Divider/>
+                                <Dropdown.Item href='/getCaseLawyerSPC'style={{textAlign:'left',color:blue200}}> SPC cases</Dropdown.Item>
                             </Dropdown.Menu>
                             </Dropdown>
                         </li>
@@ -194,7 +196,7 @@ class NewNavBar extends Component{
                         <Dropdown.Menu>
                             <Dropdown.Item href='/approvedCompanies' style={{textAlign:'left',color:blue200}}> Show Approved Companies</Dropdown.Item>
                             <Dropdown.Divider/>
-                            <Dropdown.Item href='/lawyerAcceptedForm'style={{textAlign:'left',color:blue200}}> Pick a Task</Dropdown.Item>
+                            <Dropdown.Item href='/lawyerAcceptedForms'style={{textAlign:'left',color:blue200}}> Pick a Task</Dropdown.Item>
                             <Dropdown.Divider/>
                             <Dropdown.Item href='/GetReviewer'style={{textAlign:'left',color:blue200}}> View your tasks</Dropdown.Item>
                         </Dropdown.Menu>

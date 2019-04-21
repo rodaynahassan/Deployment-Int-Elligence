@@ -29,10 +29,10 @@ mongoose
 
 //Static file declaration
 
-app.use(express.static('build'));
-app.get('*', function(req, res) {
-	res.sendFile('index.html');
-});
+// app.use(express.static('build'));
+// app.get('*', function(req, res) {
+// 	res.sendFile('index.html');
+// });
 
 app.use(express.static(path.join(__dirname, 'client/build')));
 

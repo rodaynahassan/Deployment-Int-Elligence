@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const Form = require('../../Models/Form')
 const validator = require('../../Validation/formValidations')
 const controller = require('../../controllers/formController')
+const userController = require('../../controllers/userController')
 const passport = require('passport')
 require('../../config/passport')(passport)
 
@@ -39,7 +40,7 @@ router.get('/getAllForms' , async (req,res) => {
 })
 //get company aka status=approved
 router.get('/getApprovedCompany', async (req,res) => {
-    const form = await Controller.search('status','Approved')
+    const form = await controller.search('status','Approved')
     return res.json({data:form})  
 })
 //get rejected form
@@ -98,7 +99,7 @@ router.get('/getLawyerComments/:id', passport.authenticate('jwt', {session: fals
 })
 
 //get a form by id
-router.get('getSpecificform/:id',  passport.authenticate('jwt', {session: false}) ,async (req,res) => {
+router.get('/getSpecificform/:id',  passport.authenticate('jwt', {session: false}) ,async (req,res) => {
         const id = req.params.id
         const form = await controller.search('_id',id)
         return res.json({data:form})
@@ -138,6 +139,41 @@ router.post('/', passport.authenticate('jwt', {session: false}) , async (req,res
         console.log(error)
     }  
  })
+
+
+
+ //delete an unassigned form
+ router.delete('/deleteUnassignedForm/:id', passport.authenticate('jwt', {session: false}) , async (req,res) => {
+    try {
+     const id = req.params.id
+     const userId= req.user.id
+     const form = await controller.search('_id', id)
+     if(form.status==="Unassigned"){
+     const deletedForm= await controller.remove('_id',id)
+     const user = await userController.search('_id', userId)
+     const forms=user.forms
+     
+     for (i = 0; i < forms.length; i++) {
+        if (forms[i]._id.equals(id)) {
+            forms.remove(forms[i])
+        }
+    }
+
+    return res.json({msg:'Form was deleted successfully',data:deletedForm})
+    }
+    else{
+        res.json({msg:'Cant delete'});
+     }
+  }
+    
+    catch(error) {
+        console.log(error)
+    }  
+    
+ })
+
+
+
 
  
 

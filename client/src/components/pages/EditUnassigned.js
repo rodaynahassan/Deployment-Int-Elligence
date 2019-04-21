@@ -11,7 +11,7 @@ import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 var mongoose = require('mongoose')
 
-class EditSPCForm extends React.Component{
+class EditUnassigned extends React.Component{
 
     constructor(props){
         super(props);
@@ -33,27 +33,27 @@ class EditSPCForm extends React.Component{
       
     }
     componentDidMount(){
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken')
-      axios.get('http://localhost:5000/routes/api/forms/getSpecificform'+ mongoose.Types.ObjectId(this.props.formId._id),{headers: { "Authorization": localStorage.getItem('jwtToken') }})
-          .then(response => {
+    //   axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken')
+    //   axios.get('http://localhost:5000/routes/api/forms/getSpecificform/'+ mongoose.Types.ObjectId(this.props.formId._id),{headers: { "Authorization": localStorage.getItem('jwtToken') }})
+    //       .then(response => {
                     
-              this.setState({ 
-                formId:response.data.data._id,
-                companyName: response.data.data.companyName, 
-                companyGovernorate: response.data.data.companyGovernorate,
-                companyAddress: response.data.data.companyAddress,
-                companyCity: response.data.data.companyCity,
-                companyTelephone: response.data.data.companyTelephone,
-                companyFax: response.data.data.companyFax,
-                companyNameInEnglish: response.data.data.companyNameInEnglish,
-                currency: response.data.data.currency,
-                equityCapital: response.data.data.equityCapital
+    //           this.setState({ 
+    //             formId:response.data.data._id,
+    //             companyName: response.data.data.companyName, 
+    //             companyGovernorate: response.data.data.companyGovernorate,
+    //             companyAddress: response.data.data.companyAddress,
+    //             companyCity: response.data.data.companyCity,
+    //             companyTelephone: response.data.data.companyTelephone,
+    //             companyFax: response.data.data.companyFax,
+    //             companyNameInEnglish: response.data.data.companyNameInEnglish,
+    //             currency: response.data.data.currency,
+    //             equityCapital: response.data.data.equityCapital
 
-             });
+    //          });
             
-          })
-          .catch(function (error) {
-          })
+    //       })
+    //       .catch(function (error) {
+    //       })
         axios.get('http://localhost:5000/routes/api/governorates/')        
           .then(res => {
                 this.setState({governorate: res.data.data})
@@ -62,8 +62,8 @@ class EditSPCForm extends React.Component{
       }
     
       handleClick(formId){
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
-        var apiBaseUrl = ("http://localhost:5000/routes/api/users/updateForm"+mongoose.Types.ObjectId(formId)) ;
+        axios.defaults.headers.common['Authorization'] =localStorage.getItem('jwtToken');
+        var apiBaseUrl = ("http://localhost:5000/routes/api/users/updateForm/"+mongoose.Types.ObjectId(formId)) ;
         var payload={
           "companyName": this.state.companyName,
           "companyGovernorate": this.state.companyGovernorate,
@@ -77,6 +77,7 @@ class EditSPCForm extends React.Component{
           }
         axios.put(apiBaseUrl, payload,{headers: { "Authorization": localStorage.getItem('jwtToken') }})
        .then(function (response) {
+           console.log(response)
          alert('The SPC form has been updated successfully');
        })
        .catch((error)=>{
@@ -301,4 +302,4 @@ class EditSPCForm extends React.Component{
 
 
 
-export default EditSPCForm;
+export default EditUnassigned;

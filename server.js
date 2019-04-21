@@ -23,9 +23,9 @@ mongoose
 	useNewUrlParser: true;
 }
 
-app.get('*', (req, res) => {
-	res.sendFile(path.resolve(where, the, index.html, is));
-});
+// app.get('*', (req, res) => {
+// 	res.sendFile(path.resolve(where, the, index.html, is));
+// });
 
 //Static file declaratio
 // app.use(express.static(path.join(__dirname, 'client/build')));

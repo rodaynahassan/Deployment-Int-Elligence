@@ -28,6 +28,12 @@ mongoose
 // });
 
 //Static file declaration
+
+app.use(express.static('build'));
+app.get('*', function(req, res) {
+	res.sendFile('index.html');
+});
+
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 //production mode
@@ -44,6 +50,11 @@ app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname + '/client/public/index.html'));
 });
 
+app.use(function(req, res, next) {
+	res.header('Access-Control-Allow-Origin', '*');
+	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+	next();
+});
 // if (process.env.NODE_ENV === 'production') {
 // 	app.use(express.static('client/build'));
 // 	app.get('*', (req, res) => {

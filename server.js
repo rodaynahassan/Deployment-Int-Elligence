@@ -81,6 +81,10 @@ app.use(function(req, res, next) {
 // 	});
 // }
 
+// Handling 404
+app.use((req, res) => {
+	res.status(404).send({ err: 'We can not find what you are looking for' });
+});
 // Init middleware
 
 app.use(express.json());
@@ -109,16 +113,3 @@ app.use(function(req, res, next) {
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log(`Server up and running on port ${port}`));
-
-//production mode
-if (process.env.NODE_ENV === 'production') {
-	app.use(express.static('client/build'));
-	//
-	app.get('*', (req, res) => {
-		res.sendFile(path.join((__dirname = 'client'), 'build', 'index.html'));
-	});
-}
-// Handling 404
-app.use((req, res) => {
-	res.status(404).send({ err: 'We can not find what you are looking for' });
-});

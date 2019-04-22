@@ -23,7 +23,7 @@ class DropdownTrial extends Component {
 		});
 	}
 	componentDidMount() {
-		axios.get('http://localhost:' + process.env.PORT + '/routes/api/nationalities/').then((res) => {
+		axios.get('/routes/api/nationalities/').then((res) => {
 			this.setState({ nationalities: res.data.data });
 		});
 	}

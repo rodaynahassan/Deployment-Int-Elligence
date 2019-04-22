@@ -50,13 +50,13 @@ class SPCform extends Component {
 		};
 	}
 	componentDidMount() {
-		axios.get('http://localhost:5000/routes/api/governorates/').then((res) => {
+		axios.get('/routes/api/governorates/').then((res) => {
 			this.setState({ governorate: res.data.data });
 		});
 	}
 
 	handleClick(event) {
-		var apiBaseUrl = 'http://localhost:5000/routes/api/users/CreatingForm';
+		var apiBaseUrl = '/routes/api/users/CreatingForm';
 		var payload = {
 			//"userId":mongoose.Types.ObjectId('5ca7b4748be2725704f230bc'),
 			companyName: this.state.companyName,
@@ -94,11 +94,9 @@ class SPCform extends Component {
 	};
 	changeHandler2 = (event) => {
 		this.setState({ [event.target.name]: event.target.value });
-		axios
-			.get('http://localhost:5000/routes/api/governorates/getByGovernorateName/' + event.target.value)
-			.then((res) => {
-				this.setState({ cities: res.data.data });
-			});
+		axios.get('/routes/api/governorates/getByGovernorateName/' + event.target.value).then((res) => {
+			this.setState({ cities: res.data.data });
+		});
 	};
 	validateForm() {
 		return (

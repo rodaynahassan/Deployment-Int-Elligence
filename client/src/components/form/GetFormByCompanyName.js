@@ -23,7 +23,7 @@ class MyCompany extends Component {
 	//do you mean get all forms?
 
 	componentDidMount() {
-		axios.get('http://localhost:5000/routes/api/forms/getAllForms').then((res) => {
+		axios.get('/routes/api/forms/getAllForms').then((res) => {
 			this.setState({ companies: res.data.data });
 		});
 	}
@@ -44,7 +44,7 @@ class MyCompany extends Component {
 
 	handleClick(event) {
 		axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
-		var apiBaseUrl = 'http://localhost:5000/routes/api/admins/getByCompanyName/';
+		var apiBaseUrl = '/routes/api/admins/getByCompanyName/';
 		axios
 			.get(apiBaseUrl + this.state.companyName.value, {
 				headers: { Authorization: localStorage.getItem('jwtToken') }

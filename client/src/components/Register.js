@@ -72,7 +72,7 @@ class Register extends Component {
 	}
 
 	componentDidMount() {
-		axios.get('http://localhost:5000/routes/api/nationalities').then((res) => {
+		axios.get('/routes/api/nationalities').then((res) => {
 			this.setState({ nationalities: res.data.data });
 		});
 	}

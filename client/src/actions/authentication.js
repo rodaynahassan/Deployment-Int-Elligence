@@ -6,7 +6,7 @@ import jwt_decode from 'jwt-decode';
 
 export const registerUser = (user) => (dispatch) => {
 	axios
-		.post('http://localhost:5000/routes/api/users/register', user)
+		.post('/routes/api/users/register', user)
 		//.then(res => history.push('/login'))
 		.catch((err) => console.log(err))
 		.catch((err) => {
@@ -19,7 +19,7 @@ export const registerLR = (user) => (dispatch) => {
 	if (user.userType === 'Lawyer') {
 		axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
 		axios
-			.post('http://localhost:5000/routes/api/admins/registerL', user, {
+			.post('/routes/api/admins/registerL', user, {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
 			//.then(res => history.push('/login'))
@@ -28,7 +28,7 @@ export const registerLR = (user) => (dispatch) => {
 
 	if (user.userType === 'Reviewer') {
 		axios
-			.post('http://localhost:5000/routes/api/admins/registerR', user, {
+			.post('/routes/api/admins/registerR', user, {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
 			.then((res) => console.log(res))

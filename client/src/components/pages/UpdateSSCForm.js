@@ -42,11 +42,9 @@ class UpdateSSCForm extends React.Component {
 		};
 		axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
 		axios
-			.get(
-				'http://localhost:5000/routes/api/forms/getSpecificform/' +
-					mongoose.Types.ObjectId(this.props.formId._id),
-				{ headers: { Authorization: localStorage.getItem('jwtToken') } }
-			)
+			.get('/routes/api/forms/getSpecificform/' + mongoose.Types.ObjectId(this.props.formId._id), {
+				headers: { Authorization: localStorage.getItem('jwtToken') }
+			})
 			.then((response) => {
 				this.setState({
 					companyName: response.data.data.companyName,
@@ -75,13 +73,9 @@ class UpdateSSCForm extends React.Component {
 			.catch(function(error) {});
 		axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
 		axios
-			.get(
-				'http://localhost:5000/routes/api/forms/getSpecificform/' +
-					mongoose.Types.ObjectId(this.props.formId._id),
-				{
-					headers: { Authorization: localStorage.getItem('jwtToken') }
-				}
-			)
+			.get('/routes/api/forms/getSpecificform/' + mongoose.Types.ObjectId(this.props.formId._id), {
+				headers: { Authorization: localStorage.getItem('jwtToken') }
+			})
 			.then((response) => {
 				let test = [];
 				let i;
@@ -108,15 +102,13 @@ class UpdateSSCForm extends React.Component {
 
 	changeHandler2 = (event) => {
 		this.setState({ [event.target.name]: event.target.value });
-		axios
-			.get('http://localhost:5000/routes/api/governorates/getByGovernorateName/' + event.target.value)
-			.then((res) => {
-				this.setState({ cities: res.data.data });
-				console.log(this.state.cities);
-			});
+		axios.get('/routes/api/governorates/getByGovernorateName/' + event.target.value).then((res) => {
+			this.setState({ cities: res.data.data });
+			console.log(this.state.cities);
+		});
 	};
 	handleClick(event) {
-		var apiBaseUrl = 'http://localhost:5000/routes/api/users/' + mongoose.Types.ObjectId(this.props.formId._id);
+		var apiBaseUrl = '/routes/api/users/' + mongoose.Types.ObjectId(this.props.formId._id);
 		var payload = {
 			companyName: this.state.companyName,
 			companyGovernorate: this.state.companyGovernorate,

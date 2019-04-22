@@ -12,7 +12,7 @@ class InProgressSPCCases extends Component {
 	componentDidMount() {
 		axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
 		axios
-			.get('http://localhost:5000/routes/api/users/getInProgressSPCCases/', {
+			.get('/routes/api/users/getInProgressSPCCases/', {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
 			.then((res) => {

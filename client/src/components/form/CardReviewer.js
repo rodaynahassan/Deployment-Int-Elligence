@@ -21,13 +21,7 @@ class Cardd extends Component{
         axios.defaults.headers.common['Authorization'] =  localStorage.getItem('jwtToken');
         axios.put('http://localhost:5000/routes/api/users/accept/'+mongoose.Types.ObjectId(formId),{headers: { "Authorization": localStorage.getItem('jwtToken') }})
         }
-
-   
-        
-    reject = (formId) => {
-            axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
-            axios.put('http://localhost:5000/routes/api/users/reject/' + mongoose.Types.ObjectId(formId),{headers: { "Authorization": localStorage.getItem('jwtToken') }} )
-        }    
+  
 
 
     render()
@@ -54,7 +48,7 @@ class Cardd extends Component{
                 <div  style={{textAlign:'right'}}>
                 <ButtonGroup size="lg">
                 <Button variant="outline-blue"  block style={{width:"250px",height:"115px"}} onClick={()=>this.accept(this.props.company._id)} ><h3><i class="fas fa-handshake" style={{fontSize:'1em'}}></i> <br />ACCEPT CASE</h3></Button> <br />
-                <Button variant="outline-blue" block  style={{width:"250px",height:"115px"}}  onClick={()=>this.reject(this.props.company._id)} ><h3><i class="fas fa-ban" style={{fontSize:'1em'}}></i><br /> REJECT CASE</h3></Button>
+                
                 <ButtonToolbar>
                     <Button
                     variant="outline-blue"

@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 class FlippingUnassignedForms extends Component {
   AssignCase = (formId) => {
       axios.defaults.headers.common['Authorization'] =  localStorage.getItem('jwtToken');
-      axios.put('http://localhost:5000/routes/api/users/takingForm/'+mongoose.Types.ObjectId(formId),{headers: { "Authorization": localStorage.getItem('jwtToken') }})
+      axios.put('http://localhost:5000/routes/api/userDynamicForms/takingForm/'+mongoose.Types.ObjectId(formId),{headers: { "Authorization": localStorage.getItem('jwtToken') }})
       .then(res=>console.log(res))
       .catch(err=>console.log(err))
     }
@@ -33,7 +33,7 @@ class FlippingUnassignedForms extends Component {
                  <h1 style = {{textShadow:'-1px 0 white, 0 1px white, 1px 0 white, 0 -1px white',fontSize:'60px'}}>{this.props.unassigned.companyName} </h1><br/>
                    <i class="fas fa-angle-double-left" title='click to view details' style={{paddingRight:'650px'}}></i>
                    <i class="fas fa-angle-double-right" title='click to view details' style={{paddingLeft:'650px'}}></i><br/>
-                   <Button type="button" variant="ali" onClick={()=>(this.AssignCase(this.props.unassigned._id), alert('This Case is assigned to YOU!!'))}class="btn btn-info"><h6 style={{color:"#64b9e0" }}>Pick Case</h6></Button>
+                   <Button type="button" variant="ali" onClick={()=>(this.AssignCase(Form._id), alert('This Case is assigned to YOU!!'))}class="btn btn-info"><h6 style={{color:"#64b9e0" }}>Pick Case</h6></Button>
                    </div>
             </FrontSide>
             <BackSide

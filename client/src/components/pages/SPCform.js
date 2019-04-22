@@ -10,10 +10,6 @@ import { MDBRow, MDBCol, MDBInput, MDBBtn,MDBDropdown,MDBDropdownToggle,MDBDropd
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import trans from '../translations/spcTranslation'
-//import {Dropdown} from 'react-bootstrap';
-import {Dropdown} from 'semantic-ui-react';
-
-import DropdownItem from 'react-bootstrap/DropdownItem';
 
 var mongoose = require('mongoose')
 

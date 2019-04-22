@@ -9,12 +9,10 @@ render() {
   trans.setLanguage(this.props.lang)
 	return(
   <Flippy
-    flipOnHover={false} // default false
-    flipOnClick={true} // default false
+    flipOnHover={false}
+    flipOnClick={true} 
     flipDirection="horizontal" // horizontal or vertical
-    ref={(r) => this.flippy = r} // to use toggle method like this.flippy.toggle()
-    // if you pass isFlipped prop component will be controlled component.
-    // and other props, which will go to div
+    ref={(r) => this.flippy = r}
     style={{ width: "100%" , height: '430px' }} /// these are optional style, it is not necessary
   >
     <FrontSide
@@ -32,6 +30,8 @@ render() {
     </FrontSide>
     <BackSide
        style={{ backgroundColor: '#f7f7f7', borderStyle: 'solid',borderWidth:'5px', paddingLeft:'60px'}}>
+{/*        
+
         <h2 style={{fontSize:'30px'}}><i class="fas fa-circle" style={{fontSize:"15px"}}></i> Name In English :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#9ad1e7'}}>{this.props.company.companyNameInEnglish}</span> </h2> 
            <h4><i class="fas fa-circle" style={{fontSize:"15px"}}></i> Governorate :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#9ad1e7'}}>{this.props.company.companyGovernorate}</span> </h4>
            <h4><i class="fas fa-circle"style={{fontSize:"15px"}}></i> City :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#9ad1e7'}}>{this.props.company.companyCity}</span> </h4>
@@ -41,7 +41,7 @@ render() {
            <h4><i class="fas fa-circle"style={{fontSize:"15px"}}></i> Currency :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#9ad1e7'}}>{this.props.company.currency}</span> </h4>
            <h4><i class="fas fa-circle"style={{fontSize:"15px"}}></i> Equity Capital :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#9ad1e7'}}>{this.props.company.equityCapital}</span> </h4>
            <h4><i class="fas fa-circle"style={{fontSize:"15px"}}></i> Type :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#9ad1e7'}}>{this.props.company.type}</span> </h4>
-           <h4><i class="fas fa-circle"style={{fontSize:"15px"}}></i> Creation Date :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#9ad1e7'}}>{this.props.company.creationDate}</span> </h4>
+           <h4><i class="fas fa-circle"style={{fontSize:"15px"}}></i> Creation Date :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#9ad1e7'}}>{this.props.company.creationDate}</span> </h4> */}
     </BackSide>
   </Flippy>
 )

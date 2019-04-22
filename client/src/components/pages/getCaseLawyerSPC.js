@@ -24,7 +24,7 @@ class Companies extends Component {
     }
     componentDidMount(){
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
-      axios.get('http://localhost:5000/routes/api/users/getUserFormsSPC/',{headers: { "Authorization": localStorage.getItem('jwtToken') }})
+      axios.get('http://localhost:5000/routes/api/userDynamicForms/getLawyerInProgressCases/',{headers: { "Authorization": localStorage.getItem('jwtToken') }})
       .then(res => {
         if(Array.isArray(res.data.data)){
           this.setState({companies: res.data.data})
@@ -40,7 +40,7 @@ class Companies extends Component {
           }
           sortByCreationDate = () => {
             axios.defaults.headers.common['Authorization'] =  localStorage.getItem('jwtToken');
-            axios.get('http://localhost:5000/routes/api/users/SpecificformsSortedByformDate',{headers: { "Authorization": localStorage.getItem('jwtToken') }}).then (res=> {
+            axios.get('http://localhost:5000/routes/api/user/SpecificformsSortedByformDate',{headers: { "Authorization": localStorage.getItem('jwtToken') }}).then (res=> {
                    this.setState({companies:res.data.data})
                    alert('Cases have been sorted')
                 }).catch(err=>{console.log(err)});
@@ -75,33 +75,6 @@ class Companies extends Component {
          {this.tabRow()}
          </div>
         )
-          
-
-
-
-
-
-      // render(){
-      //   return (
-             
-      //     <div style={{paddingLeft:"60px"}}>
-      //     <Button variant="nada" block disabled><h1>specific lawyer cases</h1></Button>
-        
-      //     <Container >
-      //     <div  style={{textAlign:'right'}}>
-      //     <div class="btn-group-vertical" >
-      //     <Button type="button" variant="#2e5a7c" onClick={()=>this.sort()} class="btn btn-primary">Sort the cases by ID</Button>
-      //      <Button type="button" variant="#2e5a7c" onClick={()=>this.sortByCreationDate()}  class="btn btn-primary">Sort the cases by CreationDate</Button>
-      //      </div>
-      //       </div>
-      //      </Container>
-      //     {/* <Button variant="dark" onClick={()=>this.sort()}>Sort the cases by ID </Button> 
-      //     <Button variant="dark" onClick={()=>this.sortByCreationDate()}>Sort the cases by CreationDate </Button>  */}
-          
-      //     </div>
-
-         // )
-        // }
     }
       }
  export default Companies

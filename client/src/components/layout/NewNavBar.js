@@ -59,25 +59,25 @@ class NewNavBar extends Component{
                                 <i className="fa fa-fw fa-list-alt"  style={{color:blue100,fontSize:"1.5em"}}></i>
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                <Dropdown.Item href='/form'style={{textAlign:'left',color:blue200}}> Create a company</Dropdown.Item>
+                                <Dropdown.Item href='/form'style={{textAlign:'left',color:'#3e484d'}}> Create a company</Dropdown.Item>
                                 <Dropdown.Divider/>
-                                <Dropdown.Item href='/approvedCompanies' style={{textAlign:'left',color:blue200}}> Show Approved Companies</Dropdown.Item>
+                                <Dropdown.Item href='/approvedCompanies' style={{textAlign:'left',color:'#3e484d'}}> Show Approved Companies</Dropdown.Item>
                                 <Dropdown.Divider/>
-                                <Dropdown.Item href='/showspcform'style={{textAlign:'left',color:blue200}} > Track your forms</Dropdown.Item>
+                                <Dropdown.Item href='/showspcform'style={{textAlign:'left',color:'#3e484d'}} > Track your forms</Dropdown.Item>
                             </Dropdown.Menu>
                             </Dropdown>
                         </li>
                         <li class="nav-item dropdown">
                         <Dropdown >
-                            <Dropdown.Toggle  title= "Settings"variant="omar" id="dropdown-basic"  >
+                            <Dropdown.Toggle  title= "Settings" variant="omar" id="dropdown-basic"  >
                             <   i className="fas fa-cog"  style={{color:blue100,fontSize:"1.5em"}}></i>
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                <Dropdown.Item href='/editprofile' style={{textAlign:'left',color:blue200}}> Edit your profile</Dropdown.Item>
+                                <Dropdown.Item href='/editprofile' style={{textAlign:'left',color:'#3e484d'}}> Edit your profile</Dropdown.Item>
                                 <Dropdown.Divider/>
-                                <Dropdown.Item href='/changepassword'style={{textAlign:'left',color:blue200}}> Change your password</Dropdown.Item>
+                                <Dropdown.Item href='/changepassword'style={{textAlign:'left',color:'#3e484d'}}> Change your password</Dropdown.Item>
                                 <Dropdown.Divider/>
-                                <Dropdown.Item onClick={this.logOut} style={{textAlign:'left',color:blue200}}> Logout</Dropdown.Item>
+                                <Dropdown.Item onClick={this.logOut} style={{textAlign:'left',color:'#3e484d'}}> Logout</Dropdown.Item>
                             </Dropdown.Menu>
                             </Dropdown>
                         </li>
@@ -122,15 +122,15 @@ class NewNavBar extends Component{
                                 <i className="fa fa-fw fa-list-alt"  style={{color:blue100,fontSize:"1.5em"}}></i>
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                <Dropdown.Item href='/form'style={{textAlign:'left',color:blue200}}> Create a company</Dropdown.Item>
+                                <Dropdown.Item href='/form'style={{textAlign:'left',color:'#3e484d'}}> Create a company</Dropdown.Item>
                                 <Dropdown.Divider/>
-                                <Dropdown.Item href='/approvedCompanies' style={{textAlign:'left',color:blue200}}> Show Approved Companies</Dropdown.Item>
+                                <Dropdown.Item href='/approvedCompanies' style={{textAlign:'left',color:"#3e484d"}}> Show Approved Companies</Dropdown.Item>
                                 <Dropdown.Divider/>
-                                <Dropdown.Item href='/getCaseLawyerSPC'style={{textAlign:'left',color:blue200}} > Track your forms</Dropdown.Item>
+                                <Dropdown.Item href='/getCaseLawyerSPC'style={{textAlign:'left',color:'#3e484d'}} > Track your forms</Dropdown.Item>
                                 <Dropdown.Divider/>
-                                <Dropdown.Item href='/unassignedForm'style={{textAlign:'left',color:blue200}}> Pick a Task</Dropdown.Item>
+                                <Dropdown.Item href='/unassignedForm'style={{textAlign:'left',color:'#3e484d'}}> Pick a Task</Dropdown.Item>
                                 <Dropdown.Divider/>
-                                <Dropdown.Item href='/getCaseLawyerSPC'style={{textAlign:'left',color:blue200}}> SPC cases</Dropdown.Item>
+                                <Dropdown.Item href='/getCaseLawyerSPC'style={{textAlign:'left',color:'#3e484d'}}> SPC cases</Dropdown.Item>
                             </Dropdown.Menu>
                             </Dropdown>
                         </li>
@@ -140,11 +140,11 @@ class NewNavBar extends Component{
                                 <i className="fas fa-cog"  style={{color:blue100,fontSize:"1.5em"}}></i>
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                <Dropdown.Item href='/editprofile' style={{textAlign:'left',color:blue200}}> Edit your profile</Dropdown.Item>
+                                <Dropdown.Item href='/editprofile' style={{textAlign:'left',color:'#3e484d'}}> Edit your profile</Dropdown.Item>
                                 <Dropdown.Divider/>
-                                <Dropdown.Item href='/changepassword'style={{textAlign:'left',color:blue200}}> Change your password</Dropdown.Item>
+                                <Dropdown.Item href='/changepassword'style={{textAlign:'left',color:'#3e484d'}}> Change your password</Dropdown.Item>
                                 <Dropdown.Divider/>
-                                <Dropdown.Item onClick={this.logOut} style={{textAlign:'left',color:blue200}}> Logout</Dropdown.Item>
+                                <Dropdown.Item onClick={this.logOut} style={{textAlign:'left',color:'#3e484d'}}> Logout</Dropdown.Item>
                             </Dropdown.Menu>
                             </Dropdown>
                         </li>
@@ -194,11 +194,11 @@ class NewNavBar extends Component{
                                 <i className="fa fa-fw fa-list-alt"  style={{color:blue100,fontSize:"1.5em"}}></i>
                             </Dropdown.Toggle>
                         <Dropdown.Menu>
-                            <Dropdown.Item href='/approvedCompanies' style={{textAlign:'left',color:blue200}}> Show Approved Companies</Dropdown.Item>
+                            <Dropdown.Item href='/approvedCompanies' style={{textAlign:'left',color:'#3e484d'}}> Show Approved Companies</Dropdown.Item>
                             <Dropdown.Divider/>
-                            <Dropdown.Item href='/lawyerAcceptedForms'style={{textAlign:'left',color:blue200}}> Pick a Task</Dropdown.Item>
+                            <Dropdown.Item href='/lawyerAcceptedForms'style={{textAlign:'left',color:'#3e484d'}}> Pick a Task</Dropdown.Item>
                             <Dropdown.Divider/>
-                            <Dropdown.Item href='/GetReviewer'style={{textAlign:'left',color:blue200}}> View your tasks</Dropdown.Item>
+                            <Dropdown.Item href='/GetReviewer'style={{textAlign:'left',color:'#3e484d'}}> View your tasks</Dropdown.Item>
                         </Dropdown.Menu>
                         </Dropdown>
                     </li>
@@ -208,11 +208,11 @@ class NewNavBar extends Component{
                                 <i className="fas fa-cog"  style={{color:blue100,fontSize:"1.5em"}}></i>
                             </Dropdown.Toggle>
                         <Dropdown.Menu>
-                            <Dropdown.Item href='/editprofile' style={{textAlign:'left',color:blue200}}> Edit your profile</Dropdown.Item>
+                            <Dropdown.Item href='/editprofile' style={{textAlign:'left',color:'#3e484d'}}> Edit your profile</Dropdown.Item>
                             <Dropdown.Divider/>
-                            <Dropdown.Item href='/changepassword'style={{textAlign:'left',color:blue200}}> Change your password</Dropdown.Item>
+                            <Dropdown.Item href='/changepassword'style={{textAlign:'left',color:'#3e484d'}}> Change your password</Dropdown.Item>
                             <Dropdown.Divider/>
-                            <Dropdown.Item onClick={this.logOut} style={{textAlign:'left',color:blue200}}> Logout</Dropdown.Item>
+                            <Dropdown.Item onClick={this.logOut} style={{textAlign:'left',color:'#3e484d'}}> Logout</Dropdown.Item>
                         </Dropdown.Menu>
                         </Dropdown>
                     </li>

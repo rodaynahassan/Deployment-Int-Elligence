@@ -337,6 +337,7 @@ router.put(
         if (returnedForm.error)
           return res.status(400).json({ error: form.error });
         var investor = await userController.search("_id", form.investorId);
+        if(!investor){
         if (investor.error)
           return res.status(400).json({ error: investor.error });
         var notifyUser = await notifications.notifyUserForFormUpdates(
@@ -348,13 +349,16 @@ router.put(
           data: returnedForm,
           notifications: notifyUser
         });
+      }
       } else {
         return res.status(400).json({ msg: "You can't accept this form :(" });
       }
     } else if (req.user.userType === "Reviewer") {
       const formid = req.params.formId;
-      const form = await dynamicFormController.search("_id", formid);
+      var form = await dynamicFormController.search("_id", formid);
       if (form.error) return res.status(400).json({ error: form.error });
+      form=form[0]
+      console.log(form)
       if (
         form.status === "In progress Reviewer" &&
         form.reviewerId.equals(req.user.id)
@@ -368,6 +372,7 @@ router.put(
         if (returnedForm.error)
           return res.status(400).json({ error: form.error });
         const investor = await userController.search("_id".form.investor_id);
+        if(!investor){
         if (investor.error)
           return res.status(400).json({ error: investor.error });
         const updatedFinancialBalance = form.fees + investor.financialBalance;
@@ -388,6 +393,7 @@ router.put(
           data: returnedForm,
           notifications: notifyUser
         });
+      }
       } else {
         return res.status(400).json({ msg: "You can't accept this form :(" });
       }
@@ -423,6 +429,7 @@ router.put(
        // console.log(form.investorId);
         var investor = await userController.search("_id", form.investorId);
        // console.log(investor);
+       if(!investor){
         if (investor.error)
           return res.status(400).json({ error: investor.error });
         var notifyUser = await notifications.notifyUserForFormUpdates(
@@ -434,25 +441,31 @@ router.put(
           data: returnedForm,
           notification: notifyUser
         });
+      }
       } else {
         return res.status(400).json({ msg: "You can not take it :)" });
       }
     } else if (req.user.userType === "Reviewer") {
       const formid = req.params.formId;
       var form = await dynamicFormController.search("_id", formid);
+      //console.log(form)
       if (form.error) return res.status(400).json({ error: form.error });
       form = form[0];
-      if (form.status === "Lawyer Accepted") {
+      if (form.status === "Lawyer accepted") {
+        console.log(form)
         form.status = "In progress Reviewer";
         form.reviewerId = req.user.id;
+        
         const returnedForm = await dynamicFormController.update(
           "_id",
           formid,
           form
         );
+       console.log(returnedForm)
         if (returnedForm.error)
           return res.status(400).json({ error: returnedForm.error });
         var investor = await userController.search("_id", form.investorId);
+        if(!investor){
         if (investor.error)
           return res.status(400).json({ error: investor.error });
         var notifyUser = await notifications.notifyUserForFormUpdates(
@@ -464,6 +477,11 @@ router.put(
           data: returnedForm,
           notification: notifyUser
         });
+      }
+      return res.json({
+        msg: "Form picked Succesfully",
+        data: returnedForm
+      });
       } else {
         return res.status(400).json({ msg: "You can not take it :)" });
       }

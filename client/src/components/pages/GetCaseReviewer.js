@@ -14,7 +14,7 @@ class Companies extends Component {
     }
     componentDidMount(){
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
-      axios.get('http://localhost:5000/routes/api/users/getUserFormsSPC',{headers: { "Authorization": localStorage.getItem('jwtToken') }})
+      axios.get('http://localhost:5000/routes/api/userDynamicForms/getReviewerInProgressCases',{headers: { "Authorization": localStorage.getItem('jwtToken') }})
       .then(res => {
         if(Array.isArray(res.data.data)){
           this.setState({companies: res.data.data})

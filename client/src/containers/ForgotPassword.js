@@ -45,7 +45,7 @@ class ForgotPassword extends Component {
 			});
 		} else {
 			axios
-				.post('http://localhost:5000/routes/api/users/forgotPassword', {
+				.post('/routes/api/users/forgotPassword', {
 					email
 				})
 				.then((response) => {

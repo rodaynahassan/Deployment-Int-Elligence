@@ -450,7 +450,7 @@ router.post('/login', async (req, res) => {
 //Calculating fees as a lawyer
 router.put('/CalculatingFees/:formId', passport.authenticate('jwt', { session: false }), async (req, res) => {
 	if (req.user.userType === 'Lawyer') {
-		var equation = await axios.get('http://localhost:5000/routes/api/fakeServer/ReturningEquation');
+		var equation = await axios.get('/routes/api/fakeServer/ReturningEquation');
 		console.log(equation);
 		const formid = req.params.formId;
 		const form = await formController.search('_id', formid);
@@ -868,7 +868,7 @@ router.post('/forgotPassword', async (req, res) => {
 				'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
 				'Please click on the following link, or paste this into your browser to complete the process within one hour of receiving it:\n\n' +
 				`http://localhost:3000/reset/${token}\n\n` +
-				//`http://localhost:5000/routes/api/users/reset/${token}\n\n` +
+				//`/routes/api/users/reset/${token}\n\n` +
 				'If you did not request this, please ignore this email and your password will remain unchanged.\n'
 		};
 

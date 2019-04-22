@@ -41,10 +41,10 @@ export default class ResetPassword extends Component {
 
 	async componentDidMount() {
 		// axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
-		// axios.get('http://localhost:5000/routes/api/users/SpecificFormSortedByFormId',{headers: { "Authorization": localStorage.getItem('jwtToken') }})
+		// axios.get('/routes/api/users/SpecificFormSortedByFormId',{headers: { "Authorization": localStorage.getItem('jwtToken') }})
 		console.log(this.props.match.params.token);
 		await axios
-			.get('http://localhost:5000/routes/api/users/reset/' + this.props.match.params.token)
+			.get('/routes/api/users/reset/' + this.props.match.params.token)
 			.then((response) => {
 				console.log(response);
 				if (response.data.message === 'password reset link a-ok') {
@@ -76,7 +76,7 @@ export default class ResetPassword extends Component {
 		console.log(this.state.name);
 		e.preventDefault();
 		axios
-			.put('http://localhost:5000/routes/api/users/updatePasswordViaEmail', {
+			.put('/routes/api/users/updatePasswordViaEmail', {
 				name: this.state.name,
 				password: this.state.password,
 				resetPasswordToken: this.props.match.params.token

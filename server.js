@@ -24,7 +24,7 @@ mongoose
 }
 
 //Static file declaration
-//app.use(express.static(path.join(__dirname, 'client/build')));
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 //roduction mode
 // console.log(process.env.NODE_ENV + '   ffffffffffffffffffffff');
@@ -72,7 +72,7 @@ mongoose
 
 if (process.env.NODE_ENV === 'production') {
 	app.use(express.static(path.resolve(__dirname, 'client/build')));
-	//
+
 	app.get('*', (req, res) => {
 		res.sendfile(path.resolve((__dirname = 'client/build/index.html')));
 	});
@@ -80,9 +80,9 @@ if (process.env.NODE_ENV === 'production') {
 // console.log(__dirname + '   gggggggggggggggggggg');
 
 //build mode
-app.get('*', (req, res) => {
-	res.sendFile(path.join(__dirname + '/client/public/index.html'));
-});
+// app.get('*', (req, res) => {
+// 	res.sendFile(path.join(__dirname + '/client/public/index.html'));
+// });
 
 app.use(function(req, res, next) {
 	res.header('Access-Control-Allow-Origin', '*');

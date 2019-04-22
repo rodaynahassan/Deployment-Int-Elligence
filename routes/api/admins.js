@@ -2,15 +2,15 @@
 const express = require("express");
 const uuid = require("uuid");
 const router = express.Router();
-const validator = require('../../Validation/adminValidations')
+const validator = require('../../validations/adminValidations')
 const adminController = require('../../controllers/adminController')
 const formController = require('../../controllers/formController')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 const tokenKey = require('../../config/keys').secretOrKey
 // Models
-const Admin = require('../../Models/Admin');
-const Forms = require('../../Models/Form');
+const Admin = require('../../models/Admin');
+const Forms = require('../../models/Form');
 const dynamicFormController = require('../../controllers/dynamicFormController')
 
 const passport = require('passport')

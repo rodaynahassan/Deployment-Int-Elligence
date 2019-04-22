@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { Component } from "react";
 import axios from "axios";
 import "../../App.css";
@@ -12,25 +11,12 @@ import { Dropdown, Card } from "react-bootstrap";
 import { MDBProgress } from 'mdbreact'
 const mongoose = require("mongoose");
 var $ = require("jquery")(window);
-=======
-import React, { Component } from 'react';
-import axios from 'axios';
-import '../../App.css';
-import Table from 'react-bootstrap/Table';
-import { Button, Container } from 'react-bootstrap';
-import 'mdbreact/dist/css/mdb.css';
-import Card from '../form/Card';
-import GetAllUserForms from '../form/GetAllUserForms';
-import { Dropdown } from 'react-bootstrap';
-var $ = require('jquery')(window);
->>>>>>> a3c4290fe06a5cd3ae24bf639641802a9d01e1f4
 
 // tabRow(){
 //   return this.state.companies.map(function(company,i){
 //       return <GetAllUserForms company={company} key={i} />;
 //   });
 // }
-<<<<<<< HEAD
 
 class Companies extends Component {
   state = {
@@ -42,7 +28,7 @@ class Companies extends Component {
       "Bearer " + localStorage.getItem("jwtToken");
     axios
       .get(
-        "http://localhost:5000/routes/api/userDynamicForms/getLawyerInProgressCases",
+        "/routes/api/userDynamicForms/getLawyerInProgressCases",
         { headers: { Authorization: localStorage.getItem("jwtToken") } }
       )
       .then(res => {
@@ -61,7 +47,7 @@ class Companies extends Component {
     );
     axios
       .get(
-        "http://localhost:5000/routes/api/userDynamicForms/AllFormSortedByFormId/",
+        "/routes/api/userDynamicForms/AllFormSortedByFormId/",
         { headers: { Authorization: localStorage.getItem("jwtToken") } }
       )
       .then(res => {
@@ -78,7 +64,7 @@ class Companies extends Component {
     );
     axios
       .get(
-        "http://localhost:5000/routes/api/userDynamicForms/AllformsSortedByformDate/",
+        "/routes/api/userDynamicForms/AllformsSortedByformDate/",
         { headers: { Authorization: localStorage.getItem("jwtToken") } }
       )
       .then(res => {
@@ -98,7 +84,7 @@ class Companies extends Component {
     );
     axios
       .put(
-        "http://localhost:5000/routes/api/userDynamicForms/accept/" +
+        "/routes/api/userDynamicForms/accept/" +
           mongoose.Types.ObjectId(formId),
         { headers: { Authorization: localStorage.getItem("jwtToken") } }
       )
@@ -114,7 +100,7 @@ class Companies extends Component {
       "jwtToken"
     );
     axios.put(
-      "http://localhost:5000/routes/api/userDynamicForms/calculatingFees/" +
+      "/routes/api/userDynamicForms/calculatingFees/" +
         mongoose.Types.ObjectId(formId),
       { headers: { Authorization: localStorage.getItem("jwtToken") } }
     );
@@ -319,100 +305,5 @@ class Companies extends Component {
       </div>
     );
   }
-=======
-
-class Companies extends Component {
-	state = {
-		companies: []
-	};
-	componentDidMount() {
-		axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
-		axios
-			.get('/routes/api/userDynamicForms/getLawyerInProgressCases/', {
-				headers: { Authorization: localStorage.getItem('jwtToken') }
-			})
-			.then((res) => {
-				if (Array.isArray(res.data.data)) {
-					this.setState({ companies: res.data.data });
-				}
-			});
-	}
-
-	sort = () => {
-		axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
-		axios
-			.get('/routes/api/users/SpecificFormSortedByFormId', {
-				headers: { Authorization: localStorage.getItem('jwtToken') }
-			})
-			.then((res) => {
-				this.setState({ companies: res.data.data });
-				alert('Cases have been sorted');
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	};
-	sortByCreationDate = () => {
-		axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
-		axios
-			.get('/routes/api/user/SpecificformsSortedByformDate', {
-				headers: { Authorization: localStorage.getItem('jwtToken') }
-			})
-			.then((res) => {
-				this.setState({ companies: res.data.data });
-				alert('Cases have been sorted');
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	};
-
-	tabRow = () => {
-		return this.state.companies.map((company, i) => {
-			return <Card company={company} key={i} />;
-		});
-	};
-
-	render() {
-		return (
-			<div>
-				<div>
-					<div
-						style={{
-							backgroundColor: '#a3dbf1',
-							marginTop: '80px',
-							textAlign: 'center',
-							fontSize: '50px',
-							color: 'dark',
-							paddingLeft: '60px',
-							flexDirection: 'row',
-							justifyContent: 'flex-end'
-						}}
-					>
-						<h2 style={{ fontSize: '50px' }}>Lawyer SPC Cases</h2>
-						<Dropdown>
-							<Dropdown.Toggle variant="dark dark" id="dropdown-basic" style={{ width: '150px' }}>
-								Sort the Cases
-							</Dropdown.Toggle>
-							<Dropdown.Menu>
-								<Dropdown.Item onClick={() => this.sort()} style={{ textAlign: 'left' }}>
-									By ID
-								</Dropdown.Item>
-								<Dropdown.Divider />
-								<Dropdown.Item
-									onClick={() => this.sortByCreationDate()}
-									style={{ textAlign: 'center' }}
-								>
-									By Creation Date
-								</Dropdown.Item>
-							</Dropdown.Menu>
-						</Dropdown>
-					</div>
-				</div>
-				{this.tabRow()}
-			</div>
-		);
-	}
->>>>>>> a3c4290fe06a5cd3ae24bf639641802a9d01e1f4
 }
 export default Companies;

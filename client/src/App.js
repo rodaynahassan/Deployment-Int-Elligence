@@ -11,8 +11,6 @@ import FormControl from 'react-bootstrap/FormControl';
 import './App.scss';
 import LandingBody from './components/pages/landingBody';
 import Profile from './components/pages/profilePage';
-import About from './components/pages/aboutContactUsPage';
-import ApprovedCompanies from './components/pages/ApprovedCompanies';
 import Footer from './components/layout/footer';
 import SPCForm from './components/pages/SPCform';
 import FForm from './components/pages/form';
@@ -254,7 +252,7 @@ class App extends Component {
       <Route path='/profileLR' render={(props) => <ShowProfileLR {...props}  lang={this.state.lang}/>}/>
       <Route path='/changePassword' render={(props) => <ChangePassword {...props}  lang={this.state.lang}/>}/>
       <Route path='/about' render={(props) => <About {...props}  lang={this.state.lang}/>}/>
-      <Route path='/approvedCompanies' render={(props) => <ApprovedCompanies {...props}  lang={this.state.lang}/>}/>
+      
       <Route path='/SPC' render={(props) => <SPCForm {...props}  lang={this.state.lang}/>}/>
       <Route path='/form' render={(props) => <FForm {...props}  lang={this.state.lang}/>}/>
       <Route path='/SSC' render={(props) => <SSCForm {...props}  lang={this.state.lang}/>}/>

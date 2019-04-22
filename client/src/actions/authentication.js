@@ -41,7 +41,7 @@ export const registerLR = (user) => (dispatch) => {
 
 export const loginUser = (user) => (dispatch) => {
 	axios
-		.post('http://localhost:5000/routes/api/users/login', user)
+		.post('http://localhost:' + process.env.PORT + '/routes/api/users/login', user)
 		.then((res) => {
 			const { token } = res.data;
 			localStorage.setItem('jwtToken', token);

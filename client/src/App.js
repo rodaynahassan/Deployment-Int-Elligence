@@ -95,7 +95,6 @@ class App extends Component {
 				<Provider store={store}>
 					<div style={{ paddingBottom: '7rem' }}>
 						<Router>
-							{/* <Side changelang={this.changelang}  /> */}
 							<div>
 								<Route
 									exact

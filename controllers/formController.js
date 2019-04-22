@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
-const Form = require('../Models/Form')
-const validator = require('../Validation/formValidations')
-const User = require('../Models/User')
+const Form = require('../models/Form')
+const validator = require('../validations/formValidations')
+const User = require('../models/User')
 
 //Creating
 exports.create = async function create(body)

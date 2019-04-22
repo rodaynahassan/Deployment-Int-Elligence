@@ -4,7 +4,7 @@ const functions = {
     postForm: async(companyGovernorate1 , companyCity1 , companyAddress1 , companyName1 , currency1 ,equityCapital1 ,type1 ,creationDate1 ,userId1)=>{
             var form = await axios({
                 method:'post',
-                url:'http://localhost:5000/routes/api/forms/',
+                url:'http://localhost:5000/routes/api/dynamicForms/',
                 data: {
                     companyName:companyName1,
                     companyGovernorate:companyGovernorate1 ,

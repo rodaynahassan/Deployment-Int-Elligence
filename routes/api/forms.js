@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
-const Form = require('../../Models/Form')
-const validator = require('../../Validation/formValidations')
+const Form = require('../../models/Form')
+const validator = require('../../validations/formValidations')
 const controller = require('../../controllers/formController')
 const passport = require('passport')
 require('../../config/passport')(passport)
@@ -27,9 +27,6 @@ require('../../config/passport')(passport)
 //     // return res.json({data: req.user})
 
 // })
-
-
-
 
 
 //get all forms

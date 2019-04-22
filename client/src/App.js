@@ -11,6 +11,8 @@ import FormControl from 'react-bootstrap/FormControl';
 import './App.scss';
 import LandingBody from './components/pages/landingBody';
 import Profile from './components/pages/profilePage';
+
+
 import Footer from './components/layout/footer';
 import SPCForm from './components/pages/SPCform';
 import FForm from './components/pages/form';
@@ -43,14 +45,14 @@ import ShowProfileI from './components/pages/showProfileI';
 import ShowProfileLR from './components/pages/showProfileLR';
 import InProgressSSCCases from './components/pages/inProgressSSCCases';
 import InProgressSPCCases from './components/pages/inProgressSPCCases';
-import AdminProfile from './components/pages/AdminProfile'
-import About from './components/pages/about'
 import GetCaseLawyerSPC from './components/pages/getCaseLawyerSPC';
 import GetCaseLawyerSSC from './components/pages/getCaseLawyerSSC';
 import EditUnassigned from './components/pages/EditUnassigned';
 import ShowUnassignedForms from './components/pages/ShowUnassignedForms';
 import ForgotPassword from './containers/ForgotPassword';
 import ResetPassword from './containers/ResetPassword';
+import AdminProfile from './components/pages/AdminProfile'
+import About from './components/pages/about'
 
 class App extends Component {
 	constructor() {
@@ -128,11 +130,7 @@ class App extends Component {
 									path="/about"
 									render={(props) => <About {...props} lang={this.state.lang} />}
 								/>
-								<Route
-									exact
-									path="/approvedCompanies"
-									render={(props) => <ApprovedCompanies {...props} lang={this.state.lang} />}
-								/>
+								
 								<Route
 									exact
 									path="/SPC"
@@ -223,6 +221,9 @@ class App extends Component {
 									path="/companyName"
 									render={(props) => <GetFormByCompanyName {...props} lang={this.state.lang} />}
 								/>
+								<Route path='/AdminProfile' render={(props) => <AdminProfile {...props}  lang={this.state.lang} />}/>
+
+                                <Route path='/about' render={(props) => <About {...props}  lang={this.state.lang}/>}/>
 								<Route
 									exact
 									path="/getCaseLawyerSSC"
@@ -234,57 +235,6 @@ class App extends Component {
 									render={(props) => <GetCaseLawyerSPC {...props} lang={this.state.lang} />}
 								/>
 
-<Provider store = { store }>
-      <Router>
-    
-      
-     {/* <Side changelang={this.changelang}  /> */}
-     
-      <div>
-     
-
-        <Route exact path="/" render={props=>(
-           <LandingBody {...props} lang={this.state.lang}/>
-        )}/>
-      <Route path='/login' render={(props) => <Login {...props}  lang={this.state.lang}/>}/>
-      <Route path='/profile' render={(props) => <Profile {...props}  lang={this.state.lang}/>}/>
-      <Route path='/profileI' render={(props) => <ShowProfileI {...props}  lang={this.state.lang}/>}/>
-      <Route path='/profileLR' render={(props) => <ShowProfileLR {...props}  lang={this.state.lang}/>}/>
-      <Route path='/changePassword' render={(props) => <ChangePassword {...props}  lang={this.state.lang}/>}/>
-      <Route path='/about' render={(props) => <About {...props}  lang={this.state.lang}/>}/>
-      
-      <Route path='/SPC' render={(props) => <SPCForm {...props}  lang={this.state.lang}/>}/>
-      <Route path='/form' render={(props) => <FForm {...props}  lang={this.state.lang}/>}/>
-      <Route path='/SSC' render={(props) => <SSCForm {...props}  lang={this.state.lang}/>}/>
-      <Route path='/journal' render={(props) => <Companies {...props}  lang={this.state.lang}/>}/>
-      <Route path='/register' render={(props) => <Register1 {...props}  lang={this.state.lang}/>}/>
-      <Route path='/registerAdmin' component={ adminPage}/>
-      <Route path='/SortByID' component={ SortSpecificUserCase}/>
-      <Route path='/dropDown' component={ DropdownTrial}/>
-      <Route path='/dropDownCity' component={ DropdownCities}/> 
-      <Route path='/dropDownGovernorate' component={ DropdownGovernorates}/> 
-      <Route path='/unassignedForm'  render={(props) => <UnassignedForm {...props}  lang={this.state.lang}/>}/> 
-      <Route path='/lawyerAcceptedForms'  render={(props) => <AssignToReviewer {...props}  lang={this.state.lang}/>}/> 
-      <Route path='/GetReviewer' component={GetCaseReviewer}/>  
-      <Route path='/editprofile'  render={(props) => <EditProfile {...props}  lang={this.state.lang}/>}  /> 
-      <Route path='/editspcform' render={(props) => <EditSPCForm {...props}  formId={this.state.formId}/>}/> 
-      <Route path='/editsscform' render={(props) => <EditSSCForm {...props}  formId={this.state.formId}/>}/>
-      <Route path='/showsscform' render={(props) => <InProgressSSCCases {...props}  lang={this.state.lang} setFormId={this.setFormId}/>}/>
-      <Route path='/showspcform' render={(props) => <InProgressSPCCases {...props}  lang={this.state.lang} setFormId={this.setFormId} />}/>
-      <Route path='/companyName' render={(props) => <GetFormByCompanyName {...props}  lang={this.state.lang} />}/>
-      <Route path='/getCaseLawyerSSC' render={(props) => <GetCaseLawyerSSC {...props}  lang={this.state.lang} />}/>
-      <Route path='/getCaseLawyerSPC' render={(props) => <GetCaseLawyerSPC {...props}  lang={this.state.lang} />}/>
-      <Route path='/AdminProfile' render={(props) => <AdminProfile {...props}  lang={this.state.lang} />}/>
-
-     
-      </div>
-    
-    {currentLocation==='/'?<Side changelang={this.changelang}  />:<NewNavBar changelang={this.changelang}/>}
-    <Footer/>
-      </Router>
-      </Provider>
-        )}
- 
 								<Route
 									exact
 									path="/forgotPassword"

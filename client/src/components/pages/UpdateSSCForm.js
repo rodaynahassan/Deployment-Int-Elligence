@@ -59,15 +59,6 @@ class UpdateSSCForm extends React.Component {
 					equityCapital: response.data.data.equityCapital,
 					lawyerComments: response.data.data.lawyerComments,
 					reviewerComments: response.data.data.reviewerComments
-					// SSCManagerName: response.data.SSCManagers[0].name,
-					// SSCManagerType: response.data.SSCManagers[0].type,
-					// SSCManagerGender: response.data.SSCManagers[0].gender,
-					// SSCManagerNationality: response.data.SSCManagers[0].nationality,
-					// SSCManagerIdentificationType: response.data.SSCManagers[0].identificationType,
-					// SSCManagerIdentificationNumber: response.data.SSCManagers[0].identificationNumber,
-					// SSCManagerBirthdate: response.data.SSCManagers[0].birthdate,
-					// SSCManagerAddress: response.data.SSCManagers[0].address,
-					// typeOfManagers: response.data.SSCManagers[0].typeOfManagers
 				});
 			})
 			.catch(function(error) {});

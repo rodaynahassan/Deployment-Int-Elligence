@@ -10,7 +10,7 @@ const externalentities = require('./routes/api/externalentities');
 const nationalities = require('./routes/api/nationalities');
 const governorates = require('./routes/api/governorates');
 const app = express();
-const morgan = require('morgan');
+//const morgan = require('morgan');
 
 // DB Config
 const db = require('./config/keys').mongoURI;
@@ -38,7 +38,7 @@ app.use(express.urlencoded({ extended: false }));
 
 //app.use(express.multipart());
 app.use(cors());
-app.use(morgan('combined'));
+//app.use(morgan('combined'));
 
 // Direct routes to appropriate files
 app.use('/routes/api/users', users);
@@ -56,6 +56,14 @@ app.use(function(req, res, next) {
 	next();
 });
 
+if (process.env.NODE_ENV === 'production') {
+	app.use(express.static(path.resolve(__dirname, 'client/build')));
+	//
+	app.get('*', (req, res) => {
+		res.sendfile(path.resolve((__dirname = 'client/build/index.html')));
+	});
+}
+
 // Handling 404
 app.use((req, res) => {
 	res.status(404).send({ err: 'We can not find what you are looking for' });
@@ -63,13 +71,5 @@ app.use((req, res) => {
 
 const port = process.env.PORT || 5000;
 //production mode
-
-// if (process.env.NODE_ENV === 'production') {
-// 	app.use(express.static(path.resolve(__dirname, 'client/build')));
-// 	//
-// 	app.get('*', (req, res) => {
-// 		res.sendfile(path.resolve((__dirname = 'client/build/index.html')));
-// 	});
-// }
 
 app.listen(port, () => console.log(`Server up and running on port ${port}`));

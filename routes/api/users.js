@@ -391,7 +391,6 @@ router.post('/register', async (req, res) => {
 		});
 		return res.json({ msg: 'Account was created successfully', data: returnedUser });
 	}
-	return res.json({ msg: 'Account was created successfully', data: newUser });
 });
 
 // router.post('/register', async (req, res) => {                       //register Investor
@@ -409,7 +408,7 @@ router.post('/login', async (req, res) => {
 		const user = await User.findOne({ email });
 		if (!user) {
 			const admin = await Admin.findOne({ email });
-			if (!admin) return res.status(404).json({ email: 'This email is not registered yet' });
+			if (!admin) return res.status(400).json({ email: 'This email is not registered yet' });
 			else {
 				const doesItMatch = await bcrypt.compareSync(password, admin.password);
 				if (doesItMatch) {
@@ -421,6 +420,8 @@ router.post('/login', async (req, res) => {
 					const token = jwt.sign(payload, tokenKey, { expiresIn: '1h' });
 					//res.json({data: `Bearer ${token}`})
 					return res.json({ msg: 'You are logged in now', token: `Bearer ${token}`, type: admin.userType });
+				} else {
+					return res.status(400).json({ email: 'Wrong Password' });
 				}
 			}
 		}

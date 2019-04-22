@@ -51,6 +51,7 @@ import EditUnassigned from './components/pages/EditUnassigned';
 import ShowUnassignedForms from './components/pages/ShowUnassignedForms';
 import ForgotPassword from './containers/ForgotPassword';
 import ResetPassword from './containers/ResetPassword';
+import Try from './components/Try';
 
 class App extends Component {
 	constructor() {
@@ -212,6 +213,7 @@ class App extends Component {
 							render={(props) => <ForgotPassword {...props} lang={this.state.lang} />}
 						/>
 						<Route exact path="/reset/:token" component={ResetPassword} />
+						<Route exact path="/try" component={Try} />
 					</div>
 					<Footer />
 				</Router>

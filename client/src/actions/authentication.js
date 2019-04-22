@@ -7,11 +7,13 @@ import jwt_decode from 'jwt-decode';
 export const registerUser = (user) => (dispatch) => {
 	axios
 		.post('/routes/api/users/register', user)
-		//.then(res => history.push('/login'))
-		.catch((err) => console.log(err))
+		.then((res) => {
+			alert('Account Created Succesfully');
+			window.location = '/login';
+		})
 		.catch((err) => {
-			alert(err.response.data.errmsg || err.response.data);
-			console.log(err.response);
+			alert(err.response.data.error.errmsg || err.response.data.error || err.response.data);
+			console.log(err.response.data);
 		});
 };
 
@@ -64,6 +66,7 @@ export const loginUser = (user) => (dispatch) => {
 			(err) => {
 				console.log(err);
 				localStorage.setItem('isLoggedIn', false);
+				alert('Wrong Email or Password');
 				return err;
 			}
 			// {

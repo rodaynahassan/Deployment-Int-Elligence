@@ -333,15 +333,6 @@ router.get('/reset/:token', async (req, res) => {
 	console.log(token);
 
 	const user = await User.findOne({ resetPasswordToken: token } /*, { resetPasswordExpires: { $gt: Date.now() } }*/);
-	//console.log(user.name);
-	//     User.findOne({
-	//     where: {
-	//       resetPasswordToken: req.query.resetPasswordToken,
-	//       resetPasswordExpires: {
-	//         [Op.gt]: Date.now(),
-	//       },
-	//     },
-	//   }).then((user) => {
 
 	if (user == null) {
 		console.error('password reset link is invalid or has expired');

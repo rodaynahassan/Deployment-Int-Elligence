@@ -1,7 +1,6 @@
 const express = require('express');
 const Joi = require('joi');
 const router = express.Router();
-const formController = require('../../controllers/formController');
 const userController = require('../../controllers/userController');
 const User = require('../../models/User');
 const notifications = require('../../helpers/notifications');
@@ -327,8 +326,6 @@ router.post('/forgotPassword', async (req, res) => {
 });
 
 router.get('/reset/:token', async (req, res) => {
-	// const resetpasswordtoken = await userController.search('resetPasswordToken', req.query.resetPasswordToken)
-	// const resetpasswordExpires = await userController.search('resetPasswordToken', req.query.resetPasswordToken)
 	const token = req.params.token;
 	console.log(token);
 
@@ -354,17 +351,8 @@ router.put('/updatePasswordViaEmail', async (req, res) => {
 		{ resetPasswordToken: req.body.resetPasswordToken }
 		//{ resetPasswordExpires: { /*[Op.gt]*/ $gt: Date.now() } }
 	);
-	//console.log(req.body.name);
 	const userid = user._id;
-	// User.findOne({
-	//   where: {
-	//     username: req.body.username,
-	//     resetPasswordToken: req.body.resetPasswordToken,
-	//     resetPasswordExpires: {
-	//       [Op.gt]: Date.now(),
-	//     },
-	//   },
-	// }).then(user => {
+
 	if (user == null) {
 		console.error('password reset link is invalid or has expired');
 		res.status(403).send('password reset link is invalid or has expired');

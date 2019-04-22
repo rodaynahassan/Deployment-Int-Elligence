@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
 const users = require('./routes/api/users');
-const forms = require('./routes/api/forms');
 const admins = require('./routes/api/admins');
 const fakeServer = require('./routes/api/fakeServer');
 const externalentities = require('./routes/api/externalentities');
@@ -35,7 +34,6 @@ app.use(cors());
 
 // Direct routes to appropriate files
 app.use('/routes/api/users', users);
-app.use('/routes/api/forms', forms);
 app.use('/routes/api/admins', admins);
 app.use('/routes/api/externalentities', externalentities);
 app.use('/routes/api/nationalities', nationalities);

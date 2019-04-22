@@ -25,7 +25,8 @@ class Profile extends Component{
             email:'',
             financialBalance:'',
             telephone:'',
-            fax:''
+            fax:'',
+            
        };
 
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
@@ -46,7 +47,7 @@ class Profile extends Component{
             });
             
           })
-      
+          
     }
 
     render()
@@ -371,113 +372,13 @@ class Profile extends Component{
             
         );
 
-        var admin = (
-            <div>
-                <br/> 
-                <br/> 
-                <br/>
-            <div class="container emp-profile">
-            <form method="post">
-            <div class="row">
-                <div class="col-md-6">
-                <div class="container" >
-                <div class="jumbotron" style={{width:"300px",height:"130px",paddingTop:"10px"}}>
-                    <h3> <i className="far fa-user" style={{color:blue200}}/> {this.state.name}</h3>
-                    <h4> <i className="fas fa-at" style={{color:blue200}}/> {this.state.email}</h4>
-    
-                </div>
-                </div>
-                </div>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>                
-            </div>
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="tab-content profile-tab" id="myTabContent">
-                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                        <label><i class="fas fa-venus-mars" style={{color:blue200}}/> Gender</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                        <p>{this.state.gender}</p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                        <label><i class="fas fa-birthday-cake" style={{color:blue200}}/> Birthdate</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                        <p>{this.state.birthdate}</p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label><i className="fas fa-globe" style={{color:blue200}}/> Nationality</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p>{this.state.nationality}</p>
-                                        </div>
-                                    </div>
-                                    <div class="row" >
-                                        <div class="col-md-6">
-                                        <label><i className="fas fa-id-badge" style={{color:blue200}}/> Identification Type</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                        <p>{this.state.identificationType}</p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                        <label><i class="fas fa-sort-numeric-down" style={{color:blue200}}/> Identification Number</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                        <p>{this.state.identificationNumber}</p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                        <label><i class="fas fa-map-marked-alt" style={{color:blue200}}/> Address</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                        <p>{this.state.address}</p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                        <label><i class="fas fa-phone" style={{color:blue200}}/> Telephone</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                        <p>{this.state.telephone}</p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                        <label><i class="fas fa-fax" style={{color:blue200}}/> Fax</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                        <p>{this.state.fax}</p>
-                                        </div>
-                                    </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>           
-    </div>
-            
-</div>
-        );
+       
     
 
         return(
             <div style={{ paddingLeft:'60px',justifyItems:"center"}}>
             {localStorage.getItem('type')==='Investor'? Investor:null}
            {localStorage.getItem('type')==='Lawyer'? Lawyer:null}
-           {localStorage.getItem('type')==='Admin'? admin:null}
            {localStorage.getItem('type')==='Reviewer'? Reviewer:null}
           </div>
         );

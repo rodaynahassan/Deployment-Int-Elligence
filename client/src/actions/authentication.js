@@ -57,7 +57,11 @@ export const loginUser = (user) => dispatch => {
                 if(localStorage.getItem("isLoggedIn")==='true') {
                     // this.props.history.replace('/profile')
                     // this.props.history.go(1)
+                    if(localStorage.getItem("type")==='Investor'|| localStorage.getItem("type")==='Lawyer'||localStorage.getItem("type")==='Reviewer')
                     document.location.href = "/profile"
+                    else
+                    document.location.href = "/adminprofile"
+
                 }
         })
         .catch(

@@ -54,13 +54,14 @@ class AddCommentsLawyer extends Component{
 
 
       axios.defaults.headers.common['Authorization'] =  localStorage.getItem('jwtToken');
-        var apiBaseUrl =('http://localhost:5000/routes/api/users/lawyerComments/'+mongoose.Types.ObjectId(formId))
+        var apiBaseUrl =('http://localhost:5000/routes/api/userDynamicForms/lawyerComments/'+mongoose.Types.ObjectId(formId))
         var payload={
             "lawyerComments": this.state.lawyerComments.value
         }
         axios.put(apiBaseUrl, payload,{headers: { "Authorization": localStorage.getItem('jwtToken') }})
        .then(function (response) {
          console.log(response);
+        // document.location.href = "/getCaseLawyerSPC";
        })
        .catch(function (error) {
          console.log(error);

@@ -49,13 +49,8 @@ class AddCommentsReviewer extends Component{
 
     //if the id belongs to a lawyer
     handleClick = (formId,event) =>
-    {
-
-      
-
-
-     
-        var apiBaseUrl =('http://localhost:5000/routes/api/users/reviewerComments/'+mongoose.Types.ObjectId(formId))
+    { 
+        var apiBaseUrl =('http://localhost:5000/routes/api/userDynamicForms/reviewerComments/'+mongoose.Types.ObjectId(formId))
         var payload={
             "reviewerComments": this.state.reviewerComments.value
         }

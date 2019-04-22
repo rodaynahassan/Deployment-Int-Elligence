@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';       //new stuff
 import store from './store';                //new stuff
 import {BrowserRouter as Router, Route} from 'react-router-dom'
-
 import './App.scss'
 import LandingBody from './components/pages/landingBody'
 import Profile from './components/pages/profilePage'
@@ -41,6 +40,7 @@ import InProgressSSCCases from './components/pages/inProgressSSCCases';
 import InProgressSPCCases from './components/pages/inProgressSPCCases';
 import GetCaseLawyerSPC from './components/pages/getCaseLawyerSPC'
 import GetCaseLawyerSSC from './components/pages/getCaseLawyerSSC'
+import AdminProfile from './components/pages/AdminProfile'
 
 import Try from './components/try';
 import About from './components/pages/about'
@@ -113,6 +113,7 @@ class App extends Component {
       <Route path='/companyName' render={(props) => <GetFormByCompanyName {...props}  lang={this.state.lang} />}/>
       <Route path='/getCaseLawyerSSC' render={(props) => <GetCaseLawyerSSC {...props}  lang={this.state.lang} />}/>
       <Route path='/getCaseLawyerSPC' render={(props) => <GetCaseLawyerSPC {...props}  lang={this.state.lang} />}/>
+      <Route path='/AdminProfile' render={(props) => <AdminProfile {...props}  lang={this.state.lang} />}/>
 
       <Route path='/try' render={(props) => <Try {...props}  lang={this.state.lang}/>}/>
      

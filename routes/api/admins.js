@@ -11,6 +11,7 @@ const tokenKey = require('../../config/keys').secretOrKey
 // Models
 const Admin = require('../../Models/Admin');
 const Forms = require('../../Models/Form');
+const dynamicFormController = require('../../controllers/dynamicFormController')
 
 const passport = require('passport')
 require('../../config/passport')(passport)
@@ -32,7 +33,27 @@ router.get('/getById', passport.authenticate('jwt', { session: false }), async (
     var admin = await adminController.search("id", req.user.id)
     return res.json({ data: admin });
 })
-
+router.get(
+    "/CertainAttributes",
+    passport.authenticate("jwt", { session: false }),
+    async (req, res) => {
+      const userid = req.user.id;
+      const searchUsers = await adminController.search("id", userid);
+      return res.json({
+        Username: searchUsers.name,
+        Gender: searchUsers.gender,
+        Nationality: searchUsers.nationality,
+        IdentificationType: searchUsers.identificationType,
+        IdentificationNumber: searchUsers.identificationNumber,
+        Birthdate: searchUsers.birthdate,
+        Address: searchUsers.address,
+        Email: searchUsers.email,
+        Password: searchUsers.password,
+        Telephone: searchUsers.telephone,
+        Fax: searchUsers.fax
+      });
+    }
+  );
 
 // get all admins
 router.get('/', async (req, res) =>                                //redundant
@@ -40,6 +61,7 @@ router.get('/', async (req, res) =>                                //redundant
     const admin = await adminController.search()
     return res.json({ data: admin });
 })
+
 
 //create admin           //not sure about it
 router.post('/createAdmin', async (req, res) => {
@@ -75,16 +97,20 @@ router.get('/CasesSortedByCreationDate', passport.authenticate('jwt', { session:
     }
 })
 //get case/form by company name
-router.get('/getByCompanyName/:companyName', passport.authenticate('jwt', { session: false }), async (req, res) => {
-    if (req.user.userType === "Admin") {
-        const companyname = req.params.companyName
-        const formRequested = await formController.search('companyName', companyname)
-        return res.json({ data: formRequested })
+router.get(
+    "/getByCompanyName/:companyName",
+    passport.authenticate("jwt", { session: false }),
+    async (req, res) => {
+      if (req.user.userType === "Admin") {
+        const companyname = req.params.companyName;
+        var form = await dynamicFormController.search('companyName', companyname);
+        if (form.error) return res.status(400).json({ error: form.error });
+        return res.json({ data: form });
+      } else {
+        return res.json({ msg: "Non Authorized" });
+      }
     }
-    else {
-        return res.json({ msg: 'Non Authorized' })
-    }
-})
+  );
 
 // update an admin
 router.put('/updateAdmin', passport.authenticate('jwt', { session: false }), async (req, res) => {

@@ -229,7 +229,7 @@ deleteInvestor: async (token) => {
   getAllForms: async () => {
     return await axios({
       method: "get",
-      url: "http://localhost:5000/routes/api/forms/getAllForms"
+      url: "http://localhost:5000/routes/api/dynamicForms/"
     })
     .then(res => {
         return res;
@@ -238,7 +238,7 @@ deleteInvestor: async (token) => {
         return { error: err };
       });
   }
-};
+  }
 module.exports = functions;
 
 jest.setTimeout(4000000);

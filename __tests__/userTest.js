@@ -8,21 +8,55 @@ const funcs = require("../funcs/userFuncs");
 let beforeOldUsers;
 let beforeOldLength;
 let token;
+let token2; //Admin 
+let token3; //Lawyer
+let token4; //Reviewer
 let beforeNewUsers;
 let beforeNewLength;
 let loggedInUser;
+let beforeOldForms;
+let beforeOldFormLength;
+let beforeNewForms;
+let beforeNewFormLength;
+let loggedInAdmin;
+let loggedInLawyer;
+let loggedInReviewer;
+let form1;
+let form2;
+let form3;
 beforeAll(async () => {
+  loggedInAdmin = await funcs.loginAdmin('password1234','mari@gmail.com')
+  token2 = loggedInAdmin.data.data
+  await funcs.createLawyer(token2,'Lawyer','Ahmed','Male','Egyptian','National ID','570575620174','01-01-1980','Nasr City','ahmed999@gmail.com','12345678')
+  loggedInLawyer = await funcs.loginUser('12345678','ahmed999@gmail.com')
+  token3 = loggedInLawyer.data.token
+  await funcs.createReviewer(token2,'Reviewer','Alaa','Male','Egyptian','National ID','570575644371','01-01-1980','Nasr City','alaa999@gmail.com','12345678')
+  loggedInReviewer = await funcs.loginUser('12345678','alaa999@gmail.com')
+  token4 = loggedInReviewer.data.token
   beforeOldUsers = await funcs.getAllUsers();
   beforeOldLength = beforeOldUsers.data.data.length;
-  await funcs.createInvestor('Investor','Mona','Female','Egyptian','National ID','870575020173','01-01-1980','Nasr City','hehe@gmail.com','password1234','Person')
+  await funcs.createInvestor('Investor','Mona','Female','Egyptian','National ID','990575020173','01-01-1980','Nasr City','monzzzz@gmail.com','password1234','Person')
   beforeNewUsers = await funcs.getAllUsers();
   beforeNewLength = beforeNewUsers.data.data.length
-  loggedInUser = await funcs.loginUser("password1234","hehe@gmail.com")
+  loggedInUser = await funcs.loginUser("password1234","monzzzz@gmail.com")
   token = loggedInUser.data.token
+  beforeOldForms = await funcs.getAllForms()
+  beforeOldFormLength = beforeOldForms.data.data.length
+  form1 = await funcs.postFormForUser(token,'SPCForm','الشركة00','The Company00','Cairo','New Cairo','Fifth Settlement','02752277577','a-2417457642','Dollars','Egyptian',100000)
+  // console.log(form1)
+  form2 = await funcs.postFormForUser(token,'SPCForm','الشركة01','The Company01','Cairo','New Cairo','Fifth Settlement','015722772081','u-417757743','Dollars','Egyptian',100000)
+  form3 = await funcs.postFormForUser(token,'SPCForm','الشركة02','The Company02','Cairo','New Cairo','Fifth Settlement','011472777667','k-317772942','Dollars','Egyptian',100000)
+  beforeNewForms = await funcs.getAllForms()
+  beforeNewFormLength = beforeNewForms.data.data.length
 });
 
 afterAll(async () => {
   await funcs.deleteUser(token);
+  await funcs.deleteUser(token3);
+  await funcs.deleteUser(token4);
+  await funcs.deleteForm(form1.data.data._id)
+  await funcs.deleteForm(form2.data.data._id)
+  await funcs.deleteForm(form3.data.data._id)
 });
 
 //Testing Creating a user
@@ -32,7 +66,7 @@ test("Creating a user", async () => {
     "Mona"
   );
   expect(beforeNewUsers.data.data[beforeNewUsers.data.data.length - 1].email).toMatch(
-    "hehe@gmail.com"
+    "monzzzz@gmail.com"
   );
 });
 
@@ -104,14 +138,52 @@ test("Updating a user by id with wrong password", async () => {
   expect(updatedUser.error.response.data.error).toEqual('"password" length must be at least 8 characters long');
 });
 
+//Testing getting all lawyers
+test('Getting all lawyers', async () =>{
+  const lawyers = await funcs.getAllLawyers()
+  expect(lawyers.data.data[lawyers.data.data.length-1].userType).toBe('Lawyer')
+})
+
+//Testing getting all reviewers
+test('Getting all reviewers', async () =>{
+  const reviewers = await funcs.getAllReviewers()
+  expect(reviewers.data.data[reviewers.data.data.length-1].userType).toBe('Reviewer')
+})
+
+//Testing getting all investors
+test('Getting all investors', async () =>{
+  const investors = await funcs.getAllInvestors()
+  expect(investors.data.data[investors.data.data.length-1].userType).toBe('Investor')
+})
+
+//Testing getting the financial balance
+test('Getting the financial balance of an investor', async () =>{
+  const investors = await funcs.getAllInvestors()
+  const financialBalance = await funcs.getFinancialBalance(token)
+  expect(investors.data.data[investors.data.data.length-1].financialBalance).toBe(financialBalance.data.data)
+})
+
+//Testing delete an investor
+test('Deleting an investor',async() =>{
+  await funcs.createInvestor('Investor','Noha','Female','Egyptian','National ID','010575020173','01-01-1980','Nasr City','noha123@gmail.com','password1234','Person')
+  const oldInvestors = await funcs.getAllInvestors()
+  const oldLength = oldInvestors.data.data.length
+  const loggedInInvestor = await funcs.loginUser('password1234','noha123@gmail.com')
+  const tokenInvestor = loggedInInvestor.data.token
+  await funcs.deleteUser(tokenInvestor)
+  const newInvestors = await funcs.getAllInvestors()
+  const newLength  = newInvestors.data.data.length
+  expect(newLength).toBe(oldLength-1)
+})
+
 //Testing login User
 test("Login User", async () => {
-  expect(loggedInUser.config.data).toMatch('"password":"password1234","email":"hehe@gmail.com"');
+  expect(loggedInUser.config.data).toMatch('"password":"password1234","email":"monzzzz@gmail.com"');
 });
 
 //Testing login with a wrong password
 test("Login admin with wrong password", async () => {
-  const loginUser = await funcs.loginUser("Rodayna12", "hehe@gmail.com");
+  const loginUser = await funcs.loginUser("Rodayna12", "monzzzz@gmail.com");
   expect(loginUser.error.response.data.password).toMatch('Wrong password')
 });
 
@@ -121,322 +193,90 @@ test("Login admin with wrong email", async () => {
   expect(loginUser.error.response.data.email).toMatch('This email is not registered yet')
 });
 
-// //test adding comments as a lawyer
-// test("test adding comments as a lawyer", async () => {
-//   try {
-//     //expect.assertions(3)
-//     await funcs.createInvestor(
-//       "Investor",
-//       "Youssr",
-//       "Female",
-//       "Egyptian",
-//       "National ID",
-//       "123456766890",
-//       "1998-04-02",
-//       "Masr el gedida",
-//       "yoyy@hotmail.com",
-//       "sjeirys22"
-//     );
-//     var users = await funcs.getAllUsers();
-//     var id = users.data.data[users.data.data.length - 1]._id;
-//     await funcs.createForm(
-//       "hhaabb",
-//       "cairoo",
-//       "cairo",
-//       "nasrcity",
-//       "pounds",
-//       600000,
-//       "SPCForm",
-//       "2019-07-08",
-//       id
-//     );
-//     var res = await funcs.getAllForms();
-//     const a = res.data.data[res.data.data.length - 1].userId;
-//     const res2 = await funcs.putFormLawyerComments(
-//       ["HELLO"],
-//       id,
-//       res.data.data[res.data.data.length - 1]._id
-//     );
-//     expect(res.status).toEqual(200);
-//     await funcs.deleteUser(res.data.data[res.data.data.length - 1]._id);
-//     //expect(res.data.data[res.data.data.length-1].lawyerComments).toEqual(['nada'])
-//   } catch (error) {}
-// });
+//Testing all forms sorted by id as a lawyer
+test("All forms Sorted by ID", async () =>{
+  const forms = await funcs.sortFormsByID(token3)
+  expect(forms.data.data[forms.data.data.length-3]._id).toMatch(form1.data.data._id)
+  expect(forms.data.data[forms.data.data.length-2]._id).toMatch(form2.data.data._id)
+  expect(forms.data.data[forms.data.data.length-1]._id).toMatch(form3.data.data._id)
+   
+})
 
-// //test adding comments as a reviewer
-// test("test adding comments as a reviewer", async () => {
-//   try {
-//     await funcs.createInvestor(
-//       "Investor",
-//       "Youssr",
-//       "Female",
-//       "Egyptian",
-//       "National ID",
-//       "123456766890",
-//       "1998-04-02",
-//       "Masr el gedida",
-//       "yoyy@hotmail.com",
-//       "sjeirys22"
-//     );
-//     var users = await funcs.getAllUsers();
-//     var id = users.data.data[users.data.data.length - 1]._id;
-//     await funcs.createForm(
-//       "rwaaabarr",
-//       "cairoo",
-//       "cairo",
-//       "nasrcity",
-//       "pounds",
-//       600000,
-//       "SPCForm",
-//       "2019-07-08",
-//       id
-//     );
-//     var res = await funcs.getAllForms();
-//     const a = res.data.data[res.data.data.length - 1].userId;
-//     const res2 = await funcs.putFormReviewerComments(
-//       ["HELLmO"],
-//       id,
-//       res.data.data[res.data.data.length - 1]._id
-//     );
-//     //console.log(res2.data.data)
-//     expect(res.status).toEqual(200);
-//     await funcs.deleteUser(res.data.data[res.data.data.length - 1]._id);
-//     //expect(res.data.data[res.data.data.length-1].lawyerComments).toEqual(['nada'])
-//   } catch (error) {}
-// });
+//Testing all forms sorted by id
+test("All forms Sorted by Creation Date", async () =>{
+  const forms = await funcs.sortFormsByDate(token3)
+  expect(forms.data.data[forms.data.data.length-3].creationDate).toMatch(form1.data.data.creationDate)
+  expect(forms.data.data[forms.data.data.length-2].creationDate).toMatch(form2.data.data.creationDate)
+  expect(forms.data.data[forms.data.data.length-1].creationDate).toMatch(form3.data.data.creationDate)
+   
+})
 
-// //Getting approved companies
-// test("Get approved forms (Company) of Investor", async () => {
-//   try {
-//     await funcs.createInvestor(
-//       "Investor",
-//       "Youssr",
-//       "Female",
-//       "Egyptian",
-//       "National ID",
-//       "123456766890",
-//       "1998-04-02",
-//       "Masr el gedida",
-//       "yoyy@hotmail.com",
-//       "sjeirys22"
-//     );
-//     var users = await funcs.getAllUsers();
-//     var id = users.data.data[users.data.data.length - 1]._id;
-//     await funcs.postFormForUser(
-//       "Cairo",
-//       "Nasr City",
-//       "Moez Eldawla Street",
-//       "Last Company",
-//       "Dollar",
-//       200000,
-//       "SPCForm",
-//       "Approved",
-//       "1998-09-08",
-//       id
-//     );
-//     const res = await funcs.getAllForms();
-//     expect(res.data).toBeDefined();
-//     expect(res.status).toEqual(200);
-//     const res2 = await funcs.getCompanyOfAnInvestor(
-//       res.data.data[res.data.data.length - 1].userId
-//     );
-//     expect(res2.data.data[res2.data.data.length - 1].status).toMatch(
-//       "Approved"
-//     );
-//     await funcs.deleteUser(res.data.data[res.data.data.length - 1]._id);
-//   } catch (err) {}
-// });
+//Testing taking the form and change it's status to in progress lawyer as a lawyer then accept it then a reviewer can take it
+//and accept it
+test('Taking an unassigned Case and changing the status to in progress case',async () =>{
+  const forms = await funcs.getLawyerPossiblePicks(token3)
+  expect(forms.data.data[forms.data.data.length-1].status).toBe('Unassigned')
+  const wantedForm = forms.data.data[forms.data.data.length-1]
+  await funcs.takingForm(wantedForm._id,token3)
+  const wantedForms = await funcs.getAllForms()
+  const finalForm = wantedForms.data.data[wantedForms.data.data.length-1]
+  expect(finalForm.status).toBe('In progress Lawyer')
+  const inProgressForms = await funcs.getLawyerInProgressCases(token3)
+  expect(inProgressForms.data.data[inProgressForms.data.data.length-1].status).toBe('In progress Lawyer')
+  await funcs.calculateFees(inProgressForms.data.data[inProgressForms.data.data.length-1]._id,token3)
+  const feesForms = await funcs.getAllForms()
+  expect(feesForms.data.data[feesForms.data.data.length-1].fees).toBe(1100)
+  await funcs.acceptForm(feesForms.data.data[feesForms.data.data.length-1]._id,token3)
+  const acceptedForms = await funcs.getAllForms()
+  expect(acceptedForms.data.data[acceptedForms.data.data.length-1].status).toBe('Lawyer accepted')
+  const acceptedLawyerReviewerForms = await funcs.getReviewerPossiblePicks(token4)
+  expect(acceptedLawyerReviewerForms.data.data[acceptedLawyerReviewerForms.data.data.length-1].status).toBe('Lawyer accepted')
+  await funcs.takingForm(acceptedLawyerReviewerForms.data.data[acceptedLawyerReviewerForms.data.data.length-1]._id,token4)
+  const reviewerTakenForms = await funcs.getAllForms()
+  expect(reviewerTakenForms.data.data[reviewerTakenForms.data.data.length-1].status).toBe('In progress Reviewer')
+  await funcs.acceptForm(reviewerTakenForms.data.data[reviewerTakenForms.data.data.length-1]._id,token4)
+  const reviewerAcceptedForms = await funcs.getAllForms()
+  expect(reviewerAcceptedForms.data.data[reviewerAcceptedForms.data.data.length-1].status).toBe('Approved')
+})
 
-// //Getting in progress cases
-// test("Get in progress forms (Cases)", async () => {
-//   try {
-//     await funcs.createInvestor(
-//       "Investor",
-//       "Ahmed",
-//       "Male",
-//       "Egyptian",
-//       "Passport",
-//       "0987654321111",
-//       "1997-12-15",
-//       "Nasr City",
-//       "tott@gmail.com",
-//       "hahahahaha"
-//     );
-//     var users = await funcs.getAllUsers();
-//     var id = users.data.data[users.data.data.length - 1]._id;
-//     await funcs.postFormForUser(
-//       "Cairo",
-//       "Nasr City",
-//       "Moez Eldawla Street",
-//       "Final Company",
-//       "Dollar",
-//       200000,
-//       "SPCForm",
-//       "In progress",
-//       "1998-09-08",
-//       id
-//     );
-//     const res = await funcs.getAllForms();
-//     expect(res.data).toBeDefined();
-//     expect(res.status).toEqual(200);
-//     const res2 = await funcs.getInProgressCase(
-//       res.data.data[res.data.data.length - 1].userId
-//     );
-//     expect(res2.data.data[res2.data.data.length - 1].status).toMatch(
-//       "In progress"
-//     );
-//     await funcs.deleteUser(res.data.data[res.data.data.length - 1]._id);
-//   } catch (err) {}
-// });
+//Testing getting in progress cases (anything rather than 'Approved') as an investor
+test('In progress cases of an investor', async () =>{
+  const forms = await funcs.getInvestorInProgressCases(token)
+  expect(forms.data.data[forms.data.data.length-1].status).not.toBe('Approved')
+})
 
-// test("check if a user is deleted from database", async () => {
-//   try {
-//     //expect.assertions(6)
-//     const user1 = await funcs.createLawyerOrReviewer(
-//       "Lawyer",
-//       "ammar",
-//       "Male",
-//       "Egyptian",
-//       "National ID",
-//       "245330443672",
-//       "1998-5-1",
-//       "Maadi",
-//       "ammar.gp@7gmail.com",
-//       "133462366777"
-//     );
-//     // const user2=await funcs.createLawyerOrReviewer('Reviewer','Mohanad','Male','Egyptian','National ID','24411113672','1998-5-5','Maadi','mohanad.ahmed@gmail.com','116626727')
-//     // const user3=await funcs.createLawyerOrReviewer('Lawyer','misho','Male','Egyptian','National ID','2441fvv26672','1998-4-2','Masr el gedida','alxi.ahmed@gmail.com','66v6626727')
+//Testing getting unassigned cases as a lawyer
+test('Cases I can get as a lawyer (Unassigned Cases)', async () =>{
+  const forms = await funcs.getLawyerPossiblePicks(token3)
+  expect(forms.data.data[forms.data.data.length-1].status).toBe('Unassigned')
+}) 
 
-//     const OldUsers = await funcs.getAllUsers();
-//     const oldLength = OldUsers.data.data.length;
+//Testing investor creating a form
+test('Creating a form as an investor',async () =>{
+  const createdForm = await funcs.getAllForms()
+  const users = await funcs.getAllUsers()
+  expect(createdForm.data.data[createdForm.data.data.length-1].investorId).toMatch(users.data.data[users.data.data.length-1]._id)
+  expect(createdForm.data.data[createdForm.data.data.length-1].companyName).toMatch('الشركة02')
+})
 
-//     expect(OldUsers).toBeDefined();
-//     expect(OldUsers.status).toEqual(200);
-//     expect(OldUsers.data.data).toHaveLength(oldLength);
+//Testing updating a form as an investor
+test('Updating a form as an investor',async () =>{
+  const createdForm = await funcs.getAllForms()
+  specificForm = createdForm.data.data[createdForm.data.data.length-2]
+  id = specificForm._id
+  await funcs.updateFormForUser(token,id,
+    specificForm.formType,
+    "الشركة03",
+    specificForm.companyNameInEnglish,
+    specificForm.companyGovernorate,
+    specificForm.companyCity,
+    specificForm.companyAddress,
+    specificForm.companyTelephone,
+    specificForm.companyFax,
+    specificForm.currency,
+    specificForm.investorNationality,
+    specificForm.equityCapital)
+    const updatedForms = await funcs.getAllForms()
+    expect(updatedForms.data.data[updatedForms.data.data.length-2].companyName).toMatch('الشركة03')
+})
 
-//     await funcs.deleteUser(
-//       OldUsers.data.data[OldUsers.data.data.length - 1]._id
-//     ); //delete an existing user
-
-//     const newUsers = await funcs.getAllUsers();
-//     const newLength = oldLength - 1;
-
-//     expect(newUsers).toBeDefined();
-//     expect(newUsers.status).toEqual(200);
-//     expect(newUsers.data.data).toHaveLength(newLength); //check if length will be less by 1
-
-//     //  await funcs.deleteUser(OldUsers.data.data[OldUsers.data.data.length-1]._id)
-//     //  await funcs.deleteUser(OldUsers.data.data[OldUsers.data.data.length-1]._id)
-//   } catch (error) {}
-// });
-
-
-// test("check if delete a user that is not in the database will be deleted or not", async () => {
-//   try {
-//     //expect.assertions(6)
-//     // const user1=await funcs.createLawyerOrReviewer('Lawyer','hesham','Male','Egyptian','National ID','245470443672','1998-5-1','Maadi','hesham.gp@7gmail.com','123462366777')
-//     //  const user2=await funcs.createLawyerOrReviewer('Reviewer','Mohanad','Male','Egyptian','National ID','24411113672','1998-5-5','Maadi','mohanad.ahmed@gmail.com','116626727')
-//     // const user3=await funcs.createLawyerOrReviewer('Lawyer','misho','Male','Egyptian','National ID','2441fvv26672','1998-4-2','Masr el gedida','alxi.ahmed@gmail.com','66v6626727')
-
-//     const OldUsers = await funcs.getAllUsers();
-//     const oldLength = OldUsers.data.data.length;
-
-//     expect(OldUsers).toBeDefined();
-//     expect(OldUsers.status).toEqual(200);
-//     expect(OldUsers.data.data).toHaveLength(oldLength);
-
-//     await funcs.deleteUser(mongoose.Types.ObjectId("5c9fb264da7a330017864111")); //try to delete non existing user
-
-//     const newUsers = await funcs.getAllUsers();
-
-//     expect(newUsers).toBeDefined();
-//     expect(newUsers.status).toEqual(200);
-//     expect(newUsers.data.data).not.toHaveLength(oldLength - 1); //check if length will change
-
-//     //  await funcs.deleteUser(OldUsers.data.data[OldUsers.data.data.length-1]._id)
-//     //  await funcs.deleteUser(OldUsers.data.data[OldUsers.data.data.length-1]._id)
-//   } catch (error) {}
-// });
-
-test("Test getting the financial balance of a certain Investor ", async () => {
-  try {
-    //creating an Investor for testing
-    await funcs.CreateInvestor(
-      "Investor",
-      "sebaaa3y",
-      "male",
-      "Egyptian",
-      "national id",
-      "A6123456777",
-      "1998-12-10T00:00:00.000Z",
-      "Maadi",
-      "ali@yahoo.com",
-      "123456789",
-      "202"
-    );
-
-    const res = await funcs.getAllUsers(); // getting all users
-    expect(res.data).toBeDefined();
-    expect(res.status).toEqual(200);
-
-    const res2 = await funcs.getUserById(
-      res.data.data[res.data.data.length - 1]._id
-    ); // getting a certain user
-
-    expect(res2.data.data.financialBalance).toEqual(202); // checking his financial balance
-  } catch (error) {}
-});
-
-test("Check the update of a certain user", async () => {
-  try {
-    const res = await funcs.getAllUsers(); // getting all users
-    expect(res).toBeDefined();
-    expect(res.status).toEqual(200);
-    var len = res.data.data[res.data.data.length - 1];
-    var lenid = res.data.data[res.data.data.length - 1]._id; // get the id of a certain user
-    expect(res.data.data.length).toEqual(42); // check the length
-
-    await funcs.UpdateUser(lenid); // update the user
-
-    var x = await funcs.getUserById(lenid);
-
-    expect(x.data.data.name).toBe("ALI EL SEBAIE2"); // checking
-    expect(x.data.data.nationality).toBe("Masry"); // checking
-    expect(res.data.data.length).toEqual(42); // check the length again to make sure that it is not changed after updating
-  } catch (error) {}
-});
-
-// test("Check the update of a form in a certain user", async () => {
-//   try {
-//     const res = await funcs.getAllUsers(); // getting all users
-//     const res2 = await funcs.getAllForms(); // getting all forms
-//     expect(res).toBeDefined();
-//     expect(res.status).toEqual(200);
-//     var lenid = res.data.data[res.data.data.length - 1]._id; // get the id of a certain user
-//     var formid = res2.data.data[res2.data.data.length - 1]._id; // get the id of a certain form
-
-//     await funcs.UpdateFormInUser(lenid, formid); // update the form of the user
-
-//     var x = await funcs.getFormById(formid);
-
-//     expect(x.data.data.companyName).toBe("sebaie200 company"); // checking
-//     expect(x.data.data.companyNameInEnglish).toBe("Irish comp"); // checking
-//   } catch (error) {}
-// });
-
-// test("Check the get of a certain form", async () => {
-//   // get a certain form
-
-//   try {
-//     const res = await funcs.getAllForms(); // getting all Forms
-//     expect(res.data).toBeDefined();
-//     expect(res.status).toEqual(200);
-
-//     const res2 = await funcs.getFormById(
-//       res.data.data[res.data.data.length - 1]._id
-//     ); // getting a certain form
-
-//     expect(res2.data.data.companyName).toBe("rwaaaarr"); // checking
-//     expect(res2.data.data.type).toBe("SPCForm"); // checking
-//   } catch (error) {}
-// });

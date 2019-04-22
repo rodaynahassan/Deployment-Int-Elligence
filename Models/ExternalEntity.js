@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 var ObjectId = mongoose.Schema.Types.ObjectId;
-const x=require('./node_modules/mongoose-type-url');
+//const x=require('./node_modules/mongoose-type-url');
 
 
 const ExternalEntitySchema= new Schema({

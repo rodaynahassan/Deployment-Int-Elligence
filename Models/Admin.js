@@ -13,9 +13,8 @@ const Admin = new Schema({
   birthdate:{ type: Date, required: true},
   address: { type: String, required: true},
   telephone:{ type:String},
-  fax:{ type:String},
+  fax:{ type:String}
 
 });
 
 module.exports = admin = mongoose.model('admins', Admin);
-

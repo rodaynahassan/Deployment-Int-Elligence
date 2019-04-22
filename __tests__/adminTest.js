@@ -1,6 +1,10 @@
 /**
  * @jest-environment node
  */
+
+// test('1+1 is 2', async () => {
+//   expect(1+1).toBe(2)
+// })
 const mongoose = require("mongoose");
 const funcs = require("../funcs/adminFuncs");
 
@@ -10,24 +14,21 @@ let token;
 let beforeNewAdmins;
 let beforeNewLength;
 let loggedInAdmin;
+let beforeAdmin;
 //let tokenUser;
 beforeAll(async () => {
   beforeOldAdmins = await funcs.getAdmins();
   beforeOldLength = beforeOldAdmins.data.data.length;
-  await funcs.postAdmin("Mariam","Female","Egyptian","National ID","44730746622","password1234","1990-3-3","Maadi","mar@gmail.com","Admin");
+  beforeAdmin = await funcs.postAdmin("Mariam","Female","Egyptian","National ID","55630746622","password1234","1990-3-3","Maadi","mari@gmail.com","Admin");
   beforeNewAdmins = await funcs.getAdmins();
   beforeNewLength = beforeNewAdmins.data.data.length
-  loggedInAdmin = await funcs.loginAdmin("password1234","mar@gmail.com")
+  loggedInAdmin = await funcs.loginAdmin("password1234","mari@gmail.com")
   token = loggedInAdmin.data.data
-  //console.log(token)
-  // await funcs.createInvestor('Investor','Mahmoud','Male','Egyptian','National ID','104575020173','01-01-1980','Nasr City','hodd@gmail.com','password1234','Person')
-  // const loggedInUser = await funcs.loginInvestor('password1234','hodd@gmail.com')
-  // tokenUser = loggedInUser.data.token
 });
 
 afterAll(async () => {
-  const allAdmins = await funcs.getAdmins()
-  await funcs.deleteAdmin(allAdmins.data.data[allAdmins.data.data.length - 1]._id);
+  //const allAdmins = await funcs.getAdmins()
+  await funcs.deleteAdmin(beforeAdmin.data.data._id);
   // await funcs.deleteInvestor(tokenUser)
 });
 
@@ -38,7 +39,7 @@ test("Creating an admin", async () => {
     "Mariam"
   );
   expect(beforeNewAdmins.data.data[beforeNewAdmins.data.data.length - 1].email).toMatch(
-    "mar@gmail.com"
+    "mari@gmail.com"
   );
 });
 
@@ -184,12 +185,12 @@ test("Updating an admin by id with wrong password", async () => {
 
 //Testing login
 test("Login admin", async () => {
-  expect(loggedInAdmin.config.data).toMatch('"password":"password1234","email":"mar@gmail.com"');
+  expect(loggedInAdmin.config.data).toMatch('"password":"password1234","email":"mari@gmail.com"');
 });
 
 //Testing login with a wrong password
 test("Login admin with wrong password", async () => {
-  const loginAdmin = await funcs.loginAdmin("Rodayna12", "mar@gmail.com");
+  const loginAdmin = await funcs.loginAdmin("Rodayna12", "mari@gmail.com");
   expect(loginAdmin.error.response.data.password).toMatch('Wrong password')
 });
 

@@ -22,6 +22,14 @@ mongoose
 {
 	useNewUrlParser: true;
 }
+app.get('/*', (req, res) => {
+	let url = path.join(__dirname, '../client/build', 'index.html');
+	if (
+		!url.startsWith('/app/') // we're on local windows
+	)
+		url = url.substring(1);
+	res.sendFile(url);
+});
 
 //Static file declaration
 app.use(express.static(path.join(__dirname, 'client/build')));
@@ -38,9 +46,9 @@ if (process.env.NODE_ENV === 'production') {
 console.log(__dirname + '   gggggggggggggggggggg');
 
 //build mode
-app.get('*', (req, res) => {
-	res.sendFile(path.join(__dirname + '/client/public/index.html'));
-});
+// app.get('*', (req, res) => {
+// 	res.sendFile(path.join(__dirname + '/client/public/index.html'));
+// });
 
 // app.get('*', (req, res) => {
 // 	res.sendFile(path.resolve(where, the, index.html, is));

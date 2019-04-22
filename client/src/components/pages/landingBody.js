@@ -15,14 +15,10 @@ import ReactDOM from 'react-dom';
 import Companies from '../pages/Companies';
 import Footer from '../layout/footer';
 import { Animate, AnimateGroup } from 'react-simple-animate';
-import Egypt from '../layout/Egypt.jpg';
+import egypt1 from '../layout/egypt.gif';
 import trans from '../translations/landingTranslation';
 
 class LandingBody extends Component {
-	constructor(props) {
-		super(props);
-	}
-
 	props = {
 		startStyle: { opacity: 0 },
 		endStyle: { opacity: 1 }
@@ -61,10 +57,10 @@ class LandingBody extends Component {
 		return (
 			<Carousel>
 				<Carousel.Item>
-					<div style={{ position: 'fixed', top: '0', zIndex: '-1', width: '100%' }}>
+					<div style={{ position: 'fixed', top: '0', zIndex: '0', width: '100%' }}>
 						<video
-							playsInline="playsinline"
-							autoPlay="autoplay"
+							playsinline="playsinline"
+							autoplay="autoplay"
 							muted="muted"
 							loop="loop"
 							width="100%"
@@ -87,7 +83,8 @@ class LandingBody extends Component {
 								<h1
 									style={{
 										fontSize: '100px',
-										textShadow: '-2px 0 white, 0 2px white, 2px 0 white, 0 -2px white'
+										textShadow: '-2px 0 black, 0 2px black, 2px 0 black, 0 -2px black',
+										color: 'white'
 									}}
 								>
 									G&nbsp;
@@ -102,7 +99,8 @@ class LandingBody extends Component {
 								<h1
 									style={{
 										fontSize: '100px',
-										textShadow: '-2px 0 white, 0 2px white, 2px 0 white, 0 -2px white'
+										textShadow: '-2px 0 black, 0 2px black, 2px 0 black, 0 -2px black',
+										color: 'white'
 									}}
 								>
 									A&nbsp;
@@ -117,7 +115,8 @@ class LandingBody extends Component {
 								<h1
 									style={{
 										fontSize: '100px',
-										textShadow: '-2px 0 white, 0 2px white, 2px 0 white, 0 -2px white'
+										textShadow: '-2px 0 black, 0 2px black, 2px 0 black, 0 -2px black',
+										color: 'white'
 									}}
 								>
 									F&nbsp;
@@ -132,7 +131,8 @@ class LandingBody extends Component {
 								<h1
 									style={{
 										fontSize: '100px',
-										textShadow: '-2px 0 white, 0 2px white, 2px 0 white, 0 -2px white'
+										textShadow: '-2px 0 black, 0 2px black, 2px 0 black, 0 -2px black',
+										color: 'white'
 									}}
 								>
 									I&nbsp;
@@ -144,7 +144,7 @@ class LandingBody extends Component {
 								startStyle={{ opacity: 0, transform: 'translateY(0)' }}
 								sequenceIndex={7}
 							>
-								<img src={Egypt} height="50px" width="80px" />
+								<img src={egypt1} height="50px" width="80px" />
 							</Animate>
 						</view>
 					</AnimateGroup>

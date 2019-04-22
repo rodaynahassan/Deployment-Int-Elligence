@@ -10,14 +10,17 @@ class Footer extends Component {
 
 render () {
   return (
-      <div style={{marginTop: '0px',backgroundColor:"#123456" , paddingLeft:"4.55%" , width:"100%" , alignItems:"center",justifyContent:"center"}}>
+      <div class="wrapper" style={{position: "absolute",
+        bottom: 0,
+        width: "100%",
+        height: "8rem",backgroundColor:"#123456" , paddingLeft:"4.55%" , width:"100%" , alignItems:"center",justifyContent:"center"}}>
      
     <MDBFooter  className="font-small pt-4" >
       <MDBContainer className="text-center text-md-left">
-        <MDBRow className="text-center text-md-left  pb-3 ml-4">
+        <MDBRow className="text-center text-md-left  pb-3 ml-4" >
           
           
-        <hr className="w-100 clearfix d-md-none" style={{color:'black'}}/>
+        <hr className="w-100 clearfix d-md-none" style={{color:"dark"}}/>
 
          
             <h6 className="text-uppercase mb-4 font-weight-bold mr-2 ml-4">Contact Us</h6>
@@ -35,7 +38,7 @@ render () {
               <i className="fas fa-fax mr-1 ml-1" />+202 24055425&nbsp;
             </p>
         </MDBRow>
-        <hr className="w-100 clearfix d-md-none"  style={{color:'black'}} />
+        <hr className="w-100 clearfix d-md-none"  style={{color:'dark'}} />
 
         <MDBRow className="d-flex align-items-center">
           <MDBCol md="8" lg="8">

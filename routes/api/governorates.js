@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Governorate= require('../../Models/Governorate');
+const Governorate= require('../../models/Governorate');
 const governorateController = require('../../controllers/governorateController')
 
 

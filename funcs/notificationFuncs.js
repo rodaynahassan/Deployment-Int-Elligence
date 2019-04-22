@@ -4,7 +4,7 @@ const functions = {
     createInvestor: async(userType1,name1,gender1,nationality1,identificationType1,identificationNumber1,birthdate1,address1,email1,password1) =>{  
         var user = await axios({
            method:'post',
-           url:'http://localhost:3000/routes/api/users/register',
+           url:'http://localhost:5000/routes/api/users/register',
            data:{ 
            userType:userType1,
            name: name1,
@@ -25,7 +25,7 @@ const functions = {
 postSPCFormForUser: async(companyGovernorate1 , companyCity1 , companyAddress1 , companyName1 , currency1 ,equityCapital1 ,type1 ,creationDate1 ,userId1)=>{
         var form = await axios({
             method:'post',
-            url:'http://localhost:3000/routes/api/users/CreatingForm/'+ userId1,
+            url:'http://localhost:5000/routes/api/users/CreatingForm/'+ userId1,
             data: {
                 companyGovernorate:companyGovernorate1 ,
                 companyCity:companyCity1,
@@ -44,7 +44,7 @@ postSPCFormForUser: async(companyGovernorate1 , companyCity1 , companyAddress1 ,
 putFormLawyerComments: async (lawyerComments1,userId1,formId1)=> {
     var returned = await axios({ 
     method :'put',
-    url :'http://localhost:3000/routes/api/users/lawyerComments/' +userId1+'/'+formId1,
+    url :'http://localhost:5000/routes/api/users/lawyerComments/' +userId1+'/'+formId1,
     data : {
         lawyerComments : lawyerComments1
     }
@@ -54,7 +54,7 @@ putFormLawyerComments: async (lawyerComments1,userId1,formId1)=> {
 putFormReviewerComments: async (ReviewerComments1,userId1,formId1)=> {
     var returned = await axios({ 
     method :'put',
-    url :'http://localhost:3000/routes/api/users/reviewerComments/' +userId1+'/'+formId1,
+    url :'http://localhost:5000/routes/api/users/reviewerComments/' +userId1+'/'+formId1,
     data : {
         reviewerComments : ReviewerComments1
     }
@@ -69,7 +69,7 @@ deleteUser: async (DeleteID) => {
 UpdateFormInUser: async(UserId,FormId,status1) =>{     // update a form in a certain user
         return await axios({
             method:'put',
-            url : 'http://localhost:3000/routes/api/users/' + UserId + '/' + FormId,
+            url : 'http://localhost:5000/routes/api/users/' + UserId + '/' + FormId,
             data: {
                 status:status1
             }

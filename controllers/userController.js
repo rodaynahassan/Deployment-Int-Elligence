@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const User = require('../Models/User');
-const userValidator = require('../Validation/UserValidation');
+const User = require('../models/User');
+const userValidator = require('../validations/userValidations');
 const bcrypt = require('bcrypt');
 
 //comparing between creation dates
@@ -38,7 +38,6 @@ exports.registerInvestor = async function registerInvestor(body) {
 	return newUser;
 };
 
-// Search users
 exports.search = async function search(att, value) {
 	if (att === null) {
 		var values = await User.find();
@@ -73,32 +72,49 @@ exports.remove = async function remove(att, value) {
 exports.update = async function update(att, value, body) {
 	try {
 		if (!att) return null;
-
-		if (body.userType === 'Lawyer') {
-			const isValidated = validator.updateValidationL(body);
-			if (isValidated.error) return { error: isValidated.error.details[0].message };
-		}
-		if (body.userType === 'Investor') {
-			const isValidated = validator.updateValidationI(body);
-			if (isValidated.error) return { error: isValidated.error.details[0].message };
-		}
-		if (body.userType === 'Reviewer') {
-			const isValidated = validator.updateValidationR(body);
-			if (isValidated.error) return { error: isValidated.error.details[0].message };
-		}
 		if (att === '_id') {
-			var updatedUser = await User.findByIdAndUpdate(value, body)
-				.then((res) => {
-					return res;
-				})
-				.catch((error) => {
-					return { error: error };
-				});
-			if (updatedUser.error) return updatedUser;
-			var x = await User.findById(value);
-			return x;
+			const user = await User.findById(value);
+			if (user.userType === 'Lawyer') {
+				const isValidated = userValidator.updateValidationL(body);
+				if (isValidated.error) return { error: isValidated.error.details[0].message };
+				var updatedUser = await User.findByIdAndUpdate(value, body)
+					.then((res) => {
+						return res;
+					})
+					.catch((error) => {
+						return { error: error };
+					});
+				if (updatedUser.error) return updatedUser;
+				var x = await User.findById(value);
+				return x;
+			} else if (user.userType === 'Investor') {
+				var isValidated = userValidator.updateValidationI(body);
+				if (isValidated.error) return { error: isValidated.error.details[0].message };
+				var updatedUser = await User.findByIdAndUpdate(value, body)
+					.then((res) => {
+						return res;
+					})
+					.catch((error) => {
+						return { error: error };
+					});
+				if (updatedUser.error) return updatedUser;
+				var x = await User.findById(value);
+				return x;
+			} else if (user.userType === 'Reviewer') {
+				const isValidated = userValidator.updateValidationR(body);
+				if (isValidated.error) return { error: isValidated.error.details[0].message };
+				var updatedUser = await User.findByIdAndUpdate(value, body)
+					.then((res) => {
+						return res;
+					})
+					.catch((error) => {
+						return { error: error };
+					});
+				if (updatedUser.error) return updatedUser;
+				var x = await User.findById(value);
+				return x;
+			}
 		}
-
 		var updatedUser = User.updateMany({ att: value }, body)
 			.then((res) => {
 				return res;

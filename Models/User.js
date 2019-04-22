@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const Form = require('../Models/Form').schema;
+const Form = require('./Form').schema;
 
 const User = new Schema({
 	userType: { type: String, enum: [ 'Reviewer', 'Lawyer', 'Investor' ] },

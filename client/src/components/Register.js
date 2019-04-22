@@ -1,22 +1,67 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepIcon from '@material-ui/core/StepIcon';
+import StepLabel from '@material-ui/core/StepLabel';
+import StepContent from '@material-ui/core/StepContent';
+import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBCard, MDBCardBody, MDBInput } from 'mdbreact';
+import React, { Component } from 'react';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import 'bootstrap-css-only/css/bootstrap.min.css';
+import 'mdbreact/dist/css/mdb.css';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { registerUser } from '../actions/authentication';
 import classnames from 'classnames';
-import { MDBRow, MDBCol } from 'mdbreact';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import axios from 'axios';
+import { Hidden } from '@material-ui/core';
 
-class Register extends Component {
+const styles = (theme) => ({
+	root: {
+		width: '90%'
+	},
+	button: {
+		marginTop: theme.spacing.unit,
+		marginRight: theme.spacing.unit
+	},
+	actionsContainer: {
+		marginBottom: theme.spacing.unit * 2
+	},
+	resetContainer: {
+		padding: theme.spacing.unit * 3
+	}
+});
+
+function getSteps() {
+	return [ <h3>Insert your basic Info</h3>, <h3>Fill your Personal Data</h3>, <h3>Submit</h3> ];
+}
+
+function getStepContent(step) {
+	switch (step) {
+		case 0:
+			return <h3>Your Basic Info</h3>;
+		case 1:
+			return <h3>Your Personal Info</h3>;
+		case 2:
+			return;
+		default:
+			return 'Unknown step';
+	}
+}
+
+class Register extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			userType: 'Investor',
 			name: '',
-			gender: '',
-			nationality: '',
-			identificationType: '',
+			gender: 'Male',
+			nationality: 'Egyptian',
+			identificationType: 'National ID',
 			identificationNumber: '',
 			birthdate: '',
 			address: '',
@@ -24,10 +69,11 @@ class Register extends Component {
 			password: '',
 			telephone: '',
 			fax: '',
-			investorType: '',
+			investorType: 'Person',
 			nationalities: [],
 			errors: {},
-			password_confirm: ''
+			password_confirm: '',
+			activeStep: 0
 		};
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -41,6 +87,7 @@ class Register extends Component {
 		this.setState({
 			[e.target.name]: e.target.value
 		});
+		console.log(this.state.investorType);
 	}
 
 	handleSubmit(e) {
@@ -72,7 +119,7 @@ class Register extends Component {
 	}
 
 	componentDidMount() {
-		axios.get('/routes/api/nationalities').then((res) => {
+		axios.get('http://localhost:5000/routes/api/nationalities').then((res) => {
 			this.setState({ nationalities: res.data.data });
 		});
 	}
@@ -98,250 +145,352 @@ class Register extends Component {
 		);
 	}
 
+	validateForm2() {
+		return (
+			this.state.gender.length >= 4 &&
+			this.state.gender.length <= 6 &&
+			this.state.identificationNumber.length >= 8 &&
+			this.state.identificationNumber.length <= 50 &&
+			this.state.address.length >= 5 &&
+			this.state.address.length <= 50 &&
+			this.state.telephone.length >= 4 &&
+			this.state.telephone.length <= 15 &&
+			this.state.fax.length >= 5 &&
+			this.state.fax.length <= 20 &&
+			this.state.activeStep === 1
+		);
+	}
+
+	validateForm1() {
+		return (
+			this.state.email.length >= 3 &&
+			this.state.email.length <= 50 &&
+			this.state.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) &&
+			this.state.password.length >= 8 &&
+			this.state.password_confirm.length <= 20 &&
+			this.state.password === this.state.password_confirm
+		);
+	}
+
+	handleNext = () => {
+		this.setState((state) => ({
+			activeStep: state.activeStep + 1
+		}));
+	};
+
+	handleBack = () => {
+		this.setState((state) => ({
+			activeStep: state.activeStep - 1
+		}));
+	};
+
+	handleReset = () => {
+		this.setState({
+			activeStep: 0
+		});
+	};
+
 	render() {
+		const { classes } = this.props;
+		const steps = getSteps();
+		const { activeStep } = this.state;
 		const { errors } = this.state;
 
+		var basic = (
+			<div>
+				<form>
+					<div className="form-group">
+						<MDBInput
+							label="Name"
+							type="text"
+							className={classnames('form-control form-control-lg', {
+								'is-invalid': errors.Name
+							})}
+							name="name"
+							onChange={this.changeHandler}
+							value={this.state.name}
+							required
+						/>
+						{errors.name && <div className="invalid-feedback">{errors.name}</div>}
+					</div>
+					<br />
+
+					<div className="form-group">
+						<MDBInput
+							label="Email"
+							type="email"
+							className={classnames('form-control form-control-lg', {
+								'is-invalid': errors.Email
+							})}
+							name="email"
+							onChange={this.changeHandler}
+							value={this.state.email}
+							required
+						/>
+						{errors.email && <div className="invalid-feedback">{errors.email}</div>}
+					</div>
+					<br />
+
+					<div className="form-group">
+						<MDBInput
+							label="Password"
+							type="password"
+							className={classnames('form-control form-control-lg', { 'is-invalid': errors.Password })}
+							name="password"
+							onChange={this.changeHandler}
+							value={this.state.password}
+							required
+						/>
+
+						{errors.password && <div className="invalid-feedback">{errors.password}</div>}
+					</div>
+					<br />
+
+					<div className="form-group">
+						<MDBInput
+							label="Confirm Password"
+							type="password"
+							className={classnames('form-control form-control-lg', {
+								'is-invalid': errors.confirm_password
+							})}
+							name="password_confirm"
+							onChange={this.changeHandler}
+							value={this.state.password_confirm}
+							required
+						/>
+						{errors.password_confirm && <div className="invalid-feedback">{errors.password_confirm}</div>}
+					</div>
+				</form>
+			</div>
+		);
+
+		var personal = (
+			<div>
+				<form>
+					<MDBRow>
+						<MDBCol>
+							<div className="form-group">
+								<label htmlFor="gender">Gender</label>
+								<select
+									className="form-control"
+									id="exampleFormControlSelect1"
+									name="gender"
+									onChange={this.changeHandler}
+									value={this.state.gender}
+								>
+									<option>Male</option>
+									<option>Female</option>
+								</select>
+							</div>
+						</MDBCol>
+					</MDBRow>
+
+					<div className="form-group">
+						<label htmlFor="Nationality">Nationality</label>
+						<select
+							className="form-control"
+							id="exampleFormControlSelect1"
+							name="nationality"
+							onChange={this.changeHandler}
+							value={this.state.nationality}
+						>
+							{this.state.nationalities.map((nat) => <option value={nat.name}>{nat.name}</option>)};
+						</select>
+					</div>
+
+					<MDBRow>
+						<MDBCol>
+							<div className="form-group">
+								<label htmlFor="identificationType">Identification Type</label>
+								<select
+									className="form-control"
+									id="exampleFormControlSelect1"
+									name="identificationType"
+									onChange={this.changeHandler}
+									value={this.state.identificationType}
+								>
+									<option>National ID</option>
+									<option>Passport</option>
+								</select>
+							</div>
+						</MDBCol>
+					</MDBRow>
+
+					<div className="form-group">
+						<MDBInput
+							label="Identification Number"
+							type="text"
+							className={classnames('form-control form-control-lg', { 'is-invalid': errors.fax })}
+							name="identificationNumber"
+							onChange={this.changeHandler}
+							value={this.state.identificationNumber}
+							required
+						/>
+						{errors.identificationNumber && (
+							<div className="invalid-feedback">{errors.identificationNumber}</div>
+						)}
+					</div>
+
+					<div className="form-group">
+						<MDBInput
+							label="Birthdate"
+							type="text"
+							className={classnames('form-control form-control-lg', { 'is-invalid': errors.birthdate })}
+							name="birthdate"
+							onChange={this.changeHandler}
+							value={this.state.birthdate}
+							required
+						/>
+						{errors.birthdate && <div className="invalid-feedback">{errors.birthdate}</div>}
+					</div>
+
+					<div className="form-group">
+						<MDBInput
+							label="Address"
+							type="text"
+							className={classnames('form-control form-control-lg', { 'is-invalid': errors.address })}
+							name="address"
+							onChange={this.changeHandler}
+							value={this.state.address}
+							required
+						/>
+						{errors.address && <div className="invalid-feedback">{errors.address}</div>}
+					</div>
+
+					<div className="form-group">
+						<MDBInput
+							label="Telephone"
+							type="text"
+							className={classnames('form-control form-control-lg', { 'is-invalid': errors.telephone })}
+							name="telephone"
+							onChange={this.changeHandler}
+							value={this.state.telephone}
+						/>
+						{errors.telephone && <div className="invalid-feedback">{errors.telephone}</div>}
+					</div>
+
+					<div className="form-group">
+						<MDBInput
+							label="Fax"
+							type="text"
+							className={classnames('form-control form-control-lg', { 'is-invalid': errors.fax })}
+							name="fax"
+							onChange={this.changeHandler}
+							value={this.state.Fax}
+						/>
+						{errors.fax && <div className="invalid-feedback">{errors.fax}</div>}
+					</div>
+
+					<MDBRow>
+						<MDBCol>
+							<div className="form-group">
+								<label htmlFor="investorType">Investor Type</label>
+								<select
+									className="form-control"
+									id="exampleFormControlSelect1"
+									name="investorType"
+									onChange={this.changeHandler}
+									value={this.state.investorType}
+								>
+									<option>Person</option>
+								</select>
+							</div>
+						</MDBCol>
+					</MDBRow>
+				</form>
+			</div>
+		);
+
+		var Submit = (
+			<div>
+				<form>
+					<div className="form-group">
+						<button
+							type="submit"
+							disabled={!this.validateForm()}
+							onClick={(e) => this.handleSubmit(e)}
+							className="btn blue-gradient btn-block btn-rounded z-depth-1a"
+							style={{ width: '200px' }}
+						>
+							Submit
+						</button>
+					</div>
+				</form>
+
+				{/* <button
+									onClick={(e) => this.handleSubmit(e)}
+									type="submit"
+								
+								>
+									{trans.loginbutton}
+								</button> */}
+			</div>
+		);
+
 		return (
-			<MuiThemeProvider>
-				<div className="container" style={{ marginTop: '50px', width: '700px' }}>
-					<h2 style={{ marginBottom: '40px' }}>Registration</h2>
-					<form onSubmit={this.handleSubmit}>
-						<div className="form-group">
-							<label htmlFor="name">Name</label>
-							<input
-								type="text"
-								placeholder="Name"
-								className={classnames('form-control form-control-lg', {
-									'is-invalid': errors.name
-								})}
-								name="name"
-								// hintText="Enter your name"
-								// floatingLabelText={'Email'}
-								//id="materialFormRegisterNameEx"
-								onChange={this.handleInputChange}
-								value={this.state.name}
-								required
-							/>
+			<div style={{ paddingRight: '200px' }}>
+				<div className={classes.root}>
+					<Stepper activeStep={activeStep} orientation="vertical">
+						{steps.map((label, index) => (
+							<Step key={label}>
+								<StepLabel>{label}</StepLabel>
+								<StepContent>
+									<Typography>{getStepContent(index)}</Typography>
+									<div className={classes.actionsContainer}>
+										{this.state.activeStep === 0 ? basic : null}
+										{this.state.activeStep === 1 ? personal : null}
+										{this.state.activeStep === 2 ? Submit : null}
 
-							{errors.name && <div className="invalid-feedback">{errors.name}</div>}
-						</div>
+										<div>
+											<button
+												disabled={activeStep === 0}
+												onClick={this.handleBack}
+												// className={classes.button}
+												className="btn blue-gradient btn-block btn-rounded z-depth-1a"
+												style={{ width: '100px' }}
+												//variant="contained"
+											>
+												Back
+											</button>
+											<button
+												//variant="contained"
+												onClick={this.handleNext}
+												disabled={
+													this.state.activeStep === 0 ? (
+														!this.validateForm1()
+													) : this.state.activeStep === 1 ? (
+														!this.validateForm2()
+													) : null
+												}
+												// className={classes.button}
+												className="btn blue-gradient btn-block btn-rounded z-depth-1a"
+												style={{ width: '100px' }}
+												// color="primary"
+											>
+												{activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+											</button>
+										</div>
+									</div>
+								</StepContent>
 
-						<MDBRow>
-							<MDBCol>
-								<div className="form-group">
-									<label htmlFor="gender">Gender</label>
-									<select
-										className="form-control"
-										id="exampleFormControlSelect1"
-										name="gender"
-										onChange={this.handleInputChange}
-										value={this.state.gender}
-									>
-										<option>Male</option>
-										<option>Female</option>
-									</select>
-								</div>
-							</MDBCol>
-						</MDBRow>
-
-						<div className="form-group">
-							<label htmlFor="Nationality">Nationality</label>
-							<select
-								className="form-control"
-								id="exampleFormControlSelect1"
-								name="nationality"
-								onChange={this.changeHandler}
-								value={this.state.nationality}
-							>
-								{this.state.nationalities.map((nat) => <option value={nat.name}>{nat.name}</option>)};
-							</select>
-						</div>
-
-						<MDBRow>
-							<MDBCol>
-								<div className="form-group">
-									<label htmlFor="identificationType">Identification Type</label>
-									<select
-										className="form-control"
-										id="exampleFormControlSelect1"
-										name="identificationType"
-										onChange={this.handleInputChange}
-										value={this.state.identificationType}
-									>
-										<option>National ID</option>
-										<option>Passport</option>
-									</select>
-								</div>
-							</MDBCol>
-						</MDBRow>
-
-						<div className="form-group">
-							<label htmlFor="identificationNumber">Identification Number</label>
-							<input
-								type="text"
-								placeholder="identification Number"
-								className={classnames('form-control form-control-lg', {
-									'is-invalid': errors.identificationNumber
-								})}
-								name="identificationNumber"
-								onChange={this.handleInputChange}
-								value={this.state.identificationNumber}
-								required
-							/>
-							{errors.identificationNumber && (
-								<div className="invalid-feedback">{errors.identificationNumber}</div>
-							)}
-						</div>
-
-						<div className="form-group">
-							<label htmlFor="birthdate">Birthdate</label>
-							<input
-								type="text"
-								placeholder="Birthdate"
-								className={classnames('form-control form-control-lg', {
-									'is-invalid': errors.birthdate
-								})}
-								name="birthdate"
-								onChange={this.handleInputChange}
-								value={this.state.birthdate}
-								required
-							/>
-							{errors.birthdate && <div className="invalid-feedback">{errors.birthdate}</div>}
-						</div>
-
-						<div className="form-group">
-							<label htmlFor="address">Address</label>
-							<input
-								type="text"
-								placeholder="Address"
-								className={classnames('form-control form-control-lg', {
-									'is-invalid': errors.address
-								})}
-								name="address"
-								onChange={this.handleInputChange}
-								value={this.state.address}
-								required
-							/>
-							{errors.address && <div className="invalid-feedback">{errors.address}</div>}
-						</div>
-
-						<div className="form-group">
-							<label htmlFor="email">Email</label>
-							<input
-								type="email"
-								placeholder="Email"
-								className={classnames('form-control form-control-lg', {
-									'is-invalid': errors.email
-								})}
-								name="email"
-								onChange={this.handleInputChange}
-								value={this.state.email}
-								required
-							/>
-							{errors.email && <div className="invalid-feedback">{errors.email}</div>}
-						</div>
-
-						<div className="form-group">
-							<label htmlFor="password">Password</label>
-							<input
-								type="password"
-								placeholder="Password"
-								className={classnames('form-control form-control-lg', {
-									'is-invalid': errors.password
-								})}
-								//className={this.state.newPassword.valid?"is-valid" : "is-invalid"}
-								name="password"
-								onChange={this.handleInputChange}
-								value={this.state.password}
-								required
-							/>
-
-							{errors.password && <div className="invalid-feedback">{errors.password}</div>}
-						</div>
-
-						<div className="form-group">
-							<label htmlFor="password_confirm">Confirm Password</label>
-							<input
-								type="password"
-								placeholder="Confirm Password"
-								className={classnames('form-control form-control-lg', {
-									'is-invalid': errors.password_confirm
-								})}
-								name="password_confirm"
-								onChange={this.handleInputChange}
-								value={this.state.password_confirm}
-								required
-							/>
-							{errors.password_confirm && (
-								<div className="invalid-feedback">{errors.password_confirm}</div>
-							)}
-						</div>
-
-						<div className="form-group">
-							<label htmlFor="telephone">Telephone</label>
-							<input
-								type="text"
-								placeholder="Telephone"
-								className={classnames('form-control form-control-lg', {
-									'is-invalid': errors.telephone
-								})}
-								name="telephone"
-								onChange={this.handleInputChange}
-								value={this.state.telephone}
-							/>
-							{errors.telephone && <div className="invalid-feedback">{errors.telephone}</div>}
-						</div>
-
-						<div className="form-group">
-							<label htmlFor="fax">Fax</label>
-							<input
-								type="text"
-								placeholder="Fax"
-								className={classnames('form-control form-control-lg', {
-									'is-invalid': errors.fax
-								})}
-								name="fax"
-								onChange={this.handleInputChange}
-								value={this.state.fax}
-							/>
-							{errors.fax && <div className="invalid-feedback">{errors.fax}</div>}
-						</div>
-
-						<MDBRow>
-							<MDBCol>
-								<div className="form-group">
-									<label htmlFor="investorType">Investor Type</label>
-									<select
-										className="form-control"
-										id="exampleFormControlSelect1"
-										name="investorType"
-										onChange={this.handleInputChange}
-										value={this.state.investorType}
-									>
-										<option>Person</option>
-									</select>
-								</div>
-							</MDBCol>
-						</MDBRow>
-
-						<div className="form-group">
-							<button
-								type="submit"
-								disabled={!this.validateForm()}
-								onClick={(e) => (
-									this.handleSubmit(e), alert('The Account has been created successfully')
-								)}
-								className="btn btn-primary"
-							>
-								Register User
-							</button>
-						</div>
-					</form>
+								<StepContent />
+							</Step>
+						))}
+					</Stepper>
+					{activeStep === steps.length && (
+						<Paper square elevation={0} className={classes.resetContainer}>
+							<Typography>All steps completed - you&apos;re finished</Typography>
+						</Paper>
+					)}
 				</div>
-			</MuiThemeProvider>
+			</div>
 		);
 	}
 }
+
+Register.propTypes = {
+	classes: PropTypes.object
+};
 
 Register.propTypes = {
 	registerUser: PropTypes.func.isRequired
@@ -351,4 +500,4 @@ const mapStateToProps = (state) => ({
 	errors: state.errors
 });
 
-export default connect(mapStateToProps, { registerUser })(withRouter(Register));
+export default withStyles(styles)(connect(mapStateToProps, { registerUser })(withRouter(Register)));

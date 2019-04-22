@@ -36,9 +36,11 @@ class InProgressSPCCases extends Component {
 	};
 	render() {
 		return (
-			<div style={{ paddingLeft: '60px', justifyItems: 'center' }}>
+			<div style={{ justifyItems: 'center' }}>
 				<h2 align="center">
-					<Badge variant="dark">Your In progress Cases</Badge>
+					<Badge style={{ backgroundColor: '#64b9e0', marginTop: '80px' }} variant="dark">
+						Your In progress Cases
+					</Badge>
 				</h2>
 				<Navbar bg="dark">
 					<Table striped bordered hover variant="dark">

@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const validator = require('../../Validation/externalentityValidations')
+const validator = require('../../validations/externalentityValidations')
 const mongoose = require('mongoose')
 const controller = require('../../controllers/externalentityController')
-const ExternalEntity = require('../../Models/ExternalEntity')
+const ExternalEntity = require('../../models/ExternalEntity')
 
 //get all external entities 
 router.get('/', async (req,res) => {
@@ -36,7 +36,7 @@ router.get('/getByExternalEntityApi/:Api', async (req,res) => {
 //create an external entity 
 router.post('/', async (req,res) => {
    var newExternalEntity=await controller.create(req.body)
-   if(newExternalEntity.error) res.status(400).send({error:error})
+   if(newExternalEntity.error) res.status(400).send(newExternalEntity)
    return res.json({data:newExternalEntity})
  })
 

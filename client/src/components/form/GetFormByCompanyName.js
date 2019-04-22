@@ -23,7 +23,7 @@ class MyCompany extends Component {
 	//do you mean get all forms?
 
 	componentDidMount() {
-		axios.get('/routes/api/forms/getAllForms').then((res) => {
+		axios.get('/routes/api/forms/').then((res) => {
 			this.setState({ companies: res.data.data });
 		});
 	}

@@ -31,7 +31,7 @@ class EditProfile extends React.Component {
 
 		axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
 		axios
-			.get('/routes/api/users/CertainAttributes', {
+			.get('http://localhost:5000/routes/api/users/CertainAttributes', {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
 			.then((response) => {
@@ -41,7 +41,7 @@ class EditProfile extends React.Component {
 					nationality: response.data.Nationality,
 					identificationType: response.data.IdentificationType,
 					identificationNumber: response.data.IdentificationNumber,
-					birthdate: response.data.Birthdate,
+					birthdate: response.data.Birthdate.substring(0, 9),
 					address: response.data.Address,
 					email: response.data.Email,
 					telephone: response.data.Telephone,
@@ -63,7 +63,7 @@ class EditProfile extends React.Component {
 			telephone: this.state.telephone,
 			fax: this.state.fax
 		};
-		var apiBaseUrl = '/routes/api/users/updateUser';
+		var apiBaseUrl = 'http://localhost:5000/routes/api/users/updateUser';
 		var payload = {
 			name: this.state.name,
 			gender: this.state.gender,
@@ -92,7 +92,7 @@ class EditProfile extends React.Component {
 		this.setState({ [event.target.name]: event.target.value });
 	};
 	componentDidMount() {
-		axios.get('/routes/api/nationalities/').then((res) => {
+		axios.get('http://localhost:5000/routes/api/nationalities').then((res) => {
 			this.setState({ nationalities: res.data.data });
 		});
 	}

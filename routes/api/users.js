@@ -42,13 +42,6 @@ router.get('/AllformsSortedByformDate/', passport.authenticate('jwt', { session:
 	}
 });
 
-// //sort forms by id as a lawyer
-// router.get('/formSortedByformId/', async (req, res) => { // sort forms by form id
-//     var forms = await Forms.find()
-//     forms.sort(compareById)
-//     return res.json({ data: forms });
-// })
-
 //sort all forms by id as a lawyer
 router.get('/AllFormSortedByFormId/', passport.authenticate('jwt', { session: false }), async (req, res) => {
 	// sort all forms by form id

@@ -1,7 +1,8 @@
 var Joi = require("joi");
-const FormType = require("../Models/FormType");
-const DynamicForm = require("../Models/DynamicForm");
-const Dependencies = require("../Models/Dependencies");
+const FormType = require("../models/FormType");
+const DynamicForm = require("mongoose").model('dynamicforms')
+//const DynamicForm = require("../models/DynamicForm");
+const Dependencies = require("../models/Dependencies");
 Joi.objectId = require("joi-objectid")(Joi);
 
 module.exports = {
@@ -538,10 +539,7 @@ module.exports = {
       creationDate:Joi.date(),
       __v:Joi.number()
     };
-    console.log("hi")
     var formType = request.formType;
-    
-    console.log("hi")
     let validations = await FormType.find({ formType: formType })
       .then(res => {
         return res;

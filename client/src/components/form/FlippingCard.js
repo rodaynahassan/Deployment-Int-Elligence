@@ -9,12 +9,10 @@ render() {
   trans.setLanguage(this.props.lang)
 	return(
   <Flippy
-    flipOnHover={false} // default false
-    flipOnClick={true} // default false
+    flipOnHover={false}
+    flipOnClick={true} 
     flipDirection="horizontal" // horizontal or vertical
-    ref={(r) => this.flippy = r} // to use toggle method like this.flippy.toggle()
-    // if you pass isFlipped prop component will be controlled component.
-    // and other props, which will go to div
+    ref={(r) => this.flippy = r}
     style={{ width: "100%" , height: '430px' }} /// these are optional style, it is not necessary
   >
     <FrontSide
@@ -25,25 +23,25 @@ render() {
       }}
     >
     <div style={{textAlign:'center' ,fontSize:'50px' , textShadow:'-2px 0 white, 0 2px white, 2px 0 white, 0 -2px white'}}>
-   
-     <h1 style = {{textShadow:'-1px 0 white, 0 1px white, 1px 0 white, 0 -1px white', fontSize:'100px'}}>{this.props.company.companyName} </h1><br/><br/>
-      <h5 style={{textShadow:'-1px 0 white, 0 1px white, 1px 0 white, 0 -1px white', fontSize:'30px', color:'#2e5a7c'}}>{trans.hover}</h5> 
+    <h1 style = {{textShadow:'-1px 0 white, 0 1px white, 1px 0 white, 0 -1px white', fontSize:'100px'}}>{this.props.company.companyName} </h1><br/>
+             <i class="fas fa-angle-double-left" title='click to view details' style={{paddingRight:'650px'}}></i>
+             <i class="fas fa-angle-double-right" title='click to view details' style={{paddingLeft:'650px'}}></i><br/>
       </div>
     </FrontSide>
     <BackSide
-       style={{ backgroundColor: '#e8e6da', borderStyle: 'solid',borderWidth:'5px'}}>
-        <div style={{textAlign:'center', fontSize:'20px'}}>
-        <h3> Name In English :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#2e5a7c'}}>{this.props.company.companyNameInEnglish}</span> </h3> 
-           <h5> Governorate :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#2e5a7c'}}>{this.props.company.companyGovernorate}</span> </h5>
-           <h5> City :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#2e5a7c'}}>{this.props.company.companyCity}</span> </h5>
-           <h5> Address :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#2e5a7c'}}>{this.props.company.companyAddress}</span> </h5>
-           <h5> Telephone :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#2e5a7c'}}>{this.props.company.companyTelephone}</span> </h5>
-           <h5> Fax :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#2e5a7c'}}>{this.props.company.companyFax}</span> </h5>
-           <h5> Currency :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#2e5a7c'}}>{this.props.company.currency}</span> </h5>
-           <h5> Equity Capital :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#2e5a7c'}}>{this.props.company.equityCapital}</span> </h5>
-           <h5> Type :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#2e5a7c'}}>{this.props.company.type}</span> </h5>
-           <h5> creation Date :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#2e5a7c'}}>{this.props.company.creationDate}</span> </h5>
-         </div>
+       style={{ backgroundColor: '#f7f7f7', borderStyle: 'solid',borderWidth:'5px', paddingLeft:'60px'}}>
+{/*        
+
+        <h2 style={{fontSize:'30px'}}><i class="fas fa-circle" style={{fontSize:"15px"}}></i> Name In English :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#9ad1e7'}}>{this.props.company.companyNameInEnglish}</span> </h2> 
+           <h4><i class="fas fa-circle" style={{fontSize:"15px"}}></i> Governorate :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#9ad1e7'}}>{this.props.company.companyGovernorate}</span> </h4>
+           <h4><i class="fas fa-circle"style={{fontSize:"15px"}}></i> City :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#9ad1e7'}}>{this.props.company.companyCity}</span> </h4>
+           <h4><i class="fas fa-circle"style={{fontSize:"15px"}}></i> Address :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#9ad1e7'}}>{this.props.company.companyAddress}</span> </h4>
+           <h4><i class="fas fa-circle"style={{fontSize:"15px"}}></i> Telephone :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#9ad1e7'}}>{this.props.company.companyTelephone}</span> </h4>
+           <h4><i class="fas fa-circle"style={{fontSize:"15px"}}></i> Fax :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#9ad1e7'}}>{this.props.company.companyFax}</span> </h4>
+           <h4><i class="fas fa-circle"style={{fontSize:"15px"}}></i> Currency :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#9ad1e7'}}>{this.props.company.currency}</span> </h4>
+           <h4><i class="fas fa-circle"style={{fontSize:"15px"}}></i> Equity Capital :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#9ad1e7'}}>{this.props.company.equityCapital}</span> </h4>
+           <h4><i class="fas fa-circle"style={{fontSize:"15px"}}></i> Type :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#9ad1e7'}}>{this.props.company.type}</span> </h4>
+           <h4><i class="fas fa-circle"style={{fontSize:"15px"}}></i> Creation Date :<span style ={{textAlign:'center'}}></span> <span style = {{ color:'#9ad1e7'}}>{this.props.company.creationDate}</span> </h4> */}
     </BackSide>
   </Flippy>
 )

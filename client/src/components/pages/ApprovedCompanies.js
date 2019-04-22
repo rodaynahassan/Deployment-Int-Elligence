@@ -1,4 +1,4 @@
-import  React, { Component } from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 import '../../App.css';
 import ApprovedCompaniesFields from '../user/ApprovedCompaniesFields';
@@ -19,27 +19,30 @@ import {Button} from"react-bootstrap"
 
 
 class ApprovedCompanies extends Component {
-    state = {
-      approvedCompanies:[]
-    }
-    componentDidMount(){
+	state = {
+		approvedCompanies: []
+	};
+	componentDidMount() {
+		axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
+		axios
+			.get('/routes/api/users/getApprovedCompanies', {
+				headers: { Authorization: localStorage.getItem('jwtToken') }
+			})
+			.then((res) => {
+				if (Array.isArray(res.data.data)) {
+					this.setState({ approvedCompanies: res.data.data, sscManagers: [] });
+				}
+			});
+	}
 
+	tabRow = () => {
+		return this.state.approvedCompanies.map((approvedCompany, i) => {
+			return <ApprovedCompaniesFields approvedCompany={approvedCompany} key={i} />;
+		});
+	};
 
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
-      axios.get('http://localhost:5000/routes/api/userDynamicForms/getInvestorApprovedCompanies',{headers: { "Authorization": localStorage.getItem('jwtToken') }})
-      .then(res => {
-        if(Array.isArray(res.data.data)){
-          this.setState({approvedCompanies: res.data.data,sscManagers:[]})
-           
-         }
-      })
-    }
-      tabRow(){
-       return (
-        this.state.approvedCompanies.map(function(approvedCompany,i){
-        return <ApprovedCompaniesFields approvedCompany={approvedCompany} key={i}/>})
-        )
-      }
+     
+     
 
       printDocument() {
         const input = document.getElementById('divToPrint');

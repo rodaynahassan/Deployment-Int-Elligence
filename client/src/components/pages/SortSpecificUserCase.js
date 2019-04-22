@@ -2,68 +2,65 @@ import React from 'react';
 import axios from 'axios';
 import GetSpecificUserCase from '../form/GetSpecificUserCase';
 import Table from 'react-bootstrap/Table';
-import {Button} from 'react-bootstrap';
-import "mdbreact/dist/css/mdb.css";
+import { Button } from 'react-bootstrap';
+import 'mdbreact/dist/css/mdb.css';
 
-export default class SortSpecificUserCase extends React.Component{
-    constructor(props) {
-        super(props)
-        this.state = {
-            forms: []
-        }
-    }
-sort = () => {
+export default class SortSpecificUserCase extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			forms: []
+		};
+	}
+	sort = () => {
+		axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
+		axios
+			.get('/routes/api/users/SpecificFormSortedByFormId', {
+				headers: { Authorization: localStorage.getItem('jwtToken') }
+			})
+			.then((res) => {
+				this.setState({ forms: res.data.data });
+				alert('Cases have been sorted');
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
 
+	tabRow() {
+		return this.state.forms.map(function(form, i) {
+			return <GetSpecificUserCase form={form} key={i} />;
+		});
+	}
 
+	render() {
+		return (
+			<div>
+				<br />
+				<Button variant="dark" onClick={() => this.sort()}>
+					Sort the cases by ID{' '}
+				</Button>
 
-    
-    axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
-    axios.get('http://localhost:5000/routes/api/users/SpecificFormSortedByFormId',{headers: { "Authorization": localStorage.getItem('jwtToken') }}).then (res=> {
-           this.setState({forms:res.data.data})
-           alert('Cases have been sorted')
-        }).catch(err=>{console.log(err)});
-       
- }
-
-    tabRow(){
-        return this.state.forms.map(function(form,i){
-            return <GetSpecificUserCase form={form} key={i} />;
-            
-        });
-    }
-
-  render()
-    {
-        return (
-            <div>
-                 <br/>
-                <Button variant="dark" onClick={()=>this.sort()}>Sort the cases by ID </Button> 
-                
-                <Table  bordered hover variant='dark' size='sm'>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Name In English </th>
-                <th>Governorate</th>
-                <th>City</th>
-                <th>Address</th>
-                <th>Telephone</th>
-                <th>Fax </th>
-                <th>Currency</th>
-                <th>Capital </th>
-                <th>Type </th>
-                <th>Creation Date </th>
-
-            </tr>
-            </thead>
-            <tbody>
-              {this.tabRow()}
-              
-              
-            </tbody>
-           </Table> 
-               </div>
-               )}
-              
-   }
+				<Table bordered hover variant="dark" size="sm">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Name</th>
+							<th>Name In English </th>
+							<th>Governorate</th>
+							<th>City</th>
+							<th>Address</th>
+							<th>Telephone</th>
+							<th>Fax </th>
+							<th>Currency</th>
+							<th>Capital </th>
+							<th>Type </th>
+							<th>Creation Date </th>
+						</tr>
+					</thead>
+					<tbody>{this.tabRow()}</tbody>
+				</Table>
+			</div>
+		);
+	}
+}

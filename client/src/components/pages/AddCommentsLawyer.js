@@ -1,9 +1,9 @@
-import  React, { Component } from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
-import {Button} from 'react-bootstrap'
-import {Modal} from 'react-bootstrap'
-import {Col} from 'react-bootstrap'
-import {Row} from 'react-bootstrap'
+import { Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
 import '../../App.css';
 import GetAllUserForms from '../form/GetAllUserForms'
 const mongoose = require('mongoose')
@@ -54,7 +54,7 @@ class AddCommentsLawyer extends Component{
 
 
       axios.defaults.headers.common['Authorization'] =  localStorage.getItem('jwtToken');
-        var apiBaseUrl =('http://localhost:5000/routes/api/userDynamicForms/lawyerComments/'+mongoose.Types.ObjectId(formId))
+        var apiBaseUrl =('/routes/api/userDynamicForms/lawyerComments/'+mongoose.Types.ObjectId(formId))
         var payload={
             "lawyerComments": this.state.lawyerComments.value
         }
@@ -119,4 +119,4 @@ class AddCommentsLawyer extends Component{
     }
 }
 
- export default AddCommentsLawyer
+export default AddCommentsLawyer;

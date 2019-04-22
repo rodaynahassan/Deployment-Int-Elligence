@@ -1,7 +1,7 @@
-import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/css/bootstrap.css';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import {Dropdown} from 'react-bootstrap';
+import { Dropdown } from 'react-bootstrap';
 import RaisedButton from 'material-ui/RaisedButton';
 import style from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -13,10 +13,8 @@ import { MDBRow, MDBCol, MDBInput, MDBBtn,MDBIcon } from "mdbreact";
 //import { Dropdown } from 'semantic-ui-react';
 import axios from 'axios';
 
-var mongoose = require('mongoose')
+var mongoose = require('mongoose');
 
-
-                
 class MyCompany extends Component {
 
     state = {
@@ -44,7 +42,7 @@ class MyCompany extends Component {
     handleClick(event){
 
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
-      var apiBaseUrl = "http://localhost:5000/routes/api/admins/getByCompanyName/";
+      var apiBaseUrl = "/routes/api/admins/getByCompanyName/";
       
       axios.get(apiBaseUrl + this.state.companyName.value,{headers: { "Authorization": localStorage.getItem('jwtToken') }})        
       .then(res => {
@@ -196,4 +194,4 @@ class MyCompany extends Component {
 }
 
 ReactDOM.render(<MyCompany />, document.getElementById('root'));
-    export default MyCompany
+export default MyCompany;

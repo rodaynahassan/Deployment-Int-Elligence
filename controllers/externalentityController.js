@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
-//const Form = require('../Models/ExternalEntity')
-const validator = require('../Validation/externalentityValidations')
-const ExternalEntity = require('../Models/ExternalEntity')
+const validator = require('../validations/externalentityValidations')
+const ExternalEntity = require('../models/ExternalEntity')
 //Searching for external entity (GAFI , Notary Public,Commercial Register)
 exports.search=async function search(att,value)
 {
@@ -54,8 +53,14 @@ exports.update=async function update(att,value,body)
    }
  if(att==='id')  
  {
-     const externalentity=await ExternalEntity.findByIdAndUpdate(value,body)
-     return externalentity
+    var updatedExternalEntity = await ExternalEntity.findByIdAndUpdate(value,body)
+        .then(res=>{return res})
+        .catch(error=>{
+           return {error:error}
+       })
+       if (updatedExternalEntity.error) return updatedExternalEntity
+        var returnedExternalEntity = await ExternalEntity.findById(value)
+        return returnedExternalEntity
  }
  else
  {

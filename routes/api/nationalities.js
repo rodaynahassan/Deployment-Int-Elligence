@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const Nationality = require('../../Models/Nationality');
+const Nationality = require('../../models/Nationality');
 
 //Regarding the drop down list
 

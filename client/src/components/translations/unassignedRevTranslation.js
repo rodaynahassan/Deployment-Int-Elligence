@@ -3,7 +3,7 @@ import LocalizedStrings from 'react-localization';
 let strings = new LocalizedStrings({
     en:{
         hover: "Press here to view details",
-        title:"Unassigned Cases",
+        title:"UNASSIGNED CASES",
         name:"Name",
         nameInEnglish:"Name In English",
         governorate:"Governorate",

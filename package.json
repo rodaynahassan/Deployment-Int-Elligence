@@ -38,6 +38,7 @@
 	},
 	"scripts": {
 		"test": "jest --detectOpenHandles",
+		"socket.io": "^2.0.4",
 		"client-install": "npm install --prefix client",
 		"start": "node server.js",
 		"server": "nodemon server.js",

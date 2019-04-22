@@ -10,6 +10,7 @@ const externalentities = require('./routes/api/externalentities');
 const nationalities = require('./routes/api/nationalities');
 const governorates = require('./routes/api/governorates');
 const app = express();
+var io = require('socket.io-client');
 var socket = require('socket.io');
 
 // DB Config

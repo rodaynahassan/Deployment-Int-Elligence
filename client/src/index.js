@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-var io = require('socket.io-client');
+//var io = require('socket.io-client');
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
@@ -12,4 +12,4 @@ ReactDOM.render(<App />, document.getElementById('root'));
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
 
-var socket = io.connect('http://localhost:3000');
+//var socket = io.connect('http://localhost:3000');

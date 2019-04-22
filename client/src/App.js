@@ -65,6 +65,7 @@ class App extends Component {
 	// componentDidMount() {
 	// 	this.connecToServer();
 	// }
+
 	state = {
 		lang: localStorage.getItem('lang'),
 		formId: {}
@@ -81,6 +82,7 @@ class App extends Component {
 		else if (formId.type === 'SSCForm') document.location.href = '/editsscform';
 		else document.location.href = '/editspcform';
 	};
+
 	render() {
 		return (
 			<Provider store={store}>

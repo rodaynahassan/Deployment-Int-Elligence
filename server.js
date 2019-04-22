@@ -22,28 +22,20 @@ mongoose
 {
 	useNewUrlParser: true;
 }
-app.get('/*', (req, res) => {
-	let url = path.join(__dirname, '../client/build', 'index.html');
-	if (
-		!url.startsWith('/app/') // we're on local windows
-	)
-		url = url.substring(1);
-	res.sendFile(url);
-});
 
 //Static file declaration
-app.use(express.static(path.join(__dirname, 'client/build')));
+//app.use(express.static(path.join(__dirname, 'client/build')));
 
 //production mode
-console.log(process.env.NODE_ENV + '   ffffffffffffffffffffff');
-if (process.env.NODE_ENV === 'production') {
-	app.use(express.static(path.join(__dirname, 'client/build')));
-	//
-	app.get('*', (req, res) => {
-		res.sendfile(path.join((__dirname = 'client/build/index.html')));
-	});
-}
-console.log(__dirname + '   gggggggggggggggggggg');
+//console.log(process.env.NODE_ENV + '   ffffffffffffffffffffff');
+// if (process.env.NODE_ENV === 'production') {
+// 	app.use(express.static(path.join(__dirname, 'client/build')));
+// 	//
+// 	app.get('*', (req, res) => {
+// 		res.sendfile(path.join((__dirname = 'client/build/index.html')));
+// 	});
+// }
+//console.log(__dirname + '   gggggggggggggggggggg');
 
 //build mode
 // app.get('*', (req, res) => {
@@ -122,3 +114,12 @@ app.use((req, res) => {
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log(`Server up and running on port ${port}`));
+
+//production mode
+if (process.env.NODE_ENV === 'production') {
+	app.use(express.static('client/build'));
+	//
+	app.get('*', (req, res) => {
+		res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+	});
+}

@@ -28,18 +28,28 @@ mongoose
 
 //roduction mode
 // console.log(process.env.NODE_ENV + '   ffffffffffffffffffffff');
-if (process.env.NODE_ENV === 'production') {
-	app.use(express.static(path.resolve(__dirname, 'client/build')));
-	//
-	app.get('*', (req, res) => {
-		res.sendfile(path.resolve((__dirname = 'client/build/index.html')));
-	});
-}
-// console.log(__dirname + '   gggggggggggggggggggg');
 
-//build mode
-app.get('*', (req, res) => {
-	res.sendFile(path.join(__dirname + '/client/public/index.html'));
+// if (process.env.NODE_ENV === 'production') {
+// 	app.use(express.static(path.resolve(__dirname, 'client/build')));
+// 	//
+// 	app.get('*', (req, res) => {
+// 		res.sendfile(path.resolve((__dirname = 'client/build/index.html')));
+// 	});
+// }
+// // console.log(__dirname + '   gggggggggggggggggggg');
+
+// //build mode
+// app.get('*', (req, res) => {
+// 	res.sendFile(path.join(__dirname + '/client/public/index.html'));
+// });
+
+app.get('/*', (req, res) => {
+	let url = path.join(__dirname, '../client/build', 'index.html');
+	if (
+		!url.startsWith('/app/') // we're on local windows
+	)
+		url = url.substring(1);
+	res.sendFile(url);
 });
 
 // app.get('*', (req, res) => {

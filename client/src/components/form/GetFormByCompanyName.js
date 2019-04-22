@@ -83,7 +83,7 @@ class MyCompany extends Component {
 
           <div style={{paddingLeft:"45%"}}>
             <MuiThemeProvider >
-            <RaisedButton label="Search" primary={true} style={style}
+            <RaisedButton label="Search" primary={true} style={{style}}
             onClick={(event) => (this.handleClick(event))} />
             </MuiThemeProvider>
             </div>

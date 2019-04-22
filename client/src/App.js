@@ -73,54 +73,65 @@ class App extends Component {
   render() {
     var currentLocation = window.location.pathname;
     return (
-
+      <body style={{position: "relative",
+        minHeight: "100vh",}}>
 <Provider store = { store }>
+<div style = {{paddingBottom: "7rem"}}>
       <Router>
     
       
-     
+      
+     {/* <Side changelang={this.changelang}  /> */}
       <div>
      
 
         <Route exact path="/" render={props=>(
            <LandingBody {...props} lang={this.state.lang}/>
         )}/>
-      <Route path='/login' render={(props) => <Login {...props}  lang={this.state.lang}/>}/>
-      <Route path='/profile' render={(props) => <Profile {...props}  lang={this.state.lang}/>}/>
-      <Route path='/profileI' render={(props) => <ShowProfileI {...props}  lang={this.state.lang}/>}/>
-      <Route path='/profileLR' render={(props) => <ShowProfileLR {...props}  lang={this.state.lang}/>}/>
-      <Route path='/changePassword' render={(props) => <ChangePassword {...props}  lang={this.state.lang}/>}/>
-      <Route path='/about' render={(props) => <About {...props}  lang={this.state.lang}/>}/>
-      <Route path='/approvedCompanies' render={(props) => <ApprovedCompanies {...props}  lang={this.state.lang}/>}/>
-      <Route path='/SPC' render={(props) => <SPCForm {...props}  lang={this.state.lang}/>}/>
-      <Route path='/form' render={(props) => <FForm {...props}  lang={this.state.lang}/>}/>
-      <Route path='/SSC' render={(props) => <SSCForm {...props}  lang={this.state.lang}/>}/>
-      <Route path='/journal' render={(props) => <Companies {...props}  lang={this.state.lang}/>}/>
-      <Route path='/register' render={(props) => <Register1 {...props}  lang={this.state.lang}/>}/>
-      <Route path='/registerAdmin' component={ adminPage}/>
-      <Route path='/SortByID' component={ SortSpecificUserCase}/>
-      <Route path='/dropDown' component={ DropdownTrial}/>
-      <Route path='/dropDownCity' component={ DropdownCities}/> 
-      <Route path='/dropDownGovernorate' component={ DropdownGovernorates}/> 
-      <Route path='/unassignedForm'  render={(props) => <UnassignedForm {...props}  lang={this.state.lang}/>}/> 
-      <Route path='/lawyerAcceptedForms'  render={(props) => <AssignToReviewer {...props}  lang={this.state.lang}/>}/> 
-      <Route path='/GetReviewer' component={GetCaseReviewer}/>  
-      <Route path='/editprofile'  render={(props) => <EditProfile {...props}  lang={this.state.lang}/>}  /> 
-      <Route path='/editspcform' render={(props) => <EditSPCForm {...props}  formId={this.state.formId}/>}/> 
-      <Route path='/editsscform' render={(props) => <EditSSCForm {...props}  formId={this.state.formId}/>}/>
-      <Route path='/showsscform' render={(props) => <InProgressSSCCases {...props}  lang={this.state.lang} setFormId={this.setFormId}/>}/>
-      <Route path='/showspcform' render={(props) => <InProgressSPCCases {...props}  lang={this.state.lang} setFormId={this.setFormId} />}/>
-      <Route path='/companyName' render={(props) => <GetFormByCompanyName {...props}  lang={this.state.lang} />}/>
-      <Route path='/getCaseLawyerSSC' render={(props) => <GetCaseLawyerSSC {...props}  lang={this.state.lang} />}/>
-      <Route path='/getCaseLawyerSPC' render={(props) => <GetCaseLawyerSPC {...props}  lang={this.state.lang} />}/>
-
-      <Route path='/try' render={(props) => <Try {...props}  lang={this.state.lang}/>}/>
+     
+     
+      <Route exact path='/profile' render={(props) => <Profile {...props}  lang={this.state.lang}/>}/>
+      <Route exact path='/profileI' render={(props) => <ShowProfileI {...props}  lang={this.state.lang}/>}/>
+      <Route exact path='/profileLR' render={(props) => <ShowProfileLR {...props}  lang={this.state.lang}/>}/>
+      <Route exact path='/changePassword' render={(props) => <ChangePassword {...props}  lang={this.state.lang}/>}/>
+      <Route exact path='/about' render={(props) => <About {...props}  lang={this.state.lang}/>}/>
+      <Route exact path='/approvedCompanies' render={(props) => <ApprovedCompanies {...props}  lang={this.state.lang}/>}/>
+      <Route exact path='/SPC' render={(props) => <SPCForm {...props}  lang={this.state.lang}/>}/>
+      <Route exact path='/form' render={(props) => <FForm {...props}  lang={this.state.lang}/>}/>
+      <Route exact path='/SSC' render={(props) => <SSCForm {...props}  lang={this.state.lang}/>}/>
+      <Route exact path='/journal' render={(props) => <Companies {...props}  lang={this.state.lang}/>}/>
+      <Route exact path='/register' render={(props) => <Register1 {...props}  lang={this.state.lang}/>}/>
+      <Route exact path='/login' render={(props) => <Login {...props}  lang={this.state.lang}/>}/>
+      <Route exact path='/registerAdmin' component={ adminPage}/>
+      <Route exact path='/SortByID' component={ SortSpecificUserCase}/>
+      <Route exact path='/dropDown' component={ DropdownTrial}/>
+      <Route exact path='/dropDownCity' component={ DropdownCities}/>
+      <Route exact path='/dropDownGovernorate' component={ DropdownGovernorates}/>
+      <Route exact path='/unassignedForm'  render={(props) => <UnassignedForm {...props}  lang={this.state.lang}/>}/>
+      <Route exact path='/lawyerAcceptedForms'  render={(props) => <AssignToReviewer {...props}  lang={this.state.lang}/>}/>
+  
+      <Route exact path='/GetReviewer' component={GetCaseReviewer}/>
+      
+      <Route exact path='/editprofile'  render={(props) => <EditProfile {...props}  lang={this.state.lang}/>}/>
+      <Route exact path='/editspcform' render={(props) => <EditSPCForm {...props}  formId={this.state.formId}/>}/>
+      <Route exact path='/editsscform' render={(props) => <EditSSCForm {...props}  formId={this.state.formId}/>}/>
+      <Route exact path='/showsscform' render={(props) => <InProgressSSCCases {...props}  lang={this.state.lang} setFormId={this.setFormId}/>}/>
+      <Route exact path='/showspcform' render={(props) => <InProgressSPCCases {...props}  lang={this.state.lang} setFormId={this.setFormId} />}/>
+      <Route exact path='/companyName' render={(props) => <GetFormByCompanyName {...props}  lang={this.state.lang} />}/>
+      <Route exact path='/getCaseLawyerSSC' render={(props) => <GetCaseLawyerSSC {...props}  lang={this.state.lang} />}/>
+      <Route exact path='/getCaseLawyerSPC' render={(props) => <GetCaseLawyerSPC {...props}  lang={this.state.lang} />}/>
+      
+      <Route exact path='/try' render={(props) => <Try {...props}  lang={this.state.lang}/>}/>
       </div>
     
     {currentLocation==='/'?<Side changelang={this.changelang}  />:<NewNavBar changelang={this.changelang}/>}
-    <Footer/>
+    
+      
+          <Footer/>
       </Router>
+      </div>
       </Provider>
+      </body>
         )}
  
 }

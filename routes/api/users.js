@@ -3,16 +3,15 @@ const Joi = require("joi");
 const router = express.Router();
 const formController = require("../../controllers/formController");
 const userController = require("../../controllers/userController");
-const User = require("../../Models/User");
-const Admin = require("../../Models/Admin");
-const validator = require("../../Validation/UserValidation");
+const User = require("../../models/User");
 const notifications = require("../../helpers/notifications");
 const dynamicFormController = require("../../controllers/dynamicFormController");
-
+const Admin = require("../../models/Admin")
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const tokenKey = require("../../config/keys_dev").secretOrKey;
 const passport = require("passport");
+const axios = require("axios");
 require("../../config/passport")(passport);
 
 // //       for testing!!!!!!!!
@@ -28,7 +27,7 @@ require("../../config/passport")(passport);
 
 // })
 
-const axios = require("axios");
+
 
 //sort all forms for a  by form creation date
 // router.get(
@@ -469,54 +468,47 @@ router.post("/register", async (req, res) => {
 // })
 
 //Login
-router.post("/login", async (req, res) => {
+router.post('/login', async (req, res) => {
   try {
-    const email = req.body.email;
-    const password = req.body.password;
-    const user = await User.findOne({ email });
-    if (!user) {
-      const admin = await Admin.findOne({ email });
-      if (!admin)
-        return res
-          .status(404)
-          .json({ email: "This email is not registered yet" });
-      else {
-        const doesItMatch = await bcrypt.compareSync(password, admin.password);
-        if (doesItMatch) {
-          const payload = {
-            id: admin.id,
-            name: admin.name,
-            email: admin.email
-          };
-          const token = jwt.sign(payload, tokenKey, { expiresIn: "1h" });
-          //res.json({data: `Bearer ${token}`})
-          return res.json({
-            msg: "You are logged in now",
-            token: `Bearer ${token}`,
-            type: admin.userType
-          });
-        }
+      const email = req.body.email;
+      const password = req.body.password;
+      const user = await User.findOne({ email });
+      if (!user) {
+
+          const admin = await Admin.findOne({ email })
+          if (!admin)
+              return res.status(404).json({ email: 'This email is not registered yet' })
+          else {
+              const doesItMatch = await bcrypt.compareSync(password, admin.password);
+              if (doesItMatch) {
+                  const payload = {
+                      id: admin.id,
+                      name: admin.name,
+                      email: admin.email
+                  }
+                  const token = jwt.sign(payload, tokenKey, { expiresIn: '1h' })
+                  //res.json({data: `Bearer ${token}`})
+                  return res.json({ msg: 'You are logged in now', token: `Bearer ${token}`, type: admin.userType })
+              }
+          }
       }
-    }
-    const doesItMatch = await bcrypt.compareSync(password, user.password);
-    if (doesItMatch) {
-      const payload = {
-        id: user.id,
-        name: user.name,
-        email: user.email
-      };
-      const token = jwt.sign(payload, tokenKey, { expiresIn: "1h" });
-      //res.json({data: `Bearer ${token}`})
-      return res.json({
-        msg: "You are logged in now",
-        token: `Bearer ${token}`,
-        type: user.userType
-      }); //,data:'Token'
-    } else return res.status(400).send({ password: "Wrong password" });
-  } catch (e) {
-    console.log(e);
+      const doesItMatch = await bcrypt.compareSync(password, user.password);
+      if (doesItMatch) {
+          const payload = {
+              id: user.id,
+              name: user.name,
+              email: user.email
+          }
+          const token = jwt.sign(payload, tokenKey, { expiresIn: '1h' })
+          //res.json({data: `Bearer ${token}`})
+          return res.json({ msg: 'You are logged in now', token: `Bearer ${token}`, type: user.userType })//,data:'Token'
+      }
+      else
+          return res.status(400).send({ password: 'Wrong password' });
   }
-});
+
+  catch (e) { console.log(e) }
+})
 
 //Calculating fees as a lawyer
 // router.put(

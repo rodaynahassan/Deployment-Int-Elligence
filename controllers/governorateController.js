@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Governorate = require('../Models/Governorate');
+const Governorate = require('../models/Governorate');
 
 
 

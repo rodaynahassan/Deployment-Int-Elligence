@@ -1,7 +1,8 @@
 var Joi = require("joi");
-const FormType = require("../Models/FormType");
-const DynamicForm = require("../Models/DynamicForm");
-const Dependencies = require("../Models/Dependencies");
+const FormType = require("../models/FormType");
+const DynamicForm = require("mongoose").model('dynamicforms')
+//const DynamicForm = require("../models/DynamicForm");
+const Dependencies = require("../models/Dependencies");
 Joi.objectId = require("joi-objectid")(Joi);
 
 module.exports = {
@@ -532,13 +533,13 @@ module.exports = {
       reviewerComments: Joi.array(),
       status:Joi.string(),
       fees:Joi.number(),
-      investorId:Joi.object().allow(null),
-      reviewerId:Joi.object().allow(null),
-      lawyerId:Joi.object().allow(null),
+      investorId:Joi.any().allow(null),
+      reviewerId:Joi.any().allow(null),
+      lawyerId:Joi.any().allow(null),
       creationDate:Joi.date(),
       __v:Joi.number()
     };
-    let formType = request.toJSON().formType;
+    var formType = request.formType;
     let validations = await FormType.find({ formType: formType })
       .then(res => {
         return res;
@@ -590,7 +591,7 @@ module.exports = {
               });
             if (testUnique.error) return testUnique;
             //console.log(testUnique)
-            if (testUnique[0])
+            if (testUnique[1])
               return {
                 error: "Duplicate Value: " + prop + ":" + request[prop]
               };
@@ -761,8 +762,8 @@ module.exports = {
               .catch(err => {
                 return { error: err };
               });
-              console.log(request)
-            let array = request.toJSON()[""+prop];
+             // console.log(request)
+            let array = request[""+prop];
             childValidations = childValidations[0].toJSON();
             // console.log(childValidations)
             for (i = 0; i < array.length; i++) {
@@ -945,7 +946,7 @@ module.exports = {
         }
       }
     }
-    let x = await Joi.validate(request.toJSON(), updateSchema)
+    let x = await Joi.validate(request, updateSchema)
       .then(res => {
         return res;
       })

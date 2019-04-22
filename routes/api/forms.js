@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
-const Form = require('../../Models/Form')
-const validator = require('../../Validation/formValidations')
+const Form = require('../../models/Form')
+const validator = require('../../validations/formValidations')
 const controller = require('../../controllers/formController')
 const passport = require('passport')
 require('../../config/passport')(passport)
@@ -89,7 +89,7 @@ router.get('/getLawyerComments/:id', passport.authenticate('jwt', {session: fals
 })
 
 //get a form by id
-router.get('getSpecificform/:id',  passport.authenticate('jwt', {session: false}) ,async (req,res) => {
+router.get('/getSpecificform/:id',  passport.authenticate('jwt', {session: false}) ,async (req,res) => {
         const id = req.params.id
         const form = await controller.search('_id',id)
         return res.json({data:form})

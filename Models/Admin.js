@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
+ 
 const Admin = new Schema({
   userType:{type: String,enum:['Admin']},
   name: { type: String, required: true},
@@ -13,9 +13,11 @@ const Admin = new Schema({
   birthdate:{ type: Date, required: true},
   address: { type: String, required: true},
   telephone:{ type:String},
-  fax:{ type:String},
+  fax:{ type:String}
 
 });
 
-module.exports = admin = mongoose.model('admins', Admin);
+module.exports = admin = mongoose.model('admins', Admin)
+
+
 

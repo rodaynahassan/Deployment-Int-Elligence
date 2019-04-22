@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-const DynamicForm = require("../Models/DynamicForm");
-const validator = require("../Validation/dynamicFormValidations");
+const DynamicForm = require("../models/DynamicForm");
+const validator = require("../validations/dynamicFormValidations");
 
 exports.search = async (att, value) => {
   if (!att) {

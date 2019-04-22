@@ -8,7 +8,7 @@ module.exports = {
             gender: Joi.string().required().max(6),
             nationality: Joi.string().required().max(50),
             identificationType: Joi.string().required().max(50),
-            identificationNumber: Joi.string().max(14).required(),
+            identificationNumber: Joi.string().min(8).max(14).required(),
             password: Joi.string().min(8).required().max(50),
             birthdate: Joi.date().required(),
             address: Joi.string().required().max(50),

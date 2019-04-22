@@ -3,8 +3,6 @@ import axios from 'axios';
 import '../../App.css';
 import "mdbreact/dist/css/mdb.css";
 import Flippy , {FrontSide , BackSide} from 'react-flippy'
-import FlippingCard from '../form/FlippingCard'
-import {Card} from 'react-bootstrap'
 import trans from '../translations/companiesTranslation'
 class Companies extends Component {
     state = {
@@ -82,8 +80,8 @@ class Companies extends Component {
         trans.setLanguage(this.props.lang)
         return ( 
           <div>
-          <div style={{backgroundColor:"#a3dbf1" ,marginTop:"80px",paddingBottom:"20px", paddingTop:"20px",textAlign:"center", fontSize:"60px" , color:"dark" ,flexDirection: 'row', justifyContent: 'flex-end'}} ><h2 style={{fontSize:"50px"}}>{trans.title}</h2></div>   
-          <div  style={{display:"flex" , flexWrap:"wrap",alignItems:"right" , justifyContent:"right"}}>
+          <div style={{backgroundColor:"#a3dbf1",paddingBottom:"20px", paddingTop:"20px",textAlign:"center", fontSize:"60px" , color:"dark" ,flexDirection: 'row', justifyContent: 'flex-end'}} ><h2 style={{marginTop:"30px",paddingTop:'50px',fontSize:"50px"}}>{trans.title}</h2></div>   
+          <div  style={{display:"flex" ,flexWrap:"wrap",alignItems:"right" , justifyContent:"right"}}>
           
           {this.getAttributes()} 
          </div>

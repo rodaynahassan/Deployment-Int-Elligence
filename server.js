@@ -10,6 +10,7 @@ const externalentities = require('./routes/api/externalentities');
 const nationalities = require('./routes/api/nationalities');
 const governorates = require('./routes/api/governorates');
 const app = express();
+const morgan = require('morgan');
 
 // DB Config
 const db = require('./config/keys').mongoURI;
@@ -37,6 +38,7 @@ app.use(express.urlencoded({ extended: false }));
 
 //app.use(express.multipart());
 app.use(cors());
+app.use(morgan('combined'));
 
 // Direct routes to appropriate files
 app.use('/routes/api/users', users);
@@ -62,12 +64,12 @@ app.use((req, res) => {
 const port = process.env.PORT || 5000;
 //production mode
 
-if (process.env.NODE_ENV === 'production') {
-	app.use(express.static(path.resolve(__dirname, 'client/build')));
-	//
-	app.get('*', (req, res) => {
-		res.sendfile(path.resolve((__dirname = 'client/build/index.html')));
-	});
-}
+// if (process.env.NODE_ENV === 'production') {
+// 	app.use(express.static(path.resolve(__dirname, 'client/build')));
+// 	//
+// 	app.get('*', (req, res) => {
+// 		res.sendfile(path.resolve((__dirname = 'client/build/index.html')));
+// 	});
+// }
 
 app.listen(port, () => console.log(`Server up and running on port ${port}`));

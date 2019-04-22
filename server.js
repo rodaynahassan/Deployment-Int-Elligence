@@ -70,6 +70,20 @@ mongoose
 // 	res.sendFile(path.join(__dirname + '/client/public/index.html'));
 // });
 
+if (process.env.NODE_ENV === 'production') {
+	app.use(express.static(path.resolve(__dirname, 'client/build')));
+	//
+	app.get('*', (req, res) => {
+		res.sendfile(path.resolve((__dirname = 'client/build/index.html')));
+	});
+}
+// console.log(__dirname + '   gggggggggggggggggggg');
+
+//build mode
+app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname + '/client/public/index.html'));
+});
+
 app.use(function(req, res, next) {
 	res.header('Access-Control-Allow-Origin', '*');
 	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
@@ -114,17 +128,3 @@ app.use(function(req, res, next) {
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log(`Server up and running on port ${port}`));
-
-if (process.env.NODE_ENV === 'production') {
-	app.use(express.static(path.resolve(__dirname, 'client/build')));
-	//
-	app.get('*', (req, res) => {
-		res.sendfile(path.resolve((__dirname = 'client/build/index.html')));
-	});
-}
-// console.log(__dirname + '   gggggggggggggggggggg');
-
-//build mode
-app.get('*', (req, res) => {
-	res.sendFile(path.join(__dirname + '/client/public/index.html'));
-});

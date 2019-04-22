@@ -26,21 +26,21 @@ mongoose
 //Static file declaration
 //app.use(express.static(path.join(__dirname, 'client/build')));
 
-//production mode
-//console.log(process.env.NODE_ENV + '   ffffffffffffffffffffff');
-// if (process.env.NODE_ENV === 'production') {
-// 	app.use(express.static(path.join(__dirname, 'client/build')));
-// 	//
-// 	app.get('*', (req, res) => {
-// 		res.sendfile(path.join((__dirname = 'client/build/index.html')));
-// 	});
-// }
-//console.log(__dirname + '   gggggggggggggggggggg');
+p; //roduction mode
+console.log(process.env.NODE_ENV + '   ffffffffffffffffffffff');
+if (process.env.NODE_ENV === 'production') {
+	app.use(express.static(path.join(__dirname, 'client/build')));
+	//
+	app.get('*', (req, res) => {
+		res.sendfile(path.join((__dirname = 'client/build/index.html')));
+	});
+}
+console.log(__dirname + '   gggggggggggggggggggg');
 
 //build mode
-// app.get('*', (req, res) => {
-// 	res.sendFile(path.join(__dirname + '/client/public/index.html'));
-// });
+app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname + '/client/public/index.html'));
+});
 
 // app.get('*', (req, res) => {
 // 	res.sendFile(path.resolve(where, the, index.html, is));
@@ -106,11 +106,6 @@ app.use(function(req, res, next) {
 	next();
 });
 
-// Handling 404
-app.use((req, res) => {
-	res.status(404).send({ err: 'We can not find what you are looking for' });
-});
-
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log(`Server up and running on port ${port}`));
@@ -123,3 +118,7 @@ if (process.env.NODE_ENV === 'production') {
 		res.sendFile(path.join((__dirname = 'client'), 'build', 'index.html'));
 	});
 }
+// Handling 404
+app.use((req, res) => {
+	res.status(404).send({ err: 'We can not find what you are looking for' });
+});

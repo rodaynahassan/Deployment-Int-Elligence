@@ -11,9 +11,6 @@ const nationalities = require('./routes/api/nationalities');
 const governorates = require('./routes/api/governorates');
 const app = express();
 
-//var server = app.listen(3000);
-//var socket = require('socket.io');
-
 // DB Config
 const db = require('./config/keys').mongoURI;
 
@@ -36,88 +33,12 @@ if (process.env.NODE_ENV === 'production') {
 	});
 }
 
-//build mode
-app.get('*', (req, res) => {
-	res.sendFile(path.join(__dirname + '/client/public/index.html'));
-});
-
-//Static file declaration
-//app.use(express.static(path.join(__dirname, 'client/build')));
-
-//roduction mode
-// console.log(process.env.NODE_ENV + '   ffffffffffffffffffffff');
-
-// if (process.env.NODE_ENV === 'production') {
-// 	app.use(express.static(path.resolve(__dirname, 'client/build')));
-// 	//
-// 	app.get('*', (req, res) => {
-// 		res.sendfile(path.resolve((__dirname = 'client/build/index.html')));
-// 	});
-// }
-// // console.log(__dirname + '   gggggggggggggggggggg');
-
-// //build mode
-// app.get('*', (req, res) => {
-// 	res.sendFile(path.join(__dirname + '/client/public/index.html'));
-// });
-
-// app.get('*', (req, res) => {
-// 	res.sendFile(path.resolve(where, the, index.html, is));
-// });
-
-//Static file declaration
-
-// app.use(express.static('build'));
-// app.get('*', function(req, res) {
-// 	res.sendFile('index.html');
-// });
-
-// app.use(express.static(path.join(__dirname, 'client/build')));
-
-// //production mode
-// if (process.env.NODE_ENV === 'production') {
-// 	app.use(express.static(path.join(__dirname, 'client/build')));
-// 	//
-// 	app.get('*', (req, res) => {
-// 		res.sendFile(path.join(((__dirname = 'client'), 'build', 'index.html')));
-// 	});
-// }
-
-// //build mode
-// app.get('*', (req, res) => {
-// 	res.sendFile(path.join(__dirname + '/client/public/index.html'));
-// });
-
-// if (process.env.NODE_ENV === 'production') {
-// 	app.use(express.static(path.resolve(__dirname, 'client/build')));
-
-// 	app.get('*', (req, res) => {
-// 		res.sendfile(path.resolve((__dirname = 'client/build/index.html')));
-// 	});
-// }
-// console.log(__dirname + '   gggggggggggggggggggg');
-
-//build mode
-// app.get('*', (req, res) => {
-// 	res.sendFile(path.join(__dirname + '/client/public/index.html'));
-// });
-
 app.use(function(req, res, next) {
 	res.header('Access-Control-Allow-Origin', '*');
 	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 	next();
 });
-// if (process.env.NODE_ENV === 'production') {
-// 	app.use(express.static('client/build'));
-// 	app.get('*', (req, res) => {
-// 		res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-// 	});
-// }
 
-// Handling 404
-app.use((req, res) => {
-	res.status(404).send({ err: 'We can not find what you are looking for' });
-});
 // Init middleware
 
 app.use(express.json());
@@ -141,6 +62,11 @@ app.use(function(req, res, next) {
 	res.header('Access-Control-Allow-Origin', '*');
 	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 	next();
+});
+
+// Handling 404
+app.use((req, res) => {
+	res.status(404).send({ err: 'We can not find what you are looking for' });
 });
 
 const port = process.env.PORT || 5000;

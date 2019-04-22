@@ -15,12 +15,9 @@ const axios = require('axios');
 
 const moment = require('moment');
 
-//const crypto = require('crypto-js');
-
 const randomBytes = require('randombytes');
 
 const nodemailer = require('nodemailer');
-//require('dotenv').config();
 
 let crypto;
 try {

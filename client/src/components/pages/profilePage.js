@@ -29,7 +29,7 @@ class Profile extends Component {
 
 		axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
 		axios
-			.get('http://localhost:5000/routes/api/users/CertainAttributes', {
+			.get('/routes/api/users/CertainAttributes', {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
 			.then((response) => {

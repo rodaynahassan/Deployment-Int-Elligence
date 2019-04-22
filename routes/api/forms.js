@@ -9,12 +9,6 @@ require('../../config/passport')(passport)
 
 
 
-
-
-
-
-
-
 // //       for testing!!!!!!!!
 // router.get('/getInvestorName',passport.authenticate('jwt', {session: false}) ,async (req,res) => {
 //     // You can access the logged in user through req.user
@@ -36,7 +30,7 @@ router.get('/getAllForms' , async (req,res) => {
 })
 //get company aka status=approved
 router.get('/getApprovedCompany', async (req,res) => {
-    const form = await Controller.search('status','Approved')
+    const form = await controller.search('status','Approved')
     return res.json({data:form})  
 })
 //get rejected form

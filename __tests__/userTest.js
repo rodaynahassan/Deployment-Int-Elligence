@@ -1,9 +1,10 @@
+
 /**
  * @jest-environment node
- */
-var mongoose = require("mongoose");
-var axios = require("axios");
-const funcs = require("../funcs/userFuncs");
+*/
+var mongoose=require('mongoose');
+var axios=require('axios');
+const funcs = require('../funcs/userFuncs');
 
 let beforeOldUsers;
 let beforeOldLength;
@@ -61,7 +62,7 @@ afterAll(async () => {
 
 //Testing Creating a user
 test("Creating a user", async () => {
-  expect(beforeNewLength).toBe(beforeOldLength + 1);
+  expect(beforeNewUsers.data.data).toHaveLength(beforeOldUsers.data.data.length+1);
   expect(beforeNewUsers.data.data[beforeNewUsers.data.data.length - 1].name).toMatch(
     "Mona"
   );

@@ -15,7 +15,7 @@ import ReactDOM from 'react-dom';
 import Companies from '../pages/Companies'
 import Footer from '../layout/footer'
 import { Animate, AnimateGroup } from 'react-simple-animate';
-import Egypt from '../layout/Egypt.jpg'
+import egypt1 from '../layout/egypt.gif'
 import trans from '../translations/landingTranslation'
 
 class LandingBody extends Component {
@@ -31,13 +31,13 @@ class LandingBody extends Component {
 }
   render() {
     var loggedIn = <div><Button variant="outline-light" size="lg"  onClick={this.logOut}>Signout</Button><Button variant="outline-light" size="lg" href="/journal">{trans.electronicjournal}</Button></div>
-    var notloggedIn =  <div><Button variant="outline-light" size="lg"  href="/register">{trans.signup}</Button> <Button variant="outline-light" size="lg" href="/login">{trans.signin}</Button><Button variant="outline-light" size="lg" href="/journal">{trans.electronicjournal}</Button></div>
+    var notloggedIn =  <div><Button variant="outline-light" size="lg"  href="/try">{trans.signup}</Button> <Button variant="outline-light" size="lg" href="/login">{trans.signin}</Button><Button variant="outline-light" size="lg" href="/journal">{trans.electronicjournal}</Button></div>
     trans.setLanguage(this.props.lang)
     return (
        
         <Carousel>
         <Carousel.Item > 
-          <div style={{position: "fixed", top: "0", zIndex: "-1",width:"100%"}}>
+          <div style={{position: "fixed", top: "0", zIndex: "0",width:"100%"}}>
             <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop" width="100%" object-fit="cover">
                  <source src={egypt} type="video/mp4"></source>
             </video>
@@ -50,15 +50,15 @@ class LandingBody extends Component {
           <view style={{display:"flex", justifyContent:'center' , alignItems:'center'}}>
 
        <Animate delaySeconds="0.1" durationSeconds= "0.6"  endStyle={{ opacity: 1, transform: 'translateY(-10px)' }}
-        startStyle={{ opacity: 0, transform: 'translateY(0)' }} sequenceIndex={3} ><h1 style={{fontSize:"100px", textShadow: '-2px 0 white, 0 2px white, 2px 0 white, 0 -2px white'}}>G&nbsp;</h1></Animate>    
+        startStyle={{ opacity: 0, transform: 'translateY(0)' }} sequenceIndex={3} ><h1 style={{fontSize:"100px", textShadow: '-2px 0 black, 0 2px black, 2px 0 black, 0 -2px black',color:"white"}}>G&nbsp;</h1></Animate>    
         <Animate durationSeconds= "0.6" endStyle={{ opacity: 1, transform: 'translateY(-10px)' }}
-        startStyle={{ opacity: 0, transform: 'translateY(0)' }} sequenceIndex={4}><h1 style={{fontSize:"100px", textShadow: '-2px 0 white, 0 2px white, 2px 0 white, 0 -2px white' }}>A&nbsp;</h1></Animate>
+        startStyle={{ opacity: 0, transform: 'translateY(0)' }} sequenceIndex={4}><h1 style={{fontSize:"100px", textShadow: '-2px 0 black, 0 2px black, 2px 0 black, 0 -2px black' ,color:"white"}}>A&nbsp;</h1></Animate>
         <Animate durationSeconds= "0.6" endStyle={{ opacity: 1, transform: 'translateY(-10px)' }}
-        startStyle={{ opacity: 0, transform: 'translateY(0)' }} sequenceIndex={5} ><h1 style={{fontSize:"100px", textShadow: '-2px 0 white, 0 2px white, 2px 0 white, 0 -2px white' }}>F&nbsp;</h1></Animate>
+        startStyle={{ opacity: 0, transform: 'translateY(0)' }} sequenceIndex={5} ><h1 style={{fontSize:"100px", textShadow: '-2px 0 black, 0 2px black, 2px 0 black, 0 -2px black' ,color:"white"}}>F&nbsp;</h1></Animate>
         <Animate durationSeconds= "0.6" endStyle={{ opacity: 1, transform: 'translateY(-10px)' }} 
-        startStyle={{ opacity: 0, transform: 'translateY(0)' }} sequenceIndex={6} ><h1 style={{fontSize:"100px", textShadow: '-2px 0 white, 0 2px white, 2px 0 white, 0 -2px white' }}>I&nbsp;</h1></Animate>
+        startStyle={{ opacity: 0, transform: 'translateY(0)' }} sequenceIndex={6} ><h1 style={{fontSize:"100px", textShadow: '-2px 0 black, 0 2px black, 2px 0 black, 0 -2px black',color:"white" }}>I&nbsp;</h1></Animate>
          <Animate durationSeconds= "0.6" endStyle={{ opacity: 1, transform: 'translateY(-10px)' }} 
-        startStyle={{ opacity: 0, transform: 'translateY(0)' }} sequenceIndex={7} ><img src={Egypt} height="50px" width="80px" /></Animate>
+        startStyle={{ opacity: 0, transform: 'translateY(0)' }} sequenceIndex={7} ><img src={egypt1} height="50px" width="80px" /></Animate>
   </view>
   </AnimateGroup>
           <div style={{height:"570px"}}>

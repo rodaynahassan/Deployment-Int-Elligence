@@ -5,7 +5,7 @@ const JwtStrategy = require('passport-jwt').Strategy
  const Admin = require('../models/Admin')
  const User = mongoose.model('users')
  const tokenKey = require('./keys').secretOrKey
-
+  
  let opts = {};
  opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken()
  opts.secretOrKey = tokenKey

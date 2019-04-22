@@ -390,5 +390,3 @@ test("Login admin with wrong email", async () => {
 //     await userfuncs.deleteUser(id);
 //   } catch (error) {}
 // });
-
-

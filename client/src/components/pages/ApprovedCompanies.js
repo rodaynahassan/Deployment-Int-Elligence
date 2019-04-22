@@ -2,9 +2,6 @@ import  React, { Component } from 'react';
 import axios from 'axios';
 import '../../App.css';
 import ApprovedCompaniesFields from '../user/ApprovedCompaniesFields';
-import Table from 'react-bootstrap/Table'
-import Navbar from 'react-bootstrap/Navbar'
-import {Badge} from 'react-bootstrap'
 import trans from '../translations/approvedTranslation'
 
 class ApprovedCompanies extends Component {
@@ -23,38 +20,22 @@ class ApprovedCompanies extends Component {
          }
       })
     }
-      tabRow(){
-       return (
-        this.state.approvedCompanies.map(function(approvedCompany,i){
-        return <ApprovedCompaniesFields approvedCompany={approvedCompany} key={i}/>})
-        )
-      }
+      
+      tabRow = () => {
+        return this.state.approvedCompanies.map((approvedCompany,i)=>{
+            return <ApprovedCompaniesFields approvedCompany={approvedCompany} key={i}/>  
+         })
+        }
+
       render(){
         trans.setLanguage(this.props.lang)
         return (
-          <div  style={{paddingLeft:'60px',flexDirection: 'row', justifyContent: 'flex-end'}} >
-           <div style={{backgroundColor:"#123456" , textAlign:"center", fontSize:"50px" , color:"white" }} >{trans.title}</div>
-          <Table striped bordered hover variant="gamed" size="sm">
-            <thead>
-              <tr>
-                <th>{trans.name}</th>
-                <th>{trans.nameInEnglish}</th>
-                <th>{trans.governorate}</th>
-                <th>{trans.city}</th>
-                <th>{trans.address}</th>
-                <th>{trans.telephone}</th>
-                <th>{trans.fax}</th>
-                <th>{trans.currency}</th>
-                <th>{trans.capital}</th>
-                <th>{trans.type}</th>
-                <th>{trans.date}</th>
-              </tr>
-              </thead>
-              <tbody>
+          <div>
+          <div style={{backgroundColor:"#a3dbf1" ,marginTop:"80px",paddingBottom:"20px", paddingTop:"20px",textAlign:"center", fontSize:"60px" , color:"dark" ,flexDirection: 'row', justifyContent: 'flex-end'}} ><h2 style={{fontSize:"50px"}}>{trans.title}</h2></div>   
+              <div  style={{display:"flex" , flexWrap:"wrap",alignItems:"right" , justifyContent:"right"}}>
               {this.tabRow()}
-            </tbody>
-          </Table>
-        
+              </div>
+          
           </div>
           )
       }

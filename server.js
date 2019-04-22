@@ -26,8 +26,23 @@ mongoose
 	useNewUrlParser: true;
 }
 
+//production mode
+
+if (process.env.NODE_ENV === 'production') {
+	app.use(express.static(path.resolve(__dirname, 'client/build')));
+	//
+	app.get('*', (req, res) => {
+		res.sendfile(path.resolve((__dirname = 'client/build/index.html')));
+	});
+}
+
+//build mode
+app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname + '/client/public/index.html'));
+});
+
 //Static file declaration
-app.use(express.static(path.join(__dirname, 'client/build')));
+//app.use(express.static(path.join(__dirname, 'client/build')));
 
 //roduction mode
 // console.log(process.env.NODE_ENV + '   ffffffffffffffffffffff');
@@ -73,13 +88,13 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 // 	res.sendFile(path.join(__dirname + '/client/public/index.html'));
 // });
 
-if (process.env.NODE_ENV === 'production') {
-	app.use(express.static(path.resolve(__dirname, 'client/build')));
+// if (process.env.NODE_ENV === 'production') {
+// 	app.use(express.static(path.resolve(__dirname, 'client/build')));
 
-	app.get('*', (req, res) => {
-		res.sendfile(path.resolve((__dirname = 'client/build/index.html')));
-	});
-}
+// 	app.get('*', (req, res) => {
+// 		res.sendfile(path.resolve((__dirname = 'client/build/index.html')));
+// 	});
+// }
 // console.log(__dirname + '   gggggggggggggggggggg');
 
 //build mode

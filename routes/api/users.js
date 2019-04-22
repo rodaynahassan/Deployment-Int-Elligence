@@ -6,24 +6,26 @@ const userController = require("../../controllers/userController");
 const User = require("../../models/User");
 const notifications = require("../../helpers/notifications");
 const dynamicFormController = require("../../controllers/dynamicFormController");
-const Admin = require("../../models/Admin")
+const Admin = require('../../models/Admin')
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const tokenKey = require("../../config/keys_dev").secretOrKey;
-const passport = require("passport");
+const passport = require('passport')
+require('../../config/passport')(passport)
 const axios = require("axios");
-require("../../config/passport")(passport);
 
 //get all lawyers
 router.get("/getAllLawyers", async (req, res) => {
   const userType = await userController.search("userType", "Lawyer");
   return res.json({ data: userType });
 });
+
 //get all investors
 router.get("/getAllInvestors", async (req, res) => {
   const userType = await userController.search("userType", "Investor");
   return res.json({ data: userType });
 });
+
 //get all Reviewers
 router.get("/getAllReviewers", async (req, res) => {
   const userType = await userController.search("userType", "Reviewer");

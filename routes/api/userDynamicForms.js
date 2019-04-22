@@ -285,9 +285,9 @@ router.put(
       //console.log(equation);
       const formid = req.params.formId;
       var form = await dynamicFormController.search("_id", formid);
-      form=form[0]
+      form=form[0].toJSON()
       if (form.error) return res.status(400).json({ error: form.error });
-      var capital = form.toJSON().equityCapital;
+      var capital = form.equityCapital;
       //console.log(form)
       //console.log(capital)
       var calculatedFees =
@@ -565,7 +565,7 @@ router.get(
       if (forms.error) return res.status(400).json({ error: forms.error });
       var acceptedForms = [];
       for (i = 0; i < forms.length; i++) {
-        if (forms[i].status === "Accepted") acceptedForms.push(forms[i]);
+        if (forms[i].status === "Approved") acceptedForms.push(forms[i]);
       }
       res.json({ data: acceptedForms });
     } else {

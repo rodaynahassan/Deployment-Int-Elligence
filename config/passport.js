@@ -1,10 +1,9 @@
- const JwtStrategy = require('passport-jwt').Strategy
+const JwtStrategy = require('passport-jwt').Strategy
  const ExtractJwt = require('passport-jwt').ExtractJwt
  const mongoose = require('mongoose')
- const User = mongoose.model('users')
  //const Admin = mongoose.model('admins')
  const Admin = require('../models/Admin')
- 
+ const User = mongoose.model('users')
  const tokenKey = require('./keys').secretOrKey
   
  let opts = {};

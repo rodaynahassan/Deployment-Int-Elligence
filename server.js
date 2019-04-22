@@ -26,8 +26,8 @@ mongoose
 //Static file declaration
 //app.use(express.static(path.join(__dirname, 'client/build')));
 
-p; //roduction mode
-console.log(process.env.NODE_ENV + '   ffffffffffffffffffffff');
+//roduction mode
+// console.log(process.env.NODE_ENV + '   ffffffffffffffffffffff');
 if (process.env.NODE_ENV === 'production') {
 	app.use(express.static(path.join(__dirname, 'client/build')));
 	//
@@ -35,7 +35,7 @@ if (process.env.NODE_ENV === 'production') {
 		res.sendfile(path.join((__dirname = 'client/build/index.html')));
 	});
 }
-console.log(__dirname + '   gggggggggggggggggggg');
+// console.log(__dirname + '   gggggggggggggggggggg');
 
 //build mode
 app.get('*', (req, res) => {

@@ -57,7 +57,7 @@ export default class ResetPassword extends Component {
 				}
 			})
 			.catch((error) => {
-				console.log(error.response.data);
+				alert(error.response.data.errmsg || error.response.data)
 				this.setState({
 					updated: false,
 					isLoading: false,
@@ -95,9 +95,7 @@ export default class ResetPassword extends Component {
 					});
 				}
 			})
-			.catch((error) => {
-				console.log(error.response.data);
-			});
+			.catch((err) => alert(err.response.data.errmsg || err.response.data));
 	};
 
 	render() {

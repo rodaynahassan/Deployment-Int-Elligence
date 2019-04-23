@@ -129,14 +129,16 @@ exports.update = async (att, value, body) => {
     };
   }
   if (att === "_id") {
+    //console.log(body)
     var dynamicForm = await DynamicForm.findByIdAndUpdate(value, body)
       .then(res => {
+        console.log(res)
         return res;
       })
       .catch(err => {
         return { error: err };
       });
-    // console.log(dynamicForm)
+   // console.log(dynamicForm)
     if (dynamicForm.error) return dynamicForm;
     return await DynamicForm.findById(value)
       .then(res => {

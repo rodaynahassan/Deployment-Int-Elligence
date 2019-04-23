@@ -61,7 +61,7 @@ class UpdateSSCForm extends React.Component {
 					reviewerComments: response.data.data.reviewerComments
 				});
 			})
-			.catch(function(error) {});
+			.catch((err) => alert(err.response.data.errmsg || err.response.data));
 		axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
 		axios
 			.get('/routes/api/forms/getSpecificform/' + mongoose.Types.ObjectId(this.props.formId._id), {
@@ -88,7 +88,7 @@ class UpdateSSCForm extends React.Component {
 					SSCManagers: test
 				});
 			})
-			.catch(function(error) {});
+			.catch((err) => alert(err.response.data.errmsg || err.response.data));
 	}
 
 	changeHandler2 = (event) => {
@@ -125,9 +125,7 @@ class UpdateSSCForm extends React.Component {
 					alert('SSCForm Updated Succesfully');
 				}
 			})
-			.catch(function(error) {
-				console.log(error);
-			});
+			.catch((err) => alert(err.response.data.errmsg || err.response.data));
 	}
 
 	changeHandler = (event) => {

@@ -22,9 +22,7 @@ export default class SortSpecificUserCase extends React.Component {
 				this.setState({ forms: res.data.data });
 				alert('Cases have been sorted');
 			})
-			.catch((err) => {
-				console.log(err);
-			});
+			.catch((err) => alert(err.response.data.errmsg || err.response.data));
 	};
 
 	tabRow() {

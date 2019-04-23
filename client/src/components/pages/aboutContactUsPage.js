@@ -9,6 +9,7 @@ import { MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, 
 //import Header from '../layout/header'
 import background from '../../backkk.jpeg'
 import trans from '../translations/aboutContactTranslation'
+
 class About extends Component{
 
     constructor()
@@ -18,6 +19,7 @@ class About extends Component{
 
      render()
      {
+       
       trans.setLanguage(this.props.lang)
          return (
              <section style={{ paddingLeft:'60px',display:"flex", justifyContent: 'center',width:"100%" ,height:"800px", backgroundImage:"url("+background+")",backgroundRepeat:"no-repeat",backgroundSize:"100% 100%",alignItems:"center"}}>   

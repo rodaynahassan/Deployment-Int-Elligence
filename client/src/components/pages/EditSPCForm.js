@@ -49,7 +49,7 @@ class EditSPCForm extends React.Component {
 					equityCapital: response.data.data.equityCapital
 				});
 			})
-			.catch(function(error) {});
+			.catch((err) => alert(err.response.data.errmsg || err.response.data));
 		axios.get('/routes/api/governorates/').then((res) => {
 			this.setState({ governorate: res.data.data });
 		});

@@ -22,6 +22,8 @@ class NewNavBar extends Component {
 			formType: '',
 			formTypeArrays: []
 		};
+	}
+	componentDidMount() {
 		axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
 		axios
 			.get('/routes/api/formTypes/getAllFormTypes/', {
@@ -29,14 +31,16 @@ class NewNavBar extends Component {
 			})
 			.then((res) => {
 				this.setState({ formTypes: res.data.data });
-			});
+			})
+			.catch((err) => {});
 		axios
 			.get('/routes/api/formTypes/getAllFormTypeArrays/', {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
 			.then((res) => {
 				this.setState({ formTypeArrays: res.data.data });
-			});
+			})
+			.catch((err) => {});
 	}
 	logOut() {
 		localStorage.setItem('isLoggedIn', 'false');

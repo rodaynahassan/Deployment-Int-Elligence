@@ -23,7 +23,7 @@ class assignToReviewer extends Component
         {
             axios.defaults.headers.common['Authorization'] =  localStorage.getItem('jwtToken');
             axios.put('http://localhost:5000/routes/api/userDynamicForms/takingForm/'+Mongoose.Types.ObjectId(formId),{headers: { "Authorization": localStorage.getItem('jwtToken') }})
-            document.location.href='/investorInProgressform'    
+            // document.location.href='/AssignToReviewer'    
           }
         getAttributes =()=>{
         

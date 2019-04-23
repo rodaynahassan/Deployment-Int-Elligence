@@ -38,6 +38,12 @@ class InProgressInvestorCases extends Component {
                  document.location.href='/investorInProgressform'         
                    }).catch(err=>{console.log(err)});
             }
+            redirectEdit(formId,formType){
+              console.log(formType)
+              localStorage.setItem('formId',formId)
+              localStorage.setItem('formType',formType)
+             document.location.href='/editinvcompany'
+            }
     getAttributes =()=>{
       return this.state.certainFormType.map((Form,index)=>{
       var KEYS =[]
@@ -73,7 +79,7 @@ class InProgressInvestorCases extends Component {
           {Form.status==='Lawyer accepted'?<MDBProgress  material value={75} color="dark" height="63px"><h3 style={{color:"#64b9e0", fontSize:'30px'}}>Lawyer Accepted <br/> 75%</h3></MDBProgress>:null}
           {Form.status==='In progress Reviewer'?<MDBProgress  material value={100} color="dark" height="63px"><h3 style={{color:"#64b9e0", fontSize:'30px'}}>In Progress Reviewer <br/> 100%</h3></MDBProgress>:null}
           {Form.status==='Approved'?<MDBProgress material value={65} color="dark" height="63px"><h3 style={{color:"#64b9e0", fontSize:'30px'}}>Approved</h3></MDBProgress>:null}
-          {Form.status==='Unassigned'?<div><Button type="button"  variant="dark" onClick={()=>(this.EditForm(Form._id))} class="btn btn-info"><h3 style={{color:"#64b9e0", fontSize:'15px'}}>Edit Form<br/><i class="fas fa-edit"></i></h3></Button><Button variant="dark" type="button"  onClick={()=>(this.DeleteForm((Form._id)), alert('This case is deleted to YOU!!'))} class="btn btn-info"><h3 style={{color:"#64b9e0", fontSize:'15px'}}>Delete Form<br/><i class="fas fa-trash"></i></h3></Button></div>:null}
+          {Form.status==='Unassigned'?<div><Button type="button"  variant="dark" onClick={()=>this.redirectEdit(Form._id,Form.formType)} class="btn btn-info"><h3 style={{color:"#64b9e0", fontSize:'15px'}}>Edit Form<br/><i class="fas fa-edit"></i></h3></Button><Button variant="dark" type="button"  onClick={()=>(this.DeleteForm((Form._id)), alert('This case is deleted to YOU!!'))} class="btn btn-info"><h3 style={{color:"#64b9e0", fontSize:'15px'}}>Delete Form<br/><i class="fas fa-trash"></i></h3></Button></div>:null}
            </div>
            </div>
            </FrontSide>

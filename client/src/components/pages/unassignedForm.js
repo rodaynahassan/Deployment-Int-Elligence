@@ -24,7 +24,7 @@ class unassignedForm extends Component
           axios.defaults.headers.common['Authorization'] =  localStorage.getItem('jwtToken');
           axios.put('http://localhost:5000/routes/api/userDynamicForms/takingForm/'+mongoose.Types.ObjectId(formId),{headers: { "Authorization": localStorage.getItem('jwtToken') }})
           .then(res=>console.log(res))
-          document.location.href='/investorInProgressform'    
+          // document.location.href='/UnassignedForm'    
           .catch(err=>console.log(err))
         }
         

@@ -109,7 +109,7 @@ class MyCompany extends Component {
           <div >
              
           <MDBCol>
-          <MDBRow style={{paddingLeft:"41%", marginTop:"6%"}}>
+          <MDBRow style={{paddingLeft:"41%", marginTop:"6%", paddingBottom:"70px"}}>
            
             <MDBInput
             icon="search" 
@@ -128,7 +128,7 @@ class MyCompany extends Component {
 
 
 
-          <div style={{paddingLeft:"45%"}}>
+          <div style={{paddingLeft:"45%",paddingBottom:"70px"}}>
             <MuiThemeProvider >
             <RaisedButton label="Search" primary={true} style={style}
             onClick={(event) => (this.handleClick(event))} />

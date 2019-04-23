@@ -17,14 +17,14 @@ import Footer from './components/layout/footer';
 import SPCForm from './components/pages/SPCform';
 import FForm from './components/pages/form';
 import SSCForm from './components/pages/SSCForm';
-import FlippingCard from './components/form/FlippingCard';
 import Companies from './components/pages/Companies';
 import Side from './components/layout/Side';
 import SortSpecificUserCaseDate from './components/form/SortByDate';
 import NewNavBar from './components/layout/NewNavBar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar1 from './components/NavBar';
-import adminPage from './components/pages/adminPage';
+import AdminProfile from './components/pages/AdminProfile';
+import adminPage from './components/pages/adminPage'
 import Register1 from './components/Register';
 import Login from './components/pages/Login';
 import Home from './components/Home';
@@ -43,18 +43,15 @@ import ChangePassword from './components/pages/ChangePassword';
 import GetFormByCompanyName from './components/form/GetFormByCompanyName';
 import ShowProfileI from './components/pages/showProfileI';
 import ShowProfileLR from './components/pages/showProfileLR';
-import InProgressSSCCases from './components/pages/inProgressSSCCases';
-import InProgressSPCCases from './components/pages/inProgressSPCCases';
 import GetCaseLawyerSPC from './components/pages/getCaseLawyerSPC';
 import GetCaseLawyerSSC from './components/pages/getCaseLawyerSSC';
-import EditUnassigned from './components/pages/EditUnassigned';
-import ShowUnassignedForms from './components/pages/ShowUnassignedForms';
 import ForgotPassword from './containers/ForgotPassword';
 import ResetPassword from './containers/ResetPassword';
 import CreateANewCompany from './components/pages/CreateANewCompany'
 import AttributeArray from './components/pages/AttributeArray'
 import InProgressInvestorCases from './components/pages/inProgressInvestorCases';
-
+import EditInvCompany from './components/pages/EditInvCompany';
+import EditLawyerCompany from './components/pages/editLawyerForms';
 class App extends Component {
 	constructor() {
 		super();
@@ -198,7 +195,7 @@ class App extends Component {
 									path="/editsscform"
 									render={(props) => <EditSSCForm {...props} formId={this.state.formId} />}
 								/>
-								<Route
+								{/* <Route
 									exact
 									path="/showsscform"
 									render={(props) => (
@@ -219,7 +216,7 @@ class App extends Component {
 											setFormId={this.setFormId}
 										/>
 									)}
-								/>
+								/> */}
 								<Route
 									exact
 									path="/companyName"
@@ -245,7 +242,21 @@ class App extends Component {
                 <Route exact path='/CreateANewCompany' render={(props) => <CreateANewCompany {...props}   lang={this.state.lang}  />}/>
                 <Route exact path='/attributeInArray' render={(props)=><AttributeArray {...props}  lang={this.state.lang} />}/>
 								<Route exact path='/investorInProgressform' render={(props) => <InProgressInvestorCases {...props}  lang={this.state.lang} setFormId={this.setFormId} />}/>
-
+								<Route
+									exact
+									path="/adminprofile"
+									render={(props) => <AdminProfile {...props} lang={this.state.lang} />}
+								/>
+								<Route
+									exact
+									path="/editinvcompany"
+									render={(props) => <EditInvCompany {...props} lang={this.state.lang} />}
+								/>
+								<Route
+									exact
+									path="/editlawyercompany"
+									render={(props) => <EditLawyerCompany {...props} lang={this.state.lang} />}
+								/>
 
 							</div>
 
@@ -254,8 +265,11 @@ class App extends Component {
 							) : (
 								<NewNavBar changelang={this.changelang} />
 							)}
+							{currentLocation === '/' ?null : (<Footer />
+							)}
+						
 
-							<Footer />
+							
 						</Router>
 					</div>
 				</Provider>

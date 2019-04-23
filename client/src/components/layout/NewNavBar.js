@@ -121,7 +121,7 @@ class NewNavBar extends Component{
                                 <i className="fa fa-fw fa-list-alt"  style={{color:blue100,fontSize:"1.5em"}}></i>
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                <Dropdown.Item href='/approvedCompanies' style={{textAlign:'left',color:blue200}}> Show Approved Companies</Dropdown.Item>
+                                <Dropdown.Item href='/approvedCompanies' style={{textAlign:'left',color:"#3e484d"}}> Show Approved Companies</Dropdown.Item>
                                 <Dropdown.Divider/>
                                 <Dropdown.Item href='/investorInProgressform'style={{textAlign:'left',color:'#3e484d'}} > Track your forms</Dropdown.Item>
                             </Dropdown.Menu>
@@ -207,13 +207,10 @@ class NewNavBar extends Component{
                                 <i className="fa fa-fw fa-list-alt"  style={{color:blue100,fontSize:"1.5em"}}></i>
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                <Dropdown.Item href='/approvedCompanies' style={{textAlign:'left',color:blue200}}> Show Approved Companies</Dropdown.Item>
-                                <Dropdown.Divider/>
                                 <Dropdown.Item href='/getCaseLawyerSPC'style={{textAlign:'left',color:'#3e484d'}} > Track your forms</Dropdown.Item>
                                 <Dropdown.Divider/>
                                 <Dropdown.Item href='/unassignedForm'style={{textAlign:'left',color:'#3e484d'}}> Pick a Task</Dropdown.Item>
-                                <Dropdown.Divider/>
-                                <Dropdown.Item href='/getCaseLawyerSPC'style={{textAlign:'left',color:'#3e484d'}}> SPC cases</Dropdown.Item>
+                                
                             </Dropdown.Menu>
                             </Dropdown>
                         </li>
@@ -277,8 +274,6 @@ class NewNavBar extends Component{
                                 <i className="fa fa-fw fa-list-alt"  style={{color:blue100,fontSize:"1.5em"}}></i>
                             </Dropdown.Toggle>
                         <Dropdown.Menu>
-                            <Dropdown.Item href='/approvedCompanies' style={{textAlign:'left',color:'#3e484d'}}> Show Approved Companies</Dropdown.Item>
-                            <Dropdown.Divider/>
                             <Dropdown.Item href='/lawyerAcceptedForms'style={{textAlign:'left',color:'#3e484d'}}> Pick a Task</Dropdown.Item>
                             <Dropdown.Divider/>
                             <Dropdown.Item href='/GetReviewer'style={{textAlign:'left',color:'#3e484d'}}> View your tasks</Dropdown.Item>

@@ -301,11 +301,12 @@ class Companies extends Component {
         <div>
           <div
             style={{
-              backgroundColor: "#96aab3",
+              backgroundColor: "#a3dbf1",
               marginTop: "90px",
               textAlign: "center",
               fontSize: "50px",
-              color: "white",
+              color: "dark",
+              paddingTop:"70px",
               paddingLeft: "60px",
               flexDirection: "row",
               justifyContent: "flex-end"

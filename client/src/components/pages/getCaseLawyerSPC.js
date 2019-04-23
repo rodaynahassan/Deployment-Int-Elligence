@@ -23,6 +23,12 @@ class Companies extends Component {
     companies: [],
     modalShow: false 
   };
+  redirectEdit(formId,formType){
+    console.log(formType)
+    localStorage.setItem('formId',formId)
+    localStorage.setItem('formType',formType)
+   document.location.href='/EditLawyerCompany'
+  }
   componentDidMount() {
     axios.defaults.headers.common["Authorization"] =
       "Bearer " + localStorage.getItem("jwtToken");
@@ -35,40 +41,50 @@ class Companies extends Component {
         if (Array.isArray(res.data.data)) {
           this.setState({ companies: res.data.data });
         }
+        console.log(this.state.companies)
       })
       .catch(err => {
         alert("" + err);
       });
   }
 
-	sort = () => {
-		axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
-		axios
-			.get('/routes/api/users/SpecificFormSortedByFormId', {
-				headers: { Authorization: localStorage.getItem('jwtToken') }
-			})
-			.then((res) => {
-				this.setState({ companies: res.data.data });
-				alert('Cases have been sorted');
-			})
-			.catch((err) => alert(err.response.data.errmsg || err.response.data));
-	};
-	sortByCreationDate = () => {
-		axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
-		axios
-			.get('/routes/api/user/SpecificformsSortedByformDate', {
-				headers: { Authorization: localStorage.getItem('jwtToken') }
-			})
-			.then((res) => {
-				this.setState({ companies: res.data.data });
-				alert('Cases have been sorted');
-			})
-			.catch((err) => alert(err.response.data.errmsg || err.response.data));
-	};
+  sort = () => {
+    axios.defaults.headers.common["Authorization"] = localStorage.getItem(
+      "jwtToken"
+    );
+    axios
+      .get(
+        "/routes/api/userDynamicForms/AllFormSortedByFormId/",
+        { headers: { Authorization: localStorage.getItem("jwtToken") } }
+      )
+      .then(res => {
+        this.setState({ companies: res.data.data });
+        alert("Cases have been sorted");
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+  sortByCreationDate = () => {
+    axios.defaults.headers.common["Authorization"] = localStorage.getItem(
+      "jwtToken"
+    );
+    axios
+      .get(
+        "/routes/api/userDynamicForms/AllformsSortedByformDate/",
+        { headers: { Authorization: localStorage.getItem("jwtToken") } }
+      )
+      .then(res => {
+        this.setState({ companies: res.data.data });
+        alert("Cases have been sorted");
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
 
   accept = formId => {
-    console.log("hi");
     axios.defaults.headers.common["Authorization"] = localStorage.getItem(
       "jwtToken"
     );
@@ -83,6 +99,7 @@ class Companies extends Component {
         document.location.href = "/getCaseLawyerSPC";
       });
   };
+
 
   calculateFees = formId => {
     console.log("hi");
@@ -184,9 +201,9 @@ class Companies extends Component {
                   }
               }
             )}
-              <MDBProgress  material value={35} color="dark" height="35px">
+              {/* <MDBProgress  material value={35} color="dark" height="35px">
                <h3> In progress Lawyer </h3>
-                </MDBProgress>
+                </MDBProgress> */}
                 
               <div  style={{textAlign:'right'}}>
                 <ButtonGroup size="sm" className="mt-3">
@@ -217,6 +234,20 @@ class Companies extends Component {
                       <br /> Calculate The Fees
                     </h3>
                   </Button>
+                  {/* <Button
+                    variant="outline-blue"
+                    block
+                    style={{ width: "250px", height: "115px" }}
+                    onClick={()=>this.redirectEdit(Form._id,Form.formType)}
+                  >
+                    <h3>
+                      <i
+                        class="fas fa-edit"
+                        style={{ fontSize: "1em" }}
+                      />{" "}
+                      <br /> Edit
+                    </h3>
+                  </Button> */}
                   <ButtonToolbar>
                     <Button
                     variant="outline-blue"
@@ -237,6 +268,10 @@ class Companies extends Component {
                     />
                     </ButtonToolbar><br />
                 </ButtonGroup>
+                <div>
+                {Form.status==='Reviewer rejected'?<div><MDBProgress  material value={60} color="dark" height="63px"><h3 style={{color:"#64b9e0", fontSize:'30px'}}>Reviewer Rejected <br/> 60%</h3></MDBProgress><br/><Button type="button"  variant="dark" onClick={()=>this.redirectEdit(Form._id,Form.formType)} class="btn btn-info"><h3 style={{color:"#64b9e0", fontSize:'15px'}}>Edit Form<br/><i class="fas fa-edit"></i></h3></Button></div>:null}
+                {Form.status==='In progress Lawyer'?<MDBProgress  material value={50} color="dark" height="63px"><h3 style={{color:"#64b9e0", fontSize:'30px'}}>Lawyer Accepted <br/>50% </h3></MDBProgress>:null}
+                </div>
                 
               </div>
             </div>
@@ -252,11 +287,13 @@ class Companies extends Component {
         <div>
           <div
             style={{
-              backgroundColor: "#96aab3",
+              backgroundColor:"#a3dbf1",
               marginTop: "90px",
               textAlign: "center",
               fontSize: "50px",
-              color: "white",
+              color: "dark",
+              paddingBottom:"50px", 
+              paddingTop:"70px",
               paddingLeft: "60px",
               flexDirection: "row",
               justifyContent: "flex-end"
@@ -296,4 +333,4 @@ class Companies extends Component {
     );
   }
 }
-export default Companies;
+export default Companies

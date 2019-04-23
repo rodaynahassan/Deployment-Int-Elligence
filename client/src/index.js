@@ -12,4 +12,4 @@ ReactDOM.render(<App />, document.getElementById('root'));
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
 
-//var socket = io.connect('http://localhost:3000');
+//var socket = io.connect('3000');

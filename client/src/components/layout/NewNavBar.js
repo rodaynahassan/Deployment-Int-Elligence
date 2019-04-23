@@ -11,15 +11,53 @@ import { blue100 } from 'material-ui/styles/colors';
 import { blue200 } from 'material-ui/styles/colors';
 import berry from '../layout/berry.png'
 import {Dropdown} from 'react-bootstrap';
+import { Link } from 'react-router-dom'
 var $ = require("jquery")(window);
 
 class NewNavBar extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            formTypes:[],
+            formType:'',
+            formTypeArrays:[]
+        }
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken')
+        axios.get('http://localhost:5000/routes/api/formTypes/getAllFormTypes/',{headers: { "Authorization": localStorage.getItem('jwtToken') }})        
+          .then(res => {
+                this.setState({formTypes: res.data.data})
+              })
+        axios.get('http://localhost:5000/routes/api/formTypes/getAllFormTypeArrays/',{headers: { "Authorization": localStorage.getItem('jwtToken') }})        
+        .then(res => {
+              this.setState({formTypeArrays: res.data.data})
+            })
+        
+    }
     logOut(){
         localStorage.setItem('isLoggedIn','false')
         localStorage.setItem('jwtToken','')
         localStorage.setItem('type','')
         document.location.href='/'
     }
+     
+    changeHandler = event => {
+        
+        this.setState({ [event.target.name] :event.target.value});
+        localStorage.setItem('formType',event.target.value)
+       // console.log(event.target.name)
+      //  console.log(event.target.value)
+        document.location.href='/createNewForm'
+    };
+
+    changeHandler2 = event => {
+        
+        this.setState({ [event.target.name] :event.target.value});
+        localStorage.setItem('formTypeArray',event.target.value)
+       // console.log(event.target.name)
+       // console.log(event.target.value)
+        document.location.href='/attributeInArray'
+    };
+     
     render()
     { 
 
@@ -54,14 +92,36 @@ class NewNavBar extends Component{
                             </Dropdown>
                         </li>
                         <li class="nav-item dropdown" >
+                        <select className="form-control"  
+                        id="exampleFormControlSelect1" name="ali"
+                        onChange={this.changeHandler}
+                        value={this.state.formType}
+                      >
+                        <option>Choose a form type</option>
+                        {this.state.formTypes.map((city)=>(
+                        <option value={city}>{city}</option>
+                        ))};    
+                        </select>
+                        </li>
+                        <li class="nav-item dropdown" >
+                        <select className="form-control"  
+                        id="exampleFormControlSelect1" name="ali"
+                        onChange={this.changeHandler2}
+                        value={this.state.formTypeArrays}
+                      >
+                        <option>Choose an array</option>
+                        {this.state.formTypeArrays.map((city)=>(
+                        <option value={city}>{city}</option>
+                        ))};    
+                        </select>
+                        </li>
+                        <li class="nav-item dropdown" >
                         <Dropdown >
                         <Dropdown.Toggle title= "Your Forms" variant="omar" id="dropdown-basic"  >
                                 <i className="fa fa-fw fa-list-alt"  style={{color:blue100,fontSize:"1.5em"}}></i>
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                <Dropdown.Item href='/form'style={{textAlign:'left',color:'#3e484d'}}> Create a company</Dropdown.Item>
-                                <Dropdown.Divider/>
-                                <Dropdown.Item href='/approvedCompanies' style={{textAlign:'left',color:'#3e484d'}}> Show Approved Companies</Dropdown.Item>
+                                <Dropdown.Item href='/approvedCompanies' style={{textAlign:'left',color:blue200}}> Show Approved Companies</Dropdown.Item>
                                 <Dropdown.Divider/>
                                 <Dropdown.Item href='/showspcform'style={{textAlign:'left',color:'#3e484d'}} > Track your forms</Dropdown.Item>
                             </Dropdown.Menu>
@@ -116,15 +176,38 @@ class NewNavBar extends Component{
                             </Dropdown.Menu>
                             </Dropdown>
                         </li>
+                        <li class="nav-item dropdown">
+                        <select className="form-control"  
+                        id="exampleFormControlSelect1" name="ali"
+                        onChange={this.changeHandler}
+                        value={this.state.formType}
+                      >
+                      Create a new form
+                        <option>Choose a form type</option>
+                        {this.state.formTypes.map((city)=>(
+                        <option value={city}>{city}</option>
+                        ))};    
+                        </select>
+                        </li>
+                        <li class="nav-item dropdown" >
+                        <select className="form-control"  
+                        id="exampleFormControlSelect1" name="ali"
+                        onChange={this.changeHandler2}
+                        value={this.state.formTypeArrays}
+                      >
+                        <option>Choose an array</option>
+                        {this.state.formTypeArrays.map((city)=>(
+                        <option value={city}>{city}</option>
+                        ))};    
+                        </select>
+                        </li>
                         <li class="nav-item dropdown" >
                         <Dropdown >
                         <Dropdown.Toggle title= "Your Forms" variant="omar" id="dropdown-basic"  >
                                 <i className="fa fa-fw fa-list-alt"  style={{color:blue100,fontSize:"1.5em"}}></i>
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                <Dropdown.Item href='/form'style={{textAlign:'left',color:'#3e484d'}}> Create a company</Dropdown.Item>
-                                <Dropdown.Divider/>
-                                <Dropdown.Item href='/approvedCompanies' style={{textAlign:'left',color:"#3e484d"}}> Show Approved Companies</Dropdown.Item>
+                                <Dropdown.Item href='/approvedCompanies' style={{textAlign:'left',color:blue200}}> Show Approved Companies</Dropdown.Item>
                                 <Dropdown.Divider/>
                                 <Dropdown.Item href='/getCaseLawyerSPC'style={{textAlign:'left',color:'#3e484d'}} > Track your forms</Dropdown.Item>
                                 <Dropdown.Divider/>

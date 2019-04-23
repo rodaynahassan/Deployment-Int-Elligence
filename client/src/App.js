@@ -51,6 +51,8 @@ import EditUnassigned from './components/pages/EditUnassigned';
 import ShowUnassignedForms from './components/pages/ShowUnassignedForms';
 import ForgotPassword from './containers/ForgotPassword';
 import ResetPassword from './containers/ResetPassword';
+import CreateANewCompany from './components/pages/CreateANewCompany'
+import AttributeArray from './components/pages/AttributeArray'
 
 class App extends Component {
 	constructor() {
@@ -95,7 +97,6 @@ class App extends Component {
 				<Provider store={store}>
 					<div style={{ paddingBottom: '7rem' }}>
 						<Router>
-							{/* <Side changelang={this.changelang}  /> */}
 							<div>
 								<Route
 									exact
@@ -240,6 +241,10 @@ class App extends Component {
 									render={(props) => <ForgotPassword {...props} lang={this.state.lang} />}
 								/>
 								<Route exact path="/reset/:token" component={ResetPassword} />
+                <Route path='/CreateANewCompany' render={(props) => <CreateANewCompany {...props}   />}/>
+                <Route path='/attributeInArray' render={(props)=><AttributeArray {...props} />}/>
+
+
 							</div>
 
 							{currentLocation === '/' ? (

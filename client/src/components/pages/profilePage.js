@@ -29,7 +29,7 @@ class Profile extends Component {
 
 		axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
 		axios
-			.get('http://localhost:5000/routes/api/users/CertainAttributes', {
+			.get('/routes/api/users/CertainAttributes', {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
 			.then((response) => {
@@ -610,15 +610,20 @@ class Profile extends Component {
 			</div>
 		);
 
-		return (
-			<div style={{ paddingLeft: '60px', justifyItems: 'center' }}>
-				{localStorage.getItem('type') === 'Investor' ? Investor : null}
-				{localStorage.getItem('type') === 'Lawyer' ? Lawyer : null}
-				{localStorage.getItem('type') === 'Admin' ? admin : null}
-				{localStorage.getItem('type') === 'Reviewer' ? Reviewer : null}
-			</div>
-		);
-	}
+            
+        
+
+       
+    
+
+        return(
+            <div style={{ paddingLeft:'60px',justifyItems:"center"}}>
+            {localStorage.getItem('type')==='Investor'? Investor:null}
+           {localStorage.getItem('type')==='Lawyer'? Lawyer:null}
+           {localStorage.getItem('type')==='Reviewer'? Reviewer:null}
+          </div>
+        );
+    }
 }
 
 ReactDOM.render(<Profile />, document.getElementById('root'));

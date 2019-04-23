@@ -1,42 +1,87 @@
 import  React, { Component } from 'react';
 import axios from 'axios';
 import '../../App.css';
-import ApprovedCompaniesFields from '../user/ApprovedCompaniesFields';
+import '../../App.scss'
+import Flippy , {FrontSide , BackSide} from 'react-flippy'
 import trans from '../translations/approvedTranslation'
 
 class ApprovedCompanies extends Component {
     state = {
-      approvedCompanies:[]
+      certainFormType:[]
     }
     componentDidMount(){
 
 
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
-      axios.get('http://localhost:5000/routes/api/users/getApprovedCompanies',{headers: { "Authorization": localStorage.getItem('jwtToken') }})
+      axios.get('http://localhost:5000/routes/api/userDynamicForms/getInvestorApprovedCompanies',{headers: { "Authorization": localStorage.getItem('jwtToken') }})
       .then(res => {
         if(Array.isArray(res.data.data)){
-          this.setState({approvedCompanies: res.data.data,sscManagers:[]})
+          this.setState({certainFormType: res.data.data})
            
          }
       })
     }
-      
-      tabRow = () => {
-        return this.state.approvedCompanies.map((approvedCompany,i)=>{
-            return <ApprovedCompaniesFields approvedCompany={approvedCompany} key={i}/>  
-         })
+    getAttributes =()=>{
+      return this.state.certainFormType.map((Form,index)=>{
+      var KEYS =[]
+      for (var key in Form)
+        {
+            KEYS.push(key)
+         }
+         return(
+          <Flippy               
+         flipOnHover={false} 
+         flipOnClick={true} 
+         flipDirection="horizontal" 
+         ref={(r) => this.flippy = r} 
+         style={{ width: "100%" , height: '500px' }}
+          
+       >
+       <FrontSide
+             style={{
+               borderStyle: 'solid',
+               borderWidth:'5px',
+               backgroundSize: "464px 400px"
+              }}
+           >
+           <div style={{textAlign:'center' ,fontSize:'50px' , textShadow:'-2px 0 white, 0 2px white, 2px 0 white, 0 -2px white'}}>
+            <h1 style = {{textShadow:'-1px 0 white, 0 1px white, 1px 0 white, 0 -1px white', fontSize:'100px'}}>{Form.companyName}</h1>
+            <i class="fas fa-angle-double-left" title='click to view details' style={{paddingRight:'650px'}}></i>
+          <i class="fas fa-angle-double-right" title='click to view details' style={{paddingLeft:'650px'}}></i><br/>
+           </div>
+           </FrontSide>
+         <BackSide
+          style={{ backgroundColor: '#f7f7f7', borderStyle: 'solid',borderWidth:'5px',paddingLeft:'60px'}}>
+          <div>
+  {  KEYS.map((key,index)=>{
+      if(key !== "_id" && key !=="formType" && key !=='investorId' && key !=='lawyerId' )
+      {
+        var constraints = Form[key]
+        console.log(key,":",constraints ) 
+        for (var i in constraints){
+          if(Array.isArray(constraints) ) return constraints.map((att,index)=>{
+         
+          })
+        return  <h5><i class="fas fa-circle" style={{fontSize:"13px"}}></i> {key} : <span style ={{textAlign:'center'}}></span> <span style = {{ color:'#9ad1e7'}}>{constraints}</span> </h5>
+        
         }
+        
+      }})}
+    </div>
+    </BackSide>    
+    </Flippy>)
+           })  
+   }
 
       render(){
         trans.setLanguage(this.props.lang)
         return (
           <div>
-          <div style={{backgroundColor:"#a3dbf1" ,marginTop:"80px",paddingBottom:"20px", paddingTop:"20px",textAlign:"center", fontSize:"60px" , color:"dark" ,flexDirection: 'row', justifyContent: 'flex-end'}} ><h2 style={{fontSize:"50px"}}>{trans.title}</h2></div>   
-              <div  style={{display:"flex" , flexWrap:"wrap",alignItems:"right" , justifyContent:"right"}}>
-              {this.tabRow()}
-              </div>
-          
-          </div>
+          <div style={{backgroundColor:"#a3dbf1",paddingBottom:"20px", paddingTop:"20px",textAlign:"center", fontSize:"60px" , color:"dark" ,flexDirection: 'row', justifyContent: 'flex-end'}} ><h2 style={{marginTop:"30px",paddingTop:'50px',fontSize:"50px"}}>{trans.title}</h2></div>   
+          <div  style={{display:"flex" ,flexWrap:"wrap",alignItems:"right" , justifyContent:"right"}}>
+          {this.getAttributes()} 
+         </div>
+         </div>
           )
       }
     }

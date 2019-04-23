@@ -240,7 +240,7 @@ router.get(
     }
   }
 );
-
+// creating form 
 router.post(
   "/CreatingForm",
   passport.authenticate("jwt", { session: false }),
@@ -272,7 +272,6 @@ router.post(
     }
   }
 );
-
 //Calculating fees as a lawyer
 router.put(
   "/CalculatingFees/:formId",
@@ -285,9 +284,9 @@ router.put(
       //console.log(equation);
       const formid = req.params.formId;
       var form = await dynamicFormController.search("_id", formid);
-      form=form[0]
+      form=form[0].toJSON()
       if (form.error) return res.status(400).json({ error: form.error });
-      var capital = form.toJSON().equityCapital;
+      var capital = form.equityCapital;
       //console.log(form)
       //console.log(capital)
       var calculatedFees =
@@ -299,6 +298,7 @@ router.put(
       if (updatedForm.error)
         return res.status(400).json({ error: updatedForm.error });
       var investor = await userController.search("_id", form.investorId);
+      if(investor!==null){
       if (investor.error)
         return res.status(400).json({ error: investor.error });
       var notifyUser = await notifications.notifyUserForFormUpdates(
@@ -310,6 +310,7 @@ router.put(
         data: updatedForm,
         notifications: notifyUser
       });
+    }
     } else {
       return res.status(401).json({ msg: "Non Authorized" });
     }
@@ -382,7 +383,7 @@ router.put(
         );
         if (returnedForm.error)
           return res.status(400).json({ error: form.error });
-        const investor = await userController.search("_id".form.investor_id);
+        const investor = await userController.search("_id",form.investor_id);
         if(investor!==null){
         if (investor.error)
           return res.status(400).json({ error: investor.error });
@@ -555,6 +556,7 @@ router.put(
 );
 
 //Show an investors approved companies
+//Show an investors approved companies
 router.get(
   "/getInvestorApprovedCompanies",
   passport.authenticate("jwt", { session: false }),
@@ -565,7 +567,7 @@ router.get(
       if (forms.error) return res.status(400).json({ error: forms.error });
       var acceptedForms = [];
       for (i = 0; i < forms.length; i++) {
-        if (forms[i].status === "Accepted") acceptedForms.push(forms[i]);
+        if (forms[i].status === "Approved") acceptedForms.push(forms[i]);
       }
       res.json({ data: acceptedForms });
     } else {
@@ -573,6 +575,27 @@ router.get(
     }
   }
 );
+
+// router.get(
+//   "/getInvestorApprovedCompanies",
+//   passport.authenticate("jwt", { session: false }),
+
+
+//   async (req, res) => {
+//     const userid = req.user.id;
+//     if (req.user.userType === "Investor") {
+//       var forms = await dynamicFormController.search("investorId", userid);
+//       if (forms.error) return res.status(400).json({ error: forms.error });
+//       var acceptedForms = [];
+//       for (i = 0; i < forms.length; i++) {
+//         if (forms[i].status === "Accepted") acceptedForms.push(forms[i]);
+//       }
+//       res.json({ data: acceptedForms });
+//     } else {
+//       res.status(401).json({ msg: "Non Authorized" });
+//     }
+//   }
+// );
 
 //As a lawyer I can add a comment
 router.put(
@@ -635,7 +658,6 @@ router.put(
     }
   }
 );
-
 //When the lawyer adds comments , the investor should edit the form and make the status of it "In progress lawyer"
 router.put(
   "/investorEditForm/:formId",
@@ -646,14 +668,22 @@ router.put(
       var form = await dynamicFormController.search("_id", formid);
       if (form.error) return res.status(400).json({ error: form.error });
       form = await form[0].toJSON()
-      if(form.status==="Unassigned" || form.status==="Lawyer rejected"){
+      if(form.status==="Unassigned"){ 
         for(var prop in req.body){
          form[prop]=req.body[prop]
         }
-        form.status="In progress Lawyer"
         var updatedForm = await dynamicFormController.update("_id", formid, form);
         if(updatedForm.error) return res.status(400).json({error:updatedForm.error})
         return res.json({msg:"Form updated Successfully",data:updatedForm})
+      }
+      else if(form.status==="Lawyer rejected"){
+        for(var prop in req.body){
+          form[prop]=req.body[prop]
+         }
+         form.status="In progress Lawyer"
+         var updatedForm = await dynamicFormController.update("_id", formid, form);
+         if(updatedForm.error) return res.status(400).json({error:updatedForm.error})
+         return res.json({msg:"Form updated Successfully",data:updatedForm})
       }
       else{
         return res.status(400).json({error:"You can't edit this form"})
@@ -691,5 +721,26 @@ router.put(
     }
   }
 );
-
+//investor can delete the form if it's status is unassigned
+router.delete(
+  "/investorDeleteForm/:formId",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    if (req.user.userType === "Investor") {
+      const formid = req.params.formId;
+      var form = await dynamicFormController.search("_id", formid);
+      if (form.error) return res.status(400).json({ error: form.error });
+      form = await form[0].toJSON()
+      if(form.status==="Unassigned"){ 
+        const deletedForm = await dynamicFormController.remove("_id",formid)
+        res.json({ msg: "Form was deleted successfully", data: deletedForm });
+      }
+      else{
+        return res.status(400).json({error:"You can't delete this form"})
+      }
+    } else {
+      return res.status(401).json({ msg: "Non Authorized" });
+    }
+  }
+);
 module.exports = router;

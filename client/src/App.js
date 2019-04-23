@@ -38,8 +38,7 @@ import ChangePassword from './components/pages/ChangePassword'
 import GetFormByCompanyName from './components/form/GetFormByCompanyName'
 import ShowProfileI from './components/pages/showProfileI'
 import ShowProfileLR from './components/pages/showProfileLR'
-import InProgressSSCCases from './components/pages/inProgressSSCCases';
-import InProgressSPCCases from './components/pages/inProgressSPCCases';
+import InProgressInvestorCases from './components/pages/inProgressInvestorCases';
 import GetCaseLawyerSPC from './components/pages/getCaseLawyerSPC'
 import GetCaseLawyerSSC from './components/pages/getCaseLawyerSSC'
 
@@ -115,8 +114,8 @@ class App extends Component {
       <Route exact path='/editprofile'  render={(props) => <EditProfile {...props}  lang={this.state.lang}/>}/>
       <Route exact path='/editspcform' render={(props) => <EditSPCForm {...props}  formId={this.state.formId}/>}/>
       <Route exact path='/editsscform' render={(props) => <EditSSCForm {...props}  formId={this.state.formId}/>}/>
-      <Route exact path='/showsscform' render={(props) => <InProgressSSCCases {...props}  lang={this.state.lang} setFormId={this.setFormId}/>}/>
-      <Route exact path='/showspcform' render={(props) => <InProgressSPCCases {...props}  lang={this.state.lang} setFormId={this.setFormId} />}/>
+      
+      <Route exact path='/investorInProgressform' render={(props) => <InProgressInvestorCases {...props}  lang={this.state.lang} setFormId={this.setFormId} />}/>
       <Route exact path='/companyName' render={(props) => <GetFormByCompanyName {...props}  lang={this.state.lang} />}/>
       <Route exact path='/getCaseLawyerSSC' render={(props) => <GetCaseLawyerSSC {...props}  lang={this.state.lang} />}/>
       <Route exact path='/getCaseLawyerSPC' render={(props) => <GetCaseLawyerSPC {...props}  lang={this.state.lang} />}/>

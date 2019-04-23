@@ -9,7 +9,6 @@ class Companies extends Component {
       certainFormType:[]
     }
     componentDidMount(){
-      // const formType= localStorage.getItem('formType')
       axios.get('http://localhost:5000/routes/api/dynamicForms/')
       .then(res => {
         if(Array.isArray(res.data.data)){
@@ -18,7 +17,6 @@ class Companies extends Component {
       }
       )}
       getAttributes =()=>{
-        
          return this.state.certainFormType.map((Form,index)=>{
          var KEYS =[]
          for (var key in Form)
@@ -31,7 +29,7 @@ class Companies extends Component {
             flipOnClick={true} 
             flipDirection="horizontal" 
             ref={(r) => this.flippy = r} 
-            style={{ width: "100%" , height: '425px' }}
+            style={{ width: "100%" , height: '500px' }}
              
           >
           <FrontSide
@@ -43,39 +41,32 @@ class Companies extends Component {
               >
               <div style={{textAlign:'center' ,fontSize:'50px' , textShadow:'-2px 0 white, 0 2px white, 2px 0 white, 0 -2px white'}}>
                <h1 style = {{textShadow:'-1px 0 white, 0 1px white, 1px 0 white, 0 -1px white', fontSize:'100px'}}>{Form.companyName}</h1>
-               <i class="fas fa-angle-double-left" title='click to view details' style={{paddingRight:'650px'}}></i>
-             <i class="fas fa-angle-double-right" title='click to view details' style={{paddingLeft:'650px'}}></i><br/>
+               <i class="fas fa-angle-double-left" title='click to view details' style={{paddingRight:'650px' , paddingTop:"100px"}}></i>
+             <i class="fas fa-angle-double-right" title='click to view details' style={{paddingLeft:'650px', paddingTop:"100px"}}></i><br/>
               </div>
               </FrontSide>
             <BackSide
              style={{ backgroundColor: '#f7f7f7', borderStyle: 'solid',borderWidth:'5px',paddingLeft:'60px'}}>
              <div>
      {  KEYS.map((key,index)=>{
-         if(key !=='_proto' && key !== "_id" && key !=="formType" && key !=='investorId' && key !=='lawyerId' )
+         if(key !== "_id" && key !=="formType" && key !=='investorId' && key !=='lawyerId' )
          {
-           var constraints = Form[key]
-           console.log(key,":",constraints ) 
+           var constraints = Form[key] 
            for (var i in constraints){
              if(Array.isArray(constraints) ) return constraints.map((att,index)=>{
+               
             
              })
            return  <h5><i class="fas fa-circle" style={{fontSize:"13px"}}></i> {key} : <span style ={{textAlign:'center'}}></span> <span style = {{ color:'#9ad1e7'}}>{constraints}</span> </h5>
-            //  return  <div><div  key={key} > {key} : {constraints} </div></div>
+           
            }
            
-         }
-         
-       })}
+         }})}
        </div>
-            </BackSide>
-                    
-                </Flippy>)
-              })
-
-        
+       </BackSide>    
+       </Flippy>)
+              })  
       }
-      
-    
       render(){
         trans.setLanguage(this.props.lang)
         return ( 

@@ -5,6 +5,7 @@ import "mdbreact/dist/css/mdb.css";
 import {Button} from 'react-bootstrap';
 import Flippy , {FrontSide , BackSide} from 'react-flippy'
 import trans from '../translations/unassignedRevTranslation'
+const Mongoose = require('mongoose');
 class assignToReviewer extends Component 
 {
     state = {
@@ -18,6 +19,12 @@ class assignToReviewer extends Component
           if(Array.isArray(res.data.data)){
             this.setState({certainFormType: res.data.data})
         }})}
+        AssignReviewer = (formId) => 
+        {
+            axios.defaults.headers.common['Authorization'] =  localStorage.getItem('jwtToken');
+            axios.put('http://localhost:5000/routes/api/userDynamicForms/takingForm/'+Mongoose.Types.ObjectId(formId),{headers: { "Authorization": localStorage.getItem('jwtToken') }})
+            document.location.href='/investorInProgressform'    
+          }
         getAttributes =()=>{
         
           return this.state.certainFormType.map((Form,index)=>{
@@ -51,7 +58,7 @@ class assignToReviewer extends Component
              style={{ backgroundColor: '#f7f7f7', borderStyle: 'solid',borderWidth:'5px',paddingLeft:'60px'}}>
              <div>
      {  KEYS.map((key,index)=>{
-         if(key !=='_proto' && key !== "_id" && key !=="formType" && key !=='investorId' && key !=='lawyerId' )
+         if( key !== "_id" && key !=="formType" && key !=='investorId' && key !=='lawyerId' )
          {
            var constraints = Form[key]
            console.log(key,":",constraints ) 
@@ -72,8 +79,8 @@ class assignToReviewer extends Component
         render(){
             return (
               <div>
-              <div style={{backgroundColor:"#a3dbf1" ,marginTop:"80px",paddingBottom:"20px", paddingTop:"20px",textAlign:"center", fontSize:"60px" , color:"dark" ,flexDirection: 'row', justifyContent: 'flex-end'}} ><h2 style={{fontSize:"50px"}}>{trans.title}</h2></div>            
-               <div  style={{display:"flex" , flexWrap:"wrap",alignItems:"right" , justifyContent:"right"}}>
+              <div style={{backgroundColor:"#a3dbf1",paddingBottom:"20px", paddingTop:"20px",textAlign:"center", fontSize:"60px" , color:"dark" ,flexDirection: 'row', justifyContent: 'flex-end'}} ><h2 style={{marginTop:"30px",paddingTop:'50px',fontSize:"50px"}}>{trans.title}</h2></div>   
+              <div  style={{display:"flex" ,flexWrap:"wrap",alignItems:"right" , justifyContent:"right"}}>
               {this.getAttributes()} 
              </div>
              </div>

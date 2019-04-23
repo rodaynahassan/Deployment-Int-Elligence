@@ -63,7 +63,7 @@ class NewNavBar extends Component{
                                 <Dropdown.Divider/>
                                 <Dropdown.Item href='/approvedCompanies' style={{textAlign:'left',color:'#3e484d'}}> Show Approved Companies</Dropdown.Item>
                                 <Dropdown.Divider/>
-                                <Dropdown.Item href='/showspcform'style={{textAlign:'left',color:'#3e484d'}} > Track your forms</Dropdown.Item>
+                                <Dropdown.Item href='/investorInProgressform'style={{textAlign:'left',color:'#3e484d'}} > Track your forms</Dropdown.Item>
                             </Dropdown.Menu>
                             </Dropdown>
                         </li>

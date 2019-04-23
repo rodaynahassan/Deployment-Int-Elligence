@@ -15,13 +15,7 @@ const axios = require('axios');
 
 const moment = require('moment');
 
-<<<<<<< HEAD
 const randomBytes = require('randombytes');
-=======
-//const crypto = require('crypto-js');
-
-//const randomBytes = require('randombytes');
->>>>>>> 8acf7f9e804e4ad0338886a18db1216f290597e9
 
 const nodemailer = require('nodemailer');
 

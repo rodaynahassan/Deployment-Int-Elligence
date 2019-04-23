@@ -2,37 +2,20 @@
 const express = require('express');
 const uuid = require('uuid');
 const router = express.Router();
-<<<<<<< HEAD
 const validator = require('../../validations/adminValidations');
 const adminController = require('../../controllers/adminController');
-const dynamicFormController = require('../../controllers/dynamicFormController');
+
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const tokenKey = require('../../config/keys').secretOrKey;
-const Admin = require('../../models/Admin');
-const passport = require('passport');
-require('../../config/passport')(passport);
-
-//get by ID
-router.get('/getById/', passport.authenticate('jwt', { session: false }), async (req, res) => {
-	var admin = await adminController.search('id', req.user.id);
-	return res.json({ data: admin });
-});
-=======
-const validator = require('../../validations/adminValidations')
-const adminController = require('../../controllers/adminController')
-
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken')
-const tokenKey = require('../../config/keys').secretOrKey
 // Models
 const Admin = require('../../models/Admin');
 
-const dynamicFormController = require('../../controllers/dynamicFormController')
+const dynamicFormController = require('../../controllers/dynamicFormController');
 
-const passport = require('passport')
-require('../../config/passport')(passport)
- //       for testing!!!!!!!!
+const passport = require('passport');
+require('../../config/passport')(passport);
+//       for testing!!!!!!!!
 // router.get('/getInvestorName',passport.authenticate('jwt', {session: false}) ,async (req,res) => {
 //     // You can access the logged in user through req.user
 //     // Add your authorization rules accordingly
@@ -46,35 +29,27 @@ require('../../config/passport')(passport)
 // })
 
 //get by ID
-router.get(
-  "/getById/",
-  passport.authenticate("jwt", { session: false }),
-  async (req, res) => {
-    var admin = await adminController.search("id", req.user.id);
-    return res.json({ data: admin });
-})
-router.get(
-    "/CertainAttributes",
-    passport.authenticate("jwt", { session: false }),
-    async (req, res) => {
-      const userid = req.user.id;
-      const searchUsers = await adminController.search("id", userid);
-      return res.json({
-        Username: searchUsers.name,
-        Gender: searchUsers.gender,
-        Nationality: searchUsers.nationality,
-        IdentificationType: searchUsers.identificationType,
-        IdentificationNumber: searchUsers.identificationNumber,
-        Birthdate: searchUsers.birthdate,
-        Address: searchUsers.address,
-        Email: searchUsers.email,
-        Password: searchUsers.password,
-        Telephone: searchUsers.telephone,
-        Fax: searchUsers.fax
-      });
-    }
-  );
->>>>>>> 8acf7f9e804e4ad0338886a18db1216f290597e9
+router.get('/getById/', passport.authenticate('jwt', { session: false }), async (req, res) => {
+	var admin = await adminController.search('id', req.user.id);
+	return res.json({ data: admin });
+});
+router.get('/CertainAttributes', passport.authenticate('jwt', { session: false }), async (req, res) => {
+	const userid = req.user.id;
+	const searchUsers = await adminController.search('id', userid);
+	return res.json({
+		Username: searchUsers.name,
+		Gender: searchUsers.gender,
+		Nationality: searchUsers.nationality,
+		IdentificationType: searchUsers.identificationType,
+		IdentificationNumber: searchUsers.identificationNumber,
+		Birthdate: searchUsers.birthdate,
+		Address: searchUsers.address,
+		Email: searchUsers.email,
+		Password: searchUsers.password,
+		Telephone: searchUsers.telephone,
+		Fax: searchUsers.fax
+	});
+});
 
 // get all admins
 router.get('/', async (
@@ -84,7 +59,6 @@ router.get('/', async (
 	const admin = await adminController.search();
 	return res.json({ data: admin });
 });
-
 
 //create admin           //not sure about it
 router.post('/createAdmin', async (req, res) => {
@@ -117,7 +91,6 @@ router.get('/CasesSortedByCreationDate', passport.authenticate('jwt', { session:
 });
 
 //get case/form by company name
-<<<<<<< HEAD
 router.get('/getByCompanyName/:companyName', passport.authenticate('jwt', { session: false }), async (req, res) => {
 	if (req.user.userType === 'Admin') {
 		const companyname = req.params.companyName;
@@ -128,22 +101,6 @@ router.get('/getByCompanyName/:companyName', passport.authenticate('jwt', { sess
 		return res.json({ msg: 'Non Authorized' });
 	}
 });
-=======
-router.get(
-    "/getByCompanyName/:companyName",
-    passport.authenticate("jwt", { session: false }),
-    async (req, res) => {
-      if (req.user.userType === "Admin") {
-        const companyname = req.params.companyName;
-        var form = await dynamicFormController.search('companyName', companyname);
-        if (form.error) return res.status(400).json({ error: form.error });
-        return res.json({ data: form });
-      } else {
-        return res.json({ msg: "Non Authorized" });
-      }
-    }
-  );
->>>>>>> 8acf7f9e804e4ad0338886a18db1216f290597e9
 
 // update an admin
 router.put('/updateAdmin', passport.authenticate('jwt', { session: false }), async (req, res) => {

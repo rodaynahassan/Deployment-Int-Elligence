@@ -1,9 +1,9 @@
-import  React, { Component } from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 import '../../App.css';
-import "mdbreact/dist/css/mdb.css";
-import Flippy , {FrontSide , BackSide} from 'react-flippy'
-import trans from '../translations/companiesTranslation'
+import 'mdbreact/dist/css/mdb.css';
+import Flippy, { FrontSide, BackSide } from 'react-flippy';
+import trans from '../translations/companiesTranslation';
 class Companies extends Component {
     state = {
       certainFormType:[]

@@ -1,11 +1,11 @@
-import  React, { Component } from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 import '../../App.css';
-import'../../App.scss';
-import {Button} from 'react-bootstrap';
-import "mdbreact/dist/css/mdb.css";
-import Flippy , {FrontSide , BackSide} from 'react-flippy'
-import trans from '../translations/unassignedTranslation'
+import '../../App.scss';
+import { Button } from 'react-bootstrap';
+import 'mdbreact/dist/css/mdb.css';
+import Flippy, { FrontSide, BackSide } from 'react-flippy';
+import trans from '../translations/unassignedTranslation';
 const mongoose = require('mongoose');
 class unassignedForm extends Component 
 {

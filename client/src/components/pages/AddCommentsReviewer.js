@@ -1,7 +1,7 @@
-import  React, { Component } from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
-import {Button} from 'react-bootstrap'
-import {Modal} from 'react-bootstrap'
+import { Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import '../../App.css';
 const mongoose = require('mongoose')
 
@@ -49,13 +49,8 @@ class AddCommentsReviewer extends Component{
 
     //if the id belongs to a lawyer
     handleClick = (formId,event) =>
-    {
-
-      
-
-
-     
-        var apiBaseUrl =('http://localhost:5000/routes/api/users/reviewerComments/'+mongoose.Types.ObjectId(formId))
+    { 
+        var apiBaseUrl =('/routes/api/userDynamicForms/reviewerComments/'+mongoose.Types.ObjectId(formId))
         var payload={
             "reviewerComments": this.state.reviewerComments.value
         }
@@ -134,12 +129,9 @@ class AddCommentsReviewer extends Component{
           block
           onClick={() => (this.handleClick() , alert('Comments added Succesfully'))}
         >Add Comment</Button> */}
-      </div>
-
-           
-        
-          )
-    }
+			</div>
+		);
+	}
 }
 
- export default AddCommentsReviewer
+export default AddCommentsReviewer;

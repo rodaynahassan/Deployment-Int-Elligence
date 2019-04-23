@@ -20,7 +20,7 @@ class ShowProfileI extends Component {
 			.then((res) => {
 				this.setState({ userInfo: [ res.data.data ] });
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => alert(err.response.data.errmsg || err.response.data));
 	};
 
 	tabRow() {

@@ -37,9 +37,7 @@ class Companies extends Component {
 				this.setState({ forms: res.data.data });
 				alert('Cases have been sorted');
 			})
-			.catch((err) => {
-				console.log(err);
-			});
+			.catch((err) => alert(err.response.data.errmsg || err.response.data));
 	};
 	sortByCreationDate = () => {
 		axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
@@ -51,9 +49,7 @@ class Companies extends Component {
 				this.setState({ companies: res.data.data });
 				alert('Cases have been sorted');
 			})
-			.catch((err) => {
-				console.log(err);
-			});
+			.catch((err) => alert(err.response.data.errmsg || err.response.data));
 	};
 	tabRow = () => {
 		return this.state.companies.map((company, i) => {

@@ -21,7 +21,7 @@ class InProgressSPCCases extends Component {
 					this.setState({ inProgressSPCCases: res.data.data });
 				}
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => alert(err.response.data.errmsg || err.response.data));
 	}
 	tabRow = () => {
 		return this.state.inProgressSPCCases.map((inProgressSPCCase, i) => {

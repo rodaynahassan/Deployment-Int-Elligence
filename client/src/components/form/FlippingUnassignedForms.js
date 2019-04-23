@@ -12,7 +12,7 @@ class FlippingUnassignedForms extends Component {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
 			.then((res) => console.log(res))
-			.catch((err) => console.log(err));
+			.catch((err) => alert(err.response.data.errmsg || err.response.data));
 	};
 	render() {
 		return (

@@ -36,12 +36,10 @@ class ShowUnassignedForms extends Component {
 							this.setState({ ShowUnassignedForms: res.data.data });
 						}
 					})
-					.catch((err) => console.log(err));
+					.catch((err) => alert(err.response.data.errmsg || err.response.data));
 				alert('Form Deleted');
 			})
-			.catch((err) => {
-				console.log(err);
-			});
+			.catch((err) => alert(err.response.data.errmsg || err.response.data));
 	}
 
 	componentDidMount() {
@@ -56,7 +54,7 @@ class ShowUnassignedForms extends Component {
 					this.setState({ ShowUnassignedForms: res.data.data });
 				}
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => alert(err.response.data.errmsg || err.response.data));
 	}
 	tabRow = () => {
 		return this.state.ShowUnassignedForms.map((ShowUnassignedForm, i) => {

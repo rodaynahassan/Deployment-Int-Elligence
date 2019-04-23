@@ -46,9 +46,7 @@ class AddCommentsReviewer extends Component {
 			.then(function(response) {
 				console.log(response);
 			})
-			.catch(function(error) {
-				console.log(error);
-			});
+			.catch((err) => alert(err.response.data.errmsg || err.response.data));
 	};
 
 	changeHandler = (event) => {

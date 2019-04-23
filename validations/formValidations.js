@@ -1,6 +1,6 @@
 const Joi = require('joi')
 Joi.objectId = require('joi-objectid')(Joi)
-const User = require('../Models/User')
+const User = require('../models/User')
 
 
 module.exports = {

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const FormType = require("../Models/FormType");
+const FormType = require("../models/FormType");
 
 exports.search = async (att, value) => {
   if (!att) {

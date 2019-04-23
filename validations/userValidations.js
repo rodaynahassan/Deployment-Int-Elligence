@@ -1,5 +1,4 @@
-const Joi = require('joi')
-
+const Joi = require('joi');
 
 module.exports = {
     createValidationL: request => {                         // create for lawyer
@@ -16,7 +15,9 @@ module.exports = {
         password : Joi.string().required().min(8).max(16),
         telephone: Joi.string().min(4).max(15),
         fax:  Joi.string().min(5).max(20),
-        forms: Joi.array()
+		forms: Joi.array(),
+		resetPasswordToken: Joi.string(),
+			resetPasswordExpires: Joi.date()
          }
 
         return Joi.validate(request, createSchema)
@@ -40,7 +41,9 @@ module.exports = {
         fax:  Joi.string().min(5).max(20),
         investorType: Joi.string().required(),
         financialBalance:Joi.number(),
-        forms:Joi.array() 
+		forms:Joi.array() ,
+		resetPasswordToken: Joi.string(),
+			resetPasswordExpires: Joi.date()
         }
 
 
@@ -63,7 +66,9 @@ module.exports = {
         password : Joi.string().required().min(8).max(16),
         telephone: Joi.string().min(4).max(15),
         fax:  Joi.string().min(5).max(20),
-        forms: Joi.array()
+		forms: Joi.array(),
+		resetPasswordToken: Joi.string(),
+			resetPasswordExpires: Joi.date()
         }
 
 
@@ -73,6 +78,7 @@ module.exports = {
 
     updateValidationL: request => {                                     //update for lawyer
         const updateSchema = {
+            userType: Joi.string().valid('Lawyer'),
             name: Joi.string().max(50).min(3),
             gender:Joi.string().max(6).min(4),
             nationality: Joi.string().max(50),
@@ -95,6 +101,7 @@ module.exports = {
 
     updateValidationI: request => {                                     //update for investor
         const updateSchema = {
+            userType: Joi.string().valid('Investor'),
             name: Joi.string().max(50).min(3),
             gender:   Joi.string().max(6).min(4),
             nationality: Joi.string().max(50),
@@ -115,6 +122,7 @@ module.exports = {
     }, 
     updateValidationR: request => {                                             //update for reviewer
         const updateSchema = {
+            userType: Joi.string().valid('Reviewer'),
         name: Joi.string().max(50).min(3),
         gender:   Joi.string().max(6).min(4),
         nationality: Joi.string().max(50),

@@ -1,7 +1,8 @@
 var Joi = require("joi");
-const FormType = require("../Models/FormType");
-const DynamicForm = require("../Models/DynamicForm");
-const Dependencies = require("../Models/Dependencies");
+const FormType = require("../models/FormType");
+const DynamicForm = require("mongoose").model('dynamicforms')
+//const DynamicForm = require("../models/DynamicForm");
+const Dependencies = require("../models/Dependencies");
 Joi.objectId = require("joi-objectid")(Joi);
 
 module.exports = {
@@ -27,7 +28,7 @@ module.exports = {
       .catch(err => {
         return { error: err };
       });
-      //console.log(dependencies)
+      console.log(dependencies)
     if (dependencies.length===0) dependencies ={};
     else {
       dependencies = dependencies[0].toJSON();

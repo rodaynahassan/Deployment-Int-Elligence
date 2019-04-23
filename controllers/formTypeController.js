@@ -29,6 +29,15 @@ exports.search = async (att, value) => {
         return { error: err };
       });
   }
+  if (att == "formTypeArray") {
+    return await FormType.find({ formTypeArray: value })
+      .then(res => {
+        return res;
+      })
+      .catch(err => {
+        return { error: err };
+      });
+  }
 };
 
 exports.create = async body => {

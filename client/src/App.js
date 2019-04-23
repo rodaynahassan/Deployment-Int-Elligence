@@ -42,6 +42,8 @@ import InProgressSSCCases from './components/pages/inProgressSSCCases';
 import InProgressSPCCases from './components/pages/inProgressSPCCases';
 import GetCaseLawyerSPC from './components/pages/getCaseLawyerSPC'
 import GetCaseLawyerSSC from './components/pages/getCaseLawyerSSC'
+import CreateANewCompany from './components/pages/CreateANewCompany'
+import AttributeArray from './components/pages/AttributeArray'
 
 import Try from './components/try';
 
@@ -54,6 +56,7 @@ class App extends Component {
   state=
   {
     lang:localStorage.getItem('lang'),
+    formType:localStorage.getItem('formType'),
     formId:{}    
 } 
   changelang = (lang) =>
@@ -63,6 +66,7 @@ class App extends Component {
       console.log(lang)
     }
 
+    
     setFormId = (formId)=>{
       this.setState({formId:formId})
       if(formId.type==="SSCForm")
@@ -113,12 +117,14 @@ class App extends Component {
       <Route path='/companyName' render={(props) => <GetFormByCompanyName {...props}  lang={this.state.lang} />}/>
       <Route path='/getCaseLawyerSSC' render={(props) => <GetCaseLawyerSSC {...props}  lang={this.state.lang} />}/>
       <Route path='/getCaseLawyerSPC' render={(props) => <GetCaseLawyerSPC {...props}  lang={this.state.lang} />}/>
+      <Route path='/createNewForm' render={(props) => <CreateANewCompany {...props}   />}/>
+      <Route path='/attributeInArray' render={(props)=><AttributeArray {...props} />}/>
 
       <Route path='/try' render={(props) => <Try {...props}  lang={this.state.lang}/>}/>
       </div>
     
     {currentLocation==='/'?<Side changelang={this.changelang}  />:<NewNavBar changelang={this.changelang}/>}
-    <Footer/>
+    {/* <Footer/> */}
       </Router>
       </Provider>
         )}

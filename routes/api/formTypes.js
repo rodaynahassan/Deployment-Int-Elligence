@@ -13,7 +13,7 @@ router.get("/" , passport.authenticate('jwt', { session: false }), async (req, r
   });
 
 
-  router.get('/getByFormType', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  router.get('/getAllFormTypes', passport.authenticate('jwt', { session: false }), async (req, res) => {
     const forms = await formTypeController.search()
     console.log(forms)
     const types=[];
@@ -23,5 +23,29 @@ router.get("/" , passport.authenticate('jwt', { session: false }), async (req, r
         }
     }
     return res.json({ data:types});
+})
+router.get('/getAllFormTypeArrays', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  const forms = await formTypeController.search()
+  //console.log(forms)
+  const types=[];
+  for (i=0;i<forms.length;i++){
+      if(forms[i].toJSON().formTypeArray){
+        //console.log(forms[i])
+      types.push(forms[i].toJSON().formTypeArray)
+      }
+  }
+  return res.json({ data:types});
+})
+
+router.get('/getByFormType/:formType', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  const formType2 = req.params.formType
+  const certainForm = await formTypeController.search('formType',formType2)
+  return res.json({ data:certainForm});
+})
+router.get('/getByFormTypeArray/:formTypeArray', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  const formType2 = req.params.formTypeArray
+  const certainForm = await formTypeController.search('formTypeArray',formType2).then(res=>{return res}).catch(err=> {return err})
+ console.log(certainForm)
+  return res.json({ data:certainForm});
 })
 module.exports = router;

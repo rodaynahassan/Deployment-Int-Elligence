@@ -18,7 +18,7 @@ module.exports = {
     if (validations.error) return validations;
     if (validations === []) return { error: "Form type doesnt exist" };
     validations = validations[0];
-    // console.log(validations)
+    // //console.log(validations)
     validations = validations.toJSON();
     let dependencies = await Dependencies.find({ formType: formType })
       .then(res => {
@@ -27,20 +27,21 @@ module.exports = {
       .catch(err => {
         return { error: err };
       });
-      console.log(dependencies)
+      //console.log(dependencies)
     if (dependencies.length===0) dependencies ={};
     else {
       dependencies = dependencies[0].toJSON();
     }
     for (var prop in validations) {
-      // console.log(prop)
-      if (prop !== "formType" && prop !== "_id") {
+      // //console.log(prop)
+      if (prop !== "formType" && prop !== "_id" && prop!=="__v") {
+        //console.log(prop)
         let constraints = validations["" + prop].split(",");
         let depends = undefined;
         if (dependencies["" + prop]) {
           depends = dependencies["" + prop].split(",");
         }
-        //  console.log(constraints)
+        //  //console.log(constraints)
         if (constraints[4] === "unique") {
           let queryparam = {};
           if (request[prop]) {
@@ -53,7 +54,7 @@ module.exports = {
                 return { error: err };
               });
             if (testUnique.error) return testUnique;
-            //console.log(testUnique)
+            ////console.log(testUnique)
             if (testUnique[0])
               return {
                 error: "Duplicate Value: " + prop + ":" + request[prop]
@@ -309,9 +310,9 @@ module.exports = {
               Joi.string(),
               Joi.number(),
               Joi.date()
-            );
-            // console.log(prop)
-            // console.log(createSchema[prop])
+            ).allow(null);
+            // //console.log(prop)
+            // //console.log(createSchema[prop])
             let childValidations = await FormType.find({
               formTypeArray: constraints[2]
             })
@@ -322,11 +323,11 @@ module.exports = {
                 return { error: err };
               });
             let array = request[prop];
-            
-             console.log(array)
+            if(!array) break;
+             //console.log(array)
             childValidations = childValidations[0].toJSON();
             for (i = 0; i < array.length; i++) {
-              let childCreateSchema = {};
+              let childCreateSchema = {formTypeArray:Joi.any()};
               if (childValidations.error) return childValidations;
               for (var childProp in childValidations) {
                 if (
@@ -334,8 +335,8 @@ module.exports = {
                   childProp !== "formTypeArray" &&
                   childProp !== "_id"
                 ) {
-                  // console.log(childProp)
-                  // console.log(childValidations[childProp])
+                  // //console.log(childProp)
+                  // //console.log(childValidations[childProp])
                   let childConstraints = childValidations[childProp].split(",");
                   switch (childConstraints[0]) {
                     case "string":
@@ -481,7 +482,7 @@ module.exports = {
                         childCreateSchema[childProp] = Joi.number();
                       break;
                     case "date":
-                      // console.log(childConstraints[1]);
+                      // //console.log(childConstraints[1]);
                       if (childConstraints[1] === "required")
                         childCreateSchema[childProp] = Joi.date().required();
                       else childCreateSchema[childProp] = Joi.date();
@@ -532,13 +533,16 @@ module.exports = {
       reviewerComments: Joi.array(),
       status:Joi.string(),
       fees:Joi.number(),
-      investorId:Joi.object().allow(null),
-      reviewerId:Joi.object().allow(null),
-      lawyerId:Joi.object().allow(null),
+      investorId:Joi.any().allow(null),
+      reviewerId:Joi.any().allow(null),
+      lawyerId:Joi.any().allow(null),
       creationDate:Joi.date(),
       __v:Joi.number()
     };
-    let formType = request.toJSON().formType;
+    //console.log("hi")
+    var formType = request.formType;
+    
+    //console.log("hi")
     let validations = await FormType.find({ formType: formType })
       .then(res => {
         return res;
@@ -547,11 +551,11 @@ module.exports = {
         return { error: err };
       });
     if (validations.error) return validations;
-    // console.log(validations)
+    // //console.log(validations)
     if (validations === [])
       return { error: "This is not a valid type of Form" };
     validations = validations[0];
-    // console.log(validations)
+    // //console.log(validations)
     validations = validations.toJSON();
     let dependencies = await Dependencies.find({ formType: formType })
       .then(res => {
@@ -560,7 +564,7 @@ module.exports = {
       .catch(err => {
         return { error: err };
       });
-     // console.log(dependencies)
+     // //console.log(dependencies)
     if (!dependencies || dependencies.length===0) dependencies = {};
     else {
       dependencies = dependencies[0].toJSON();
@@ -576,7 +580,7 @@ module.exports = {
         if (dependencies["" + prop]) {
           depends = dependencies["" + prop].split(",");
         }
-        // console.log(depends)
+        // //console.log(depends)
         if (constraints[4] === "unique") {
           let queryparam = {};
           if (request[prop]) {
@@ -589,8 +593,8 @@ module.exports = {
                 return { error: err };
               });
             if (testUnique.error) return testUnique;
-            //console.log(testUnique)
-            if (testUnique[0])
+            ////console.log(testUnique)
+            if (testUnique[1])
               return {
                 error: "Duplicate Value: " + prop + ":" + request[prop]
               };
@@ -685,8 +689,8 @@ module.exports = {
               updateSchema[prop] = Joi.number();
 
             if (depends) {
-              // console.log(depends[4])
-              // console.log(depends[1])
+              // //console.log(depends[4])
+              // //console.log(depends[1])
               if (depends[5] !== "")
                 updateSchema[prop] = Joi.when(depends[0], {
                   is: depends[1],
@@ -761,12 +765,12 @@ module.exports = {
               .catch(err => {
                 return { error: err };
               });
-              console.log(request)
-            let array = request.toJSON()[""+prop];
+             // //console.log(request)
+            let array = request[""+prop];
             childValidations = childValidations[0].toJSON();
-            // console.log(childValidations)
+            // //console.log(childValidations)
             for (i = 0; i < array.length; i++) {
-              let childUpdateSchema = {};
+              let childUpdateSchema = {formTypeArray:Joi.string()};
               if (childValidations.error) return childValidations;
               for (var childProp in childValidations) {
                 if (
@@ -774,8 +778,8 @@ module.exports = {
                   childProp !== "formTypeArray" &&
                   childProp !== "_id"
                 ) {
-                  //console.log(childProp)
-                  //console.log(childValidations[childProp])
+                  ////console.log(childProp)
+                  ////console.log(childValidations[childProp])
                   let childConstraints = childValidations[childProp].split(",");
                   switch (childConstraints[0]) {
                     case "string":
@@ -945,14 +949,14 @@ module.exports = {
         }
       }
     }
-    let x = await Joi.validate(request.toJSON(), updateSchema)
+    let x = await Joi.validate(request, updateSchema)
       .then(res => {
         return res;
       })
       .catch(err => {
         return { error: err };
       });
-    console.log(x);
+    //console.log(x);
     return x;
   }
 };

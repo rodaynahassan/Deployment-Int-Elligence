@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const Form = require('./Form').schema;
 
 const User = new Schema({
 	userType: { type: String, enum: [ 'Reviewer', 'Lawyer', 'Investor' ] },
@@ -15,7 +14,6 @@ const User = new Schema({
 	password: { type: String, required: true },
 	telephone: { type: String },
 	fax: { type: String },
-	forms: { type: Array },
 	lawyer: { type: Object },
 	investorType: { type: String },
 	financialBalance: { type: Number },

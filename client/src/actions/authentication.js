@@ -10,8 +10,6 @@ export const registerUser = (user) => dispatch => {
         //.catch(err => console.log(err))
         .catch(err => {alert(err.response.data.errmsg||err.response.data)
          console.log(err.response)})
-
-
 }
 
 export const registerLR = (user) => dispatch => {
@@ -31,11 +29,6 @@ export const registerLR = (user) => dispatch => {
 
 
 }
-
-
-
-
-
 
 
 export const loginUser = (user) => dispatch => {

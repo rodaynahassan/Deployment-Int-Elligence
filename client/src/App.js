@@ -11,8 +11,6 @@ import FormControl from 'react-bootstrap/FormControl';
 import './App.scss';
 import LandingBody from './components/pages/landingBody';
 import Profile from './components/pages/profilePage';
-import About from './components/pages/aboutContactUsPage';
-import ApprovedCompanies from './components/pages/ApprovedCompanies';
 import Footer from './components/layout/footer';
 import SPCForm from './components/pages/SPCform';
 import FForm from './components/pages/form';
@@ -47,6 +45,11 @@ import GetCaseLawyerSPC from './components/pages/getCaseLawyerSPC';
 import GetCaseLawyerSSC from './components/pages/getCaseLawyerSSC';
 import ForgotPassword from './containers/ForgotPassword';
 import ResetPassword from './containers/ResetPassword';
+import About from './components/pages/about'
+import ApprovedCompanies from './components/pages/ApprovedCompanies'
+import companyPDF from './components/pages/companyPdf'
+
+
 import CreateANewCompany from './components/pages/CreateANewCompany'
 import AttributeArray from './components/pages/AttributeArray'
 import InProgressInvestorCases from './components/pages/inProgressInvestorCases';
@@ -177,6 +180,11 @@ class App extends Component {
 									path="/lawyerAcceptedForms"
 									render={(props) => <AssignToReviewer {...props} lang={this.state.lang} />}
 								/>
+								<Route
+									exact
+									path="/approvedCompanies"
+									render={(props) => <ApprovedCompanies {...props} lang={this.state.lang} />}
+								/>
 
 								<Route exact path="/GetReviewer" component={GetCaseReviewer} />
 
@@ -231,6 +239,11 @@ class App extends Component {
 									exact
 									path="/getCaseLawyerSPC"
 									render={(props) => <GetCaseLawyerSPC {...props} lang={this.state.lang} />}
+								/>
+								<Route
+									exact
+									path="/companyPdf"
+									render={(props) => <companyPDF {...props} lang={this.state.lang} />}
 								/>
 
 								<Route

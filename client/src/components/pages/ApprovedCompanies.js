@@ -1,87 +1,249 @@
 import  React, { Component } from 'react';
 import axios from 'axios';
 import '../../App.css';
-import '../../App.scss'
-import Flippy , {FrontSide , BackSide} from 'react-flippy'
+// import ApprovedCompaniesFields from '../user/ApprovedCompaniesFields';
+import Table from 'react-bootstrap/Table'
+import Navbar from 'react-bootstrap/Navbar'
+import {Badge} from 'react-bootstrap'
 import trans from '../translations/approvedTranslation'
+import jsPDF from 'jspdf'
+import html2canvas from 'html2canvas'
+import styled, { css } from 'styled-components'
+import style from 'material-ui/RaisedButton';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import RaisedButton from 'material-ui/RaisedButton';
+import {MDBIcon } from "mdbreact";
+import {Button,Card} from"react-bootstrap"
+import egypt from '../../egypt.jpeg'
+import gafi from '../../gafi.jpeg'
 
+   
 class ApprovedCompanies extends Component {
     state = {
-      certainFormType:[]
+      approvedCompanies:[]
     }
     componentDidMount(){
 
 
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
-      axios.get('http://localhost:5000/routes/api/userDynamicForms/getInvestorApprovedCompanies',{headers: { "Authorization": localStorage.getItem('jwtToken') }})
+      axios.get('/routes/api/userDynamicForms/getInvestorApprovedCompanies',{headers: { "Authorization": localStorage.getItem('jwtToken') }})
       .then(res => {
         if(Array.isArray(res.data.data)){
-          this.setState({certainFormType: res.data.data})
+          this.setState({approvedCompanies: res.data.data,sscManagers:[]})
            
          }
       })
     }
-    getAttributes =()=>{
-      return this.state.certainFormType.map((Form,index)=>{
-      var KEYS =[]
-      for (var key in Form)
-        {
-            KEYS.push(key)
-         }
-         return(
-          <Flippy               
-         flipOnHover={false} 
-         flipOnClick={true} 
-         flipDirection="horizontal" 
-         ref={(r) => this.flippy = r} 
-         style={{ width: "100%" , height: '500px' }}
-          
-       >
-       <FrontSide
-             style={{
-               borderStyle: 'solid',
-               borderWidth:'5px',
-               backgroundSize: "464px 400px"
-              }}
-           >
-           <div style={{textAlign:'center' ,fontSize:'50px' , textShadow:'-2px 0 white, 0 2px white, 2px 0 white, 0 -2px white'}}>
-            <h1 style = {{textShadow:'-1px 0 white, 0 1px white, 1px 0 white, 0 -1px white', fontSize:'100px'}}>{Form.companyName}</h1>
-            <i class="fas fa-angle-double-left" title='click to view details' style={{paddingRight:'650px'}}></i>
-          <i class="fas fa-angle-double-right" title='click to view details' style={{paddingLeft:'650px'}}></i><br/>
-           </div>
-           </FrontSide>
-         <BackSide
-          style={{ backgroundColor: '#f7f7f7', borderStyle: 'solid',borderWidth:'5px',paddingLeft:'60px'}}>
-          <div>
-  {  KEYS.map((key,index)=>{
-      if(key !== "_id" && key !=="formType" && key !=='investorId' && key !=='lawyerId' )
-      {
-        var constraints = Form[key]
-        console.log(key,":",constraints ) 
-        for (var i in constraints){
-          if(Array.isArray(constraints) ) return constraints.map((att,index)=>{
-         
+      // tabRow(){
+      //  return (
+      //   this.state.approvedCompanies.map(function(approvedCompany,i){
+      //   return <ApprovedCompaniesFields approvedCompany={approvedCompany} key={i}/>})
+      //   )
+      // }
+
+      printDocument() {
+        const input = document.getElementById('divToPrint');
+        
+        html2canvas(input)
+          .then((canvas) => {
+            const imgData = canvas.toDataURL('image/jpeg');
+            const img = new Image();
+            var path = require("path");
+            img.src = path.resolve(egypt);
+            const img2 = new Image();
+            var path2 = require("path");
+            img2.src = path2.resolve(gafi);
+            var pdf = new jsPDF({
+              orientation: 'landscape',
+              unit: 'in',
+              format: [800, 1100]
+            }) 
+
+            pdf.addImage(imgData, 'JPEG', 1, 1);
+            pdf.addImage(img, 'JPEG', 1, 1);
+            pdf.addImage(img2, 'JPEG', 13.2, 1);
+
+            pdf.setFont("helvetica");
+            pdf.setFontType("bold");
+            pdf.setFontSize(30);
+            pdf.text(6.2, 3, 'Your Company');
+           
+            pdf.setFont("helvetica");
+            pdf.setFontType("normal");
+            pdf.setFontSize(15);
+            pdf.text(1, 10, '© 2019 Copyright: GAFI');
+
+            // pdf.output('dataurlnewwindow')
+            pdf.save("download.pdf")
           })
-        return  <h5><i class="fas fa-circle" style={{fontSize:"13px"}}></i> {key} : <span style ={{textAlign:'center'}}></span> <span style = {{ color:'#9ad1e7'}}>{constraints}</span> </h5>
         
-        }
-        
-      }})}
-    </div>
-    </BackSide>    
-    </Flippy>)
-           })  
-   }
+      }
+
+      getAttributes = () => {
+     
+        return this.state.approvedCompanies.map((Form, index) => {
+          var KEYS = [];
+          // console.log(Form)
+          for (var key in Form) {
+            KEYS.push(key);
+          }
+          return(
+            <Card >
+              <Card.Body>
+                {KEYS.map((key, index) => {
+                  if (
+                    key !== "_proto" &&
+                    key !== "_id" &&
+                    key !== "formType" &&
+                    key !== "investorId" &&
+                    key !== "lawyerId" &&
+                    key !== "reviewerId" &&
+                    key !== "__v"
+                  ) {
+                    var constraints = Form[key];
+                    if (Array.isArray(constraints)) {
+                     if(!constraints["0"]) return
+                      var keys = []
+                       for (var att in constraints["0"]) {
+                        keys.push(att);
+                         } 
+                        }
+                        return (
+                          <div>
+                            <div key={key}>
+                              <h3>
+                                <i class="fas fa-circle" style={{fontSize:'0.5em'}}/> {key} : {constraints}{" "}
+                              </h3>
+                            </div>
+                            
+                          </div>
+                        );
+                      }})
+                      }
+                       </Card.Body>
+                       </Card>
+                                    
+          )
+         }
+        )}
 
       render(){
         trans.setLanguage(this.props.lang)
         return (
-          <div>
-          <div style={{backgroundColor:"#a3dbf1",paddingBottom:"20px", paddingTop:"20px",textAlign:"center", fontSize:"60px" , color:"dark" ,flexDirection: 'row', justifyContent: 'flex-end'}} ><h2 style={{marginTop:"30px",paddingTop:'50px',fontSize:"50px"}}>{trans.title}</h2></div>   
-          <div  style={{display:"flex" ,flexWrap:"wrap",alignItems:"right" , justifyContent:"right"}}>
-          {this.getAttributes()} 
-         </div>
-         </div>
+          <div  style={{paddingLeft:'60px',flexDirection: 'row', justifyContent: 'flex-end'}} >
+           {/* <div style={{backgroundColor:"#123456" , textAlign:"center", fontSize:"50px" , color:"white" }} >{trans.title}</div>
+          <Table striped bordered hover variant="gamed" size="sm">
+            <thead>
+              <tr>
+                <th>{trans.name}</th>
+                <th>{trans.nameInEnglish}</th>
+                <th>{trans.governorate}</th>
+                <th>{trans.city}</th>
+                <th>{trans.address}</th>
+                <th>{trans.telephone}</th>
+                <th>{trans.fax}</th>
+                <th>{trans.currency}</th>
+                <th>{trans.capital}</th>
+                <th>{trans.type}</th>
+                <th>{trans.date}</th>
+              </tr>
+              </thead>
+              <tbody>
+              {this.tabRow()}
+            </tbody>     
+          </Table> */}
+
+          (<div>
+              
+              <div style={{paddingLeft:"44%"}}>
+
+              <MuiThemeProvider >
+              
+              <Button label="Save As PDF" variant='dark' size="sm" width="60px" height="2px" style={{marginTop:"100px", width:"120px", height:"50px" }}
+               onClick={this.printDocument} ><h6 style={{fontSize:"15px"}}> Save As PDF</h6><i class="far fa-file-pdf" style={{fontSize:"1.6em",left:"7%", color:"light blue"}}></i></Button>
+              
+              </MuiThemeProvider>
+
+              </div>
+              <div id="divToPrint" className="mt4" {...css({
+                backgroundColor: '#f5f5f5',
+                width: '210mm',
+                minHeight: '297mm',
+                marginLeft: 'auto',
+                marginRight: 'auto',
+                
+                })}>
+                <br />
+                <br/>
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                {this.getAttributes()}
+ 
+                {/* {this.state.approvedCompanies.map(el => {
+                  return <div key={el.id}>
+                  <br/>
+                  <br/>
+                  <br/> 
+                  <br/>
+                  <br/>
+                  <br/>
+                  <br/>
+                  <br/>
+                  <br/>
+                  <br/>
+                  <br/>
+                  <br/>
+                  <br/>
+                     <Table striped bordered hover >
+                 <thead>
+                   <tr>
+                   <th>{trans.name}</th>
+                    <th>{trans.nameInEnglish}</th>
+                    <th>{trans.governorate}</th>
+                    <th>{trans.city}</th>
+                    <th>{trans.address}</th>
+                    <th>{trans.telephone}</th>
+                    <th>{trans.fax}</th>
+                    <th>{trans.currency}</th>
+                    <th>{trans.capital}</th>
+                    <th>{trans.type}</th>
+                    <th>{trans.date}</th>
+                   </tr>
+                   </thead>
+                   <tbody>
+                   <tr>
+                     <td>{el.companyName}</td>
+                     <td>{el.companyNameInEnglish}</td>
+                     <td>{el.companyGovernorate}</td>
+                     <td>{el.companyCity}</td>
+                     <td>{el.companyAddress}</td>
+                     <td>{el.companyTelephone}</td>
+                     <td>{el.companyFax}</td>
+                     <td>{el.currency}</td>
+                     <td>{el.equityCapital}</td>
+                     <td>{el.type}</td>
+                     <td>{el.creationDate}</td>
+                   </tr>
+                   
+                 </tbody>
+                 
+                 </Table> */}
+
+                    {/* </div>
+                    
+                })} */}
+                 
+                
+                 </div>
+              
+            </div>)
+        
+          </div>
           )
       }
     }

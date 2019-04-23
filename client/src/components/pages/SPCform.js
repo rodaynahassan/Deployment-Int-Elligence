@@ -26,95 +26,109 @@ import DropdownItem from 'react-bootstrap/DropdownItem';
 
 // import {MDBSelect} from 'mdbreact';
 
-var mongoose = require('mongoose');
 
-class SPCform extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			// userId: {
-			//   value : '',
-			//  },
-			companyName: '',
-			companyGovernorate: '',
-			companyAddress: '',
-			companyCity: '',
-			companyTelephone: '',
-			companyFax: '',
-			companyNameInEnglish: '',
-			currency: '',
-			type: '',
-			equityCapital: '',
-			governorate: [],
-			cities: []
-		};
-	}
-	componentDidMount() {
-		axios.get('/routes/api/governorates/').then((res) => {
-			this.setState({ governorate: res.data.data });
-		});
-	}
+var mongoose = require('mongoose')
 
-	handleClick(event) {
-		var apiBaseUrl = '/routes/api/users/CreatingForm';
-		var payload = {
-			//"userId":mongoose.Types.ObjectId('5ca7b4748be2725704f230bc'),
-			companyName: this.state.companyName,
-			companyGovernorate: this.state.companyGovernorate,
-			companyAddress: this.state.companyAddress,
-			companyCity: this.state.companyCity,
-			companyTelephone: this.state.companyTelephone,
-			companyFax: this.state.companyFax,
-			companyNameInEnglish: this.state.companyNameInEnglish,
-			currency: this.state.currency,
-			type: 'SPCForm',
-			equityCapital: this.state.equityCapital,
-			lawyerComments: [],
-			reviewerComments: [],
-			creationDate: '2018-4-7',
-			status: 'Unassigned'
-		};
+class SPCform extends Component{
 
-		axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
-		axios
-			.post(apiBaseUrl, payload, { headers: { Authorization: localStorage.getItem('jwtToken') } })
-			.then(function(response) {
-				console.log(response);
+    constructor(props){
+        super(props);
+        this.state = {
+            // userId: {
+            //   value : '',
+            //  },
+            companyName:'',
+            companyGovernorate:'',
+            companyAddress:'',
+            companyCity:'' ,
+            companyTelephone: '',
+            companyFax: '',
+            companyNameInEnglish: '',
+            currency: '',
+            type:'',
+            equityCapital:'',
+            governorate:[],
+            cities:[]
 
-				alert('SPCForm Created Successfully');
-			})
-			.catch((error) => {
-				alert(error.response.data.errmsg || error.response.data);
-				console.log(error.response);
-			});
-	}
+        };
 
-	changeHandler = (event) => {
-		this.setState({ [event.target.name]: event.target.value });
-	};
-	changeHandler2 = (event) => {
-		this.setState({ [event.target.name]: event.target.value });
-		axios.get('/routes/api/governorates/getByGovernorateName/' + event.target.value).then((res) => {
-			this.setState({ cities: res.data.data });
-		});
-	};
-	validateForm() {
-		return (
-			this.state.companyName.length >= 3 &&
-			this.state.companyName.length <= 50 &&
-			this.state.companyAddress.length >= 5 &&
-			this.state.companyAddress.length <= 50 &&
-			this.state.companyNameInEnglish.length <= 50
-		);
-	}
+    }
+    componentDidMount(){
+      axios.get('/routes/api/governorates/')        
+        .then(res => {
+              this.setState({governorate: res.data.data})
+              
+          })
+    }
 
-	render() {
-		//  trans.setLanguage(this.props.lang)
-		return (
-			<div style={{ paddingLeft: '60px', justifyItems: 'center' }}>
-				<MuiThemeProvider>
-					<div>
-						{/* <AppBar
+    
+      handleClick(event){
+
+
+      
+
+ 
+        var apiBaseUrl = "/routes/api/users/CreatingForm";
+        var payload={
+         //"userId":mongoose.Types.ObjectId('5ca7b4748be2725704f230bc'),
+          "companyName": this.state.companyName,
+          "companyGovernorate": this.state.companyGovernorate,
+          "companyAddress": this.state.companyAddress,
+          "companyCity": this.state.companyCity,
+          "companyTelephone": this.state.companyTelephone,
+          "companyFax": this.state.companyFax,
+          "companyNameInEnglish": this.state.companyNameInEnglish,
+          "currency": this.state.currency,
+          "type" : 'SPCForm',
+          "equityCapital" : this.state.equityCapital,
+          "lawyerComments" : [],
+          "reviewerComments" : [],
+          "creationDate": "2018-4-7",
+          "status" : "Unassigned"
+        }
+        
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
+        axios.post(apiBaseUrl, payload,{headers: { "Authorization": localStorage.getItem('jwtToken') }})
+       .then(function (response) {
+         console.log(response);
+         
+          alert('SPCForm Created Successfully') ;
+
+       })
+       .catch((error)=> {
+         alert(error.response.data.errmsg||error.response.data);
+         console.log(error.response)
+       });
+      }
+      
+      changeHandler = event => {
+        
+          this.setState({ [event.target.name] :event.target.value});
+      
+      };
+      changeHandler2 = event => {
+      
+        this.setState({ [event.target.name] :event.target.value});
+        axios.get('/routes/api/governorates/getByGovernorateName/' + event.target.value)        
+        .then(res => {
+              this.setState({cities: res.data.data})
+          })
+    
+    };
+      validateForm() {
+        return this.state.companyName.length >=3 &&
+        this.state.companyName.length <=50 
+        && this.state.companyAddress.length >=5 && this.state.companyAddress.length <=50
+        && this.state.companyNameInEnglish.length <=50
+        }
+
+    render() {
+    //  trans.setLanguage(this.props.lang)
+      return (
+        <div style={{ paddingLeft:'60px',justifyItems:"center"}}>
+          <MuiThemeProvider>
+            <div>
+            {/* <AppBar
                title={trans.title}
              /> */}
 						{/* <AppBar

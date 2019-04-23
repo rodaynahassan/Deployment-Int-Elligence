@@ -8,6 +8,9 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Table } from 'semantic-ui-react';
 import {Card} from 'react-bootstrap';
 import { MDBRow, MDBCol, MDBInput, MDBBtn,MDBIcon } from "mdbreact";
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import styled, { css } from 'styled-components';
 
 
 //import { Dropdown } from 'semantic-ui-react';
@@ -25,16 +28,12 @@ class MyCompany extends Component {
 
       //do you mean get all forms?
 
-      
-     
-    
     tabRow(){
       return this.state.companies.map(function(company,i){
           return <Dropdown.Item key={i} ><h6>{company}</h6></Dropdown.Item>;
       });
     }
     
-
     changeHandler = event => {
       this.setState({ [event.target.name]: { value: event.target.value}});
     };
@@ -93,8 +92,7 @@ class MyCompany extends Component {
                     }})
                     }
                      </Card.Body>
-                     </Card>
-                                  
+                     </Card>               
         )
        }
       )}
@@ -109,7 +107,7 @@ class MyCompany extends Component {
           <div >
              
           <MDBCol>
-          <MDBRow style={{paddingLeft:"41%", marginTop:"6%", paddingBottom:"70px"}}>
+          <MDBRow style={{paddingLeft:"41%",paddingTop:"5%"}}>
            
             <MDBInput
             icon="search" 

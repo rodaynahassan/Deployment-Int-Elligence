@@ -498,6 +498,8 @@ router.put(
   }
 );
 
+
+
 //Show an investors approved companies
 router.get('/getInvestorApprovedCompanies', passport.authenticate('jwt', { session: false }), async (req, res) => {
 	const userid = req.user.id;

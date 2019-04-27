@@ -515,6 +515,7 @@ router.get('/getInvestorApprovedCompanies', passport.authenticate('jwt', { sessi
 		res.status(401).json({ msg: 'Non Authorized' });
 	}
 });
+<<<<<<< HEAD
 //Show an investors approved companies
 router.get('/getAllApprovedCompanies', async (req, res) => {
 		var forms = await dynamicFormController.search();
@@ -525,6 +526,8 @@ router.get('/getAllApprovedCompanies', async (req, res) => {
 		}
 		res.json({ data: acceptedForms });
 });
+=======
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 
 //As a lawyer I can add a comment
 router.put(
@@ -628,6 +631,7 @@ router.put(
   }
 );
 
+<<<<<<< HEAD
 //Adding Attribute to Array
 router.put(
   "/addAttributeToArray/",
@@ -678,6 +682,8 @@ router.put(
 );
 
 
+=======
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 //lawyer can edit in the form after being rejected from the reviewer
 router.put(
   "/lawyerEditForm/:formId",

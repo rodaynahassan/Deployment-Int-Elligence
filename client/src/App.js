@@ -12,22 +12,40 @@ import './App.scss';
 import LandingBody from './components/pages/landingBody';
 import Profile from './components/pages/profilePage';
 import Footer from './components/layout/footer';
+<<<<<<< HEAD
 import Companies from './components/pages/Companies';
 import Side from './components/layout/Side';
+=======
+import SPCForm from './components/pages/SPCform';
+import FForm from './components/pages/form';
+import SSCForm from './components/pages/SSCForm';
+import Companies from './components/pages/Companies';
+import Side from './components/layout/Side';
+import SortSpecificUserCaseDate from './components/form/SortByDate';
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 import NewNavBar from './components/layout/NewNavBar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar1 from './components/NavBar';
 import AdminProfile from './components/pages/AdminProfile';
+<<<<<<< HEAD
 import adminPage from './components/pages/adminPage';
 import Register1 from './components/Register';
 import Login from './components/pages/Login';
 import Home from './components/Home';
+=======
+import adminPage from './components/pages/adminPage'
+import Register1 from './components/Register';
+import Login from './components/pages/Login';
+import Home from './components/Home';
+import SortSpecificUserCase from './components/pages/SortSpecificUserCase';
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 import DropdownTrial from './components/form/DropdownNationalities';
 import DropdownCities from './components/form/DropdownCities';
 import DropdownGovernorates from './components/form/DropdownGovernorates';
 import UnassignedForm from './components/pages/unassignedForm';
 import AssignToReviewer from './components/pages/assignToReviewer';
 import GetCaseReviewer from './components/pages/GetCaseReviewer';
+<<<<<<< HEAD
 import EditProfile from './components/pages/EditProfile';
 import ChangePassword from './components/pages/ChangePassword';
 import GetFormByCompanyName from './components/form/GetFormByCompanyName';
@@ -39,6 +57,27 @@ import ApprovedCompanies from './components/pages/ApprovedCompanies';
 import companyPDF from './components/pages/companyPdf';
 import CreateANewCompany from './components/pages/CreateANewCompany';
 import AttributeArray from './components/pages/AttributeArray';
+=======
+import AddCommentsLawyer from './components/pages/AddCommentsLawyer';
+import EditProfile from './components/pages/EditProfile';
+import EditSPCForm from './components/pages/EditSPCForm';
+import EditSSCForm from './components/pages/UpdateSSCForm';
+import ChangePassword from './components/pages/ChangePassword';
+import GetFormByCompanyName from './components/form/GetFormByCompanyName';
+import ShowProfileI from './components/pages/showProfileI';
+import ShowProfileLR from './components/pages/showProfileLR';
+import GetCaseLawyerSPC from './components/pages/getCaseLawyerSPC';
+import GetCaseLawyerSSC from './components/pages/getCaseLawyerSSC';
+import ForgotPassword from './containers/ForgotPassword';
+import ResetPassword from './containers/ResetPassword';
+import About from './components/pages/about'
+import ApprovedCompanies from './components/pages/ApprovedCompanies'
+import companyPDF from './components/pages/companyPdf'
+
+
+import CreateANewCompany from './components/pages/CreateANewCompany'
+import AttributeArray from './components/pages/AttributeArray'
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 import InProgressInvestorCases from './components/pages/inProgressInvestorCases';
 import EditInvCompany from './components/pages/EditInvCompany';
 import EditLawyerCompany from './components/pages/editLawyerForms';
@@ -62,7 +101,10 @@ class App extends Component {
 	};
 	changelang = (lang) => {
 		localStorage.setItem('lang', lang);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 		this.setState({ lang: lang });
 		console.log(lang);
 	};
@@ -100,6 +142,19 @@ class App extends Component {
 								/>
 								<Route
 									exact
+<<<<<<< HEAD
+=======
+									path="/profileI"
+									render={(props) => <ShowProfileI {...props} lang={this.state.lang} />}
+								/>
+								<Route
+									exact
+									path="/profileLR"
+									render={(props) => <ShowProfileLR {...props} lang={this.state.lang} />}
+								/>
+								<Route
+									exact
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 									path="/changePassword"
 									render={(props) => <ChangePassword {...props} lang={this.state.lang} />}
 								/>
@@ -115,6 +170,24 @@ class App extends Component {
 								/>
 								<Route
 									exact
+<<<<<<< HEAD
+=======
+									path="/SPC"
+									render={(props) => <SPCForm {...props} lang={this.state.lang} />}
+								/>
+								<Route
+									exact
+									path="/form"
+									render={(props) => <FForm {...props} lang={this.state.lang} />}
+								/>
+								<Route
+									exact
+									path="/SSC"
+									render={(props) => <SSCForm {...props} lang={this.state.lang} />}
+								/>
+								<Route
+									exact
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 									path="/journal"
 									render={(props) => <Companies {...props} lang={this.state.lang} />}
 								/>
@@ -129,6 +202,10 @@ class App extends Component {
 									render={(props) => <Login {...props} lang={this.state.lang} />}
 								/>
 								<Route exact path="/registerAdmin" component={adminPage} />
+<<<<<<< HEAD
+=======
+								<Route exact path="/SortByID" component={SortSpecificUserCase} />
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 								<Route exact path="/dropDown" component={DropdownTrial} />
 								<Route exact path="/dropDownCity" component={DropdownCities} />
 								<Route exact path="/dropDownGovernorate" component={DropdownGovernorates} />
@@ -142,6 +219,15 @@ class App extends Component {
 									path="/lawyerAcceptedForms"
 									render={(props) => <AssignToReviewer {...props} lang={this.state.lang} />}
 								/>
+<<<<<<< HEAD
+=======
+								<Route
+									exact
+									path="/approvedCompanies"
+									render={(props) => <ApprovedCompanies {...props} lang={this.state.lang} />}
+								/>
+
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 								<Route exact path="/GetReviewer" component={GetCaseReviewer} />
 
 								<Route
@@ -149,6 +235,19 @@ class App extends Component {
 									path="/editprofile"
 									render={(props) => <EditProfile {...props} lang={this.state.lang} />}
 								/>
+<<<<<<< HEAD
+=======
+								<Route
+									exact
+									path="/editspcform"
+									render={(props) => <EditSPCForm {...props} formId={this.state.formId} />}
+								/>
+								<Route
+									exact
+									path="/editsscform"
+									render={(props) => <EditSSCForm {...props} formId={this.state.formId} />}
+								/>
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 								{/* <Route
 									exact
 									path="/showsscform"
@@ -178,8 +277,18 @@ class App extends Component {
 								/>
 								<Route
 									exact
+<<<<<<< HEAD
 									path="/getCaseLawyer"
 									render={(props) => <GetCaseLawyer {...props} lang={this.state.lang} />}
+=======
+									path="/getCaseLawyerSSC"
+									render={(props) => <GetCaseLawyerSSC {...props} lang={this.state.lang} />}
+								/>
+								<Route
+									exact
+									path="/getCaseLawyerSPC"
+									render={(props) => <GetCaseLawyerSPC {...props} lang={this.state.lang} />}
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 								/>
 								<Route
 									exact
@@ -193,6 +302,7 @@ class App extends Component {
 									render={(props) => <ForgotPassword {...props} lang={this.state.lang} />}
 								/>
 								<Route exact path="/reset/:token" component={ResetPassword} />
+<<<<<<< HEAD
 								<Route
 									exact
 									path="/CreateANewCompany"
@@ -214,6 +324,11 @@ class App extends Component {
 										/>
 									)}
 								/>
+=======
+                <Route exact path='/CreateANewCompany' render={(props) => <CreateANewCompany {...props}   lang={this.state.lang}  />}/>
+                <Route exact path='/attributeInArray' render={(props)=><AttributeArray {...props}  lang={this.state.lang} />}/>
+								<Route exact path='/investorInProgressform' render={(props) => <InProgressInvestorCases {...props}  lang={this.state.lang} setFormId={this.setFormId} />}/>
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 								<Route
 									exact
 									path="/adminprofile"
@@ -229,6 +344,10 @@ class App extends Component {
 									path="/editlawyercompany"
 									render={(props) => <EditLawyerCompany {...props} lang={this.state.lang} />}
 								/>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 							</div>
 
 							{currentLocation === '/' ? (
@@ -236,7 +355,15 @@ class App extends Component {
 							) : (
 								<NewNavBar changelang={this.changelang} />
 							)}
+<<<<<<< HEAD
 							{currentLocation === '/' ? null : <Footer />}
+=======
+							{currentLocation === '/' ?null : (<Footer />
+							)}
+						
+
+							
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 						</Router>
 					</div>
 				</Provider>
@@ -245,4 +372,8 @@ class App extends Component {
 	}
 }
 
+<<<<<<< HEAD
 export default App;
+=======
+export default App;
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524

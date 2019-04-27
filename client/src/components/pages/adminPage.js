@@ -9,20 +9,33 @@ import classnames from 'classnames';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { MDBRow, MDBCol } from 'mdbreact';
 import axios from 'axios';
+<<<<<<< HEAD
 import { blue200 } from 'material-ui/styles/colors';
+=======
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 
 class adminPage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+<<<<<<< HEAD
 			userType: 'Lawyer',
+=======
+			userType: '',
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 			name: '',
 			email: '',
 			password: '',
 			password_confirm: '',
+<<<<<<< HEAD
 			gender: 'Male',
 			nationality: 'Egyptian',
 			identificationType: 'National ID',
+=======
+			gender: '',
+			nationality: '',
+			identificationType: '',
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 			identificationNumber: '',
 			birthdate: '',
 			address: '',
@@ -102,8 +115,12 @@ class adminPage extends Component {
 		const { errors } = this.state;
 		return (
 			<div className="container" style={{ marginTop: '50px', width: '700px' }}>
+<<<<<<< HEAD
 			<br/>
 				<h2 style={{ marginBottom: '40px' ,color:blue200}}>Registration</h2>
+=======
+				<h2 style={{ marginBottom: '40px' }}>Registration</h2>
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 				<form onSubmit={this.handleSubmit}>
 					<MDBRow>
 						<MDBCol>

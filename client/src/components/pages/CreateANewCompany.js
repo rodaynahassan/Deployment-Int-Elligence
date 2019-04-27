@@ -73,6 +73,7 @@ class CreateANewCompany extends Component {
 		for (var key in formType) {
 			KEYS.push(key);
 		}
+<<<<<<< HEAD
 		// var trial=[]
 		// for (var i=0;i<KEYS.length;i++){
 		// 	var now=KEYS[i]
@@ -100,6 +101,9 @@ class CreateANewCompany extends Component {
 		// console.log("ay 7aga")
 		// var s = 'Z';
 		// console.log(s.charCodeAt(0));
+=======
+		//console.log(KEYS)
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 		return KEYS.map((key, index) => {
 			if (key !== '_id' && key !== '__v') {
 				var constraints = formType[key];
@@ -128,11 +132,18 @@ class CreateANewCompany extends Component {
 											name={key}
 											onChange={this.changeHandler2}
 											value={this.state[key]}
+<<<<<<< HEAD
 											style={{width:"300px"}}
 										>
 											<option>Please choose a governorate</option>
 											{this.state.governorate.map((gov) => (
 												 <option value={gov.name}>{gov.name}</option>
+=======
+										>
+											<option>Please choose a governorate</option>
+											{this.state.governorate.map((gov) => (
+												<option value={gov.name}>{gov.name}</option>
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 											))};
 										</select>
 									</div>
@@ -146,8 +157,11 @@ class CreateANewCompany extends Component {
 											name="companyCity"
 											onChange={this.changeHandler}
 											value={this.state.companyCity}
+<<<<<<< HEAD
 											style={{width:"300px"}}
 
+=======
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 										>
 											<option>Please choose a city </option>
 											{this.state.cities.map((city) => <option value={city}>{city}</option>)};
@@ -172,8 +186,11 @@ class CreateANewCompany extends Component {
 											name={key}
 											onChange={this.changeHandler}
 											value={this.state[key]}
+<<<<<<< HEAD
 											style={{width:"300px"}}
 
+=======
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 										>
 											<option>Please choose a nationality </option>
 											{this.state.nationalities.map((nat) => (
@@ -197,8 +214,11 @@ class CreateANewCompany extends Component {
 											name={key}
 											onChange={this.changeHandler}
 											value={this.state[key]}
+<<<<<<< HEAD
 											style={{width:"300px"}}
 
+=======
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 										>
 											<option>Please choose the currency</option>
 											<option>Euro</option>
@@ -247,10 +267,18 @@ class CreateANewCompany extends Component {
 				//console.log(formTypeArray)
 			});
 		arrConstraints = arrConstraints['0'];
+<<<<<<< HEAD
+=======
+		console.log(arrConstraints);
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 		var arrInputs = [];
 		for (var prop in arrConstraints) {
 			arrInputs.push(prop);
 		}
+<<<<<<< HEAD
+=======
+		console.log(arrInputs);
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 		return arrInputs.map((key, index) => {
 			return (
 				<div style={{ marginBottom: '60px' }}>
@@ -298,11 +326,21 @@ class CreateANewCompany extends Component {
 
 	handleClick = (error) => {
 		error.preventDefault();
+<<<<<<< HEAD
 		const keys = this.state.certainFormType['0'];
+=======
+		// console.log(this.state.certainFormType)
+		const keys = this.state.certainFormType['0'];
+		//const keys = Object.keys(this.state.certainFormType)
+		//  console.log(keys)
+		// var formType = this.state.certainFormType[keys]
+		// console.log(formType)
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 		var KEYS = [];
 		for (var key in keys) {
 			KEYS.push(key);
 		}
+<<<<<<< HEAD
 		var payload2 = {};
 		KEYS.map((key, index) => {
 			if (key !== '__proto__' && key !== '_id' && key !== '__v') {
@@ -310,6 +348,25 @@ class CreateANewCompany extends Component {
 			}
 		});
 		var apiBaseUrl = '/routes/api/userDynamicForms/CreatingForm';
+=======
+		//var payload = []
+		var payload2 = {};
+		//payload2.push({formType: localStorage.getItem('formType')})
+		KEYS.map((key, index) => {
+			if (key !== '__proto__' && key !== '_id' && key !== '__v') {
+				//payload2.push({ [key] : this.state[key] })
+				// key : this.state.key,
+				payload2[key] = this.state[key];
+			}
+		});
+
+		//console.log(KEYS)
+
+		var apiBaseUrl = '/routes/api/userDynamicForms/CreatingForm';
+
+		////console.log(payload2)
+
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 		axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('jwtToken');
 		axios
 			.post(apiBaseUrl, payload2, { headers: { Authorization: localStorage.getItem('jwtToken') } })

@@ -24,7 +24,11 @@ class Side extends Component{
        {    
                 var profile = <NavItem eventKey="home">
                     <NavIcon>
+<<<<<<< HEAD
                     <a href="/profile" title="Profile" >
+=======
+                    <a href="/profile">
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
                         <i className="far fa-user" style={{ fontSize: '1.75em'  }} ></i>
                         </a>
                     </NavIcon>
@@ -37,7 +41,11 @@ class Side extends Component{
             
                 var signout = <NavItem eventKey="home">
                 <NavIcon>
+<<<<<<< HEAD
                 <a onClick={this.logOut} title="Logout" >
+=======
+                <a onClick={this.logOut}>
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
                     <i className=" 	fas fa-sign-in-alt" style={{ fontSize: '1.75em'  }} ></i>
                     </a>
                 </NavIcon>
@@ -58,7 +66,11 @@ class Side extends Component{
                 <SideNav.Toggle />
                 <SideNav.Nav >
 
+<<<<<<< HEAD
                     <NavItem eventKey="home" title="Home"  >
+=======
+                    <NavItem eventKey="home" >
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
                         <NavIcon>
                         <a href="/">
                             <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} ></i>
@@ -70,7 +82,11 @@ class Side extends Component{
                             </a>
                         </NavText>
                     </NavItem>
+<<<<<<< HEAD
                     <NavItem eventKey="electronic journal" title="Electronic Journal"   >
+=======
+                    <NavItem eventKey="electronic journal"  >
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
                         <NavIcon>
                         <a href="/journal">
                             <i className="fa fa-fw fa-newspaper" style={{ fontSize: '24px'}} />
@@ -84,7 +100,11 @@ class Side extends Component{
                     </NavItem>
                     <NavItem eventKey="home" >
                         <NavIcon>
+<<<<<<< HEAD
                         <a href="/about" title="About us" >
+=======
+                        <a href="/about">
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
                             <i className="fa fa-info-circle" style={{ fontSize: '1.75em' }} ></i>
                             </a>
                         </NavIcon>

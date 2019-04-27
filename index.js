@@ -1,8 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+<<<<<<< HEAD
 const path = require('path');
 const users = require("./routes/api/users");
+=======
+const users = require("./routes/api/users");
+const forms = require("./routes/api/forms");
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 const admins = require("./routes/api/admins");
 const fakeServer = require("./routes/api/fakeServer");
 const externalentities = require("./routes/api/externalentities");
@@ -11,7 +16,10 @@ const governorates = require("./routes/api/governorates");
 const dynamicForms = require("./routes/api/dynamicForms");
 const userDynamicForms = require("./routes/api/userDynamicForms");
 const formTypes = require("./routes/api/formTypes");
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 const app = express();
 
 // DB Config
@@ -44,6 +52,10 @@ app.get("/", (req, res) => {
 
 // Direct routes to appropriate files
 app.use("/routes/api/users", users);
+<<<<<<< HEAD
+=======
+app.use("/routes/api/forms", forms);
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 app.use("/routes/api/admins", admins);
 app.use("/routes/api/externalentities", externalentities);
 app.use("/routes/api/nationalities", nationalities);
@@ -61,6 +73,7 @@ app.use(function(req, res, next) {
   );
   next();
 });
+<<<<<<< HEAD
 if (process.env.NODE_ENV === 'production') {
 	app.use(express.static(path.resolve(__dirname, 'client/build')));
 	//
@@ -68,6 +81,9 @@ if (process.env.NODE_ENV === 'production') {
 		res.sendfile(path.resolve((__dirname = 'client/build/index.html')));
 	});
 }
+=======
+
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 // Handling 404
 app.use((req, res) => {
   res.status(404).send({ err: "We can not find what you are looking for" });

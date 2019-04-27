@@ -1,6 +1,7 @@
 import LocalizedStrings from 'react-localization';
 
 let strings = new LocalizedStrings({
+<<<<<<< HEAD
 	en: {
 		title: 'Who We Are',
 		WhoWeAre:
@@ -25,3 +26,17 @@ let strings = new LocalizedStrings({
 	}
 });
 export default strings;
+=======
+    en:{
+        about:"About Us",
+        info:"Info",
+        infoText:""
+    },
+    ar:{
+        about:"عنا",
+        info:"معلوماتنا",
+        infoText:""
+    }
+});
+export default strings
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524

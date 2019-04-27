@@ -35,8 +35,13 @@ class AttributeArray extends Component {
 			attributes: [],
 			validations: [],
 			certainFormType: [],
+<<<<<<< HEAD
 			nationalities: [],
 			nationality:''
+=======
+			formTypeArray: localStorage.getItem('formTypeArray'),
+			nationalities: []
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 		};
 	}
 	componentDidMount = () => {
@@ -45,6 +50,10 @@ class AttributeArray extends Component {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
 			.then((res) => {
+<<<<<<< HEAD
+=======
+				console.log(res.data.data);
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 				this.setState({
 					certainFormType: res.data.data
 				});
@@ -60,10 +69,18 @@ class AttributeArray extends Component {
 		for (var key in formType) {
 			KEYS.push(key);
 		}
+<<<<<<< HEAD
+=======
+		console.log(KEYS);
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 		return KEYS.map((key, index) => {
 			if (key !== '_id' && key !== '__v') {
 				var constraints = formType[key];
 				constraints = constraints.split(',');
+<<<<<<< HEAD
+=======
+				console.log(constraints);
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 				if (constraints[5] === 'dropdownlist') {
 					if (key === 'gender') {
 						return (
@@ -77,9 +94,13 @@ class AttributeArray extends Component {
 											name={key}
 											onChange={this.changeHandler}
 											value={this.state[key]}
+<<<<<<< HEAD
 											style={{width:"300px"}}
 										>
 											<option>Please choose your gender</option>
+=======
+										>
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 											<option>Female</option>
 											<option>Male</option>
 										</select>
@@ -104,10 +125,15 @@ class AttributeArray extends Component {
 											name={key}
 											onChange={this.changeHandler}
 											value={this.state[key]}
+<<<<<<< HEAD
 											style={{width:"300px"}}
 										>
 												<option>Please choose your nationality</option>
 												{this.state.nationalities.map((nat) => (
+=======
+										>
+											{this.state.nationalities.map((nat) => (
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 												<option value={nat.name}>{nat.name}</option>
 											))};
 										</select>
@@ -128,9 +154,14 @@ class AttributeArray extends Component {
 											name={key}
 											onChange={this.changeHandler}
 											value={this.state[key]}
+<<<<<<< HEAD
 											style={{width:"300px"}}
 										>
 											<option>Please choose your type</option>
+=======
+										>
+											<option>Please check your type</option>
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 											<option>Person</option>
 										</select>
 									</div>
@@ -150,7 +181,10 @@ class AttributeArray extends Component {
 											name={key}
 											onChange={this.changeHandler}
 											value={this.state[key]}
+<<<<<<< HEAD
 											style={{width:"300px"}}
+=======
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 										>
 											<option>Please choose your Identification Type</option>
 											<option>National ID</option>
@@ -173,7 +207,10 @@ class AttributeArray extends Component {
 											name={key}
 											onChange={this.changeHandler}
 											value={this.state[key]}
+<<<<<<< HEAD
 											style={{width:"300px"}}
+=======
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 										>
 											<option>Please choose the type of the manager</option>
 											<option>President</option>
@@ -240,7 +277,11 @@ class AttributeArray extends Component {
 		axios
 			.put(apiBaseUrl, payload2, { headers: { Authorization: localStorage.getItem('jwtToken') } })
 			.then(function(response) {
+<<<<<<< HEAD
 				alert('The SSC Manager has been created successfully');
+=======
+				alert('The profile has been updated successfully');
+>>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 			})
 			.catch((error) => {
 				alert(error.response.data.errmsg || error.response.data);

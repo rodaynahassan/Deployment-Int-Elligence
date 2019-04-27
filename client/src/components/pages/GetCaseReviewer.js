@@ -8,10 +8,7 @@ import AddCommentsReviewer from '../pages/AddCommentsReviewer'
 import CardReviewer from "../form/CardReviewer";
 import GetAllReviewerForms from "../form/GetAllReviewerForms";
 import { Dropdown } from "react-bootstrap";
-<<<<<<< HEAD
 import { blue200 } from "material-ui/styles/colors";
-=======
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 const mongoose = require('mongoose')
 var $ = require("jquery")(window);
 
@@ -48,11 +45,7 @@ class Companies extends Component {
       )
       .then(res => {
         alert("Form updated Succesfully");
-<<<<<<< HEAD
         document.location.href = "/getReviewer";
-=======
-        document.location.href = "/getCaseLawyerSPC";
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
       });
   };
 
@@ -72,11 +65,7 @@ class Companies extends Component {
       )
       .then(res => {
         alert("Form updated Succesfully");
-<<<<<<< HEAD
         document.location.href = "/getCaseLawyer";
-=======
-        document.location.href = "/getCaseLawyerSPC";
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
       });
   };
 
@@ -247,7 +236,6 @@ class Companies extends Component {
                   );
                 }
               })}
-<<<<<<< HEAD
 							<div variant="omar" style={{ textAlign: 'right' ,color:blue200}}>
               <ButtonGroup variant="omar" size="sm" className="mt-3" style={{color:blue200}}>
                   <Button
@@ -287,51 +275,6 @@ class Companies extends Component {
                         <br />
                         Add Comments
                       </h6>
-=======
-              <MDBProgress material value={65} color="dark" height="35px">
-                <h3> In progress Reviewer </h3>
-              </MDBProgress>
-
-              <div style={{ textAlign: "right" }}>
-                <ButtonGroup size="sm" className="mt-3">
-                  <Button
-                    variant="outline-blue"
-                    style={{ width: "250px", height: "115px" }}
-                  >
-                    <h3>
-                      <i
-                        class="fas fa-handshake"
-                        style={{ fontSize: "1em" }}
-                        onClick={() => this.accept(Form._id)}
-                      />{" "}
-                      <br /> ACCEPT CASE
-                    </h3>
-                  </Button>
-                  <Button
-                    variant="outline-blue"
-                    style={{ width: "250px", height: "115px" }}
-                    block
-                    onClick={() => this.reject(Form._id)}
-                  >
-                    <h3>
-                      <i class="fas fa-ban" style={{ fontSize: "1em" }} />
-                      <br /> REJECT CASE
-                    </h3>
-                  </Button>
-                  <ButtonToolbar>
-                    <Button
-                      variant="outline-blue"
-                      block
-                      style={{ width: "250px", height: "115px" }}
-                      onClick={() => this.setState({ modalShow: true })}
-                      style={{ width: "250px", height: "115px" }}
-                    >
-                      <h3>
-                        <i class="fas fa-comment" style={{ fontSize: "1em" }} />
-                        <br />
-                        Add Comments
-                      </h3>
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
                     </Button>
                     <AddCommentsReviewer
                       show={this.state.modalShow}
@@ -341,14 +284,11 @@ class Companies extends Component {
                   </ButtonToolbar>
                   <br />
                 </ButtonGroup>
-<<<<<<< HEAD
                 <div>
                 <MDBProgress material value={65} color="dark" height="35px">
                 <h3> In progress Reviewer </h3>
               </MDBProgress>
               </div>
-=======
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
               </div>
             </div>
           </Card.Body>
@@ -363,7 +303,6 @@ class Companies extends Component {
         <div>
           <div
             style={{
-<<<<<<< HEAD
               backgroundColor: '#a3dbf1',
 							paddingTop: '70px',
 							textAlign: 'center',
@@ -382,27 +321,6 @@ class Companies extends Component {
                 variant="omar"
                 id="dropdown-basic"
                 style={{ width: "150px",left:'0',padding: '0.5px' }}
-=======
-              backgroundColor: "#a3dbf1",
-              marginTop: "90px",
-              textAlign: "center",
-              fontSize: "50px",
-              color: "dark",
-              paddingTop:"70px",
-              paddingLeft: "60px",
-              flexDirection: "row",
-              justifyContent: "flex-end"
-            }}
-          >
-            Specific Reviewer Cases
-            <br />
-            <Dropdown>
-              <Dropdown.Toggle
-                className="btn blue-gradient btn-block btn-rounded z-depth-1a"
-                variant="omar"
-                id="dropdown-basic"
-                style={{ width: "150px" }}
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
               >
                 Sort the Cases
               </Dropdown.Toggle>

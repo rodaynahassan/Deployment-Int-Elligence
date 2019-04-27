@@ -6,10 +6,6 @@ import classnames from 'classnames';
 import trans from '../translations/loginTranslation';
 import { Button } from 'react-bootstrap';
 import { MDBInput } from 'mdbreact';
-<<<<<<< HEAD
-=======
-
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 import { InputAdornment, withStyles } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import { RemoveRedEye } from '@material-ui/icons';
@@ -42,11 +38,7 @@ class PasswordInput extends Component {
 		return (
 			<div className="md-form pb-3">
 				<TextField
-<<<<<<< HEAD
 					placeholder={trans.password}
-=======
-					placeholder="Your Password"
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 					type={passwordIsMasked ? 'password' : 'text'}
 					{...this.props}
 					InputProps={{
@@ -123,10 +115,6 @@ class Login extends Component {
 				<div className="modal-dialog" role="document">
 					{/* <form onSubmit={this.handleSubmit}> */}
 					<div className="modal-content form-elegant">
-<<<<<<< HEAD
-=======
-						{/*Header*/}
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 						<div className="modal-header text-center">
 							<h3 className="modal-title w-100 dark-grey-text font-weight-bold my-3" id="myModalLabel">
 								<strong> {trans.loginTitle}</strong>
@@ -152,13 +140,8 @@ class Login extends Component {
 									onChange={this.handleInputChange}
 									value={this.state.email}
 								>
-<<<<<<< HEAD
 									<div className="valid-feedback">{trans.valid}</div>
 									<div className="invalid-feedback">{trans.invalid}</div>
-=======
-									<div className="valid-feedback">Looks good!</div>
-									<div className="invalid-feedback">Please enter a valid email</div>
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 								</MDBInput>
 
 								{/* <label data-error="wrong" data-success="right" htmlFor="Form-email1">
@@ -185,16 +168,11 @@ class Login extends Component {
 								<p className="font-small blue-text d-flex justify-content-end">
 									{' '}
 									<a href="forgotPassword" className="blue-text ml-1">
-<<<<<<< HEAD
 										{trans.forgot}
-=======
-										Forgot Password?
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 									</a>
 								</p>
 							</div>
 							<div className="text-center mb-3">
-<<<<<<< HEAD
 								<Button
 									variant="omar"
 									style={{ width: '120px', height: '55px',backgroundColor:"#a3dbf1" }}  
@@ -203,29 +181,14 @@ class Login extends Component {
 								>
 									{trans.loginbutton}
 								</Button>
-=======
-								<button
-									onClick={(e) => this.handleSubmit(e)}
-									type="submit"
-									className="btn blue-gradient btn-block btn-rounded z-depth-1a"
-								>
-									{trans.loginbutton}
-								</button>
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 							</div>
 						</div>
 
 						<div className="modal-footer mx-5 pt-3 mb-1">
 							<p className="font-small grey-text d-flex justify-content-end">
-<<<<<<< HEAD
 								{trans.member}{' '}
 								<a href="/register" className="blue-text ml-1">
 									{trans.signup}
-=======
-								Not a member?{' '}
-								<a href="/register" className="blue-text ml-1">
-									Sign Up
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 								</a>
 							</p>
 						</div>
@@ -245,8 +208,4 @@ const mapStateToProps = (state) => ({
 	errors: state.errors
 });
 
-<<<<<<< HEAD
 export default connect(mapStateToProps, { loginUser })(Login);
-=======
-export default connect(mapStateToProps, { loginUser })(Login);
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524

@@ -44,11 +44,7 @@ beforeAll(async () => {
   beforeOldForms = await funcs.getAllForms()
   beforeOldFormLength = beforeOldForms.data.data.length
   form1 = await funcs.postFormForUser(token,'SPCForm','الشركة00','The Company00','Cairo','New Cairo','Fifth Settlement','02752277577','a-2417457642','Dollars','Egyptian',100000)
-<<<<<<< HEAD
   console.log(form1)
-=======
-  // console.log(form1)
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
   form2 = await funcs.postFormForUser(token,'SPCForm','الشركة01','The Company01','Cairo','New Cairo','Fifth Settlement','015722772081','u-417757743','Dollars','Egyptian',100000)
   form3 = await funcs.postFormForUser(token,'SPCForm','الشركة02','The Company02','Cairo','New Cairo','Fifth Settlement','011472777667','k-317772942','Dollars','Egyptian',100000)
   beforeNewForms = await funcs.getAllForms()
@@ -216,7 +212,6 @@ test("All forms Sorted by Creation Date", async () =>{
    
 })
 
-<<<<<<< HEAD
 // //Testing taking the form and change it's status to in progress lawyer as a lawyer then accept it then a reviewer can take it
 // //and accept it
 // test('Taking an unassigned Case and changing the status to in progress case',async () =>{
@@ -244,35 +239,6 @@ test("All forms Sorted by Creation Date", async () =>{
 //   const reviewerAcceptedForms = await funcs.getAllForms()
 //   expect(reviewerAcceptedForms.data.data[reviewerAcceptedForms.data.data.length-1].status).toBe('Approved')
 // })
-=======
-//Testing taking the form and change it's status to in progress lawyer as a lawyer then accept it then a reviewer can take it
-//and accept it
-test('Taking an unassigned Case and changing the status to in progress case',async () =>{
-  const forms = await funcs.getLawyerPossiblePicks(token3)
-  expect(forms.data.data[forms.data.data.length-1].status).toBe('Unassigned')
-  const wantedForm = forms.data.data[forms.data.data.length-1]
-  await funcs.takingForm(wantedForm._id,token3)
-  const wantedForms = await funcs.getAllForms()
-  const finalForm = wantedForms.data.data[wantedForms.data.data.length-1]
-  expect(finalForm.status).toBe('In progress Lawyer')
-  const inProgressForms = await funcs.getLawyerInProgressCases(token3)
-  expect(inProgressForms.data.data[inProgressForms.data.data.length-1].status).toBe('In progress Lawyer')
-  await funcs.calculateFees(inProgressForms.data.data[inProgressForms.data.data.length-1]._id,token3)
-  const feesForms = await funcs.getAllForms()
-  expect(feesForms.data.data[feesForms.data.data.length-1].fees).toBe(1100)
-  await funcs.acceptForm(feesForms.data.data[feesForms.data.data.length-1]._id,token3)
-  const acceptedForms = await funcs.getAllForms()
-  expect(acceptedForms.data.data[acceptedForms.data.data.length-1].status).toBe('Lawyer accepted')
-  const acceptedLawyerReviewerForms = await funcs.getReviewerPossiblePicks(token4)
-  expect(acceptedLawyerReviewerForms.data.data[acceptedLawyerReviewerForms.data.data.length-1].status).toBe('Lawyer accepted')
-  await funcs.takingForm(acceptedLawyerReviewerForms.data.data[acceptedLawyerReviewerForms.data.data.length-1]._id,token4)
-  const reviewerTakenForms = await funcs.getAllForms()
-  expect(reviewerTakenForms.data.data[reviewerTakenForms.data.data.length-1].status).toBe('In progress Reviewer')
-  await funcs.acceptForm(reviewerTakenForms.data.data[reviewerTakenForms.data.data.length-1]._id,token4)
-  const reviewerAcceptedForms = await funcs.getAllForms()
-  expect(reviewerAcceptedForms.data.data[reviewerAcceptedForms.data.data.length-1].status).toBe('Approved')
-})
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 
 //Testing getting in progress cases (anything rather than 'Approved') as an investor
 test('In progress cases of an investor', async () =>{

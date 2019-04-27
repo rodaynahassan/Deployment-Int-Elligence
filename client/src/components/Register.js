@@ -19,10 +19,7 @@ import { registerUser } from '../actions/authentication';
 import classnames from 'classnames';
 import axios from 'axios';
 import { Hidden } from '@material-ui/core';
-<<<<<<< HEAD
 import trans from './translations/registerTranslation';
-=======
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 
 const styles = (theme) => ({
 	root: {
@@ -41,25 +38,15 @@ const styles = (theme) => ({
 });
 
 function getSteps() {
-<<<<<<< HEAD
 	return [ <h3>{trans.step1}</h3>, <h3>{trans.step2}</h3>, <h3>{trans.step3}</h3> ];
-=======
-	return [ <h3>Insert your basic Info</h3>, <h3>Fill your Personal Data</h3>, <h3>Submit</h3> ];
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 }
 
 function getStepContent(step) {
 	switch (step) {
 		case 0:
-<<<<<<< HEAD
 			return <h3>{trans.info}</h3>;
 		case 1:
 			return <h3>{trans.personal}</h3>;
-=======
-			return <h3>Your Basic Info</h3>;
-		case 1:
-			return <h3>Your Personal Info</h3>;
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 		case 2:
 			return;
 		default:
@@ -205,10 +192,7 @@ class Register extends React.Component {
 	};
 
 	render() {
-<<<<<<< HEAD
 		trans.setLanguage(this.props.lang);
-=======
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 		const { classes } = this.props;
 		const steps = getSteps();
 		const { activeStep } = this.state;
@@ -219,11 +203,7 @@ class Register extends React.Component {
 				<form>
 					<div className="form-group">
 						<MDBInput
-<<<<<<< HEAD
 							label={trans.name}
-=======
-							label="Name"
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 							type="text"
 							className={classnames('form-control form-control-lg', {
 								'is-invalid': errors.Name
@@ -239,11 +219,7 @@ class Register extends React.Component {
 
 					<div className="form-group">
 						<MDBInput
-<<<<<<< HEAD
 							label={trans.email}
-=======
-							label="Email"
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 							type="email"
 							className={classnames('form-control form-control-lg', {
 								'is-invalid': errors.Email
@@ -259,11 +235,7 @@ class Register extends React.Component {
 
 					<div className="form-group">
 						<MDBInput
-<<<<<<< HEAD
 							label={trans.password}
-=======
-							label="Password"
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 							type="password"
 							className={classnames('form-control form-control-lg', { 'is-invalid': errors.Password })}
 							name="password"
@@ -278,11 +250,7 @@ class Register extends React.Component {
 
 					<div className="form-group">
 						<MDBInput
-<<<<<<< HEAD
 							label={trans.confirmPassword}
-=======
-							label="Confirm Password"
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 							type="password"
 							className={classnames('form-control form-control-lg', {
 								'is-invalid': errors.confirm_password
@@ -304,11 +272,7 @@ class Register extends React.Component {
 					<MDBRow>
 						<MDBCol>
 							<div className="form-group">
-<<<<<<< HEAD
 								<label htmlFor="gender">{trans.gender}</label>
-=======
-								<label htmlFor="gender">Gender</label>
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 								<select
 									className="form-control"
 									id="exampleFormControlSelect1"
@@ -324,11 +288,7 @@ class Register extends React.Component {
 					</MDBRow>
 
 					<div className="form-group">
-<<<<<<< HEAD
 						<label htmlFor="Nationality">{trans.nationality}</label>
-=======
-						<label htmlFor="Nationality">Nationality</label>
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 						<select
 							className="form-control"
 							id="exampleFormControlSelect1"
@@ -343,11 +303,7 @@ class Register extends React.Component {
 					<MDBRow>
 						<MDBCol>
 							<div className="form-group">
-<<<<<<< HEAD
 								<label htmlFor="identificationType">{trans.identificationType}</label>
-=======
-								<label htmlFor="identificationType">Identification Type</label>
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 								<select
 									className="form-control"
 									id="exampleFormControlSelect1"
@@ -364,11 +320,7 @@ class Register extends React.Component {
 
 					<div className="form-group">
 						<MDBInput
-<<<<<<< HEAD
 							label={trans.identificationNumber}
-=======
-							label="Identification Number"
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 							type="text"
 							className={classnames('form-control form-control-lg', { 'is-invalid': errors.fax })}
 							name="identificationNumber"
@@ -383,11 +335,7 @@ class Register extends React.Component {
 
 					<div className="form-group">
 						<MDBInput
-<<<<<<< HEAD
 							label={trans.birthdate}
-=======
-							label="Birthdate"
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 							type="text"
 							className={classnames('form-control form-control-lg', { 'is-invalid': errors.birthdate })}
 							name="birthdate"
@@ -400,11 +348,7 @@ class Register extends React.Component {
 
 					<div className="form-group">
 						<MDBInput
-<<<<<<< HEAD
 							label={trans.address}
-=======
-							label="Address"
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 							type="text"
 							className={classnames('form-control form-control-lg', { 'is-invalid': errors.address })}
 							name="address"
@@ -417,11 +361,7 @@ class Register extends React.Component {
 
 					<div className="form-group">
 						<MDBInput
-<<<<<<< HEAD
 							label={trans.telephone}
-=======
-							label="Telephone"
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 							type="text"
 							className={classnames('form-control form-control-lg', { 'is-invalid': errors.telephone })}
 							name="telephone"
@@ -433,11 +373,7 @@ class Register extends React.Component {
 
 					<div className="form-group">
 						<MDBInput
-<<<<<<< HEAD
 							label={trans.fax}
-=======
-							label="Fax"
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 							type="text"
 							className={classnames('form-control form-control-lg', { 'is-invalid': errors.fax })}
 							name="fax"
@@ -450,11 +386,7 @@ class Register extends React.Component {
 					<MDBRow>
 						<MDBCol>
 							<div className="form-group">
-<<<<<<< HEAD
 								<label htmlFor="investorType">{trans.investorType}</label>
-=======
-								<label htmlFor="investorType">Investor Type</label>
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 								<select
 									className="form-control"
 									id="exampleFormControlSelect1"
@@ -475,7 +407,6 @@ class Register extends React.Component {
 			<div>
 				<form>
 					<div className="form-group">
-<<<<<<< HEAD
 						<Button
 							type="submit"
 							disabled={!this.validateForm()}
@@ -486,17 +417,6 @@ class Register extends React.Component {
 						>
 							{trans.submit}
 						</Button>
-=======
-						<button
-							type="submit"
-							disabled={!this.validateForm()}
-							onClick={(e) => this.handleSubmit(e)}
-							className="btn blue-gradient btn-block btn-rounded z-depth-1a"
-							style={{ width: '200px' }}
-						>
-							Submit
-						</button>
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 					</div>
 				</form>
 
@@ -512,12 +432,9 @@ class Register extends React.Component {
 
 		return (
 			<div style={{ paddingRight: '200px' }}>
-<<<<<<< HEAD
 			<br/>
 			<br/>
 			<br/>
-=======
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 				<div className={classes.root}>
 					<Stepper activeStep={activeStep} orientation="vertical">
 						{steps.map((label, index) => (
@@ -531,7 +448,6 @@ class Register extends React.Component {
 										{this.state.activeStep === 2 ? Submit : null}
 
 										<div>
-<<<<<<< HEAD
 											<Button
 												disabled={activeStep === 0}
 												onClick={this.handleBack}
@@ -547,20 +463,6 @@ class Register extends React.Component {
 												className="btn-block btn-rounded z-depth-1a"
 												variant="omar"
 												style={{ width: '100px',backgroundColor:"#a3dbf1" }}  
-=======
-											<button
-												disabled={activeStep === 0}
-												onClick={this.handleBack}
-												// className={classes.button}
-												className="btn blue-gradient btn-block btn-rounded z-depth-1a"
-												style={{ width: '100px' }}
-												//variant="contained"
-											>
-												Back
-											</button>
-											<button
-												//variant="contained"
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 												onClick={this.handleNext}
 												disabled={
 													this.state.activeStep === 0 ? (
@@ -569,19 +471,9 @@ class Register extends React.Component {
 														!this.validateForm2()
 													) : null
 												}
-<<<<<<< HEAD
 											>
 												{activeStep === steps.length - 1 ? 'Finish' : 'Next'}
 											</Button>
-=======
-												// className={classes.button}
-												className="btn blue-gradient btn-block btn-rounded z-depth-1a"
-												style={{ width: '100px' }}
-												// color="primary"
-											>
-												{activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-											</button>
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 										</div>
 									</div>
 								</StepContent>
@@ -592,11 +484,7 @@ class Register extends React.Component {
 					</Stepper>
 					{activeStep === steps.length && (
 						<Paper square elevation={0} className={classes.resetContainer}>
-<<<<<<< HEAD
 							<Typography>{trans.finish}</Typography>
-=======
-							<Typography>All steps completed - you&apos;re finished</Typography>
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 						</Paper>
 					)}
 				</div>

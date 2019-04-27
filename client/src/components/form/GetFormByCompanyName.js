@@ -9,10 +9,7 @@ import { Table } from 'semantic-ui-react';
 import {Card} from 'react-bootstrap';
 import { MDBRow, MDBCol, MDBInput, MDBBtn,MDBIcon } from "mdbreact";
 import jsPDF from 'jspdf';
-<<<<<<< HEAD
 import { Button } from 'react-bootstrap';
-=======
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 import html2canvas from 'html2canvas';
 import styled, { css } from 'styled-components';
 
@@ -126,7 +123,6 @@ class MyCompany extends Component {
             </MDBInput>
             </MDBRow>
             </MDBCol>
-<<<<<<< HEAD
           <div style={{paddingLeft:"44%",paddingBottom:"70px"}}>
             <Button 
             variant="omar"
@@ -141,68 +137,6 @@ class MyCompany extends Component {
             <div>
             {this.getAttributes()}
 \        </div>
-=======
-
-
-
-
-          <div style={{paddingLeft:"45%",paddingBottom:"70px"}}>
-            <MuiThemeProvider >
-            <RaisedButton label="Search" primary={true} style={style}
-            onClick={(event) => (this.handleClick(event))} />
-            </MuiThemeProvider>
-            </div>
-            <br />
-            <div>
-            
-                {/* {this.state.viewedComp.map(el => {
-                  return <div key={el.id}> */}
-                  
-                  {this.getAttributes()}
-                  
-                  {/* <MuiThemeProvider>
-                    
-              <Table fixed>
-              <Table.Header>
-                <Table.Row>
-                  <Table.HeaderCell>Company Name</Table.HeaderCell>
-                  <Table.HeaderCell>Company Name In English </Table.HeaderCell>
-                  <Table.HeaderCell>Company Governorate</Table.HeaderCell>
-                  <Table.HeaderCell>Company City</Table.HeaderCell>
-                  <Table.HeaderCell>Company Address</Table.HeaderCell>
-                  <Table.HeaderCell>Company Telephone</Table.HeaderCell>
-                  <Table.HeaderCell>Company Fax</Table.HeaderCell>
-                  <Table.HeaderCell>Currency</Table.HeaderCell>
-                  <Table.HeaderCell>Equity Capital</Table.HeaderCell>
-                  <Table.HeaderCell>Type</Table.HeaderCell>
-                  <Table.HeaderCell>Creation Date</Table.HeaderCell>
-                </Table.Row>
-              </Table.Header>
-
-              <Table.Body>
-                <Table.Row>
-                  <Table.Cell><span>{el.companyName}</span></Table.Cell>
-                  <Table.Cell><span>{el.companyNameInEnglish}</span></Table.Cell>
-                  <Table.Cell><span>{el.companyGovernorate}</span></Table.Cell> 
-                  <Table.Cell><span>{el.companyCity}</span></Table.Cell> 
-                  <Table.Cell><span>{el.companyAddress}</span></Table.Cell>
-                  <Table.Cell><span>{el.companTelephone}</span></Table.Cell>
-                  <Table.Cell><span>{el.companyFax}</span></Table.Cell>
-                  <Table.Cell><span>{el.currency}</span></Table.Cell>
-                  <Table.Cell><span>{el.equityCapital}</span></Table.Cell>    
-                  <Table.Cell><span>{el.type}</span></Table.Cell>
-                  <Table.Cell><span>{el.creationDate}</span></Table.Cell> 
-                   
-                </Table.Row>
-              </Table.Body>
-            </Table>
-            </MuiThemeProvider>     
-    */}
-                    {/* </div>
-                })} */}
-            
-        </div>
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
         </div>
       
         )

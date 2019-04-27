@@ -223,11 +223,7 @@ class InProgressInvestorCases extends Component {
 						justifyContent: 'flex-end'
 					}}
 				>
-<<<<<<< HEAD
 					<h2 style={{ marginTop: '30px', paddingTop: '50px', fontSize: '50px'}}>In Progress Cases</h2>
-=======
-					<h2 style={{ marginTop: '30px', paddingTop: '50px', fontSize: '50px' }}>In Progress Cases</h2>
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 				</div>
 				<div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'right', justifyContent: 'right' }}>
 					{this.getAttributes()}

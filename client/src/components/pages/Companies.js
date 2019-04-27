@@ -9,11 +9,7 @@ class Companies extends Component {
 		certainFormType: []
 	};
 	componentDidMount() {
-<<<<<<< HEAD
 		axios.get('/routes/api/userDynamicForms/getAllApprovedCompanies/').then((res) => {
-=======
-		axios.get('/routes/api/dynamicForms/').then((res) => {
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 			if (Array.isArray(res.data.data)) {
 				this.setState({ certainFormType: res.data.data });
 			}

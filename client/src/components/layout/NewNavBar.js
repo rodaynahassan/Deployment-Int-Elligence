@@ -20,12 +20,8 @@ class NewNavBar extends Component {
 		this.state = {
 			formTypes: [],
 			formType: '',
-<<<<<<< HEAD
 			formTypeArrays: [],
 			formTypeArray:''
-=======
-			formTypeArrays: []
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 		};
 	}
 	componentDidMount() {
@@ -57,41 +53,23 @@ class NewNavBar extends Component {
 	changeHandler = (event) => {
 		this.setState({ [event.target.name]: event.target.value });
 		localStorage.setItem('formType', event.target.value);
-<<<<<<< HEAD
 		document.location.href = '/createANewCompany';
-=======
-		// console.log(event.target.name)
-		//  console.log(event.target.value)
-		document.location.href = '/createNewForm';
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 	};
 
 	changeHandler2 = (event) => {
 		this.setState({ [event.target.name]: event.target.value });
 		localStorage.setItem('formTypeArray', event.target.value);
-<<<<<<< HEAD
-=======
-		// console.log(event.target.name)
-		// console.log(event.target.value)
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 		document.location.href = '/attributeInArray';
 	};
 
 	render() {
-<<<<<<< HEAD
 		var currentLocation = window.location.pathname;
-=======
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 		var Investor = (
 			<div>
 				<nav
 					class="navbar navbar-expand-sm bg-dark navbar-dark"
 					style={{
-<<<<<<< HEAD
 						position: 'fixed',
-=======
-						position: 'absolute',
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 						padding: '0.5px',
 						listStyle: 'none',
 						margin: ' 0 auto',
@@ -134,11 +112,7 @@ class NewNavBar extends Component {
 							<a
 								class="nav-link"
 								className="fa fa-info-circle"
-<<<<<<< HEAD
 								href="/about"
-=======
-								href="/aboutContactUsPage"
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 								title="About us"
 								style={{ color: blue100, paddingTop: '15px', fontSize: '1.5em' }}
 							/>
@@ -167,7 +141,6 @@ class NewNavBar extends Component {
 								</Dropdown.Menu>
 							</Dropdown>
 						</li>
-<<<<<<< HEAD
 						<li class="nav-item" color="white">
 							<a
 								className="fa fa-building"
@@ -176,40 +149,26 @@ class NewNavBar extends Component {
 							/>
 						</li>
 ]						<li class="nav-item dropdown" style={{width:"100px", paddingTop: '10px'}}>
-=======
-						<li class="nav-item dropdown">
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 							<select
 								className="form-control"
 								id="exampleFormControlSelect1"
 								name="ali"
 								onChange={this.changeHandler}
 								value={this.state.formType}
-<<<<<<< HEAD
 								style={{color: blue200,border:"solid"}}
-=======
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 							>
 								<option>Choose a form type</option>
 								{this.state.formTypes.map((city) => <option value={city}>{city}</option>)};
 							</select>
 						</li>
-<<<<<<< HEAD
 						<li class="nav-item dropdown" style={{width:"75px", paddingTop: '10px'}}>
-=======
-						<li class="nav-item dropdown">
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 							<select
 								className="form-control"
 								id="exampleFormControlSelect1"
 								name="ali"
 								onChange={this.changeHandler2}
-<<<<<<< HEAD
 								value={this.state.formTypeArray}
 								style={{color: blue200,border:"solid"}}
-=======
-								value={this.state.formTypeArrays}
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 							>
 								<option>Choose an array</option>
 								{this.state.formTypeArrays.map((city) => <option value={city}>{city}</option>)};
@@ -223,11 +182,7 @@ class NewNavBar extends Component {
 								<Dropdown.Menu>
 									<Dropdown.Item
 										href="/approvedCompanies"
-<<<<<<< HEAD
 										style={{ textAlign: 'left', color: blue200 }}
-=======
-										style={{ textAlign: 'left', color: '#3e484d' }}
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 									>
 										{' '}
 										Show Approved Companies
@@ -235,11 +190,7 @@ class NewNavBar extends Component {
 									<Dropdown.Divider />
 									<Dropdown.Item
 										href="/investorInProgressform"
-<<<<<<< HEAD
 										style={{ textAlign: 'left', color: blue200 }}
-=======
-										style={{ textAlign: 'left', color: '#3e484d' }}
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 									>
 										{' '}
 										Track your forms
@@ -253,22 +204,14 @@ class NewNavBar extends Component {
 									<i className="fas fa-cog" style={{ color: blue100, fontSize: '1.5em' }} />
 								</Dropdown.Toggle>
 								<Dropdown.Menu>
-<<<<<<< HEAD
 									<Dropdown.Item href="/editprofile" style={{ textAlign: 'left', color: blue200 }}>
-=======
-									<Dropdown.Item href="/editprofile" style={{ textAlign: 'left', color: '#3e484d' }}>
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 										{' '}
 										Edit your profile
 									</Dropdown.Item>
 									<Dropdown.Divider />
 									<Dropdown.Item
 										href="/changepassword"
-<<<<<<< HEAD
 										style={{ textAlign: 'left', color: blue200 }}
-=======
-										style={{ textAlign: 'left', color: '#3e484d' }}
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 									>
 										{' '}
 										Change your password
@@ -276,11 +219,7 @@ class NewNavBar extends Component {
 									<Dropdown.Divider />
 									<Dropdown.Item
 										onClick={this.logOut}
-<<<<<<< HEAD
 										style={{ textAlign: 'left', color: blue200 }}
-=======
-										style={{ textAlign: 'left', color: '#3e484d' }}
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 									>
 										{' '}
 										Logout
@@ -297,11 +236,7 @@ class NewNavBar extends Component {
 				<nav
 					class="navbar navbar-expand-sm bg-dark navbar-dark"
 					style={{
-<<<<<<< HEAD
 						position: 'fixed',
-=======
-						position: 'absolute',
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 						padding: '0.5px',
 						listStyle: 'none',
 						margin: ' 0 auto',
@@ -344,11 +279,7 @@ class NewNavBar extends Component {
 							<a
 								class="nav-link"
 								className="fa fa-info-circle"
-<<<<<<< HEAD
 								href="/about"
-=======
-								href="/aboutContactUsPage"
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 								title="About us"
 								style={{ color: blue100, paddingTop: '15px', fontSize: '1.5em' }}
 							/>
@@ -377,7 +308,6 @@ class NewNavBar extends Component {
 								</Dropdown.Menu>
 							</Dropdown>
 						</li>
-<<<<<<< HEAD
 						<li class="nav-item" color="white">
 							<a
 								className="fa fa-building"
@@ -386,42 +316,26 @@ class NewNavBar extends Component {
 							/>
 						</li>
 ]						<li class="nav-item dropdown" style={{width:"100px", paddingTop: '10px'}}>
-=======
-						<li class="nav-item dropdown">
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 							<select
 								className="form-control"
 								id="exampleFormControlSelect1"
 								name="ali"
 								onChange={this.changeHandler}
 								value={this.state.formType}
-<<<<<<< HEAD
 								style={{color: blue200,border:"solid"}}
 							>
-=======
-							>
-								Create a new form
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 								<option>Choose a form type</option>
 								{this.state.formTypes.map((city) => <option value={city}>{city}</option>)};
 							</select>
 						</li>
-<<<<<<< HEAD
 						<li class="nav-item dropdown" style={{width:"75px", paddingTop: '10px'}}>
-=======
-						<li class="nav-item dropdown">
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 							<select
 								className="form-control"
 								id="exampleFormControlSelect1"
 								name="ali"
 								onChange={this.changeHandler2}
-<<<<<<< HEAD
 								value={this.state.formTypeArray}
 								style={{color: blue200,border:"solid"}}
-=======
-								value={this.state.formTypeArrays}
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 							>
 								<option>Choose an array</option>
 								{this.state.formTypeArrays.map((city) => <option value={city}>{city}</option>)};
@@ -434,28 +348,16 @@ class NewNavBar extends Component {
 								</Dropdown.Toggle>
 								<Dropdown.Menu>
 									<Dropdown.Item
-<<<<<<< HEAD
 										href="/GetCaseLawyer"
 										style={{ textAlign: 'left', color: blue200 }}
 									>
 										{' '}
 										View your cases
-=======
-										href="/getCaseLawyerSPC"
-										style={{ textAlign: 'left', color: '#3e484d' }}
-									>
-										{' '}
-										Track your forms
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 									</Dropdown.Item>
 									<Dropdown.Divider />
 									<Dropdown.Item
 										href="/unassignedForm"
-<<<<<<< HEAD
 										style={{ textAlign: 'left', color: blue200 }}
-=======
-										style={{ textAlign: 'left', color: '#3e484d' }}
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 									>
 										{' '}
 										Pick a Task
@@ -469,22 +371,14 @@ class NewNavBar extends Component {
 									<i className="fas fa-cog" style={{ color: blue100, fontSize: '1.5em' }} />
 								</Dropdown.Toggle>
 								<Dropdown.Menu>
-<<<<<<< HEAD
 									<Dropdown.Item href="/editprofile" style={{ textAlign: 'left', color: blue200 }}>
-=======
-									<Dropdown.Item href="/editprofile" style={{ textAlign: 'left', color: '#3e484d' }}>
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 										{' '}
 										Edit your profile
 									</Dropdown.Item>
 									<Dropdown.Divider />
 									<Dropdown.Item
 										href="/changepassword"
-<<<<<<< HEAD
 										style={{ textAlign: 'left', color: blue200 }}
-=======
-										style={{ textAlign: 'left', color: '#3e484d' }}
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 									>
 										{' '}
 										Change your password
@@ -492,11 +386,7 @@ class NewNavBar extends Component {
 									<Dropdown.Divider />
 									<Dropdown.Item
 										onClick={this.logOut}
-<<<<<<< HEAD
 										style={{ textAlign: 'left', color: blue200 }}
-=======
-										style={{ textAlign: 'left', color: '#3e484d' }}
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 									>
 										{' '}
 										Logout
@@ -517,11 +407,7 @@ class NewNavBar extends Component {
 				<nav
 					class="navbar navbar-expand-sm bg-dark navbar-dark"
 					style={{
-<<<<<<< HEAD
 						position: 'fixed',
-=======
-						position: 'absolute',
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 						padding: '0.5px',
 						listStyle: 'none',
 						margin: ' 0 auto',
@@ -564,11 +450,7 @@ class NewNavBar extends Component {
 							<a
 								class="nav-link"
 								className="fa fa-info-circle"
-<<<<<<< HEAD
 								href="/about"
-=======
-								href="/aboutContactUsPage"
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 								title="About us"
 								style={{ color: blue100, paddingTop: '15px', fontSize: '1.5em' }}
 							/>
@@ -605,25 +487,15 @@ class NewNavBar extends Component {
 								<Dropdown.Menu>
 									<Dropdown.Item
 										href="/lawyerAcceptedForms"
-<<<<<<< HEAD
 										style={{ textAlign: 'left', color: blue200 }}
-=======
-										style={{ textAlign: 'left', color: '#3e484d' }}
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 									>
 										{' '}
 										Pick a Task
 									</Dropdown.Item>
 									<Dropdown.Divider />
-<<<<<<< HEAD
 									<Dropdown.Item href="/GetReviewer" style={{ textAlign: 'left', color: blue200 }}>
 										{' '}
 										View your cases
-=======
-									<Dropdown.Item href="/GetReviewer" style={{ textAlign: 'left', color: '#3e484d' }}>
-										{' '}
-										View your tasks
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 									</Dropdown.Item>
 								</Dropdown.Menu>
 							</Dropdown>
@@ -634,22 +506,14 @@ class NewNavBar extends Component {
 									<i className="fas fa-cog" style={{ color: blue100, fontSize: '1.5em' }} />
 								</Dropdown.Toggle>
 								<Dropdown.Menu>
-<<<<<<< HEAD
 									<Dropdown.Item href="/editprofile" style={{ textAlign: 'left', color: blue200 }}>
-=======
-									<Dropdown.Item href="/editprofile" style={{ textAlign: 'left', color: '#3e484d' }}>
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 										{' '}
 										Edit your profile
 									</Dropdown.Item>
 									<Dropdown.Divider />
 									<Dropdown.Item
 										href="/changepassword"
-<<<<<<< HEAD
 										style={{ textAlign: 'left', color: blue200 }}
-=======
-										style={{ textAlign: 'left', color: '#3e484d' }}
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 									>
 										{' '}
 										Change your password
@@ -657,11 +521,7 @@ class NewNavBar extends Component {
 									<Dropdown.Divider />
 									<Dropdown.Item
 										onClick={this.logOut}
-<<<<<<< HEAD
 										style={{ textAlign: 'left', color: blue200 }}
-=======
-										style={{ textAlign: 'left', color: '#3e484d' }}
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 									>
 										{' '}
 										Logout
@@ -682,11 +542,7 @@ class NewNavBar extends Component {
 				<nav
 					class="navbar navbar-expand-sm bg-dark navbar-dark"
 					style={{
-<<<<<<< HEAD
 						position: 'fixed',
-=======
-						position: 'absolute',
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 						padding: '0.5px',
 						listStyle: 'none',
 						margin: ' 0 auto',
@@ -729,11 +585,7 @@ class NewNavBar extends Component {
 							<a
 								class="nav-link"
 								className="fa fa-info-circle"
-<<<<<<< HEAD
 								href="/about"
-=======
-								href="/aboutContactUsPage"
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 								title="About us"
 								style={{ color: blue100, paddingTop: '15px', fontSize: '1.5em' }}
 							/>
@@ -751,11 +603,7 @@ class NewNavBar extends Component {
 							<a
 								class="nav-link"
 								className="fas fa-sign-in-alt"
-<<<<<<< HEAD
 								href="/registerAdmin"
-=======
-								href="/adminPage"
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 								title="Register a new lawyer or reviewer"
 								style={{ color: blue100, paddingTop: '15px', fontSize: '1.5em' }}
 							/>
@@ -814,7 +662,6 @@ class NewNavBar extends Component {
 				<br />
 			</div>
 		);
-<<<<<<< HEAD
 		var ElectronicJournal = (
 			<div>
 				<nav
@@ -890,8 +737,6 @@ class NewNavBar extends Component {
 				<br />
 			</div>
 		);
-=======
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 
 		return (
 			<div style={{ paddingLeft: '60px', justifyItems: 'center' }}>
@@ -899,12 +744,9 @@ class NewNavBar extends Component {
 				{localStorage.getItem('type') === 'Lawyer' ? Lawyer : null}
 				{localStorage.getItem('type') === 'Admin' ? admin : null}
 				{localStorage.getItem('type') === 'Reviewer' ? Reviewer : null}
-<<<<<<< HEAD
 				{currentLocation === '/journal' ? ElectronicJournal : null}
 				{currentLocation === '/register' ? ElectronicJournal : null}
 
-=======
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 			</div>
 		);
 	}

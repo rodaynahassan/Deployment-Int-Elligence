@@ -1,7 +1,6 @@
 import LocalizedStrings from 'react-localization';
 
 let strings = new LocalizedStrings({
-<<<<<<< HEAD
 	en: {
 		loginTitle: 'Login',
 		email: 'Email',
@@ -30,23 +29,3 @@ let strings = new LocalizedStrings({
 	}
 });
 export default strings;
-=======
-    en:{
-        loginTitle:"Login",
-        email:"Email",
-        password:"Password",
-        loginbutton:"Login",
-        hintemail:"Enter your Email",
-        hintpassword:"Enter your Password"
-    },
-    ar:{
-        loginTitle:"تسجيل الدخول",
-        email:"البريد الإلكتروني ",
-        password:"كلمة السر",
-        loginbutton:"تسجيل الدخول",
-        hintemail:"ادخل البريد الالكتروني",
-        hintpassword:"ادخل كلمة السر"
-    }
-})
-export default strings
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524

@@ -53,10 +53,7 @@ class AdminProfile extends Component {
 				<br />
 				<br />
 				<br />
-<<<<<<< HEAD
 				<br />
-=======
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 				<div class="container emp-profile">
 					<form method="post">
 						<div class="row">
@@ -64,11 +61,7 @@ class AdminProfile extends Component {
 								<div class="container">
 									<div
 										class="jumbotron"
-<<<<<<< HEAD
 										style={{ width: '500px', height: '130px', paddingTop: '10px' ,backgroundColor:"#a3dbf1" }}
-=======
-										style={{ width: '300px', height: '130px', paddingTop: '10px' }}
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
 									>
 										<h3>
 											{' '}

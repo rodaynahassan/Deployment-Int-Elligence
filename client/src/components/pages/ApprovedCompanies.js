@@ -34,16 +34,6 @@ class ApprovedCompanies extends Component {
          }
       })
     }
-<<<<<<< HEAD
-=======
-      // tabRow(){
-      //  return (
-      //   this.state.approvedCompanies.map(function(approvedCompany,i){
-      //   return <ApprovedCompaniesFields approvedCompany={approvedCompany} key={i}/>})
-      //   )
-      // }
-
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
       printDocument() {
         const input = document.getElementById('divToPrint');
         
@@ -83,10 +73,6 @@ class ApprovedCompanies extends Component {
       }
 
       getAttributes = () => {
-<<<<<<< HEAD
-=======
-     
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
         return this.state.approvedCompanies.map((Form, index) => {
           var KEYS = [];
           // console.log(Form)
@@ -126,7 +112,6 @@ class ApprovedCompanies extends Component {
                         );
                       }})
                       }
-<<<<<<< HEAD
                       <Button 
                       label="Save As PDF"
                       variant='omar' 
@@ -141,8 +126,6 @@ class ApprovedCompanies extends Component {
                       <i class="far fa-file-pdf" style={{fontSize:"1.6em",left:"2%", color:"light blue"}}></i>
                       <h5 style={{fontSize:"15px"}}> Save As PDF</h5>
                       </Button>
-=======
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
                        </Card.Body>
                        </Card>
                                     
@@ -153,47 +136,10 @@ class ApprovedCompanies extends Component {
       render(){
         trans.setLanguage(this.props.lang)
         return (
-<<<<<<< HEAD
           
           <div  style={{paddingLeft:'60px',flexDirection: 'row', justifyContent: 'flex-end'}} >
           <div>
               <div style={{paddingLeft:"44%"}}>
-=======
-          <div  style={{paddingLeft:'60px',flexDirection: 'row', justifyContent: 'flex-end'}} >
-           {/* <div style={{backgroundColor:"#123456" , textAlign:"center", fontSize:"50px" , color:"white" }} >{trans.title}</div>
-          <Table striped bordered hover variant="gamed" size="sm">
-            <thead>
-              <tr>
-                <th>{trans.name}</th>
-                <th>{trans.nameInEnglish}</th>
-                <th>{trans.governorate}</th>
-                <th>{trans.city}</th>
-                <th>{trans.address}</th>
-                <th>{trans.telephone}</th>
-                <th>{trans.fax}</th>
-                <th>{trans.currency}</th>
-                <th>{trans.capital}</th>
-                <th>{trans.type}</th>
-                <th>{trans.date}</th>
-              </tr>
-              </thead>
-              <tbody>
-              {this.tabRow()}
-            </tbody>     
-          </Table> */}
-
-          (<div>
-              
-              <div style={{paddingLeft:"44%"}}>
-
-              <MuiThemeProvider >
-              
-              <Button label="Save As PDF" variant='dark' size="sm" width="60px" height="2px" style={{marginTop:"100px", width:"120px", height:"50px" }}
-               onClick={this.printDocument} ><h6 style={{fontSize:"15px"}}> Save As PDF</h6><i class="far fa-file-pdf" style={{fontSize:"1.6em",left:"7%", color:"light blue"}}></i></Button>
-              
-              </MuiThemeProvider>
-
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
               </div>
               <div id="divToPrint" className="mt4" {...css({
                 backgroundColor: '#f5f5f5',
@@ -201,7 +147,6 @@ class ApprovedCompanies extends Component {
                 minHeight: '297mm',
                 marginLeft: 'auto',
                 marginRight: 'auto',
-<<<<<<< HEAD
                 })}>
                 <br/>
                 <br/>
@@ -211,79 +156,6 @@ class ApprovedCompanies extends Component {
                 </div>
               
             </div>
-=======
-                
-                })}>
-                <br />
-                <br/>
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                {this.getAttributes()}
- 
-                {/* {this.state.approvedCompanies.map(el => {
-                  return <div key={el.id}>
-                  <br/>
-                  <br/>
-                  <br/> 
-                  <br/>
-                  <br/>
-                  <br/>
-                  <br/>
-                  <br/>
-                  <br/>
-                  <br/>
-                  <br/>
-                  <br/>
-                  <br/>
-                     <Table striped bordered hover >
-                 <thead>
-                   <tr>
-                   <th>{trans.name}</th>
-                    <th>{trans.nameInEnglish}</th>
-                    <th>{trans.governorate}</th>
-                    <th>{trans.city}</th>
-                    <th>{trans.address}</th>
-                    <th>{trans.telephone}</th>
-                    <th>{trans.fax}</th>
-                    <th>{trans.currency}</th>
-                    <th>{trans.capital}</th>
-                    <th>{trans.type}</th>
-                    <th>{trans.date}</th>
-                   </tr>
-                   </thead>
-                   <tbody>
-                   <tr>
-                     <td>{el.companyName}</td>
-                     <td>{el.companyNameInEnglish}</td>
-                     <td>{el.companyGovernorate}</td>
-                     <td>{el.companyCity}</td>
-                     <td>{el.companyAddress}</td>
-                     <td>{el.companyTelephone}</td>
-                     <td>{el.companyFax}</td>
-                     <td>{el.currency}</td>
-                     <td>{el.equityCapital}</td>
-                     <td>{el.type}</td>
-                     <td>{el.creationDate}</td>
-                   </tr>
-                   
-                 </tbody>
-                 
-                 </Table> */}
-
-                    {/* </div>
-                    
-                })} */}
-                 
-                
-                 </div>
-              
-            </div>)
->>>>>>> 4d051423ab27b13bda556ba1e986fb699ea5b524
         
           </div>
           )

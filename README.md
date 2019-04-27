@@ -1,1 +1,1 @@
-"# Deployment-Int-Elligence" 
+# Int-Elligence

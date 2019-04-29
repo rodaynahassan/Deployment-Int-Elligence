@@ -106,12 +106,15 @@ class Login extends Component {
 	};
 
 	render() {
+		
 		const { errors } = this.state;
 		const { password } = this.state;
 		trans.setLanguage(this.props.lang);
 
 		return (
 			<div>
+				<br/>
+				<br/>
 				<div className="modal-dialog" role="document">
 					{/* <form onSubmit={this.handleSubmit}> */}
 					<div className="modal-content form-elegant">

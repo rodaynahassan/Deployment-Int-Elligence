@@ -109,7 +109,7 @@ class CreateANewCompany extends Component {
 					return (
 						<div>
 							<h2>{key}</h2>
-							<h3>Please Insert Array of {key} in the Array page</h3>
+							<h3>Please choose and insert {key} from the 2nd DropDown Menu</h3>
 						</div>
 					);
 				} else if (constraints[5] === 'dropdownlist') {
@@ -299,6 +299,7 @@ class CreateANewCompany extends Component {
 	handleClick = (error) => {
 		error.preventDefault();
 		const keys = this.state.certainFormType['0'];
+		
 		var KEYS = [];
 		for (var key in keys) {
 			KEYS.push(key);

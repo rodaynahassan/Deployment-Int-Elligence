@@ -64,55 +64,18 @@ exports.create = async (body, status, investorId, lawyerId) => {
     });
 };
 
-// exports.update = async (att, value, body) => {
-//   //delete body.formType ;
-//   var temp = new obj.constructor();
-//   for (var key in body) temp[key] = clone(body[key]);
-//   delete body.lawyerComments;
-//   delete body.reviewerComments;
-//   delete body.status;
-//   delete body.fees;
-//   delete body.investorId;
-//   delete body.lawyerId;
-//   delete body.reviewerId;
-//   delete body.creationDate;
-//   const isValidated = await validator
-//     .updateValidation(body)
-//     .then(res => {
-//       return res;
-//     })
-//     .catch(err => {
-//       return { error: err };
-//     });
-
-//   if (isValidated.error) return { error: isValidated.error };
-//   if (!att) {
-//     return {
-//       error: "Can't update record , Please provide an attribute to update with"
-//     };
-//   }
-//   if (att === "_id") {
-//     var dynamicForm = await DynamicForm.findByIdAndUpdate(value, temp)
-//       .then(res => {
-//         return res;
-//       })
-//       .catch(err => {
-//         return { error: err };
-//       });
-//     // console.log(dynamicForm)
-//     if (dynamicForm.error) return dynamicForm;
-//     return await DynamicForm.findById(value)
-//       .then(res => {
-//         return res;
-//       })
-//       .catch(err => {
-//         return { error: err };
-//       });
-//   }
-// };
-
 exports.update = async (att, value, body) => {
   //delete body.formType ;
+  var temp = new obj.constructor();
+  for (var key in body) temp[key] = clone(body[key]);
+  delete body.lawyerComments;
+  delete body.reviewerComments;
+  delete body.status;
+  delete body.fees;
+  delete body.investorId;
+  delete body.lawyerId;
+  delete body.reviewerId;
+  delete body.creationDate;
   const isValidated = await validator
     .updateValidation(body)
     .then(res => {
@@ -129,13 +92,14 @@ exports.update = async (att, value, body) => {
     };
   }
   if (att === "_id") {
-    //console.log(body)
-    var dynamicForm = await DynamicForm.findByIdAndUpdate(value, body)
-    .then(res=>{return res})
-    .catch(error=>{
-        return {error:error}
-    })
-   // console.log(dynamicForm)
+    var dynamicForm = await DynamicForm.findByIdAndUpdate(value, temp)
+      .then(res => {
+        return res;
+      })
+      .catch(err => {
+        return { error: err };
+      });
+    // console.log(dynamicForm)
     if (dynamicForm.error) return dynamicForm;
     return await DynamicForm.findById(value)
       .then(res => {
@@ -146,6 +110,42 @@ exports.update = async (att, value, body) => {
       });
   }
 };
+
+// exports.update = async (att, value, body) => {
+//   //delete body.formType ;
+//   const isValidated = await validator
+//     .updateValidation(body)
+//     .then(res => {
+//       return res;
+//     })
+//     .catch(err => {
+//       return { error: err };
+//     });
+
+//   if (isValidated.error) return { error: isValidated.error };
+//   if (!att) {
+//     return {
+//       error: "Can't update record , Please provide an attribute to update with"
+//     };
+//   }
+//   if (att === "_id") {
+//     //console.log(body)
+//     var dynamicForm = await DynamicForm.findByIdAndUpdate(value, body)
+//     .then(res=>{return res})
+//     .catch(error=>{
+//         return {error:error}
+//     })
+//    // console.log(dynamicForm)
+//     if (dynamicForm.error) return dynamicForm;
+//     return await DynamicForm.findById(value)
+//       .then(res => {
+//         return res;
+//       })
+//       .catch(err => {
+//         return { error: err };
+//       });
+//   }
+// };
 
 exports.remove = async (att, value) => {
   if (!att) {

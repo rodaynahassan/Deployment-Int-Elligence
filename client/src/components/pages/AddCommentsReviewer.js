@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
 import '../../App.css';
+import { black } from 'material-ui/styles/colors';
+import { blue200 } from 'material-ui/styles/colors';
 const mongoose = require('mongoose')
 
 
@@ -95,7 +97,7 @@ class AddCommentsReviewer extends Component{
             >
 
             <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-vcenter">
+                <Modal.Title id="contained-modal-title-vcenter" style={{color:blue200}}>
                 Add a Comment 
                 </Modal.Title>
                 </Modal.Header>
@@ -103,11 +105,10 @@ class AddCommentsReviewer extends Component{
                 {/* <h4>Centered Modal</h4> */}
                 <input type="text" placeholder='Enter Your Comment..' style={{width: "775px" , height:"100px"}} onChange={ this.changeHandler} />
                 <Button
-                type="button"
-                block
-                variant="dark"
+                className="btn-block btn-rounded z-depth-1a"
+                variant="omar"
                 value="Comment"
-                style={{width: "300px" ,display:"flex", flexWrap:"wrap", alignItems:"middle" , justifyContent:"middle"}}
+                style={{width: "110px",backgroundColor:"#a3dbff",color:black}}   
                 disabled={!this.validateForm()}
                 onClick={() => (this.handleClick(this.props.formId) , alert('Comments added Succesfully'))}
                 >Comment</Button>

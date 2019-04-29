@@ -47,7 +47,9 @@ class AttributeArray extends Component {
 			.then((res) => {
 				this.setState({
 					certainFormType: res.data.data
+					
 				});
+				console.log(this.state.certainFormType)
 			});
 	};
 	changeHandler = (event) => {
@@ -77,7 +79,7 @@ class AttributeArray extends Component {
 											name={key}
 											onChange={this.changeHandler}
 											value={this.state[key]}
-											style={{width:"300px"}}
+											style={{width:"350px"}}
 										>
 											<option>Please choose your gender</option>
 											<option>Female</option>
@@ -104,7 +106,7 @@ class AttributeArray extends Component {
 											name={key}
 											onChange={this.changeHandler}
 											value={this.state[key]}
-											style={{width:"300px"}}
+											style={{width:"350px"}}
 										>
 												<option>Please choose your nationality</option>
 												{this.state.nationalities.map((nat) => (
@@ -128,7 +130,7 @@ class AttributeArray extends Component {
 											name={key}
 											onChange={this.changeHandler}
 											value={this.state[key]}
-											style={{width:"300px"}}
+											style={{width:"350px"}}
 										>
 											<option>Please choose your type</option>
 											<option>Person</option>
@@ -150,7 +152,7 @@ class AttributeArray extends Component {
 											name={key}
 											onChange={this.changeHandler}
 											value={this.state[key]}
-											style={{width:"300px"}}
+											style={{width:"350px"}}
 										>
 											<option>Please choose your Identification Type</option>
 											<option>National ID</option>
@@ -173,7 +175,7 @@ class AttributeArray extends Component {
 											name={key}
 											onChange={this.changeHandler}
 											value={this.state[key]}
-											style={{width:"300px"}}
+											style={{width:"350px"}}
 										>
 											<option>Please choose the type of the manager</option>
 											<option>President</option>
@@ -220,20 +222,21 @@ class AttributeArray extends Component {
 	handleClick = (error) => {
 		error.preventDefault();
 		const keys = this.state.certainFormType['0'];
+		
 		var KEYS = [];
 		for (var key in keys) {
 			KEYS.push(key);
 		}
 		var payload2 = {};
 		KEYS.map((key, index) => {
-			if (key !== '__proto__' && key !== '_id' && key !== '__v') {
+			if (key !== '__proto__' && key !== '_id' && key !== '__v'&& key!=='formTypeArray' ) {
 				//payload2.push({ [key] : this.state[key] })
 				// key : this.state.key,
 				payload2[key] = this.state[key];
 			}
 		});
 		///CHANGE THIS PART WITH THE NEW ROUTE
-
+		console.log(payload2)
 		var apiBaseUrl = '/routes/api/userDynamicForms/addAttributeToArray';
 
 		axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');

@@ -24,7 +24,6 @@ class ApprovedCompanies extends Component {
     }
     componentDidMount(){
 
-
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
       axios.get('/routes/api/userDynamicForms/getInvestorApprovedCompanies',{headers: { "Authorization": localStorage.getItem('jwtToken') }})
       .then(res => {
@@ -34,6 +33,13 @@ class ApprovedCompanies extends Component {
          }
       })
     }
+      // tabRow(){
+      //  return (
+      //   this.state.approvedCompanies.map(function(approvedCompany,i){
+      //   return <ApprovedCompaniesFields approvedCompany={approvedCompany} key={i}/>})
+      //   )
+      // }
+
       printDocument() {
         const input = document.getElementById('divToPrint');
         
@@ -49,7 +55,7 @@ class ApprovedCompanies extends Component {
             var pdf = new jsPDF({
               orientation: 'landscape',
               unit: 'in',
-              format: [800, 1100]
+              format: [900, 1100]
             }) 
 
             pdf.addImage(imgData, 'JPEG', 1, 1);
@@ -64,7 +70,7 @@ class ApprovedCompanies extends Component {
             pdf.setFont("helvetica");
             pdf.setFontType("normal");
             pdf.setFontSize(15);
-            pdf.text(1, 10, '© 2019 Copyright: GAFI');
+            pdf.text(1, 12, '© 2019 Copyright: GAFI');
 
             // pdf.output('dataurlnewwindow')
             pdf.save("download.pdf")
@@ -73,6 +79,7 @@ class ApprovedCompanies extends Component {
       }
 
       getAttributes = () => {
+     
         return this.state.approvedCompanies.map((Form, index) => {
           var KEYS = [];
           // console.log(Form)
@@ -112,7 +119,51 @@ class ApprovedCompanies extends Component {
                         );
                       }})
                       }
-                      <Button 
+                       </Card.Body>
+                       </Card>
+                                    
+          )
+         }
+        )}
+
+      render(){
+        trans.setLanguage(this.props.lang)
+        return (
+          <div  style={{paddingLeft:'60px',flexDirection: 'row', justifyContent: 'flex-end'}} >
+           {/* <div style={{backgroundColor:"#123456" , textAlign:"center", fontSize:"50px" , color:"white" }} >{trans.title}</div>
+          <Table striped bordered hover variant="gamed" size="sm">
+            <thead>
+              <tr>
+                <th>{trans.name}</th>
+                <th>{trans.nameInEnglish}</th>
+                <th>{trans.governorate}</th>
+                <th>{trans.city}</th>
+                <th>{trans.address}</th>
+                <th>{trans.telephone}</th>
+                <th>{trans.fax}</th>
+                <th>{trans.currency}</th>
+                <th>{trans.capital}</th>
+                <th>{trans.type}</th>
+                <th>{trans.date}</th>
+              </tr>
+              </thead>
+              <tbody>
+              {this.tabRow()}
+            </tbody>     
+          </Table> */}
+
+          (<div>
+              
+              <div style={{paddingLeft:"44%"}}>
+
+              <MuiThemeProvider >
+              
+              <Button label="Save As PDF" variant='omar' size="sm" width="60px" height="8px" style={{marginTop:"100px", width:"120px", height:"70px" ,backgroundColor:"#a3dbf1"}}
+               onClick={this.printDocument} ><i class="far fa-file-pdf" style={{fontSize:"1.6em",left:"2%", color:"light blue"}}></i>
+               <h5 style={{fontSize:"15px"}}> Save As PDF</h5></Button>
+              
+              </MuiThemeProvider>
+              {/* <Button 
                       label="Save As PDF"
                       variant='omar' 
                       size="sm"
@@ -125,21 +176,7 @@ class ApprovedCompanies extends Component {
                       >
                       <i class="far fa-file-pdf" style={{fontSize:"1.6em",left:"2%", color:"light blue"}}></i>
                       <h5 style={{fontSize:"15px"}}> Save As PDF</h5>
-                      </Button>
-                       </Card.Body>
-                       </Card>
-                                    
-          )
-         }
-        )}
-
-      render(){
-        trans.setLanguage(this.props.lang)
-        return (
-          
-          <div  style={{paddingLeft:'60px',flexDirection: 'row', justifyContent: 'flex-end'}} >
-          <div>
-              <div style={{paddingLeft:"44%"}}>
+                      </Button> */}
               </div>
               <div id="divToPrint" className="mt4" {...css({
                 backgroundColor: '#f5f5f5',
@@ -147,13 +184,75 @@ class ApprovedCompanies extends Component {
                 minHeight: '297mm',
                 marginLeft: 'auto',
                 marginRight: 'auto',
+                
                 })}>
+                <br />
                 <br/>
-                <br/>
-                <br/>
-                <br/>
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
                 {this.getAttributes()}
-                </div>
+ 
+                {/* {this.state.approvedCompanies.map(el => {
+                  return <div key={el.id}>
+                  <br/>
+                  <br/>
+                  <br/> 
+                  <br/>
+                  <br/>
+                  <br/>
+                  <br/>
+                  <br/>
+                  <br/>
+                  <br/>
+                  <br/>
+                  <br/>
+                  <br/>
+                     <Table striped bordered hover >
+                 <thead>
+                   <tr>
+                   <th>{trans.name}</th>
+                    <th>{trans.nameInEnglish}</th>
+                    <th>{trans.governorate}</th>
+                    <th>{trans.city}</th>
+                    <th>{trans.address}</th>
+                    <th>{trans.telephone}</th>
+                    <th>{trans.fax}</th>
+                    <th>{trans.currency}</th>
+                    <th>{trans.capital}</th>
+                    <th>{trans.type}</th>
+                    <th>{trans.date}</th>
+                   </tr>
+                   </thead>
+                   <tbody>
+                   <tr>
+                     <td>{el.companyName}</td>
+                     <td>{el.companyNameInEnglish}</td>
+                     <td>{el.companyGovernorate}</td>
+                     <td>{el.companyCity}</td>
+                     <td>{el.companyAddress}</td>
+                     <td>{el.companyTelephone}</td>
+                     <td>{el.companyFax}</td>
+                     <td>{el.currency}</td>
+                     <td>{el.equityCapital}</td>
+                     <td>{el.type}</td>
+                     <td>{el.creationDate}</td>
+                   </tr>
+                   
+                 </tbody>
+                 
+                 </Table> */}
+
+                    {/* </div>
+                    
+                })} */}
+                 
+                
+                 </div>
               
             </div>
         
@@ -162,3 +261,5 @@ class ApprovedCompanies extends Component {
       }
     }
     export default ApprovedCompanies
+
+

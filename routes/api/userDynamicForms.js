@@ -638,6 +638,7 @@ router.put(
      // const formid = req.params.formId;
       var form = await dynamicFormController.search("companyName", req.body.companyName);
       if (form.error) return res.status(400).json({ error: form.error });
+      console.log("lolo2")
       form = await form[0].toJSON()
      
       if(form.status==="Unassigned"){

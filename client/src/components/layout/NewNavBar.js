@@ -170,7 +170,7 @@ class NewNavBar extends Component {
 								value={this.state.formTypeArray}
 								style={{color: blue200,border:"solid"}}
 							>
-								<option>Choose an array</option>
+								<option> </option>
 								{this.state.formTypeArrays.map((city) => <option value={city}>{city}</option>)};
 							</select>
 						</li>
@@ -337,7 +337,7 @@ class NewNavBar extends Component {
 								value={this.state.formTypeArray}
 								style={{color: blue200,border:"solid"}}
 							>
-								<option>Choose an array</option>
+								<option> </option>
 								{this.state.formTypeArrays.map((city) => <option value={city}>{city}</option>)};
 							</select>
 						</li>
@@ -730,6 +730,24 @@ class NewNavBar extends Component {
 								</Dropdown.Menu>
 							</Dropdown>
 						</li>
+						<li class="nav-item" color="white">
+							<a
+								class="nav-link"
+								className="fas fa-sign-in-alt"
+								href="/login"
+								title="Sign In"
+								style={{ color: blue100, paddingTop: '15px', fontSize: '1.5em' }}
+							/>
+						</li>
+						<li class="nav-item" color="white">
+							<a
+								class="nav-link"
+								className="fas fa-user-plus"
+								href="/register"
+								title="Sign Up"
+								style={{ color: blue100, paddingTop: '15px', fontSize: '1.5em' }}
+							/>
+						</li>
 					</ul>
 				</nav>
 				<br />
@@ -744,8 +762,20 @@ class NewNavBar extends Component {
 				{localStorage.getItem('type') === 'Lawyer' ? Lawyer : null}
 				{localStorage.getItem('type') === 'Admin' ? admin : null}
 				{localStorage.getItem('type') === 'Reviewer' ? Reviewer : null}
-				{currentLocation === '/journal' ? ElectronicJournal : null}
+				{currentLocation === '/journal' && localStorage.getItem('isLoggedIn') === 'false'? ElectronicJournal : null}
+				{currentLocation === '/journal' && localStorage.getItem('isLoggedIn') === 'true' && localStorage.getItem('type') === 'Investor'? Investor : null}
+				{currentLocation === '/journal' && localStorage.getItem('isLoggedIn') === 'true' && localStorage.getItem('type') === 'Lawyer'? Lawyer : null}
+				{currentLocation === '/journal' && localStorage.getItem('isLoggedIn') === 'true' && localStorage.getItem('type') === 'Admin'? admin : null}
+				{currentLocation === '/journal' && localStorage.getItem('isLoggedIn') === 'true' && localStorage.getItem('type') === 'Reviewer'? Reviewer : null}
+				{currentLocation === '/about' && localStorage.getItem('isLoggedIn') === 'false'? ElectronicJournal : null}
+				{currentLocation === '/about' && localStorage.getItem('isLoggedIn') === 'true' && localStorage.getItem('type') === 'Investor'? Investor : null}
+				{currentLocation === '/about' && localStorage.getItem('isLoggedIn') === 'true' && localStorage.getItem('type') === 'Lawyer'? Lawyer : null}
+				{currentLocation === '/about' && localStorage.getItem('isLoggedIn') === 'true' && localStorage.getItem('type') === 'Admin'? admin : null}
+				{currentLocation === '/about' && localStorage.getItem('isLoggedIn') === 'true' && localStorage.getItem('type') === 'Reviewer'? Reviewer : null}
 				{currentLocation === '/register' ? ElectronicJournal : null}
+				{currentLocation === '/forgotPassword' ? ElectronicJournal : null}
+				{currentLocation === '/login' ? ElectronicJournal : null}
+				{currentLocation === '/reset/:token' ? ElectronicJournal : null}
 
 			</div>
 		);

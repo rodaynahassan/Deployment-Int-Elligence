@@ -567,7 +567,7 @@ class NewNavBar extends Component {
 							<a
 								class="nav-link"
 								className="fa fa-user"
-								href="/profile"
+								href="/adminprofile"
 								title="Profile"
 								style={{ color: blue100, paddingTop: '15px', fontSize: '1.5em' }}
 							/>

@@ -9,6 +9,7 @@ import TextField from 'material-ui/TextField';
 import { MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
+import trans from '../translations/changePasswordTranslation'
 var mongoose = require('mongoose');
 
 class ChangePassword extends React.Component {
@@ -51,6 +52,7 @@ class ChangePassword extends React.Component {
 	}
 
 	render() {
+		trans.setLanguage(this.props.lang);
 		return (
 			<div style={{ paddingLeft: '60px', justifyItems: 'center' }}>
 				<div
@@ -62,7 +64,7 @@ class ChangePassword extends React.Component {
 						width: '100%'
 					}}
 				>
-					Your Profile
+					{trans.title}
 				</div>
 				<MuiThemeProvider>
 					<div style={{ paddingLeft: '30px' }}>
@@ -70,7 +72,7 @@ class ChangePassword extends React.Component {
 						<MDBRow>
 							<MDBCol>
 								<MDBInput
-									label="New Password"
+									label={trans.labelNew}
 									value={this.state.newPassword.value}
 									className={this.state.newPassword.valid ? 'is-valid' : 'is-invalid'}
 									name="newPassword"
@@ -80,7 +82,7 @@ class ChangePassword extends React.Component {
 									required
 								>
 									<div className="valid-feedback">
-										Note: It should be more than 8 characters and less than 20 characters
+										{trans.valid}
 									</div>
 								</MDBInput>
 							</MDBCol>
@@ -89,7 +91,7 @@ class ChangePassword extends React.Component {
 						<MDBRow>
 							<MDBCol>
 								<MDBInput
-									label="Confirm Password"
+									label={trans.labelConfirm}
 									value={this.state.confirmPassword.value}
 									name="confirmPassword"
 									onChange={this.changeHandler}
@@ -101,12 +103,12 @@ class ChangePassword extends React.Component {
 						</MDBRow>
 						<div style={{ paddingLeft: '50%' }}>
 							<RaisedButton
-								label="Submit"
+								label={trans.labelSubmit}
 								primary={true}
 								style={style}
 								disabled={!this.validatePassword()}
 								onClick={(event) => (
-									this.handleClick(event), alert('The password has been updated successfully')
+									this.handleClick(event), alert('Password updated Successfully')
 								)}
 							/>
 						</div>
@@ -120,6 +122,6 @@ const style = {
 	margin: 15
 };
 
-ReactDOM.render(<ChangePassword />, document.getElementById('root'));
+// ReactDOM.render(<ChangePassword />, document.getElementById('root'));
 
 export default ChangePassword;

@@ -18,6 +18,7 @@ class Side extends Component {
 		document.location.href = '/';
 	}
 	render() {
+		
 		var profile = (
 			<NavItem eventKey="home">
 				<NavIcon>

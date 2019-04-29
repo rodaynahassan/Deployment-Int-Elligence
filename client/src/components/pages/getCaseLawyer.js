@@ -10,8 +10,10 @@ import GetAllUserForms from '../form/GetAllUserForms';
 import { Dropdown, Card } from 'react-bootstrap';
 import { MDBProgress } from 'mdbreact';
 import { blue200 } from 'material-ui/styles/colors';
+import trans from '../translations/getCaseLawyerTranslation'
 const mongoose = require('mongoose');
 var $ = require('jquery')(window);
+
 
 // tabRow(){
 //   return this.state.companies.map(function(company,i){
@@ -131,7 +133,7 @@ class Companies extends Component {
 												<div>
 													{' '}
 													<h3>
-														<i class="fas fa-genderless" />LawyerComments
+														<i class="fas fa-genderless" />{trans.commentsL}
 													</h3>
 													{keys.map((att, index) => {
 														return (
@@ -148,7 +150,7 @@ class Companies extends Component {
 												<div>
 													{' '}
 													<h3>
-														<i class="fas fa-genderless" />ReviewerComments
+														<i class="fas fa-genderless" />{trans.commentsR}
 													</h3>
 													{keys.map((att, index) => {
 														return (
@@ -208,7 +210,7 @@ class Companies extends Component {
 												style={{ fontSize: '1em'}}
 											/>
 											<br /> 
-											Accept Case
+											{trans.accept}
 										</h6>
 									</Button>
 									<Button
@@ -221,7 +223,7 @@ class Companies extends Component {
 												style={{ fontSize: '1em' }}
 											/> 
 											<br />
-											Calculate The Fees
+											{trans.calculate}
 										</h9>
 									</Button>
 									<ButtonToolbar>
@@ -233,7 +235,7 @@ class Companies extends Component {
 												<i class="fas fa-comment" 
 												style={{ fontSize: '1em' }} />
 												<br />
-												Add Comments
+												{trans.comments}
 											</h6>
 										</Button>
 										<AddCommentsLawyer
@@ -249,7 +251,7 @@ class Companies extends Component {
 										<div>
 											<MDBProgress material value={60} color="dark" height="63px">
 												<h3 style={{ color: '#64b9e0', fontSize: '30px' }}>
-													Reviewer Rejected <br /> 60%
+													{trans.reviewerR} <br /> 60%
 												</h3>
 											</MDBProgress>
 											<br />
@@ -260,7 +262,7 @@ class Companies extends Component {
 												class="btn btn-info"
 											>
 												<h3 style={{ color: '#64b9e0', fontSize: '15px' }}>
-													Edit Form<br />
+													{trans.edit}<br />
 													<i class="fas fa-edit" />
 												</h3>
 											</Button>
@@ -269,7 +271,7 @@ class Companies extends Component {
 									{Form.status === 'In progress Lawyer' ? (
 										<MDBProgress material value={50} color="dark" height="63px">
 											<h3 style={{ color: '#64b9e0', fontSize: '30px' }}>
-												Lawyer Accepted <br />50%{' '}
+												{trans.lawyerA} <br />50%{' '}
 											</h3>
 										</MDBProgress>
 									) : null}
@@ -283,6 +285,7 @@ class Companies extends Component {
 	};
 
 	render() {
+		trans.setLanguage(this.props.lang);
 		return (
 			<div>
 				<div>
@@ -298,7 +301,7 @@ class Companies extends Component {
 							height:"205px"
 						}}
 					>
-						Your Cases
+						{trans.title}
 						<Dropdown>
 							<Dropdown.Toggle
 								//className="btn blue-gradient btn-block btn-rounded z-depth-1a"
@@ -306,18 +309,18 @@ class Companies extends Component {
 								id="dropdown-basic"
 								style={{ width: '150px' ,left:'0',padding: '0.5px'}}
 							>
-								Sort the Cases
+								{trans.sortB}
 							</Dropdown.Toggle>
 							<Dropdown.Menu>
 								<Dropdown.Item onClick={() => this.sort()} style={{ textAlign: 'left' ,color:blue200}}>
-									By ID
+									{trans.id}
 								</Dropdown.Item>
 								<Dropdown.Divider />
 								<Dropdown.Item
 									onClick={() => this.sortByCreationDate()}
 									style={{ textAlign: 'center',color:blue200}}
 								>
-									By Creation Date
+									{trans.date}
 								</Dropdown.Item>
 							</Dropdown.Menu>
 						</Dropdown>

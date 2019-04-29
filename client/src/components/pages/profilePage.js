@@ -9,7 +9,7 @@ import { Button } from 'mdbreact';
 import { red100 } from 'material-ui/styles/colors';
 import { blue100 } from 'material-ui/styles/colors';
 import { blue200 } from 'material-ui/styles/colors';
-
+import trans from '../translations/profilePageTranslation'
 class Profile extends Component {
 	constructor(props) {
 		super(props);
@@ -50,6 +50,7 @@ class Profile extends Component {
 	}
 
 	render() {
+		trans.setLanguage(this.props.lang);
 		var Investor = (
 			<div>
 				<br />
@@ -94,7 +95,7 @@ class Profile extends Component {
 										<div class="row">
 											<div class="col-md-6">
 												<label>
-													<i class="fas fa-venus-mars" style={{ color: blue200 }} /> Gender
+													<i class="fas fa-venus-mars" style={{ color: blue200 }} /> {trans.gender}
 												</label>
 											</div>
 											<div class="col-md-6">
@@ -105,7 +106,7 @@ class Profile extends Component {
 											<div class="col-md-6">
 												<label>
 													<i class="fas fa-birthday-cake" style={{ color: blue200 }} />{' '}
-													Birthdate
+													{trans.birthdate}
 												</label>
 											</div>
 											<div class="col-md-6">
@@ -116,7 +117,7 @@ class Profile extends Component {
 											<div class="col-md-6">
 												<label>
 													<i className="fas fa-globe" style={{ color: blue200 }} />{' '}
-													Nationality
+													{trans.nationality}
 												</label>
 											</div>
 											<div class="col-md-6">
@@ -127,7 +128,7 @@ class Profile extends Component {
 											<div class="col-md-6">
 												<label>
 													<i className="fas fa-id-badge" style={{ color: blue200 }} />{' '}
-													Identification Type
+													{trans.identificationType}
 												</label>
 											</div>
 											<div class="col-md-6">
@@ -141,7 +142,7 @@ class Profile extends Component {
 														class="fas fa-sort-numeric-down"
 														style={{ color: blue200 }}
 													/>{' '}
-													Identification Number
+													{trans.identificationNumber}
 												</label>
 											</div>
 											<div class="col-md-6">
@@ -152,7 +153,7 @@ class Profile extends Component {
 											<div class="col-md-6">
 												<label>
 													<i class="fas fa-map-marked-alt" style={{ color: blue200 }} />{' '}
-													Address
+													{trans.address}
 												</label>
 											</div>
 											<div class="col-md-6">
@@ -162,7 +163,7 @@ class Profile extends Component {
 										<div class="row">
 											<div class="col-md-6">
 												<label>
-													<i class="fas fa-phone" style={{ color: blue200 }} /> Telephone
+													<i class="fas fa-phone" style={{ color: blue200 }} /> {trans.telephone}
 												</label>
 											</div>
 											<div class="col-md-6">
@@ -172,7 +173,7 @@ class Profile extends Component {
 										<div class="row">
 											<div class="col-md-6">
 												<label>
-													<i class="fas fa-fax" style={{ color: blue200 }} /> Fax
+													<i class="fas fa-fax" style={{ color: blue200 }} /> {trans.fax}
 												</label>
 											</div>
 											<div class="col-md-6">
@@ -182,8 +183,7 @@ class Profile extends Component {
 										<div class="row">
 											<div class="col-md-6">
 												<label>
-													<i class="fas fa-money-bill" style={{ color: blue200 }} /> Financial
-													Balance
+													<i class="fas fa-money-bill" style={{ color: blue200 }} /> {trans.financialBalance}
 												</label>
 											</div>
 											<div class="col-md-6">
@@ -242,7 +242,7 @@ class Profile extends Component {
 										<div class="row">
 											<div class="col-md-6">
 												<label>
-													<i class="fas fa-venus-mars" style={{ color: blue200 }} /> Gender
+													<i class="fas fa-venus-mars" style={{ color: blue200 }} /> {trans.gender}
 												</label>
 											</div>
 											<div class="col-md-6">
@@ -253,7 +253,7 @@ class Profile extends Component {
 											<div class="col-md-6">
 												<label>
 													<i class="fas fa-birthday-cake" style={{ color: blue200 }} />{' '}
-													Birthdate
+													{trans.birthdate}
 												</label>
 											</div>
 											<div class="col-md-6">
@@ -264,7 +264,7 @@ class Profile extends Component {
 											<div class="col-md-6">
 												<label>
 													<i className="fas fa-globe" style={{ color: blue200 }} />{' '}
-													Nationality
+													{trans.nationality}
 												</label>
 											</div>
 											<div class="col-md-6">
@@ -275,7 +275,7 @@ class Profile extends Component {
 											<div class="col-md-6">
 												<label>
 													<i className="fas fa-id-badge" style={{ color: blue200 }} />{' '}
-													Identification Type
+													{trans.identificationType}
 												</label>
 											</div>
 											<div class="col-md-6">
@@ -289,7 +289,7 @@ class Profile extends Component {
 														class="fas fa-sort-numeric-down"
 														style={{ color: blue200 }}
 													/>{' '}
-													Identification Number
+													{trans.identificationNumber}
 												</label>
 											</div>
 											<div class="col-md-6">
@@ -300,7 +300,7 @@ class Profile extends Component {
 											<div class="col-md-6">
 												<label>
 													<i class="fas fa-map-marked-alt" style={{ color: blue200 }} />{' '}
-													Address
+													{trans.address}
 												</label>
 											</div>
 											<div class="col-md-6">
@@ -310,7 +310,7 @@ class Profile extends Component {
 										<div class="row">
 											<div class="col-md-6">
 												<label>
-													<i class="fas fa-phone" style={{ color: blue200 }} /> Telephone
+													<i class="fas fa-phone" style={{ color: blue200 }} /> {trans.telephone}
 												</label>
 											</div>
 											<div class="col-md-6">
@@ -320,7 +320,7 @@ class Profile extends Component {
 										<div class="row">
 											<div class="col-md-6">
 												<label>
-													<i class="fas fa-fax" style={{ color: blue200 }} /> Fax
+													<i class="fas fa-fax" style={{ color: blue200 }} /> {trans.fax}
 												</label>
 											</div>
 											<div class="col-md-6">
@@ -380,7 +380,7 @@ class Profile extends Component {
 										<div class="row">
 											<div class="col-md-6">
 												<label>
-													<i class="fas fa-venus-mars" style={{ color: blue200 }} /> Gender
+													<i class="fas fa-venus-mars" style={{ color: blue200 }} /> {trans.gender}
 												</label>
 											</div>
 											<div class="col-md-6">
@@ -391,7 +391,7 @@ class Profile extends Component {
 											<div class="col-md-6">
 												<label>
 													<i class="fas fa-birthday-cake" style={{ color: blue200 }} />{' '}
-													Birthdate
+													{trans.birthdate}
 												</label>
 											</div>
 											<div class="col-md-6">
@@ -402,7 +402,7 @@ class Profile extends Component {
 											<div class="col-md-6">
 												<label>
 													<i className="fas fa-globe" style={{ color: blue200 }} />{' '}
-													Nationality
+													{trans.nationality}
 												</label>
 											</div>
 											<div class="col-md-6">
@@ -413,7 +413,7 @@ class Profile extends Component {
 											<div class="col-md-6">
 												<label>
 													<i className="fas fa-id-badge" style={{ color: blue200 }} />{' '}
-													Identification Type
+													{trans.identificationType}
 												</label>
 											</div>
 											<div class="col-md-6">
@@ -427,7 +427,7 @@ class Profile extends Component {
 														class="fas fa-sort-numeric-down"
 														style={{ color: blue200 }}
 													/>{' '}
-													Identification Number
+													{trans.identificationNumber}
 												</label>
 											</div>
 											<div class="col-md-6">
@@ -438,7 +438,7 @@ class Profile extends Component {
 											<div class="col-md-6">
 												<label>
 													<i class="fas fa-map-marked-alt" style={{ color: blue200 }} />{' '}
-													Address
+													{trans.address}
 												</label>
 											</div>
 											<div class="col-md-6">
@@ -448,7 +448,7 @@ class Profile extends Component {
 										<div class="row">
 											<div class="col-md-6">
 												<label>
-													<i class="fas fa-phone" style={{ color: blue200 }} /> Telephone
+													<i class="fas fa-phone" style={{ color: blue200 }} /> {trans.telephone}
 												</label>
 											</div>
 											<div class="col-md-6">
@@ -458,7 +458,7 @@ class Profile extends Component {
 										<div class="row">
 											<div class="col-md-6">
 												<label>
-													<i class="fas fa-fax" style={{ color: blue200 }} /> Fax
+													<i class="fas fa-fax" style={{ color: blue200 }} /> {trans.fax}
 												</label>
 											</div>
 											<div class="col-md-6">
@@ -483,5 +483,5 @@ class Profile extends Component {
     }
 }
 
-ReactDOM.render(<Profile />, document.getElementById('root'));
+// ReactDOM.render(<Profile />, document.getElementById('root'));
 export default Profile;

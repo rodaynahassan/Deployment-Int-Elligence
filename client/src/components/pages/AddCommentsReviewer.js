@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
 import '../../App.css';
+import trans from '../translations/addCommentsReviewerTranslation'
 const mongoose = require('mongoose')
 
 
@@ -83,7 +84,7 @@ class AddCommentsReviewer extends Component{
 
 
     render() {
-        
+      trans.setLanguage(this.props.lang);
         return (
 
             <div>
@@ -96,12 +97,12 @@ class AddCommentsReviewer extends Component{
 
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                Add a Comment 
+                {trans.comment} 
                 </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                 {/* <h4>Centered Modal</h4> */}
-                <input type="text" placeholder='Enter Your Comment..' style={{width: "775px" , height:"100px"}} onChange={ this.changeHandler} />
+                <input type="text" placeholder={trans.commentPlace} style={{width: "775px" , height:"100px"}} onChange={ this.changeHandler} />
                 <Button
                 type="button"
                 block
@@ -110,10 +111,10 @@ class AddCommentsReviewer extends Component{
                 style={{width: "300px" ,display:"flex", flexWrap:"wrap", alignItems:"middle" , justifyContent:"middle"}}
                 disabled={!this.validateForm()}
                 onClick={() => (this.handleClick(this.props.formId) , alert('Comments added Succesfully'))}
-                >Comment</Button>
+                >{trans.commentB}</Button>
                 </Modal.Body>
                 <Modal.Footer>
-                <Button variant='red' onClick={this.props.onHide}>Close</Button>
+                <Button variant='red' onClick={this.props.onHide}>{trans.closeB}</Button>
                 </Modal.Footer>
             </Modal>
 

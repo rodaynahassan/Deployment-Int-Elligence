@@ -9,7 +9,7 @@ import TextField from 'material-ui/TextField';
 import { MDBRow, MDBCol, MDBInput, MDBBtn, MDBSelect } from 'mdbreact';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
-
+import trans from '../translations/editProfileTranslation'
 var mongoose = require('mongoose');
 
 class EditProfile extends React.Component {
@@ -112,6 +112,7 @@ class EditProfile extends React.Component {
 	}
 
 	render() {
+		trans.setLanguage(this.props.lang);
 		return (
 			<div style={{ paddingLeft: '60px', justifyItems: 'center' }}>
 				<div
@@ -123,7 +124,7 @@ class EditProfile extends React.Component {
 						width: '100%'
 					}}
 				>
-					Your Profile
+					{trans.title}
 				</div>
 				<MuiThemeProvider>
 					<div>
@@ -131,7 +132,7 @@ class EditProfile extends React.Component {
 						<MDBRow style={{ paddingLeft: '30px', justifyItems: 'center' }}>
 							<MDBCol>
 								<MDBInput
-									label="Name"
+									label={trans.name}
 									value={this.state.name}
 									name="name"
 									className={
@@ -146,10 +147,9 @@ class EditProfile extends React.Component {
 									id="materialFormRegisterNameEx"
 									required
 								>
-									<div className="valid-feedback">Looks good!</div>
+									<div className="valid-feedback">{trans.validfeedback}</div>
 									<div className="invalid-feedback">
-										Note: It should be more than or equal 3 characters and less than or equal 50
-										characters
+										{trans.invalidfeedbackName}
 									</div>
 								</MDBInput>
 							</MDBCol>
@@ -159,7 +159,7 @@ class EditProfile extends React.Component {
 						<MDBRow style={{ paddingLeft: '30px', justifyItems: 'center' }}>
 							<MDBCol>
 								<div className="form-group">
-									<label htmlFor="gender">Gender</label>
+									<label htmlFor="gender">{trans.gender}</label>
 									<select
 										className="form-control"
 										id="exampleFormControlSelect1"
@@ -167,8 +167,8 @@ class EditProfile extends React.Component {
 										onChange={this.changeHandler}
 										value={this.state.gender}
 									>
-										<option>Female</option>
-										<option>Male</option>
+										<option>{trans.male}</option>
+										<option>{trans.female}</option>
 									</select>
 								</div>
 							</MDBCol>
@@ -178,7 +178,7 @@ class EditProfile extends React.Component {
 						<MDBRow style={{ paddingLeft: '30px', justifyItems: 'center' }}>
 							<MDBCol>
 								<div className="form-group">
-									<label htmlFor="Nationality">Nationality</label>
+									<label htmlFor="Nationality">{trans.nationality}</label>
 									<select
 										className="form-control"
 										id="exampleFormControlSelect1"
@@ -211,13 +211,12 @@ class EditProfile extends React.Component {
 									onChange={this.changeHandler}
 									type="text"
 									id="materialFormRegisterNameEx"
-									label="Identification Type"
+									label={trans.identificationType}
 									required
 								>
-									<div className="valid-feedback">Looks good!</div>
+									<div className="valid-feedback">{trans.validfeedback}</div>
 									<div className="invalid-feedback">
-										Note: It should be more than or equal 8 characters and less than or equal 20
-										characters
+										{trans.invalidfeedbackIdentificationType}
 									</div>
 								</MDBInput>
 							</MDBCol>
@@ -240,13 +239,12 @@ class EditProfile extends React.Component {
 									onChange={this.changeHandler}
 									type="text"
 									id="materialFormRegisterNameEx"
-									label="Identification Number"
+									label={trans.identificationNumber}
 									required
 								>
-									<div className="valid-feedback">Looks good!</div>
+									<div className="valid-feedback">{trans.validfeedback}</div>
 									<div className="invalid-feedback">
-										Note: It should be more than or equal 5 characters and less than or equal 50
-										characters
+										{trans.invalidfeedbackIdentificationNumber}
 									</div>
 								</MDBInput>
 							</MDBCol>
@@ -261,10 +259,10 @@ class EditProfile extends React.Component {
 									onChange={this.changeHandler}
 									type="text"
 									id="materialFormRegisterNameEx"
-									label="Birthdate"
+									label={trans.birthdate}
 									required
 								>
-									<div className="valid-feedback">It should be in the format of: YYYY-MM-DD</div>
+									<div className="valid-feedback">{trans.validfeedbackBirthdate}</div>
 								</MDBInput>
 							</MDBCol>
 						</MDBRow>
@@ -284,13 +282,12 @@ class EditProfile extends React.Component {
 									onChange={this.changeHandler}
 									type="email"
 									id="materialFormRegisterNameEx"
-									label="Label"
+									label={trans.email}
 									required
 								>
-									<div className="valid-feedback">Looks Good!</div>
+									<div className="valid-feedback">{trans.validfeedback}</div>
 									<div className="invalid-feedback">
-										Note: It should be more than or equal 3 characters and less than or equal 254
-										characters
+										{trans.invalidfeedbackEmail}
 									</div>
 								</MDBInput>
 							</MDBCol>
@@ -311,7 +308,7 @@ class EditProfile extends React.Component {
 									onChange={this.changeHandler}
 									type="text"
 									id="materialFormRegisterNameEx"
-									label="Address"
+									label={trans.address}
 									required
 								/>
 							</MDBCol>
@@ -326,13 +323,12 @@ class EditProfile extends React.Component {
 									onChange={this.changeHandler}
 									type="text"
 									id="materialFormRegisterNameEx"
-									label="Telephone"
+									label={trans.telephone}
 									required
 								>
-									<div className="valid-feedback">Looks good!</div>
+									<div className="valid-feedback">{trans.validfeedback}</div>
 									<div className="invalid-feedback">
-										Note: It should be more than or equal 8 characters and less than or equal 15
-										characters
+										{trans.invalidfeedbackTelephone}
 									</div>
 								</MDBInput>
 							</MDBCol>
@@ -341,7 +337,7 @@ class EditProfile extends React.Component {
 						<MDBRow style={{ paddingLeft: '30px', justifyItems: 'center' }}>
 							<MDBCol>
 								<MDBInput
-									label="Fax"
+									label={trans.fax}
 									value={this.state.fax}
 									name="fax"
 									onChange={this.changeHandler}
@@ -349,10 +345,9 @@ class EditProfile extends React.Component {
 									id="materialFormRegisterNameEx"
 									required
 								>
-									<div className="valid-feedback">Looks good!</div>
+									<div className="valid-feedback">{trans.validfeedback}</div>
 									<div className="invalid-feedback">
-										Note: It should be more than or equal 5 characters and less than or equal 20
-										characters
+										{trans.invalidfeedbackFax}
 									</div>
 								</MDBInput>
 							</MDBCol>
@@ -360,7 +355,7 @@ class EditProfile extends React.Component {
 
 						<div style={{ paddingLeft: '50%' }}>
 							<RaisedButton
-								label="Submit"
+								label={trans.submit}
 								primary={true}
 								style={style}
 								disabled={!this.validateForm()}
@@ -379,6 +374,6 @@ const style = {
 	margin: 15
 };
 
-ReactDOM.render(<EditProfile />, document.getElementById('root'));
+// ReactDOM.render(<EditProfile />, document.getElementById('root'));
 
 export default EditProfile;

@@ -4,6 +4,7 @@ import { Button } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
 import '../../App.css';
 import GetAllUserForms from '../form/GetAllUserForms'
+import trans from '../translations/addCommentsLawyerTranslation'
 const mongoose = require('mongoose')
 
 
@@ -79,7 +80,7 @@ class AddCommentsLawyer extends Component{
     }
 
     render() {
-        
+      trans.setLanguage(this.props.lang);
         
         return (
             <div>
@@ -93,11 +94,11 @@ class AddCommentsLawyer extends Component{
 
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                Add a Comment 
+                {trans.comment} 
                 </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                <input type="text" placeholder='Enter Your Comment' style={{width: "775px" , height:"100px"}} onChange={ this.changeHandler} />
+                <input type="text" placeholder={trans.commentPlace} style={{width: "775px" , height:"100px"}} onChange={ this.changeHandler} />
                 <Button
                 type="button"
                 block
@@ -106,10 +107,10 @@ class AddCommentsLawyer extends Component{
                 style={{width: "300px"}}
                 onClick={() => (this.handleClick(this.props.formId), alert('Comments added Succesfully'))}
                 disabled={!this.validateForm()}
-                >Comment</Button>
+                >{trans.commentB}</Button>
                 </Modal.Body>
                 <Modal.Footer>
-                <Button variant='red' onClick={this.props.onHide}>Close</Button>
+                <Button variant='red' onClick={this.props.onHide}>{trans.closeB}</Button>
                 </Modal.Footer>
             </Modal>
            </div>

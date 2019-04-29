@@ -159,8 +159,8 @@ class Login extends Component {
 									value={this.state.password}
 									style={{ width: '100%' }}
 								>
-									<div className="valid-feedback">Looks good!</div>
-									<div className="invalid-feedback">Please enter your password</div>
+									<div className="valid-feedback">{trans.validP}</div>
+									<div className="invalid-feedback">{trans.invalidP}</div>
 								</PasswordInput>
 								{/* <label data-error="wrong" data-success="right" htmlFor="Form-pass1">
 									{trans.hintpassword}

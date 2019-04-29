@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
+import Button from '@material-ui/core/Button';
 import {
 	LinkButtons,
 	SubmitButtons,
@@ -11,6 +12,7 @@ import {
 	HeaderBar
 } from '../containers';
 import { MDBInput } from 'mdbreact';
+import { blue200 } from 'material-ui/styles/colors';
 
 const title = {
 	pageTitle: 'Forgot Password Screen'
@@ -66,7 +68,7 @@ class ForgotPassword extends Component {
 							showNullError: false
 						});
 					}
-					alert(error.response.data.errmsg || error.response.data)
+					alert(error.response.data.errmsg || error.response.data);
 				});
 		}
 	};
@@ -75,47 +77,68 @@ class ForgotPassword extends Component {
 		const { email, messageFromServer, showNullError, showError } = this.state;
 
 		return (
-			<div style={{ paddingLeft: '100 px', justifyItems: 'center' }}>
-				<HeaderBar title={title} />
-				<form className="profile-form" onSubmit={this.sendEmail}>
-					<MDBInput
-						style={{ width: '300px' }}
-						id="email"
-						label="Email"
-						value={email}
-						onChange={this.handleChange('email')}
-						placeholder="Email Address"
-					/>
-					<SubmitButtons
-						// buttonStyle={forgotButton}
-						buttonText="Send Password Reset Email"
-						className="btn blue-gradient btn-block btn-rounded z-depth-1a"
-					/>
-				</form>
-				{showNullError && (
-					<div>
-						<p>The email address cannot be null.</p>
-					</div>
-				)}
-				{showError && (
-					<div>
-						<p>That email address isn&apos;t recognized. Please try again or register for a new account.</p>
-						<LinkButtons buttonText="Register" buttonStyle={registerButton} link="/register" />
-					</div>
-				)}
-				{messageFromServer === 'recovery email sent' && (
-					<div>
-						<h3>Password Reset Email Successfully Sent!</h3>
-					</div>
-				)}
-				<br />
-				<LinkButtons
-					buttonText="Go Home"
-					// href="/register"
-					buttonStyle={homeButton}
-					link="/"
-					className="btn blue-gradient btn-block btn-rounded z-depth-1a"
-				/>
+			<div>
+				<div
+					style={{
+						backgroundColor: '#a3dbf1',
+						paddingTop: '70px',
+						textAlign: 'center',
+						fontSize: '50px',
+						color: 'dark',
+						flexDirection: 'row',
+						justifyContent: 'flex-end',
+						height: '155px'
+					}}
+				>
+					Forgot Password
+					<br />
+					<form className="profile-form" onClick={this.sendEmail}>
+						<MDBInput
+							style={{ width: '500px', right: '100%' }}
+							id="email"
+							label="Email"
+							value={email}
+							onChange={this.handleChange('email')}
+							placeholder="Email Address"
+						/>
+						<Button
+							// buttonStyle={forgotButton}
+							className="btn-block btn-rounded z-depth-1a"
+							variant="omar"
+							style={{
+								marginTop: '50px',
+								marginLeft: '50px',
+								marginRight: '2500px',
+								width: '240px',
+								height: '40px',
+								backgroundColor: '#a3dbf1'
+							}}
+						>
+							Send Password Reset Email
+						</Button>
+						<br />
+					</form>
+					{showNullError && (
+						<div style={{ marginRight: '1170px', color: blue200 }}>
+							<h4>You must insert an email</h4>
+						</div>
+					)}
+					{showError && (
+						<div style={{ marginRight: '1170px', color: blue200 }}>
+							<h4>
+								That email address isn&apos;t recognized. Please try again or register for a new
+								account.
+							</h4>
+							<LinkButtons buttonText="Register" buttonStyle={registerButton} link="/register" />
+						</div>
+					)}
+					{messageFromServer === 'recovery email sent' && (
+						<div style={{ marginRight: '1170px', color: blue200 }}>
+							<h4>Password reset email was successfully sent!</h4>
+						</div>
+					)}
+					<br />
+				</div>
 			</div>
 		);
 	}

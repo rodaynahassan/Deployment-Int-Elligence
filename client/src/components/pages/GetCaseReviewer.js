@@ -9,6 +9,7 @@ import CardReviewer from "../form/CardReviewer";
 import GetAllReviewerForms from "../form/GetAllReviewerForms";
 import { Dropdown } from "react-bootstrap";
 import { blue200 } from "material-ui/styles/colors";
+import trans from '../translations/getReviewerTranslation'
 const mongoose = require('mongoose')
 var $ = require("jquery")(window);
 

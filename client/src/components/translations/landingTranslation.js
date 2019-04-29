@@ -8,8 +8,8 @@ let strings = new LocalizedStrings({
    invest:"Invest in Egypt"
  },
  ar: {
-  signup:"تسجيل حساب",
-  signin:"دخول حساب",
+  signup:"تسجيل حساب جديد",
+  signin:"دخول",
   electronicjournal:"المجلة الالكترونية",
   invest:"استثمر في مصر"
  }

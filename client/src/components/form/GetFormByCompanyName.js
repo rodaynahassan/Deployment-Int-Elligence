@@ -12,7 +12,7 @@ import jsPDF from 'jspdf';
 import { Button } from 'react-bootstrap';
 import html2canvas from 'html2canvas';
 import styled, { css } from 'styled-components';
-
+import trans from '../translations/searchCompanyTranslation';
 
 //import { Dropdown } from 'semantic-ui-react';
 import axios from 'axios';
@@ -102,6 +102,7 @@ class MyCompany extends Component {
       
     render()
     {
+      trans.setLanguage(this.props.lang);
         return (
     
           // <div style={{paddingLeft:"60px"}}>
@@ -112,7 +113,7 @@ class MyCompany extends Component {
            
             <MDBInput
             icon="search" 
-            label="Search For A Company"               
+            label={trans.label}              
             value={this.state.companyName.value}
             name="companyName"
             onChange={this.changeHandler}
@@ -130,7 +131,7 @@ class MyCompany extends Component {
             onClick={(event) => (this.handleClick(event))} 
             type="submit"
             >
-            Search
+            {trans.search}
             </Button>
             </div>
             <br />
@@ -146,5 +147,5 @@ class MyCompany extends Component {
     
 }
 
-ReactDOM.render(<MyCompany />, document.getElementById('root'));
+// ReactDOM.render(<MyCompany />, document.getElementById('root'));
 export default MyCompany;

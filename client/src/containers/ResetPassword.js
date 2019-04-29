@@ -65,7 +65,7 @@ export default class ResetPassword extends Component {
 				}
 			})
 			.catch((error) => {
-				alert(error.response.data.errmsg || error.response.data)
+				alert(error.response.data.errmsg || error.response.data);
 				this.setState({
 					updated: false,
 					isLoading: false,

@@ -6,7 +6,7 @@ import 'mdbreact/dist/css/mdb.css';
 import Mongoose from 'mongoose';
 import { MDBProgress } from 'mdbreact';
 import { Button } from 'react-bootstrap';
-import trans from '../translations/inProgressTranslation';
+import trans from '../translations/inProgressInvestorTranslation';
 class InProgressInvestorCases extends Component {
 	state = {
 		certainFormType: [],
@@ -108,41 +108,41 @@ class InProgressInvestorCases extends Component {
 								{Form.status === 'Unassigned' ? (
 									<MDBProgress material value={25} color="dark" height="63px">
 										<h3 style={{ color: '#64b9e0', fontSize: '30px' }}>
-											Unassigned <br /> 25%
+											{trans.unassigned} <br /> 25%
 										</h3>
 									</MDBProgress>
 								) : null}
 								{Form.status === 'In progress Lawyer' ? (
 									<MDBProgress material value={35} color="dark" height="63px">
 										<h3 style={{ color: '#64b9e0', fontSize: '30px' }}>
-											In Progress Lawyer <br /> 35%
+											{trans.lawyerP} <br /> 35%
 										</h3>
 									</MDBProgress>
 								) : null}
 								{Form.status === 'Lawyer rejected' ? (
 									<MDBProgress material value={55} color="dark" height="63px">
 										<h3 style={{ color: '#64b9e0', fontSize: '30px' }}>
-											Lawyer Rejected <br /> 55%
+											{trans.lawyerR} <br /> 55%
 										</h3>
 									</MDBProgress>
 								) : null}
 								{Form.status === 'Lawyer accepted' ? (
 									<MDBProgress material value={75} color="dark" height="63px">
 										<h3 style={{ color: '#64b9e0', fontSize: '30px' }}>
-											Lawyer Accepted <br /> 75%
+											{trans.lawyerA} <br /> 75%
 										</h3>
 									</MDBProgress>
 								) : null}
 								{Form.status === 'In progress Reviewer' ? (
 									<MDBProgress material value={100} color="dark" height="63px">
 										<h3 style={{ color: '#64b9e0', fontSize: '30px' }}>
-											In Progress Reviewer <br /> 100%
+											{trans.reviewerP} <br /> 100%
 										</h3>
 									</MDBProgress>
 								) : null}
 								{Form.status === 'Approved' ? (
 									<MDBProgress material value={65} color="dark" height="63px">
-										<h3 style={{ color: '#64b9e0', fontSize: '30px' }}>Approved</h3>
+										<h3 style={{ color: '#64b9e0', fontSize: '30px' }}>{trans.approved}</h3>
 									</MDBProgress>
 								) : null}
 								{Form.status === 'Unassigned' ? (
@@ -154,7 +154,7 @@ class InProgressInvestorCases extends Component {
 											class="btn btn-info"
 										>
 											<h3 style={{ color: '#64b9e0', fontSize: '15px' }}>
-												Edit Form<br />
+												{trans.edit}<br />
 												<i class="fas fa-edit" />
 											</h3>
 										</Button>
@@ -167,7 +167,7 @@ class InProgressInvestorCases extends Component {
 											class="btn btn-info"
 										>
 											<h3 style={{ color: '#64b9e0', fontSize: '15px' }}>
-												Delete Form<br />
+												{trans.delete}<br />
 												<i class="fas fa-trash" />
 											</h3>
 										</Button>
@@ -223,7 +223,7 @@ class InProgressInvestorCases extends Component {
 						justifyContent: 'flex-end'
 					}}
 				>
-					<h2 style={{ marginTop: '30px', paddingTop: '50px', fontSize: '50px'}}>In Progress Cases</h2>
+					<h2 style={{ marginTop: '30px', paddingTop: '50px', fontSize: '50px'}}>{trans.title}</h2>
 				</div>
 				<div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'right', justifyContent: 'right' }}>
 					{this.getAttributes()}

@@ -87,7 +87,7 @@ class unassignedForm extends Component {
 								onClick={() => (this.AssignCase(Form._id), alert('This Case is assigned to YOU!!'))}
 								class="btn btn-info"
 							>
-								<h6 style={{ color: '#64b9e0' }}>Pick Case</h6>
+								<h6 style={{ color: '#64b9e0' }}>{trans.pick}</h6>
 							</Button>
 						</div>
 					</FrontSide>
@@ -129,6 +129,7 @@ class unassignedForm extends Component {
 		});
 	};
 	render() {
+		trans.setLanguage(this.props.lang);
 		return (
 			<div>
 				<div

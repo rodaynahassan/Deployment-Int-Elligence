@@ -68,7 +68,7 @@ class ForgotPassword extends Component {
 							showNullError: false
 						});
 					}
-					alert(error.response.data.errmsg || error.response.data)
+					alert(error.response.data.errmsg || error.response.data);
 				});
 		}
 	};

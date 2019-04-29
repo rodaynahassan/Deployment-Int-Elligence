@@ -13,6 +13,7 @@
 		"classnames": "^2.2.6",
 		"flippy": "^1.2.0",
 		"html2canvas": "^1.0.0-rc.1",
+		"http-proxy-middleware": "^0.19.1",
 		"jquery": "^3.4.0",
 		"jspdf": "^1.5.3",
 		"jwt-decode": "^2.2.0",

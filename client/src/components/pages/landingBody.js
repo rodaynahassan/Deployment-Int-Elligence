@@ -30,6 +30,7 @@ class LandingBody extends Component {
 		document.location.href = '/';
 	}
 	render() {
+		trans.setLanguage(this.props.lang);
 		var loggedIn = (
 			<div>
 				<Button variant="outline-light" size="lg" onClick={this.logOut}>
@@ -53,7 +54,6 @@ class LandingBody extends Component {
 				</Button>
 			</div>
 		);
-		trans.setLanguage(this.props.lang);
 		return (
 			<Carousel>
 				<Carousel.Item>

@@ -27,12 +27,15 @@ let form2;
 let form3;
 beforeAll(async () => {
   loggedInAdmin = await funcs.loginAdmin('password1234','mari@gmail.com')
+  console.log(loggedInAdmin)
   token2 = loggedInAdmin.data.data
   await funcs.createLawyer(token2,'Lawyer','Ahmed','Male','Egyptian','National ID','570575620174','01-01-1980','Nasr City','ahmed999@gmail.com','12345678')
   loggedInLawyer = await funcs.loginUser('12345678','ahmed999@gmail.com')
+  console.log(loggedInLawyer)
   token3 = loggedInLawyer.data.token
   await funcs.createReviewer(token2,'Reviewer','Alaa','Male','Egyptian','National ID','570575644371','01-01-1980','Nasr City','alaa999@gmail.com','12345678')
   loggedInReviewer = await funcs.loginUser('12345678','alaa999@gmail.com')
+  console.log(loggedInReviewer)
   token4 = loggedInReviewer.data.token
   beforeOldUsers = await funcs.getAllUsers();
   beforeOldLength = beforeOldUsers.data.data.length;
@@ -40,13 +43,13 @@ beforeAll(async () => {
   beforeNewUsers = await funcs.getAllUsers();
   beforeNewLength = beforeNewUsers.data.data.length
   loggedInUser = await funcs.loginUser("password1234","monzzzz@gmail.com")
+  console.log(loggedInUser)
   token = loggedInUser.data.token
   beforeOldForms = await funcs.getAllForms()
   beforeOldFormLength = beforeOldForms.data.data.length
-  form1 = await funcs.postFormForUser(token,'SPCForm','الشركة00','The Company00','Cairo','New Cairo','Fifth Settlement','02752277577','a-2417457642','Dollars','Egyptian',100000)
-  console.log(form1)
-  form2 = await funcs.postFormForUser(token,'SPCForm','الشركة01','The Company01','Cairo','New Cairo','Fifth Settlement','015722772081','u-417757743','Dollars','Egyptian',100000)
-  form3 = await funcs.postFormForUser(token,'SPCForm','الشركة02','The Company02','Cairo','New Cairo','Fifth Settlement','011472777667','k-317772942','Dollars','Egyptian',100000)
+  form1 = await funcs.postFormForUser(loggedInUser.data.token,'SPCForm','الشركة00','The Company00','Cairo','New Cairo','Fifth Settlement','02752277577','a-2417457642','Dollars','Egyptian',100000)
+  form2 = await funcs.postFormForUser(loggedInUser.data.token,'SPCForm','الشركة01','The Company01','Cairo','New Cairo','Fifth Settlement','015722772081','u-417757743','Dollars','Egyptian',100000)
+  form3 = await funcs.postFormForUser(loggedInUser.data.token,'SPCForm','الشركة02','The Company02','Cairo','New Cairo','Fifth Settlement','011472777667','k-317772942','Dollars','Egyptian',100000)
   beforeNewForms = await funcs.getAllForms()
   beforeNewFormLength = beforeNewForms.data.data.length
 });
@@ -280,6 +283,3 @@ test('Updating a form as an investor',async () =>{
     const updatedForms = await funcs.getAllForms()
     expect(updatedForms.data.data[updatedForms.data.data.length-2].companyName).toMatch('الشركة03')
 })
-
-// }
-//   });

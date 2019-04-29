@@ -66,6 +66,10 @@ class App extends Component {
 		console.log(lang);
 	};
 
+	componentDidMount() {
+		document.title = 'GAFI';
+	}
+
 	setFormId = (formId) => {
 		this.setState({ formId: formId });
 		if (formId.status === 'Unassigned') document.location.href = '/editUnassigned';

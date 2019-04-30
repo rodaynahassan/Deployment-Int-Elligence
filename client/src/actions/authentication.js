@@ -10,13 +10,13 @@ export const registerUser = (user) => (dispatch) => {
 		//.then(res => history.push('/login'))
 		//.catch(err => console.log(err))
 		.then(function(response) {
-			alert("You have registered successfully. Congratulations :)! ")
+			alert('You have registered successfully. Congratulations :)! ');
+			document.location.href = '/login';
 		})
 		.catch((err) => {
-			alert(err.response.data.error|| err.response.data);
+			alert(err.response.data.error || err.response.data);
 			console.log(err.response);
 		});
-		
 };
 
 export const registerLR = (user) => (dispatch) => {

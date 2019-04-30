@@ -10,10 +10,9 @@ import GetAllUserForms from '../form/GetAllUserForms';
 import { Dropdown, Card } from 'react-bootstrap';
 import { MDBProgress } from 'mdbreact';
 import { blue200 } from 'material-ui/styles/colors';
-import trans from '../translations/getCaseLawyerTranslation'
+import trans from '../translations/getCaseLawyerTranslation';
 const mongoose = require('mongoose');
 var $ = require('jquery')(window);
-
 
 // tabRow(){
 //   return this.state.companies.map(function(company,i){
@@ -90,26 +89,27 @@ class Companies extends Component {
 				alert('The form was accepted succesfully');
 				document.location.href = '/getCaseLawyer';
 			})
-			.catch((err)=>{
-				alert(err.response.data.msg|| err.response.data);
+			.catch((err) => {
+				alert(err.response.data.msg || err.response.data);
 				console.log(err.response);
-			})
+			});
 	};
 
 	calculateFees = (formId) => {
 		console.log('hi');
 		axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
-		axios.put('/routes/api/userDynamicForms/calculatingFees/' + mongoose.Types.ObjectId(formId), {
-			headers: { Authorization: localStorage.getItem('jwtToken') }
-		})
-		.then((res) => {
-			alert('The fees was calculated succesfully');
-			document.location.href = '/getCaseLawyer';
-		})
-		.catch((err)=>{
-			alert(err.response.data.msg|| err.response.data);
-			console.log(err.response);
-		})
+		axios
+			.put('/routes/api/userDynamicForms/calculatingFees/' + mongoose.Types.ObjectId(formId), {
+				headers: { Authorization: localStorage.getItem('jwtToken') }
+			})
+			.then((res) => {
+				alert('The fees was calculated succesfully');
+				document.location.href = '/getCaseLawyer';
+			})
+			.catch((err) => {
+				alert(err.response.data.msg || err.response.data);
+				console.log(err.response);
+			});
 	};
 
 	getAttributes = () => {
@@ -147,13 +147,14 @@ class Companies extends Component {
 												<div>
 													{' '}
 													<h3>
-														<i class="fas fa-genderless" />{trans.commentsL}
+														<i class="fas fa-genderless" />
+														{trans.commentsL}
 													</h3>
 													{keys.map((att, index) => {
 														return (
 															<h5 style={{ paddingLeft: '5%' }}>
 																<i class="fas fa-circle" />
-																{constraints['0'][att]}
+																{constraints[att]}
 															</h5>
 														);
 													})}
@@ -164,13 +165,14 @@ class Companies extends Component {
 												<div>
 													{' '}
 													<h3>
-														<i class="fas fa-circle" />{trans.commentsR}
+														<i class="fas fa-circle" />
+														{trans.commentsR}
 													</h3>
 													{keys.map((att, index) => {
 														return (
 															<h5 style={{ paddingLeft: '5%' }}>
 																<i class="fas fa-circle" />
-																{constraints['0'][att]}
+																{constraints[att]}
 															</h5>
 														);
 													})}
@@ -213,59 +215,56 @@ class Companies extends Component {
                <h3> In progress Lawyer </h3>
                 </MDBProgress> */}
 
-							<div variant="omar" style={{ textAlign: 'right' ,color:blue200 }}>
-								<ButtonGroup variant="omar" size="sm" className="mt-3" style={{color:blue200}}>
-									<Button variant="omar" style={{ width: '120px', height: '65px',backgroundColor:"#a3dbf1" }}
-											onClick={() => this.accept(Form._id)}
+							<div variant="omar" style={{ textAlign: 'right', color: blue200 }}>
+								<ButtonGroup variant="omar" size="sm" className="mt-3" style={{ color: blue200 }}>
+									<Button
+										variant="omar"
+										style={{ width: '120px', height: '65px', backgroundColor: '#a3dbf1' }}
+										onClick={() => this.accept(Form._id)}
 									>
 										<h6>
-											<i
-												class="fas fa-handshake"
-												style={{ fontSize: '1em'}}
-											/>
-											<br /> 
+											<i class="fas fa-handshake" style={{ fontSize: '1em' }} />
+											<br />
 											{trans.accept}
 										</h6>
 									</Button>
 									<Button
-										variant="omar" style={{ width: '120px', height: '65px',backgroundColor:"#a3dbf1" }}
+										variant="omar"
+										style={{ width: '120px', height: '65px', backgroundColor: '#a3dbf1' }}
 										onClick={() => this.calculateFees(Form._id)}
 									>
 										<h9>
-											<i 
-												class="fas fa-money-bill-alt" 
-												style={{ fontSize: '1em' }}
-											/> 
+											<i class="fas fa-money-bill-alt" style={{ fontSize: '1em' }} />
 											<br />
 											{trans.calculate}
 										</h9>
 									</Button>
 									{Form.status === 'Reviewer rejected' ? (
 										<div>
-											
 											<Button
 												type="button"
 												variant="omar"
-												style={{ width: '120px', height: '65px',backgroundColor:"#a3dbf1" }}
+												style={{ width: '120px', height: '65px', backgroundColor: '#a3dbf1' }}
 												onClick={() => this.redirectEdit(Form._id, Form.formType)}
 												class="btn btn-info"
 											>
 												<h3 style={{ fontSize: '15px' }}>
 													<i class="fas fa-edit" />
-													<br/>
-													{trans.edit}<br />
+													<br />
+													{trans.edit}
+													<br />
 												</h3>
 											</Button>
-											</div>
+										</div>
 									) : null}
 									<ButtonToolbar>
 										<Button
-											variant="omar" style={{ width: '120px', height: '65px',backgroundColor:"#a3dbf1" }}
+											variant="omar"
+											style={{ width: '120px', height: '65px', backgroundColor: '#a3dbf1' }}
 											onClick={() => this.setState({ modalShow: true })}
 										>
 											<h6>
-												<i class="fas fa-comment" 
-												style={{ fontSize: '1em' }} />
+												<i class="fas fa-comment" style={{ fontSize: '1em' }} />
 												<br />
 												{trans.comments}
 											</h6>
@@ -276,12 +275,11 @@ class Companies extends Component {
 											formId={Form._id}
 										/>
 									</ButtonToolbar>
-									</ButtonGroup>
-									<br/>
-									{Form.status === 'Reviewer rejected' ? (
-										<div>
-											
-											{/* <Button
+								</ButtonGroup>
+								<br />
+								{Form.status === 'Reviewer rejected' ? (
+									<div>
+										{/* <Button
 												type="button"
 												variant="dark"
 												onClick={() => this.redirectEdit(Form._id, Form.formType)}
@@ -293,15 +291,14 @@ class Companies extends Component {
 												</h3>
 											</Button>
 											<br /> */}
-											<MDBProgress material value={60} color="dark" height="63px">
-												<h3 style={{ color: '#64b9e0', fontSize: '30px' }}>
-													{trans.reviewerR} <br /> 60%
-												</h3>
-											</MDBProgress>
-										</div>
-									) : null}
-									
-								
+										<MDBProgress material value={60} color="dark" height="63px">
+											<h3 style={{ color: '#64b9e0', fontSize: '30px' }}>
+												{trans.reviewerR} <br /> 60%
+											</h3>
+										</MDBProgress>
+									</div>
+								) : null}
+
 								<div>
 									{/* {Form.status === 'Reviewer rejected' ? (
 										<div>
@@ -354,7 +351,7 @@ class Companies extends Component {
 							color: 'dark',
 							flexDirection: 'row',
 							justifyContent: 'flex-end',
-							height:"205px"
+							height: '205px'
 						}}
 					>
 						{trans.title}
@@ -363,18 +360,21 @@ class Companies extends Component {
 								//className="btn blue-gradient btn-block btn-rounded z-depth-1a"
 								variant="omar"
 								id="dropdown-basic"
-								style={{ width: '150px' ,left:'0',padding: '0.5px'}}
+								style={{ width: '150px', left: '0', padding: '0.5px' }}
 							>
 								{trans.sortB}
 							</Dropdown.Toggle>
 							<Dropdown.Menu>
-								<Dropdown.Item onClick={() => this.sort()} style={{ textAlign: 'left' ,color:blue200}}>
+								<Dropdown.Item
+									onClick={() => this.sort()}
+									style={{ textAlign: 'left', color: blue200 }}
+								>
 									{trans.id}
 								</Dropdown.Item>
 								<Dropdown.Divider />
 								<Dropdown.Item
 									onClick={() => this.sortByCreationDate()}
-									style={{ textAlign: 'center',color:blue200}}
+									style={{ textAlign: 'center', color: blue200 }}
 								>
 									{trans.date}
 								</Dropdown.Item>

@@ -11,7 +11,6 @@ export const registerUser = (user) => (dispatch) => {
 		//.catch(err => console.log(err))
 		.then(function(response) {
 			alert('You have registered successfully. Congratulations :)! ');
-			document.location.href = '/login';
 		})
 		.catch((err) => {
 			alert(err.response.data.error || err.response.data);

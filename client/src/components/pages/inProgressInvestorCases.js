@@ -95,12 +95,12 @@ class InProgressInvestorCases extends Component {
 							<i
 								class="fas fa-angle-double-left"
 								title="click to view details"
-								style={{ paddingRight: '650px' , paddingBottom:"100px"}}
+								style={{ paddingRight: '650px', paddingBottom: '100px' }}
 							/>
 							<i
 								class="fas fa-angle-double-right"
 								title="click to view details"
-								style={{ paddingLeft: '650px', paddingBottom:"100px" }}
+								style={{ paddingLeft: '650px', paddingBottom: '100px' }}
 							/>
 							<br />
 							<br />
@@ -121,7 +121,6 @@ class InProgressInvestorCases extends Component {
 								) : null}
 								{Form.status === 'Lawyer rejected' ? (
 									<MDBProgress material value={55} color="dark" height="63px">
-									
 										<h3 style={{ color: '#64b9e0', fontSize: '30px' }}>
 											{trans.lawyerR} <br /> 55%
 										</h3>
@@ -129,7 +128,6 @@ class InProgressInvestorCases extends Component {
 								) : null}
 								{Form.status === 'Lawyer accepted' ? (
 									<MDBProgress material value={75} color="dark" height="63px">
-									
 										<h3 style={{ color: '#64b9e0', fontSize: '30px' }}>
 											{trans.lawyerA} <br /> 75%
 										</h3>
@@ -156,20 +154,20 @@ class InProgressInvestorCases extends Component {
 											class="btn btn-info"
 										>
 											<h3 style={{ color: '#64b9e0', fontSize: '15px' }}>
-												{trans.edit}<br />
+												{trans.edit}
+												<br />
 												<i class="fas fa-edit" />
 											</h3>
 										</Button>
 										<Button
 											variant="dark"
 											type="button"
-											onClick={() => (
-												this.DeleteForm(Form._id)
-											)}
+											onClick={() => this.DeleteForm(Form._id)}
 											class="btn btn-info"
 										>
 											<h3 style={{ color: '#64b9e0', fontSize: '15px' }}>
-												{trans.delete}<br />
+												{trans.delete}
+												<br />
 												<i class="fas fa-trash" />
 											</h3>
 										</Button>
@@ -184,11 +182,12 @@ class InProgressInvestorCases extends Component {
 											class="btn btn-info"
 										>
 											<h3 style={{ color: '#64b9e0', fontSize: '15px' }}>
-												{trans.edit}<br />
+												{trans.edit}
+												<br />
 												<i class="fas fa-edit" />
 											</h3>
 										</Button>
-										</div>
+									</div>
 								) : null}
 							</div>
 						</div>
@@ -202,7 +201,7 @@ class InProgressInvestorCases extends Component {
 						}}
 					>
 						<div>
-						{KEYS.map((key, index) => {
+							{KEYS.map((key, index) => {
 								if (
 									key !== '_proto' &&
 									key !== '_id' &&
@@ -224,7 +223,7 @@ class InProgressInvestorCases extends Component {
 											return (
 												<div>
 													{' '}
-													<h3 >
+													<h3>
 														<i class="fas fa-genderless" />Lawyer Comments
 													</h3>
 													{keys.map((att, index) => {
@@ -248,7 +247,7 @@ class InProgressInvestorCases extends Component {
 														return (
 															<h5 style={{ paddingLeft: '5%' }}>
 																{/* <i class="fas fa-circle" /> */}
-																{constraints['0'][att]}
+																{constraints[att]}
 															</h5>
 														);
 													})}
@@ -360,7 +359,7 @@ class InProgressInvestorCases extends Component {
 						justifyContent: 'flex-end'
 					}}
 				>
-					<h2 style={{ marginTop: '30px', paddingTop: '50px', fontSize: '50px'}}>{trans.title}</h2>
+					<h2 style={{ marginTop: '30px', paddingTop: '50px', fontSize: '50px' }}>{trans.title}</h2>
 				</div>
 				<div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'right', justifyContent: 'right' }}>
 					{this.getAttributes()}

@@ -109,6 +109,8 @@ class Register extends React.Component {
 			investorType: this.state.investorType
 		};
 		this.props.registerUser(payload, this.props.history);
+		
+		// alert("You have registered successfully. Congratulations :)! ")
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -414,6 +416,7 @@ class Register extends React.Component {
 							className="btn-block btn-rounded z-depth-1a"
 							variant="omar"
 							style={{ width: '100px',backgroundColor:"#a3dbf1" }} 
+							
 						>
 							{trans.submit}
 						</Button>

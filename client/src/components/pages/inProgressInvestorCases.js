@@ -47,8 +47,8 @@ class InProgressInvestorCases extends Component {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
 			.then((res) => {
-				document.getElementById('Flip').flipOnClick = false;
-				alert('Cases have been Deleted');
+				//document.getElementById('Flip').flipOnClick = false;
+				alert('This case has been deleted successfully!');
 				document.location.href = '/investorInProgressform';
 			})
 			.catch((err) => {
@@ -74,7 +74,7 @@ class InProgressInvestorCases extends Component {
 					flipOnClick={this.state.isFlipped}
 					flipDirection="horizontal"
 					ref={(r) => (this.flippy = r)}
-					style={{ width: '100%', height: '500px' }}
+					style={{ width: '100%', height: '900px' }}
 				>
 					<FrontSide
 						style={{
@@ -95,12 +95,12 @@ class InProgressInvestorCases extends Component {
 							<i
 								class="fas fa-angle-double-left"
 								title="click to view details"
-								style={{ paddingRight: '650px' }}
+								style={{ paddingRight: '650px' , paddingBottom:"100px"}}
 							/>
 							<i
 								class="fas fa-angle-double-right"
 								title="click to view details"
-								style={{ paddingLeft: '650px' }}
+								style={{ paddingLeft: '650px', paddingBottom:"100px" }}
 							/>
 							<br />
 							<br />
@@ -121,6 +121,7 @@ class InProgressInvestorCases extends Component {
 								) : null}
 								{Form.status === 'Lawyer rejected' ? (
 									<MDBProgress material value={55} color="dark" height="63px">
+									
 										<h3 style={{ color: '#64b9e0', fontSize: '30px' }}>
 											{trans.lawyerR} <br /> 55%
 										</h3>
@@ -128,15 +129,16 @@ class InProgressInvestorCases extends Component {
 								) : null}
 								{Form.status === 'Lawyer accepted' ? (
 									<MDBProgress material value={75} color="dark" height="63px">
+									
 										<h3 style={{ color: '#64b9e0', fontSize: '30px' }}>
 											{trans.lawyerA} <br /> 75%
 										</h3>
 									</MDBProgress>
 								) : null}
 								{Form.status === 'In progress Reviewer' ? (
-									<MDBProgress material value={100} color="dark" height="63px">
+									<MDBProgress material value={95} color="dark" height="63px">
 										<h3 style={{ color: '#64b9e0', fontSize: '30px' }}>
-											{trans.reviewerP} <br /> 100%
+											{trans.reviewerP} <br /> 95%
 										</h3>
 									</MDBProgress>
 								) : null}
@@ -162,7 +164,7 @@ class InProgressInvestorCases extends Component {
 											variant="dark"
 											type="button"
 											onClick={() => (
-												this.DeleteForm(Form._id), alert('This case is deleted to YOU!!')
+												this.DeleteForm(Form._id)
 											)}
 											class="btn btn-info"
 										>
@@ -172,6 +174,21 @@ class InProgressInvestorCases extends Component {
 											</h3>
 										</Button>
 									</div>
+								) : null}
+								{Form.status === 'Lawyer rejected' ? (
+									<div>
+										<Button
+											type="button"
+											variant="dark"
+											onClick={() => this.redirectEdit(Form._id, Form.formType)}
+											class="btn btn-info"
+										>
+											<h3 style={{ color: '#64b9e0', fontSize: '15px' }}>
+												{trans.edit}<br />
+												<i class="fas fa-edit" />
+											</h3>
+										</Button>
+										</div>
 								) : null}
 							</div>
 						</div>
@@ -185,11 +202,131 @@ class InProgressInvestorCases extends Component {
 						}}
 					>
 						<div>
-							{KEYS.map((key, index) => {
+						{KEYS.map((key, index) => {
+								if (
+									key !== '_proto' &&
+									key !== '_id' &&
+									key !== 'formType' &&
+									key !== 'investorId' &&
+									key !== 'lawyerId' &&
+									key !== 'reviewerId' &&
+									key !== '__v'
+								) {
+									var constraints = Form[key];
+									if (Array.isArray(constraints)) {
+										if (!constraints['0']) return;
+										var keys = [];
+										for (var att in constraints['0']) {
+											keys.push(att);
+										}
+
+										if (key === 'lawyerComments') {
+											return (
+												<div>
+													{' '}
+													<h3 >
+														<i class="fas fa-genderless" />Lawyer Comments
+													</h3>
+													{keys.map((att, index) => {
+														return (
+															<h5 style={{ paddingLeft: '5%' }}>
+																{/* <i class="fas fa-circle" /> */}
+																{constraints[att]}
+															</h5>
+														);
+													})}
+												</div>
+											);
+										} else if (key === 'reviewerComments') {
+											return (
+												<div>
+													{' '}
+													<h3>
+														<i class="fas fa-circle" />
+													</h3>
+													{keys.map((att, index) => {
+														return (
+															<h5 style={{ paddingLeft: '5%' }}>
+																{/* <i class="fas fa-circle" /> */}
+																{constraints['0'][att]}
+															</h5>
+														);
+													})}
+												</div>
+											);
+										} else {
+											return (
+												<div>
+													{' '}
+													<h3>
+														<i class="fas fa-circle" />
+														{key}
+													</h3>
+													{keys.map((att, index) => {
+														return (
+															<h5 style={{ paddingLeft: '5%' }}>
+																<i class="fas fa-circle" /> {att} :
+																{constraints['0'][att]}
+															</h5>
+														);
+													})}
+												</div>
+											);
+										}
+									}
+
+									return (
+										<div>
+											<div key={key}>
+												<h3>
+													<i class="fas fa-circle" style={{ fontSize: '0.5em' }} /> {key} :{' '}
+													{constraints}{' '}
+												</h3>
+											</div>
+										</div>
+									);
+								}
+							})}
+							{/* {KEYS.map((key, index) => {
 								if (key !== '_id' && key !== 'formType' && key !== 'investorId' && key !== 'lawyerId') {
 									var constraints = Form[key];
 									console.log(key, ':', constraints);
 									for (var i in constraints) {
+										if (key === 'lawyerComments') {
+											return (
+												<div>
+													{' '}
+													<h3>
+														<i class="fas fa-circle"style={{ fontSize: '13px' }} />{trans.commentsL}
+													</h3>
+													{KEYS.map((att, index) => {
+														return (
+															<h5 style={{ paddingLeft: '5%' }}>
+																<i class="fas fa-circle" style={{ fontSize: '13px' }}/>
+																{constraints['0'][att]}
+															</h5>
+														);
+													})}
+												</div>
+											);
+										} else if (key === 'reviewerComments') {
+											return (
+												<div>
+													{' '}
+													<h3>
+														<i class="fas fa-circle"style={{ fontSize: '13px' }} />{trans.commentsR}
+													</h3>
+													{KEYS.map((att, index) => {
+														return (
+															<h5 style={{ paddingLeft: '5%' }}>
+																<i class="fas fa-circle" style={{ fontSize: '13px' }} />
+																{constraints['0'][att]}
+															</h5>
+														);
+													})}
+												</div>
+											);
+										} else 
 										if (Array.isArray(constraints)) return constraints.map((att, index) => {});
 										return (
 											<h5>
@@ -200,7 +337,7 @@ class InProgressInvestorCases extends Component {
 										);
 									}
 								}
-							})}
+							})} */}
 						</div>
 					</BackSide>
 				</Flippy>

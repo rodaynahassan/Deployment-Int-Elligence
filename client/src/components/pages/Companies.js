@@ -74,7 +74,7 @@ class Companies extends Component {
 					>
 						<div>
 							{KEYS.map((key, index) => {
-								if (key !== '_id' && key !== 'formType' && key !== 'investorId' && key !== 'lawyerId') {
+								if (key !== '_id' && key !== 'formType' && key !== 'investorId' && key !== 'lawyerId' && key !== 'reviewerId') {
 									var constraints = Form[key];
 									for (var i in constraints) {
 										if (Array.isArray(constraints)) return constraints.map((att, index) => {});

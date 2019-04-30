@@ -6,7 +6,6 @@ import '../../App.css';
 import GetAllUserForms from '../form/GetAllUserForms'
 import { black } from 'material-ui/styles/colors';
 import { blue200 } from 'material-ui/styles/colors';
-import trans from '../translations/addCommentsLawyerTranslation'
 const mongoose = require('mongoose')
 
 
@@ -82,7 +81,6 @@ class AddCommentsLawyer extends Component{
     }
 
     render() {
-      trans.setLanguage(this.props.lang);
         
         return (
             <div>
@@ -96,11 +94,11 @@ class AddCommentsLawyer extends Component{
 
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter" style={{color:blue200}}>
-                {trans.comment} 
+                Add a Comment 
                 </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                <input type="text" placeholder={trans.commentPlace} style={{width: "775px" , height:"100px"}} onChange={ this.changeHandler} />
+                <input type="text" placeholder="Enter Your Comment" style={{width: "775px" , height:"100px"}} onChange={ this.changeHandler} />
                 <Button
                 className="btn-block btn-rounded z-depth-1a"
                 variant="omar"
@@ -108,10 +106,10 @@ class AddCommentsLawyer extends Component{
                 style={{width: "110px",backgroundColor:"#a3dbff",color:black}}
                 onClick={() => (this.handleClick(this.props.formId), alert('Comments added Succesfully'))}
                 disabled={!this.validateForm()}
-                >{trans.commentB}</Button>
+                >Comment</Button>
                 </Modal.Body>
                 <Modal.Footer>
-                <Button variant='red' onClick={this.props.onHide}>{trans.closeB}</Button>
+                <Button variant='red' onClick={this.props.onHide}>Close</Button>
                 </Modal.Footer>
             </Modal>
            </div>

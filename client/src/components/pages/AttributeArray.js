@@ -246,7 +246,7 @@ class AttributeArray extends Component {
 				alert('The SSC Manager has been created successfully');
 			})
 			.catch((error) => {
-				alert(error.response.data.errmsg || error.response.data);
+				alert(error.response.data.msg || error.response.data);
 				console.log(error);
 			});
 	};

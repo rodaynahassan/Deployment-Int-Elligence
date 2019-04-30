@@ -9,10 +9,14 @@ export const registerUser = (user) => (dispatch) => {
 		.post('/routes/api/users/register', user)
 		//.then(res => history.push('/login'))
 		//.catch(err => console.log(err))
+		.then(function(response) {
+			alert("You have registered successfully. Congratulations :)! ")
+		})
 		.catch((err) => {
-			alert(err.response.data.errmsg || err.response.data);
+			alert(err.response.data.error|| err.response.data);
 			console.log(err.response);
 		});
+		
 };
 
 export const registerLR = (user) => (dispatch) => {

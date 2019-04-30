@@ -315,7 +315,7 @@ class NewNavBar extends Component {
 								style={{ color: blue100, paddingTop: '15px', fontSize: '1.5em' }}
 							/>
 						</li>
-]						<li class="nav-item dropdown" style={{width:"100px", paddingTop: '10px'}}>
+						<li class="nav-item dropdown" style={{width:"100px", paddingTop: '10px'}}>
 							<select
 								className="form-control"
 								id="exampleFormControlSelect1"

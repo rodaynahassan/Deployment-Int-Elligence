@@ -34,7 +34,7 @@ class LandingBody extends Component {
 		var loggedIn = (
 			<div>
 				<Button variant="outline-light" size="lg" onClick={this.logOut}>
-					Signout
+					{trans.signout}
 				</Button>
 				<Button variant="outline-light" size="lg" href="/journal">
 					{trans.electronicjournal}

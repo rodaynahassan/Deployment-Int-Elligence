@@ -8,8 +8,9 @@ import { registerLR } from '../../actions/authentication';
 import classnames from 'classnames';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { MDBRow, MDBCol } from 'mdbreact';
+import { Button, Container, ButtonGroup, ButtonToolbar } from 'react-bootstrap';
 import axios from 'axios';
-import { blue200 } from 'material-ui/styles/colors';
+import { blue200,black } from 'material-ui/styles/colors';
 
 class adminPage extends Component {
 	constructor(props) {
@@ -318,14 +319,15 @@ class adminPage extends Component {
 					</div>
 
 					<div className="form-group">
-						<button
+						<Button
 							type="submit"
+							variant="omar" style={{ width: '140px', height: '40px',backgroundColor:"#a3dbf1" ,color:black}}
 							disabled={!this.validateForm()}
 							onClick={(e) => (this.handleSubmit(e), alert('The Account has been created successfully'))}
-							className="btn btn-primary"
+							
 						>
 							Register User
-						</button>
+						</Button>
 					</div>
 				</form>
 			</div>

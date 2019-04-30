@@ -5,13 +5,15 @@ let strings = new LocalizedStrings({
    signup:"Sign Up",
    signin:"Sign In",
    electronicjournal:"Electronic Journal",
-   invest:"Invest in Egypt"
+   invest:"Invest in Egypt",
+   signout:"Sign Out"
  },
  ar: {
   signup:"تسجيل حساب جديد",
   signin:"دخول",
   electronicjournal:"المجلة الالكترونية",
-  invest:"استثمر في مصر"
+  invest:"استثمر في مصر",
+  signout:"خروج"
  }
 });
 

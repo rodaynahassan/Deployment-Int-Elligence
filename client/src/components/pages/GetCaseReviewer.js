@@ -33,27 +33,43 @@ class Companies extends Component {
       });
   }
 
-  accept = formId => {
-    console.log("hi");
-    axios.defaults.headers.common["Authorization"] = localStorage.getItem(
-      "jwtToken"
-    );
-    axios
-      .put(
-        "/routes/api/userDynamicForms/accept/" +
-          mongoose.Types.ObjectId(formId),
-        { headers: { Authorization: localStorage.getItem("jwtToken") } }
-      )
-      .then(res => {
-        alert("Form updated Succesfully");
-        document.location.href = "/getReviewer";
-      });
-  };
-
+  // accept = (formId) => {
+  //   console.log("hi");
+  //   axios.defaults.headers.common["Authorization"] = localStorage.getItem(
+  //     "jwtToken"
+  //   );
+  //   axios
+  //     .put(
+  //       "/routes/api/userDynamicForms/accept/" +
+  //         mongoose.Types.ObjectId(formId),
+  //       { headers: { Authorization: localStorage.getItem("jwtToken") } })
+  //     .then((res) => {
+  //       alert("The form was accepted succesfully");
+  //       document.location.href = '/GetReviewer';
+  //     })
+  //     .catch((err)=>{
+	// 			alert(err.response.data.msg|| err.response.data);
+	// 			console.log(err.response);
+	// 		})
+  // };
+	accept = (formId) => {
+		axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
+		axios
+			.put('/routes/api/userDynamicForms/accept/' + mongoose.Types.ObjectId(formId), {
+				headers: { Authorization: localStorage.getItem('jwtToken') }
+			})
+			.then((response) => {
+        console.log("hello")
+			})
+			.catch((err)=>{
+				alert(err.response.data.msg|| err.response.data);
+				console.log(err.response);
+			})
+	};
 
 
     
-  reject = formId => {
+  reject = (formId) => {
     console.log("hi");
     axios.defaults.headers.common["Authorization"] = localStorage.getItem(
       "jwtToken"
@@ -65,8 +81,7 @@ class Companies extends Component {
         { headers: { Authorization: localStorage.getItem("jwtToken") } }
       )
       .then(res => {
-        alert("Form updated Succesfully");
-        document.location.href = "/getCaseLawyer";
+        console.log('Reject')
       });
   };
 
@@ -78,63 +93,67 @@ class Companies extends Component {
     );
     axios
       .get(
-        "/routes/api/userDynamicForms/AllFormSortedByFormId/",
+        "/routes/api/userDynamicForms/SpecificFormSortedByFormId",
         { headers: { Authorization: localStorage.getItem("jwtToken") } }
       )
       .then(res => {
         this.setState({ companies: res.data.data });
         alert("Cases have been sorted");
+        document.location.href = "/GetReviewer";
       })
       .catch(err => {
         console.log(err);
       });
   };
-  sortByCreationDate = () => {
-    axios.defaults.headers.common["Authorization"] = localStorage.getItem(
-      "jwtToken"
-    );
-    axios
-      .get(
-        "/routes/api/userDynamicForms/AllformsSortedByformDate/",
-        { headers: { Authorization: localStorage.getItem("jwtToken") } }
-      )
-      .then(res => {
-        this.setState({ companies: res.data.data });
-        alert("Cases have been sorted");
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
-	sort = () => {
-		axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
-		axios
-			.get('/routes/api/users/SpecificFormSortedByFormId', {
-				headers: { Authorization: localStorage.getItem('jwtToken') }
-			})
-			.then((res) => {
-				this.setState({ forms: res.data.data });
-				alert('Cases have been sorted');
-			})
-			.catch((err) => alert(err.response.data.errmsg || err.response.data));
-	};
+  // sortByCreationDate = () => {
+  //   axios.defaults.headers.common["Authorization"] = localStorage.getItem(
+  //     "jwtToken"
+  //   );
+  //   axios
+  //     .get(
+  //       "/routes/api/userDynamicForms/SpecificformsSortedByformDate",
+  //       { headers: { Authorization: localStorage.getItem("jwtToken") } }
+  //     )
+  //     .then(res => {
+  //       this.setState({ companies: res.data.data });
+  //       alert("Cases have been sorted");
+  //       document.location.href = "/GetReviewer";
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // };
+	// sort = () => {
+	// 	axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
+	// 	axios
+	// 		.get('/routes/api/users/SpecificFormSortedByFormId', {
+	// 			headers: { Authorization: localStorage.getItem('jwtToken') }
+	// 		})
+	// 		.then((res) => {
+	// 			this.setState({ forms: res.data.data });
+  //       alert('Cases have been sorted');
+  //       document.location.href = "/GetReviewer";
+	// 		})
+	// 		.catch((err) => alert(err.response.data.errmsg || err.response.data));
+	// };
 	sortByCreationDate = () => {
 		axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
 		axios
-			.get('/routes/api/users/SpecificformsSortedByformDate', {
+			.get('/routes/api/userDynamicForms/SpecificformsSortedByformDate', {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
 			.then((res) => {
 				this.setState({ companies: res.data.data });
-				alert('Cases have been sorted');
+        alert('Cases have been sorted');
+        document.location.href = "/GetReviewer";
 			})
 			.catch((err) => alert(err.response.data.errmsg || err.response.data));
 	};
-	tabRow = () => {
-		return this.state.companies.map((company, i) => {
-			return <CardReviewer company={company} key={i} />;
-		});
-	};
+	// tabRow = () => {
+	// 	return this.state.companies.map((company, i) => {
+	// 		return <CardReviewer company={company} key={i} />;
+	// 	});
+	// };
   getAttributes = () => {
     let modalClose = () => this.setState({ modalShow: false });
     return this.state.companies.map((Form, index) => {
@@ -212,7 +231,7 @@ class Companies extends Component {
                           {keys.map((att, index) => {
                             return (
                               <h5 style={{ paddingLeft: "5%" }}>
-                                <i class="fas fa-genderless" /> {att} :
+                                <i class="fas fa-cicle" /> {att} :
                                 {constraints["0"][att]}
                               </h5>
                             );
@@ -242,7 +261,8 @@ class Companies extends Component {
                   <Button
                     variant="omar"
                     style={{ width: '120px', height: '65px',backgroundColor:"#a3dbf1" }}  
-                    onClick={() => this.accept(Form._id)}
+                    onClick={() => (this.accept(Form._id),alert("The form was accepted succesfully"),
+                    document.location.href = '/GetReviewer')}
                     >
                     <h6>
                       <i
@@ -256,7 +276,8 @@ class Companies extends Component {
                   <Button
                     variant="omar"
                     style={{ width: '120px', height: '65px',backgroundColor:"#a3dbf1" }}  
-                    onClick={() => this.reject(Form._id)}
+                    onClick={() => (this.reject(Form._id),alert("Form rejected Succesfully"),
+                    document.location.href = "/GetReviewer")}
                   >
                     <h6>
                       <i class="fas fa-ban" style={{ fontSize: "1em" }} />
@@ -286,8 +307,8 @@ class Companies extends Component {
                   <br />
                 </ButtonGroup>
                 <div>
-                <MDBProgress material value={65} color="dark" height="35px">
-                <h3> In progress Reviewer </h3>
+                <MDBProgress material value={65} color="dark" height="63px">
+                <h3 style={{ color: '#64b9e0', fontSize: '30px' }}> In progress Reviewer  <br/> 65% </h3>
               </MDBProgress>
               </div>
               </div>

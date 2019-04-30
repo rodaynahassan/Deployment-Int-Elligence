@@ -115,7 +115,6 @@ export default class ResetPassword extends Component {
 	};
 }
 	render() {
-		
 		const { password, error, isLoading, updated,showNullError } = this.state;
 
 		if (error) {
@@ -412,7 +411,7 @@ export default class ResetPassword extends Component {
 					</Button>
 					</div>
 				)}
-				<Button
+				{/* <Button
 						buttonStyle={homeButton}
 						className="btn-block btn-rounded z-depth-1a"
 						variant="omar"
@@ -420,7 +419,7 @@ export default class ResetPassword extends Component {
 						style={{marginTop:"50px",marginLeft: "50px",marginRight:"2500px",width:"100px", height:"40px" ,backgroundColor:"#a3dbf1"}}
 					>
 					Home
-					</Button>
+					</Button> */}
 			</div>
 			</div>
 		);

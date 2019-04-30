@@ -29,8 +29,11 @@ class unassignedForm extends Component {
 			.put('/routes/api/userDynamicForms/takingForm/' + mongoose.Types.ObjectId(formId), {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
-			.then((res) => console.log(res))
-			// document.location.href='/UnassignedForm'
+			.then((res) => {
+				//document.getElementById('Flip').flipOnClick = false;
+				alert('This Case is assigned to YOU!!');
+				document.location.href = '/UnassignedForm';
+			})
 			.catch((err) => console.log(err));
 	};
 
@@ -84,7 +87,7 @@ class unassignedForm extends Component {
 							<Button
 								type="button"
 								variant="ali"
-								onClick={() => (this.AssignCase(Form._id), alert('This Case is assigned to YOU!!'))}
+								onClick={() => this.AssignCase(Form._id)}
 								class="btn btn-info"
 							>
 								<h6 style={{ color: '#64b9e0' }}>{trans.pick}</h6>

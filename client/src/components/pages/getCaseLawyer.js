@@ -52,12 +52,13 @@ class Companies extends Component {
 	sort = () => {
 		axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
 		axios
-			.get('/routes/api/userDynamicForms/AllFormSortedByFormId/', {
+			.get('/routes/api/userDynamicForms/SpecificFormSortedByFormId', {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
 			.then((res) => {
 				this.setState({ companies: res.data.data });
 				alert('Cases have been sorted');
+				document.location.href = '/getCaseLawyer';
 			})
 			.catch((err) => {
 				console.log(err);
@@ -66,12 +67,13 @@ class Companies extends Component {
 	sortByCreationDate = () => {
 		axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
 		axios
-			.get('/routes/api/userDynamicForms/AllformsSortedByformDate/', {
+			.get('/routes/api/userDynamicForms/t', {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
 			.then((res) => {
 				this.setState({ companies: res.data.data });
 				alert('Cases have been sorted');
+				document.location.href = '/getCaseLawyer';
 			})
 			.catch((err) => {
 				console.log(err);
@@ -85,9 +87,13 @@ class Companies extends Component {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
 			.then((res) => {
-				alert('Form updated Succesfully');
+				alert('The form was accepted succesfully');
 				document.location.href = '/getCaseLawyer';
-			});
+			})
+			.catch((err)=>{
+				alert(err.response.data.msg|| err.response.data);
+				console.log(err.response);
+			})
 	};
 
 	calculateFees = (formId) => {
@@ -95,7 +101,15 @@ class Companies extends Component {
 		axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
 		axios.put('/routes/api/userDynamicForms/calculatingFees/' + mongoose.Types.ObjectId(formId), {
 			headers: { Authorization: localStorage.getItem('jwtToken') }
-		});
+		})
+		.then((res) => {
+			alert('The fees was calculated succesfully');
+			document.location.href = '/getCaseLawyer';
+		})
+		.catch((err)=>{
+			alert(err.response.data.msg|| err.response.data);
+			console.log(err.response);
+		})
 	};
 
 	getAttributes = () => {
@@ -150,12 +164,12 @@ class Companies extends Component {
 												<div>
 													{' '}
 													<h3>
-														<i class="fas fa-genderless" />{trans.commentsR}
+														<i class="fas fa-circle" />{trans.commentsR}
 													</h3>
 													{keys.map((att, index) => {
 														return (
 															<h5 style={{ paddingLeft: '5%' }}>
-																<i class="fas fa-genderless" />
+																<i class="fas fa-circle" />
 																{constraints['0'][att]}
 															</h5>
 														);
@@ -167,13 +181,13 @@ class Companies extends Component {
 												<div>
 													{' '}
 													<h3>
-														<i class="fas fa-genderless" />
+														<i class="fas fa-circle" />
 														{key}
 													</h3>
 													{keys.map((att, index) => {
 														return (
 															<h5 style={{ paddingLeft: '5%' }}>
-																<i class="fas fa-genderless" /> {att} :
+																<i class="fas fa-circle" /> {att} :
 																{constraints['0'][att]}
 															</h5>
 														);
@@ -226,6 +240,24 @@ class Companies extends Component {
 											{trans.calculate}
 										</h9>
 									</Button>
+									{Form.status === 'Reviewer rejected' ? (
+										<div>
+											
+											<Button
+												type="button"
+												variant="omar"
+												style={{ width: '120px', height: '65px',backgroundColor:"#a3dbf1" }}
+												onClick={() => this.redirectEdit(Form._id, Form.formType)}
+												class="btn btn-info"
+											>
+												<h3 style={{ fontSize: '15px' }}>
+													<i class="fas fa-edit" />
+													<br/>
+													{trans.edit}<br />
+												</h3>
+											</Button>
+											</div>
+									) : null}
 									<ButtonToolbar>
 										<Button
 											variant="omar" style={{ width: '120px', height: '65px',backgroundColor:"#a3dbf1" }}
@@ -244,10 +276,34 @@ class Companies extends Component {
 											formId={Form._id}
 										/>
 									</ButtonToolbar>
-									<br />
-								</ButtonGroup>
-								<div>
+									</ButtonGroup>
+									<br/>
 									{Form.status === 'Reviewer rejected' ? (
+										<div>
+											
+											{/* <Button
+												type="button"
+												variant="dark"
+												onClick={() => this.redirectEdit(Form._id, Form.formType)}
+												class="btn btn-info"
+											>
+												<h3 style={{ color: '#64b9e0', fontSize: '15px' }}>
+													{trans.edit}<br />
+													<i class="fas fa-edit" />
+												</h3>
+											</Button>
+											<br /> */}
+											<MDBProgress material value={60} color="dark" height="63px">
+												<h3 style={{ color: '#64b9e0', fontSize: '30px' }}>
+													{trans.reviewerR} <br /> 60%
+												</h3>
+											</MDBProgress>
+										</div>
+									) : null}
+									
+								
+								<div>
+									{/* {Form.status === 'Reviewer rejected' ? (
 										<div>
 											<MDBProgress material value={60} color="dark" height="63px">
 												<h3 style={{ color: '#64b9e0', fontSize: '30px' }}>
@@ -267,7 +323,7 @@ class Companies extends Component {
 												</h3>
 											</Button>
 										</div>
-									) : null}
+									) : null} */}
 									{Form.status === 'In progress Lawyer' ? (
 										<MDBProgress material value={50} color="dark" height="63px">
 											<h3 style={{ color: '#64b9e0', fontSize: '30px' }}>

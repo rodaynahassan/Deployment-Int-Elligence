@@ -26,7 +26,13 @@ class assignToReviewer extends Component {
 		axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
 		axios.put('/routes/api/userDynamicForms/takingForm/' + Mongoose.Types.ObjectId(formId), {
 			headers: { Authorization: localStorage.getItem('jwtToken') }
-		});
+		})
+		.then((res) => {
+			//document.getElementById('Flip').flipOnClick = false;
+			alert('This Case is assigned to YOU!!');
+			document.location.href = '/lawyerAcceptedForms';
+		})
+		.catch((err) => console.log(err));
 		// document.location.href='/AssignToReviewer'
 	};
 	getAttributes = () => {
@@ -79,7 +85,7 @@ class assignToReviewer extends Component {
 							<Button
 								type="button"
 								variant="ali"
-								onClick={() => (this.AssignReviewer(Form._id), alert('This Case is assigned to YOU!!'))}
+								onClick={() => this.AssignReviewer(Form._id)}
 								class="btn btn-info"
 							>
 								<h6 style={{ color: '#64b9e0' }}>{trans.pick}</h6>

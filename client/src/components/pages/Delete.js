@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
 import '../../App.css';
+import swal from 'sweetalert';
 import axios from 'axios';
 import Mongoose from 'mongoose';
 
@@ -20,8 +21,8 @@ class Delete extends Component
 			})
 			.then((res) => {
 				//document.getElementById('Flip').flipOnClick = false;
-				alert('This case has been deleted successfully!!');
-				document.location.href = '/investorInProgressform';
+				swal('This case has been deleted successfully!!');
+				setTimeout("document.location.href = '/investorInProgressform';",3500);
 			})
 			.catch((err) => {
 				console.log(err);

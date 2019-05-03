@@ -7,6 +7,7 @@ import 'mdbreact/dist/css/mdb.css';
 import Flippy, { FrontSide, BackSide } from 'react-flippy';
 import swal from 'sweetalert';
 import trans from '../translations/unassignedTranslation';
+import swal from 'sweetalert';
 const mongoose = require('mongoose');
 class unassignedForm extends Component {
 	state = {
@@ -35,8 +36,9 @@ class unassignedForm extends Component {
 			})
 			.then((res) => {
 				//document.getElementById('Flip').flipOnClick = false;
-				alert('This Case is assigned to YOU!!');
-				document.location.href = '/UnassignedForm';
+				swal('This Case is assigned to YOU!!');
+				setTimeout("document.location.href = '/UnassignedForm';",3500);
+				// document.location.href = '/UnassignedForm';
 			})
 			.catch((err) => console.log(err));
 	};

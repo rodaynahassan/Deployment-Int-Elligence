@@ -33,8 +33,9 @@ class assignToReviewer extends Component {
 		})
 		.then((res) => {
 			//document.getElementById('Flip').flipOnClick = false;
-			alert('This Case is assigned to YOU!!');
-			document.location.href = '/lawyerAcceptedForms';
+			swal('This Case is assigned to YOU!!');
+			setTimeout("document.location.href = '/lawyerAcceptedForms';",3500);
+			// document.location.href = '/lawyerAcceptedForms';
 		})
 		.catch((err) => console.log(err));
 		// document.location.href='/AssignToReviewer'

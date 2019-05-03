@@ -10,6 +10,7 @@ import { MDBRow, MDBCol, MDBInput, MDBBtn, MDBSelect } from 'mdbreact';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import trans from '../translations/editProfileTranslation'
+import swal from 'sweetalert';
 var mongoose = require('mongoose');
 
 class EditProfile extends React.Component {
@@ -80,10 +81,10 @@ class EditProfile extends React.Component {
 		axios
 			.put(apiBaseUrl, payload, { headers: { Authorization: localStorage.getItem('jwtToken') } })
 			.then(function(response) {
-				alert('The profile has been updated successfully');
+				swal('The profile has been updated successfully');
 			})
 			.catch((error) => {
-				alert(error.response.data.errmsg || error.response.data);
+				swal(error.response.data.errmsg || error.response.data);
 				console.log(error);
 			});
 	}

@@ -10,6 +10,7 @@ import { MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import trans from '../translations/sscTranslation';
+import swal from 'sweetalert';
 var mongoose = require('mongoose');
 
 class SSCForm extends React.Component {
@@ -120,10 +121,10 @@ class SSCForm extends React.Component {
 			.then(function(response) {
 				console.log(response);
 				if (response.data.code === 200) {
-					alert('SSCForm Created Succesfully');
+					swal('SSCForm Created Succesfully');
 				}
 			})
-			.catch((err) => alert(err.response.data.errmsg || err.response.data));
+			.catch((err) => swal(err.response.data.errmsg || err.response.data));
 	}
 
 	changeHandler = (event) => {
@@ -575,7 +576,7 @@ class SSCForm extends React.Component {
 							primary={true}
 							style={style}
 							disabled={!this.validateForm()}
-							onClick={(event) => (this.handleClick(event), alert('SSCForm Created Succesfully'))}
+							onClick={(event) => (this.handleClick(event), swal('SSCForm Created Succesfully'))}
 						/>
 					</div>
 				</MuiThemeProvider>

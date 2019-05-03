@@ -7,7 +7,6 @@ import 'mdbreact/dist/css/mdb.css';
 import Flippy, { FrontSide, BackSide } from 'react-flippy';
 import swal from 'sweetalert';
 import trans from '../translations/unassignedTranslation';
-import swal from 'sweetalert';
 const mongoose = require('mongoose');
 class unassignedForm extends Component {
 	state = {

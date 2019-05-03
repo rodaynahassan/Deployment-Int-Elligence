@@ -20,7 +20,10 @@ import classnames from 'classnames';
 import axios from 'axios';
 import { Hidden } from '@material-ui/core';
 import trans from './translations/registerTranslation';
-
+import "react-datepicker/dist/react-datepicker.css";
+import M from 'materialize-css';
+import 'materialize-css';
+import DatePicker from "react-datepicker";
 const styles = (theme) => ({
 	root: {
 		width: '90%'
@@ -64,7 +67,7 @@ class Register extends React.Component {
 			nationality: 'Egyptian',
 			identificationType: 'National ID',
 			identificationNumber: '',
-			birthdate: '',
+			birthdate: new Date(),
 			address: '',
 			email: '',
 			password: '',
@@ -74,7 +77,8 @@ class Register extends React.Component {
 			nationalities: [],
 			errors: {},
 			password_confirm: '',
-			activeStep: 0
+			activeStep: 0,
+			//date:new Date()
 		};
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -125,8 +129,7 @@ class Register extends React.Component {
 		axios.get('/routes/api/nationalities').then((res) => {
 			this.setState({ nationalities: res.data.data });
 		});
-	}
-
+}
 	validateForm() {
 		return (
 			this.state.email.length >= 3 &&
@@ -281,6 +284,7 @@ class Register extends React.Component {
 									name="gender"
 									onChange={this.changeHandler}
 									value={this.state.gender}
+									style={{width:"250px"}}
 								>
 									<option>Male</option>
 									<option>Female</option>
@@ -288,6 +292,20 @@ class Register extends React.Component {
 							</div>
 						</MDBCol>
 					</MDBRow>
+					<div className="form-group">
+						<MDBInput
+							label={trans.birthdate}
+							type="date"
+							class="material-icons prefix"
+							className={classnames('form-control form-control-lg', { 'is-invalid': errors.birthdate })}
+							name="birthdate"
+							onChange={this.handleInputChange}
+							value={this.state.birthdate}
+							style={{width:"250px"}}
+							required
+						/>
+						{errors.birthdate && <div className="invalid-feedback">{errors.birthdate}</div>}
+					</div>
 
 					<div className="form-group">
 						<label htmlFor="Nationality">{trans.nationality}</label>
@@ -297,6 +315,7 @@ class Register extends React.Component {
 							name="nationality"
 							onChange={this.changeHandler}
 							value={this.state.nationality}
+							style={{width:"250px"}}
 						>
 							{this.state.nationalities.map((nat) => <option value={nat.name}>{nat.name}</option>)};
 						</select>
@@ -312,6 +331,7 @@ class Register extends React.Component {
 									name="identificationType"
 									onChange={this.changeHandler}
 									value={this.state.identificationType}
+									style={{width:"250px"}}
 								>
 									<option>National ID</option>
 									<option>Passport</option>
@@ -334,20 +354,6 @@ class Register extends React.Component {
 							<div className="invalid-feedback">{errors.identificationNumber}</div>
 						)}
 					</div>
-
-					<div className="form-group">
-						<MDBInput
-							label={trans.birthdate}
-							type="text"
-							className={classnames('form-control form-control-lg', { 'is-invalid': errors.birthdate })}
-							name="birthdate"
-							onChange={this.changeHandler}
-							value={this.state.birthdate}
-							required
-						/>
-						{errors.birthdate && <div className="invalid-feedback">{errors.birthdate}</div>}
-					</div>
-
 					<div className="form-group">
 						<MDBInput
 							label={trans.address}
@@ -395,6 +401,7 @@ class Register extends React.Component {
 									name="investorType"
 									onChange={this.changeHandler}
 									value={this.state.investorType}
+									style={{width:"250px"}}
 								>
 									<option>Person</option>
 								</select>
@@ -432,7 +439,45 @@ class Register extends React.Component {
 								</button> */}
 			</div>
 		);
-
+		var Next = (
+			<div>
+				<form>
+					<div className="form-group">
+					<Button
+						className="btn-block btn-rounded z-depth-1a"
+						variant="omar"
+						style={{ width: '100px',backgroundColor:"#a3dbf1" }}  
+						onClick={this.handleNext}
+						disabled={
+									this.state.activeStep === 0 ? (
+									!this.validateForm1()
+									) : this.state.activeStep === 1 ? (
+									!this.validateForm2()
+									) : null
+									}
+					>
+						Next
+					</Button>
+					</div>
+				</form>
+			</div>
+		);
+	    var Back=(
+			<div>
+			<Button
+			disabled={activeStep === 0}
+			onClick={this.handleBack}
+			className="btn-block btn-rounded z-depth-1a"
+			variant="omar"
+			style={{ width: '100px',backgroundColor:"#a3dbf1" }}  
+			
+		>
+			Back
+		</Button>
+		<br/>
+		<br/>
+		</div>
+		);
 		return (
 			<div style={{ paddingRight: '200px' }}>
 			<br/>
@@ -449,38 +494,13 @@ class Register extends React.Component {
 										{this.state.activeStep === 0 ? basic : null}
 										{this.state.activeStep === 1 ? personal : null}
 										{this.state.activeStep === 2 ? Submit : null}
-
+										{this.state.activeStep === 0 ? null : Back}
+										{this.state.activeStep === 0 ? Next : null}
+										{this.state.activeStep === 1 ? Next : null}
 										<div>
-											<Button
-												disabled={activeStep === 0}
-												onClick={this.handleBack}
-												className="btn-block btn-rounded z-depth-1a"
-												variant="omar"
-												style={{ width: '100px',backgroundColor:"#a3dbf1" }}  
-											>
-												Back
-											</Button>
-											<br/>
-											<br/>
-											<Button
-												className="btn-block btn-rounded z-depth-1a"
-												variant="omar"
-												style={{ width: '100px',backgroundColor:"#a3dbf1" }}  
-												onClick={this.handleNext}
-												disabled={
-													this.state.activeStep === 0 ? (
-														!this.validateForm1()
-													) : this.state.activeStep === 1 ? (
-														!this.validateForm2()
-													) : null
-												}
-											>
-												{activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-											</Button>
 										</div>
 									</div>
 								</StepContent>
-
 								<StepContent />
 							</Step>
 						))}

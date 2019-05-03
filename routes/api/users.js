@@ -55,6 +55,7 @@ router.get('/CertainAttributes', passport.authenticate('jwt', { session: false }
 	const userid = req.user.id;
 	const searchUsers = await userController.search('_id', userid);
 	return res.json({
+		UserType:searchUsers.userType,
 		Username: searchUsers.name,
 		Gender: searchUsers.gender,
 		Nationality: searchUsers.nationality,
@@ -212,19 +213,25 @@ router.put('/updateForm/:formId', passport.authenticate('jwt', { session: false 
 	}
 });
 
-// change password
+// Change password
 router.post('/changePassword', passport.authenticate('jwt', { session: false }), async (req, res) => {
 	const userid = req.user.id;
 	const user = await userController.search('_id', userid);
+	const oldPassword = req.body.oldPassword;
 	const newPassword = req.body.newPassword;
 	const confirmPassword = req.body.confirmPassword;
+	const doesItMatch = await bcrypt.compareSync(oldPassword, user.password);
+	if (doesItMatch){
 	if (newPassword === confirmPassword) {
 		const salt = await bcrypt.genSalt(10);
 		newPasswordEnc = await bcrypt.hash(newPassword, salt);
 		user.password = newPasswordEnc;
 		await user.save();
 		return res.json({ msg: 'Password was updated successfully', data: user });
-	} else return res.json({ msg: 'The passwords do not match!' });
+	} else return res.json({ msg: 'The passwords do not match!' });}
+	else{
+		return res.json({ msg: 'The old password does not match with your current password! Please check it again' });
+	}
 });
 
 //Paying fees

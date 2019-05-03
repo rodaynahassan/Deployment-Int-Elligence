@@ -6,6 +6,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import Button from '@material-ui/core/Button';
 import {
 	MDBRow,
 	MDBCol,
@@ -23,7 +24,6 @@ import trans from '../translations/spcTranslation';
 import { Dropdown } from 'semantic-ui-react';
 import DropdownItem from 'react-bootstrap/DropdownItem';
 import Footer from '../layout/footer';
-import { Button } from 'react-bootstrap';
 import { conditionalExpression } from '@babel/types';
 
 var mongoose = require('mongoose');
@@ -88,7 +88,7 @@ class CreateANewCompany extends Component {
 		// 		}
 				
 		// 	}
-			//console.log(temp)
+		// 	console.log(temp)
 		// 	trial.push(temp)
 		// }
 		// var size=KEYS.length
@@ -102,6 +102,19 @@ class CreateANewCompany extends Component {
 		// console.log(s.charCodeAt(0));
 		return KEYS.map((key, index) => {
 			if (key !== '_id' && key !== '__v') {
+				var now=key;
+				var temp="";
+				temp=temp+key.charAt(0).toUpperCase();
+				for(var j=1;j<now.length;j++){
+					if(now.charCodeAt(j)>=65 && now.charCodeAt(j)<=90){
+						temp=temp+" "
+						temp=temp+now.charAt(j)
+					}
+					else{
+						temp=temp+now.charAt(j)
+					}
+					
+				}
 				var constraints = formType[key];
 				constraints = constraints.split(',');
 				//console.log(constraints)
@@ -118,19 +131,19 @@ class CreateANewCompany extends Component {
 							this.setState({ governorate: res.data.data });
 						});
 						return (
-							<div style={{ marginBottom: '60px' }}>
+							<div style={{ marginBottom: '60px' ,width:"280px"}}>
 								<MDBCol>
 									<div className="form-group">
-										<label htmlFor={key}>{key}</label>
+										<label htmlFor={key}>{temp}</label>
 										<select
 											className="form-control"
 											id="exampleFormControlSelect1"
 											name={key}
 											onChange={this.changeHandler2}
 											value={this.state[key]}
-											style={{width:"300px"}}
+											
 										>
-											<option>Please choose a governorate</option>
+											<option>Please choose the governorate</option>
 											{this.state.governorate.map((gov) => (
 												 <option value={gov.name}>{gov.name}</option>
 											))};
@@ -139,17 +152,17 @@ class CreateANewCompany extends Component {
 								</MDBCol>
 								<MDBCol>
 									<div className="form-group">
-										<label htmlFor="companyCity">companyCity</label>
+										<label htmlFor="companyCity">Company City</label>
 										<select
 											className="form-control"
 											id="exampleFormControlSelect1"
 											name="companyCity"
 											onChange={this.changeHandler}
 											value={this.state.companyCity}
-											style={{width:"300px"}}
+											style={{width:"250px"}}
 
 										>
-											<option>Please choose a city </option>
+											<option>Please choose the city </option>
 											{this.state.cities.map((city) => <option value={city}>{city}</option>)};
 										</select>
 									</div>
@@ -162,20 +175,19 @@ class CreateANewCompany extends Component {
 							this.setState({ nationalities: res.data.data });
 						});
 						return (
-							<div style={{ marginBottom: '60px' }}>
+							<div style={{ marginBottom: '60px' ,width:"280px"}}>
 								<MDBCol>
 									<div className="form-group">
-										<label htmlFor={key}>{key}</label>
+										<label htmlFor={key}>{temp}</label>
 										<select
 											className="form-control"
 											id="exampleFormControlSelect1"
 											name={key}
 											onChange={this.changeHandler}
 											value={this.state[key]}
-											style={{width:"300px"}}
 
 										>
-											<option>Please choose a nationality </option>
+											<option>Please choose the nationality </option>
 											{this.state.nationalities.map((nat) => (
 												<option value={nat.name}>{nat.name}</option>
 											))};
@@ -187,17 +199,17 @@ class CreateANewCompany extends Component {
 					}
 					if (key === 'currency') {
 						return (
-							<div style={{ marginBottom: '60px' }}>
+							<div style={{ marginBottom: '60px',width:"280px" }}>
 								<MDBCol>
 									<div className="form-group">
-										<label htmlFor={key}>{key}</label>
+										<label htmlFor={key}>{temp}</label>
 										<select
 											className="form-control"
 											id="exampleFormControlSelect1"
 											name={key}
 											onChange={this.changeHandler}
 											value={this.state[key]}
-											style={{width:"300px"}}
+											
 
 										>
 											<option>Please choose the currency</option>
@@ -215,13 +227,34 @@ class CreateANewCompany extends Component {
 							</div>
 						);
 					}
-				} else {
+				}
+				else if(constraints[5] === 'datepicker'){
+					return(
+						<div style={{ marginBottom: '60px' }}>
+						<MDBRow style={{ paddingLeft: '30px', justifyItems: 'center',width:"250px" }}>
+						<MDBCol>
+						<MDBInput
+							label={temp}
+							type="date"
+							class="material-icons prefix"
+							id="materialFormRegisterNameEx"
+							name={key}
+							onChange={this.changeHandler}
+							value={this.state[key]}
+							required
+						/>
+						</MDBCol>
+						</MDBRow>
+						</div>
+					);
+				}
+				 else {
 					return (
 						<div style={{ marginBottom: '60px' }}>
 							<MDBRow style={{ paddingLeft: '30px', justifyItems: 'center' }}>
 								<MDBCol>
 									<MDBInput
-										label={key}
+										label={temp}
 										value={this.state[key]}
 										name={key}
 										onChange={this.changeHandler}
@@ -332,7 +365,12 @@ class CreateANewCompany extends Component {
 			<div style={{ paddingLeft: '60px', justifyItems: 'center' }}>
 				<MuiThemeProvider>
 					{this.getAttributes()}
-					<RaisedButton label="Submit" primary={true} style={style} onClick={this.handleClick} />
+					<Button label="Submit" className="btn-block btn-rounded z-depth-1a"
+								variant="omar"
+								style={{marginTop:"50px",marginLeft: "50px",marginRight:"2500px",width:"100px", height:"40px" ,backgroundColor:"#a3dbf1"}} onClick={this.handleClick}
+								 >
+								 Submit
+					</Button>
 				</MuiThemeProvider>
 			</div>
 		);

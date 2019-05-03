@@ -14,6 +14,7 @@ class Profile extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			userType:'',
 			name: '',
 			gender: '',
 			nationality: '',
@@ -34,6 +35,7 @@ class Profile extends Component {
 			})
 			.then((response) => {
 				this.setState({
+					userType:response.data.UserType,
 					name: response.data.Username,
 					gender: response.data.Gender,
 					nationality: response.data.Nationality,
@@ -73,6 +75,10 @@ class Profile extends Component {
 										<h4>
 											{' '}
 											<i className="fas fa-at" style={{ color: blue200 }} /> {this.state.email}
+										</h4>
+										<h4>
+											{' '}
+											<i className="fas fa-briefcase" style={{ color: blue200 }} /> {this.state.userType}
 										</h4>
 									</div>
 								</div>
@@ -221,6 +227,10 @@ class Profile extends Component {
 											{' '}
 											<i className="fas fa-at" style={{ color: blue200 }} /> {this.state.email}
 										</h4>
+										<h4>
+											{' '}
+											<i className="fas fa-briefcase" style={{ color: blue200 }} /> {this.state.userType}
+										</h4>
 									</div>
 								</div>
 							</div>
@@ -358,6 +368,10 @@ class Profile extends Component {
 										<h4>
 											{' '}
 											<i className="fas fa-at" style={{ color: blue200 }} /> {this.state.email}
+										</h4>
+										<h4>
+											{' '}
+											<i className="fas fa-briefcase" style={{ color: blue200 }} /> {this.state.userType}
 										</h4>
 									</div>
 								</div>

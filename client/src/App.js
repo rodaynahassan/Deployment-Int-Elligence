@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Page from 'react-page-loading';
 import { Provider } from 'react-redux'; //new stuff
 import store from './store'; //new stuff
 import { BrowserRouter as Router, Route } from 'react-router-dom';
@@ -42,6 +43,7 @@ import AttributeArray from './components/pages/AttributeArray';
 import InProgressInvestorCases from './components/pages/inProgressInvestorCases';
 import EditInvCompany from './components/pages/EditInvCompany';
 import EditLawyerCompany from './components/pages/editLawyerForms';
+
 class App extends Component {
 	constructor() {
 		super();
@@ -80,6 +82,8 @@ class App extends Component {
 	render() {
 		var currentLocation = window.location.pathname;
 		return (
+			<div>
+				<Page loader={"bubble-spin"} color={"#A9A9A9"} size={12}>
 			<body
 				style={{
 					position: 'relative',
@@ -244,6 +248,8 @@ class App extends Component {
 					</div>
 				</Provider>
 			</body>
+			</Page>
+			</div>
 		);
 	}
 }

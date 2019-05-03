@@ -187,7 +187,7 @@ class Companies extends Component {
 													{keys.map((att, index) => {
 														return (
 															<h5 style={{ paddingLeft: '5%' }}>
-																<i class="fas fa-circle" /> {att} :
+																<i class="fas fa-circle" sstyle={{ fontSize: '0.5em' }}/> {att} :
 																{constraints['0'][att]}
 															</h5>
 														);

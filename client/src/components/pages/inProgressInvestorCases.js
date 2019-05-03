@@ -254,18 +254,20 @@ class InProgressInvestorCases extends Component {
 													})}
 												</div>
 											);
-										} else {
+										} 
+										
+										else {
 											return (
 												<div>
 													{' '}
 													<h3>
-														<i class="fas fa-circle" />
+														<i class="fas fa-circle" style={{ fontSize: '0.5em' }} />
 														{key}
 													</h3>
 													{keys.map((att, index) => {
 														return (
-															<h5 style={{ paddingLeft: '5%'  , fontSize:"15px"}}>
-																<i class="fas fa-circle" /> {att} :
+															<h5 style={{ paddingLeft: '5%'  }}>
+																<i class="fas fa-circle" style={{ fontSize: '0.5em' }} /> {att} :
 																{constraints['0'][att]}
 															</h5>
 														);

@@ -26,7 +26,9 @@ export const registerLR = (user) => (dispatch) => {
 			.post('/routes/api/admins/registerL', user, {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
-			//.then(res => history.push('/login'))
+			.then(res => {
+				alert('the account has been created')
+			  })
 			.catch((err) => alert(err.response.data.errmsg || err.response.data));
 	}
 
@@ -35,7 +37,9 @@ export const registerLR = (user) => (dispatch) => {
 			.post('/routes/api/admins/registerR', user, {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
-			.then((res) => console.log(res))
+			.then(res => {
+				alert('the account has been created')
+			  })
 			.catch((err) => {
 				alert(err.response.data.errmsg || err.response.data);
 				console.log(err.response);

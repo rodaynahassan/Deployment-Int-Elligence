@@ -137,6 +137,9 @@ module.exports = {
               createSchema[prop] = Joi.string();
 
             if (depends) {
+              let dependConstraints = validations[depends[0]]
+              let dependConstraintArray = dependConstraints.split(",")
+              if(dependConstraintArray[0]==='number') depends[1]=parseInt(depends[1])
               if (depends[5] !== "")
                 createSchema[prop] = Joi.when(depends[0], {
                   is: depends[1],
@@ -251,6 +254,9 @@ module.exports = {
               createSchema[prop] = Joi.number();
 
             if (depends) {
+              let dependConstraints = validations[depends[0]]
+              let dependConstraintArray = dependConstraints.split(",")
+              if(dependConstraintArray[0]==='number') depends[1]=parseInt(depends[1])
               if (depends[5] !== "")
                 createSchema[prop] = Joi.when(depends[0], {
                   is: depends[1],

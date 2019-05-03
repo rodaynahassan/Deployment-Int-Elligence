@@ -195,8 +195,8 @@ class Companies extends Component {
                           {keys.map((att, index) => {
                             return (
                               <h5 style={{ paddingLeft: "5%" }}>
-                                <i class="fas fa-circle" />
-                                {constraints["0"][att]}
+                                
+                                {constraints[att]}
                               </h5>
                             );
                           })}
@@ -213,8 +213,8 @@ class Companies extends Component {
                           {keys.map((att, index) => {
                             return (
                               <h5 style={{ paddingLeft: "5%" }}>
-                                <i class="fas fa-genderless" />
-                                {constraints["0"][att]}
+                                
+                                {constraints[att]}
                               </h5>
                             );
                           })}
@@ -307,8 +307,8 @@ class Companies extends Component {
                   <br />
                 </ButtonGroup>
                 <div>
-                <MDBProgress material value={65} color="dark" height="63px">
-                <h3 style={{ color: '#64b9e0', fontSize: '30px' }}> In progress Reviewer  <br/> 65% </h3>
+                <MDBProgress material value={75} color="dark" height="63px">
+                <h3 style={{ color: '#64b9e0', fontSize: '30px' }}> In progress Reviewer  <br/> 75% </h3>
               </MDBProgress>
               </div>
               </div>

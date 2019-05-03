@@ -63,11 +63,13 @@ class adminPage extends Component {
 			fax: this.state.fax
 		};
 		this.props.registerLR(payload, this.props.history);
+		
 	}
 	componentDidMount() {
 		axios.get('/routes/api/nationalities').then((res) => {
 			this.setState({ nationalities: res.data.data });
 		});
+		
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -323,7 +325,7 @@ class adminPage extends Component {
 							type="submit"
 							variant="omar" style={{ width: '140px', height: '40px',backgroundColor:"#a3dbf1" ,color:black}}
 							disabled={!this.validateForm()}
-							onClick={(e) => (this.handleSubmit(e), alert('The Account has been created successfully'))}
+							onClick={(e) => this.handleSubmit(e)}
 							
 						>
 							Register User

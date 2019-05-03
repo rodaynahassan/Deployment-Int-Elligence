@@ -686,14 +686,18 @@ router.put(
     if (req.user.userType === "Investor") {
       console.log("lolo")
      // const formid = req.params.formId;
+     console.log(req.body)
       console.log(req.body.companyName)
       console.log(req.body.formTypeArray)
       var form = await dynamicFormController.search("companyName", req.body.companyName);
       if (form.error) return res.status(400).json({ error: form.error });
+      if(form===[] || form===null || form===undefined) return res.status(400).json({error:"Company doesn't exist"})
+      console.log(form)
       form = await form[0].toJSON()
       if(form.status==="Unassigned"){
-        if(req.body.formTypeArray === undefined){
+        if(!form[req.body.formTypeArray]){
           form[req.body.formTypeArray]=[]
+          console.log("hi")
         }
         console.log(form[req.body.formTypeArray])
         var arr = form[req.body.formTypeArray]

@@ -151,9 +151,9 @@ class Companies extends Component {
 													</h3>
 													{keys.map((att, index) => {
 														return (
-															<h5 style={{ paddingLeft: '5%' }}>
-																<i class="fas fa-circle" />
-																{constraints['0'][att]}
+															<h5 style={{ paddingLeft: '5%' , fontSize:"15px"}}>
+																
+																{constraints[att]}
 															</h5>
 														);
 													})}
@@ -164,13 +164,13 @@ class Companies extends Component {
 												<div>
 													{' '}
 													<h3>
-														<i class="fas fa-circle" />{trans.commentsR}
+														<i class="fas fa-circle" style={{fontSize:"15px"}}/>{trans.commentsR}
 													</h3>
 													{keys.map((att, index) => {
 														return (
 															<h5 style={{ paddingLeft: '5%' }}>
-																<i class="fas fa-circle" />
-																{constraints['0'][att]}
+																
+																{constraints[att]}
 															</h5>
 														);
 													})}

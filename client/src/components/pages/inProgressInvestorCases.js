@@ -74,7 +74,7 @@ class InProgressInvestorCases extends Component {
 					flipOnClick={this.state.isFlipped}
 					flipDirection="horizontal"
 					ref={(r) => (this.flippy = r)}
-					style={{ width: '100%', height: '900px' }}
+					style={{ width: '100%', height: '970px' }}
 				>
 					<FrontSide
 						style={{
@@ -229,7 +229,7 @@ class InProgressInvestorCases extends Component {
 													</h3>
 													{keys.map((att, index) => {
 														return (
-															<h5 style={{ paddingLeft: '5%' }}>
+															<h5 style={{ paddingLeft: '5%', fontSize:"15px" }}>
 																{/* <i class="fas fa-circle" /> */}
 																{constraints[att]}
 															</h5>
@@ -246,9 +246,9 @@ class InProgressInvestorCases extends Component {
 													</h3>
 													{keys.map((att, index) => {
 														return (
-															<h5 style={{ paddingLeft: '5%' }}>
+															<h5 style={{ paddingLeft: '5%', fontSize:"15px" }}>
 																{/* <i class="fas fa-circle" /> */}
-																{constraints['0'][att]}
+																{constraints[att]}
 															</h5>
 														);
 													})}
@@ -264,7 +264,7 @@ class InProgressInvestorCases extends Component {
 													</h3>
 													{keys.map((att, index) => {
 														return (
-															<h5 style={{ paddingLeft: '5%' }}>
+															<h5 style={{ paddingLeft: '5%'  , fontSize:"15px"}}>
 																<i class="fas fa-circle" /> {att} :
 																{constraints['0'][att]}
 															</h5>

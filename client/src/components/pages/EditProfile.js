@@ -297,7 +297,7 @@ class EditProfile extends React.Component {
 							<MDBCol>
 								<MDBInput
 									value={this.state.address}
-									name="companyNameInEnglish"
+									name="address"
 									className={
 										this.state.address.length <= 50 && this.state.address.length >= 5 ? (
 											'is-valid'

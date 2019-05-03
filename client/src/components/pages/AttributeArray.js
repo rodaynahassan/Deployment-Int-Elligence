@@ -235,6 +235,7 @@ class AttributeArray extends Component {
 				payload2[key] = this.state[key];
 			}
 		});
+		payload2["formTypeArray"]= localStorage.getItem("formTypeArray")
 		///CHANGE THIS PART WITH THE NEW ROUTE
 		console.log(payload2)
 		var apiBaseUrl = '/routes/api/userDynamicForms/addAttributeToArray';
@@ -246,7 +247,7 @@ class AttributeArray extends Component {
 				alert('The SSC Manager has been created successfully');
 			})
 			.catch((error) => {
-				alert(error.response.data.msg || error.response.data);
+				alert(error.response.data.error.details['0'].message||error.response.data.msg || error.response.data.error || error.response.data);
 				console.log(error);
 			});
 	};

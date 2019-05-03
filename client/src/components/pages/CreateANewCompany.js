@@ -318,8 +318,11 @@ class CreateANewCompany extends Component {
 				alert('The Form has been created successfully');
 			})
 			.catch((error) => {
-				// alert(error.response.data.errmsg||error.response.data);
-				console.log(error);
+				//console.log(error.response.data.error.details['0'].message)
+				
+			//	alert(error.response.data.error.details['0'].message)
+				alert(error.response.data.error.details['0'].message || error.response.data.error || error.response.data.errmsg||error.response.data);
+				//console.log(error);
 			});
 	};
 

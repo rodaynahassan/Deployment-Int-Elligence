@@ -602,7 +602,7 @@ class NewNavBar extends Component {
 						<li class="nav-item" color="white">
 							<a
 								class="nav-link"
-								className="fas fa-sign-in-alt"
+								className="fas fa-user-plus"
 								href="/registerAdmin"
 								title="Register a new lawyer or reviewer"
 								style={{ color: blue100, paddingTop: '15px', fontSize: '1.5em' }}

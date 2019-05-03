@@ -97,7 +97,8 @@ class ApprovedCompanies extends Component {
                     key !== "investorId" &&
                     key !== "lawyerId" &&
                     key !== "reviewerId" &&
-                    key !== "__v"
+                    key !== "__v" &&
+                    key !== "reviewerComments"
                   ) {
                     var constraints = Form[key];
                     if (Array.isArray(constraints)) {

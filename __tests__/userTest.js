@@ -26,7 +26,7 @@ let form1;
 let form2;
 let form3;
 beforeAll(async () => {
-  loggedInAdmin = await funcs.loginAdmin('password1234','mari@gmail.com')
+  loggedInAdmin = await funcs.loginAdmin('OIbrahim00','Omar_Ibra@gmail.com')
   console.log(loggedInAdmin)
   token2 = loggedInAdmin.data.data
   await funcs.createLawyer(token2,'Lawyer','Ahmed','Male','Egyptian','National ID','570575620174','01-01-1980','Nasr City','ahmed999@gmail.com','12345678')
@@ -215,33 +215,33 @@ test("All forms Sorted by Creation Date", async () =>{
    
 })
 
-// //Testing taking the form and change it's status to in progress lawyer as a lawyer then accept it then a reviewer can take it
-// //and accept it
-// test('Taking an unassigned Case and changing the status to in progress case',async () =>{
-//   const forms = await funcs.getLawyerPossiblePicks(token3)
-//   expect(forms.data.data[forms.data.data.length-1].status).toBe('Unassigned')
-//   const wantedForm = forms.data.data[forms.data.data.length-1]
-//   await funcs.takingForm(wantedForm._id,token3)
-//   const wantedForms = await funcs.getAllForms()
-//   const finalForm = wantedForms.data.data[wantedForms.data.data.length-1]
-//   expect(finalForm.status).toBe('In progress Lawyer')
-//   const inProgressForms = await funcs.getLawyerInProgressCases(token3)
-//   expect(inProgressForms.data.data[inProgressForms.data.data.length-1].status).toBe('In progress Lawyer')
-//   await funcs.calculateFees(inProgressForms.data.data[inProgressForms.data.data.length-1]._id,token3)
-//   const feesForms = await funcs.getAllForms()
-//   expect(feesForms.data.data[feesForms.data.data.length-1].fees).toBe(1100)
-//   await funcs.acceptForm(feesForms.data.data[feesForms.data.data.length-1]._id,token3)
-//   const acceptedForms = await funcs.getAllForms()
-//   expect(acceptedForms.data.data[acceptedForms.data.data.length-1].status).toBe('Lawyer accepted')
-//   const acceptedLawyerReviewerForms = await funcs.getReviewerPossiblePicks(token4)
-//   expect(acceptedLawyerReviewerForms.data.data[acceptedLawyerReviewerForms.data.data.length-1].status).toBe('Lawyer accepted')
-//   await funcs.takingForm(acceptedLawyerReviewerForms.data.data[acceptedLawyerReviewerForms.data.data.length-1]._id,token4)
-//   const reviewerTakenForms = await funcs.getAllForms()
-//   expect(reviewerTakenForms.data.data[reviewerTakenForms.data.data.length-1].status).toBe('In progress Reviewer')
-//   await funcs.acceptForm(reviewerTakenForms.data.data[reviewerTakenForms.data.data.length-1]._id,token4)
-//   const reviewerAcceptedForms = await funcs.getAllForms()
-//   expect(reviewerAcceptedForms.data.data[reviewerAcceptedForms.data.data.length-1].status).toBe('Approved')
-// })
+//Testing taking the form and change it's status to in progress lawyer as a lawyer then accept it then a reviewer can take it
+//and accept it
+test.only('Taking an unassigned Case and changing the status to in progress case',async () =>{
+  const forms = await funcs.getLawyerPossiblePicks(token3)
+  expect(forms.data.data[forms.data.data.length-1].status).toBe('Unassigned')
+  const wantedForm = forms.data.data[forms.data.data.length-1]
+  await funcs.takingForm(wantedForm._id,token3)
+  const wantedForms = await funcs.getAllForms()
+  const finalForm = wantedForms.data.data[wantedForms.data.data.length-1]
+  expect(finalForm.status).toBe('In progress Lawyer')
+  const inProgressForms = await funcs.getLawyerInProgressCases(token3)
+  expect(inProgressForms.data.data[inProgressForms.data.data.length-1].status).toBe('In progress Lawyer')
+  await funcs.calculateFees(inProgressForms.data.data[inProgressForms.data.data.length-1]._id,token3)
+  const feesForms = await funcs.getAllForms()
+  expect(feesForms.data.data[feesForms.data.data.length-1].fees).toBe(1100)
+  await funcs.acceptForm(feesForms.data.data[feesForms.data.data.length-1]._id,token3)
+  const acceptedForms = await funcs.getAllForms()
+  expect(acceptedForms.data.data[acceptedForms.data.data.length-1].status).toBe('Lawyer accepted')
+  const acceptedLawyerReviewerForms = await funcs.getReviewerPossiblePicks(token4)
+  expect(acceptedLawyerReviewerForms.data.data[acceptedLawyerReviewerForms.data.data.length-1].status).toBe('Lawyer accepted')
+  await funcs.takingForm(acceptedLawyerReviewerForms.data.data[acceptedLawyerReviewerForms.data.data.length-1]._id,token4)
+  const reviewerTakenForms = await funcs.getAllForms()
+  expect(reviewerTakenForms.data.data[reviewerTakenForms.data.data.length-1].status).toBe('In progress Reviewer')
+  await funcs.acceptForm(reviewerTakenForms.data.data[reviewerTakenForms.data.data.length-1]._id,token4)
+  const reviewerAcceptedForms = await funcs.getAllForms()
+  expect(reviewerAcceptedForms.data.data[reviewerAcceptedForms.data.data.length-1].status).toBe('Approved')
+})
 
 //Testing getting in progress cases (anything rather than 'Approved') as an investor
 test('In progress cases of an investor', async () =>{

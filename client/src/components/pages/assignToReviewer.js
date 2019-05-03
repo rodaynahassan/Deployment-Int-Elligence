@@ -5,6 +5,7 @@ import 'mdbreact/dist/css/mdb.css';
 import { Button } from 'react-bootstrap';
 import Flippy, { FrontSide, BackSide } from 'react-flippy';
 import trans from '../translations/unassignedRevTranslation';
+import swal from 'sweetalert';
 const Mongoose = require('mongoose');
 class assignToReviewer extends Component {
 	state = {
@@ -17,8 +18,11 @@ class assignToReviewer extends Component {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
 			.then((res) => {
-				if (Array.isArray(res.data.data)) {
+				if (Array.isArray(res.data.data)&&res.data.data.length>0) {
 					this.setState({ certainFormType: res.data.data });
+				}
+				else{
+					swal('There are no cases to pick right now!')
 				}
 			});
 	}

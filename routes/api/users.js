@@ -65,7 +65,8 @@ router.get('/CertainAttributes', passport.authenticate('jwt', { session: false }
 		Email: searchUsers.email,
 		Password: searchUsers.password,
 		Telephone: searchUsers.telephone,
-		Fax: searchUsers.fax
+		Fax: searchUsers.fax,
+		FinancialBalance:searchUsers.financialBalance
 	});
 });
 
@@ -110,9 +111,7 @@ router.post('/register', async (req, res) => {
 	if (newUser.userType === 'Investor') {
 		newUser.resetPasswordToken = null;
 		newUser.resetPasswordExpires = null;
-		newUser.financialBalance = 0;
 		returnedUser = await userController.update('_id', newUser._id, {
-			financialBalance: newUser.financialBalance,
 			resetPasswordToken: newUser.resetPasswordToken,
 			resetPasswordExpires: newUser.resetPasswordExpires
 		});

@@ -10,6 +10,7 @@ import GetAllUserForms from '../form/GetAllUserForms';
 import { Dropdown, Card } from 'react-bootstrap';
 import { MDBProgress } from 'mdbreact';
 import { blue200 } from 'material-ui/styles/colors';
+import swal from 'sweetalert';
 import trans from '../translations/getCaseLawyerTranslation'
 const mongoose = require('mongoose');
 var $ = require('jquery')(window);
@@ -39,8 +40,11 @@ class Companies extends Component {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
 			.then((res) => {
-				if (Array.isArray(res.data.data)) {
+				if (Array.isArray(res.data.data)&&res.data.data.length>0) {
 					this.setState({ companies: res.data.data });
+				}
+				else{
+					swal('You do not have any In Progress Cases yet!')
 				}
 				console.log(this.state.companies);
 			})

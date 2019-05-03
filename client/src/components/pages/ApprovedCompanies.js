@@ -16,6 +16,7 @@ import {MDBIcon } from "mdbreact";
 import {Button,Card} from"react-bootstrap"
 import egypt from '../../egypt.jpeg'
 import gafi from '../../gafi.jpeg'
+import swal from 'sweetalert';
 
    
 class ApprovedCompanies extends Component {
@@ -27,9 +28,11 @@ class ApprovedCompanies extends Component {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
       axios.get('/routes/api/userDynamicForms/getInvestorApprovedCompanies',{headers: { "Authorization": localStorage.getItem('jwtToken') }})
       .then(res => {
-        if(Array.isArray(res.data.data)){
+        if(Array.isArray(res.data.data)&& res.data.data.length>0){
           this.setState({approvedCompanies: res.data.data,sscManagers:[]})
-           
+         }
+         else{
+           swal('You do not have any Approved Companies yet!')
          }
       })
     }

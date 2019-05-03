@@ -10,6 +10,7 @@ import GetAllReviewerForms from "../form/GetAllReviewerForms";
 import { Dropdown } from "react-bootstrap";
 import { blue200 } from "material-ui/styles/colors";
 import trans from '../translations/getReviewerTranslation'
+import swal from "sweetalert";
 const mongoose = require('mongoose')
 var $ = require("jquery")(window);
 
@@ -27,8 +28,11 @@ class Companies extends Component {
         { headers: { Authorization: localStorage.getItem("jwtToken") } }
       )
       .then(res => {
-        if (Array.isArray(res.data.data)) {
+        if (Array.isArray(res.data.data)&&res.data.data.length>0) {
           this.setState({ companies: res.data.data });
+        }
+        else{
+          swal('You do not have any In Progress Cases yet!')
         }
       });
   }

@@ -30,7 +30,7 @@ export const registerLR = (user) => (dispatch) => {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
 			.then(res => {
-				alert('the account has been created')
+				swal('the account has been created')
 			  })
 			.catch((err) => swal(err.response.data.errmsg || err.response.data));
 	}
@@ -41,7 +41,7 @@ export const registerLR = (user) => (dispatch) => {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
 			.then(res => {
-				alert('the account has been created')
+				swal('the account has been created')
 			  })
 			.catch((err) => {
 				swal(err.response.data.errmsg || err.response.data);

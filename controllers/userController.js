@@ -23,7 +23,7 @@ exports.registerInvestor = async function registerInvestor(body) {
 
 	// const user = await User.findOne({body:email})
 	if (user) return { error: 'Account already exists' };
-
+	body.financialBalance = 0
 	const newUser = await User.create(body)
 		.then((res) => {
 			return res;

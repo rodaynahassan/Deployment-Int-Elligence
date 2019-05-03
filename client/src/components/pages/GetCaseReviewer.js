@@ -4,13 +4,12 @@ import "../../App.css";
 import { Button, Container ,ButtonGroup,ButtonToolbar,Card} from "react-bootstrap";
 import "mdbreact/dist/css/mdb.css";
 import { MDBProgress } from 'mdbreact'
-import AddCommentsReviewer from '../pages/AddCommentsReviewer'
-import CardReviewer from "../form/CardReviewer";
-import GetAllReviewerForms from "../form/GetAllReviewerForms";
+import AddCommentsReviewer from '../pages/AddCommentsReviewer';
 import { Dropdown } from "react-bootstrap";
 import { blue200 } from "material-ui/styles/colors";
-import trans from '../translations/getReviewerTranslation'
-const mongoose = require('mongoose')
+import trans from '../translations/getReviewerTranslation';
+import swal from'sweetalert';
+const mongoose = require('mongoose');
 var $ = require("jquery")(window);
 
 class Companies extends Component {
@@ -32,26 +31,6 @@ class Companies extends Component {
         }
       });
   }
-
-  // accept = (formId) => {
-  //   console.log("hi");
-  //   axios.defaults.headers.common["Authorization"] = localStorage.getItem(
-  //     "jwtToken"
-  //   );
-  //   axios
-  //     .put(
-  //       "/routes/api/userDynamicForms/accept/" +
-  //         mongoose.Types.ObjectId(formId),
-  //       { headers: { Authorization: localStorage.getItem("jwtToken") } })
-  //     .then((res) => {
-  //       alert("The form was accepted succesfully");
-  //       document.location.href = '/GetReviewer';
-  //     })
-  //     .catch((err)=>{
-	// 			alert(err.response.data.msg|| err.response.data);
-	// 			console.log(err.response);
-	// 		})
-  // };
 	accept = (formId) => {
 		axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
 		axios
@@ -62,7 +41,8 @@ class Companies extends Component {
         console.log("hello")
 			})
 			.catch((err)=>{
-				alert(err.response.data.msg|| err.response.data);
+        swal(err.response.data.msg|| err.response.data);
+        
 				console.log(err.response);
 			})
 	};
@@ -98,44 +78,13 @@ class Companies extends Component {
       )
       .then(res => {
         this.setState({ companies: res.data.data });
-        alert("Cases have been sorted");
-        document.location.href = "/GetReviewer";
+        swal("Cases have been sorted");
+        setTimeout("document.location.href = '/GetReviewer';",3500);
       })
       .catch(err => {
         console.log(err);
       });
   };
-  // sortByCreationDate = () => {
-  //   axios.defaults.headers.common["Authorization"] = localStorage.getItem(
-  //     "jwtToken"
-  //   );
-  //   axios
-  //     .get(
-  //       "/routes/api/userDynamicForms/SpecificformsSortedByformDate",
-  //       { headers: { Authorization: localStorage.getItem("jwtToken") } }
-  //     )
-  //     .then(res => {
-  //       this.setState({ companies: res.data.data });
-  //       alert("Cases have been sorted");
-  //       document.location.href = "/GetReviewer";
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  // };
-	// sort = () => {
-	// 	axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
-	// 	axios
-	// 		.get('/routes/api/users/SpecificFormSortedByFormId', {
-	// 			headers: { Authorization: localStorage.getItem('jwtToken') }
-	// 		})
-	// 		.then((res) => {
-	// 			this.setState({ forms: res.data.data });
-  //       alert('Cases have been sorted');
-  //       document.location.href = "/GetReviewer";
-	// 		})
-	// 		.catch((err) => alert(err.response.data.errmsg || err.response.data));
-	// };
 	sortByCreationDate = () => {
 		axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
 		axios
@@ -144,16 +93,11 @@ class Companies extends Component {
 			})
 			.then((res) => {
 				this.setState({ companies: res.data.data });
-        alert('Cases have been sorted');
-        document.location.href = "/GetReviewer";
+        swal('Cases have been sorted');
+        setTimeout("document.location.href = '/GetReviewer';",3500);
 			})
 			.catch((err) => alert(err.response.data.errmsg || err.response.data));
 	};
-	// tabRow = () => {
-	// 	return this.state.companies.map((company, i) => {
-	// 		return <CardReviewer company={company} key={i} />;
-	// 	});
-	// };
   getAttributes = () => {
     let modalClose = () => this.setState({ modalShow: false });
     return this.state.companies.map((Form, index) => {

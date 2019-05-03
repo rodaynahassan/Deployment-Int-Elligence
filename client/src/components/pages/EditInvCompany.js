@@ -16,6 +16,8 @@ import DropdownItem from 'react-bootstrap/DropdownItem';
 import Footer from "../layout/footer"
 import { Button } from "react-bootstrap"
 import { conditionalExpression } from '@babel/types';
+import { CommunicationSwapCalls } from 'material-ui/svg-icons';
+import swal from 'sweetalert';
 
 var mongoose = require('mongoose')
 
@@ -273,6 +275,7 @@ class EditInvCompany extends Component {
         handleClick = (error) => {
             error.preventDefault();
             console.log("hey")
+            swal('Form editted successfully')
             // console.log(this.state.certainFormType)
             const keys = this.state.certainFormType["0"]
             //const keys = Object.keys(this.state.certainFormType)
@@ -307,7 +310,7 @@ class EditInvCompany extends Component {
             axios.put(apiBaseUrl, payload2, { headers: { "Authorization": localStorage.getItem('jwtToken') } })
                 .then(function (response) {
 
-                    alert('The Form has been updated successfully');
+                    CommunicationSwapCalls('The Form has been updated successfully');
 
                 })
                 .catch((error) => {

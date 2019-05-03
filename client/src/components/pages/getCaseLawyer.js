@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import '../../App.css';
-import Table from 'react-bootstrap/Table';
 import { Button, Container, ButtonGroup, ButtonToolbar } from 'react-bootstrap';
 import 'mdbreact/dist/css/mdb.css';
 import AddCommentsLawyer from './AddCommentsLawyer';
 import Cardd from '../form/Card';
-import GetAllUserForms from '../form/GetAllUserForms';
 import { Dropdown, Card } from 'react-bootstrap';
 import { MDBProgress } from 'mdbreact';
 import { blue200 } from 'material-ui/styles/colors';
-import trans from '../translations/getCaseLawyerTranslation'
+import trans from '../translations/getCaseLawyerTranslation';
+import swal from 'sweetalert';
 const mongoose = require('mongoose');
 var $ = require('jquery')(window);
 
@@ -45,7 +44,7 @@ class Companies extends Component {
 				console.log(this.state.companies);
 			})
 			.catch((err) => {
-				alert('' + err);
+				swal('' + err);
 			});
 	}
 
@@ -57,8 +56,15 @@ class Companies extends Component {
 			})
 			.then((res) => {
 				this.setState({ companies: res.data.data });
-				alert('Cases have been sorted');
-				document.location.href = '/getCaseLawyer';
+				
+				// const r = swal.confirm("cases have been sorted?"); 
+				// if(r == true){ 
+
+				// 	document.location.href = '/getCaseLawyer';	
+				//  }
+
+				swal('Cases have been sorted')
+				setTimeout("document.location.href = '/getCaseLawyer';",3500);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -72,8 +78,8 @@ class Companies extends Component {
 			})
 			.then((res) => {
 				this.setState({ companies: res.data.data });
-				alert('Cases have been sorted');
-				document.location.href = '/getCaseLawyer';
+				swal('Cases have been sorted');
+				setTimeout("document.location.href = '/getCaseLawyer';",3500);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -87,11 +93,11 @@ class Companies extends Component {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
 			.then((res) => {
-				alert('The form was accepted succesfully');
-				document.location.href = '/getCaseLawyer';
+				swal('The form was accepted succesfully');
+				setTimeout("document.location.href = '/getCaseLawyer';",3500);
 			})
 			.catch((err)=>{
-				alert(err.response.data.msg|| err.response.data);
+				swal(err.response.data.msg|| err.response.data);
 				console.log(err.response);
 			})
 	};
@@ -103,11 +109,11 @@ class Companies extends Component {
 			headers: { Authorization: localStorage.getItem('jwtToken') }
 		})
 		.then((res) => {
-			alert('The fees was calculated succesfully');
-			document.location.href = '/getCaseLawyer';
+			swal('The fees was calculated succesfully');
+			setTimeout("document.location.href = '/getCaseLawyer';",3500);
 		})
 		.catch((err)=>{
-			alert(err.response.data.msg|| err.response.data);
+			swal(err.response.data.msg|| err.response.data);
 			console.log(err.response);
 		})
 	};

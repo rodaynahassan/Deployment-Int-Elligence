@@ -10,6 +10,7 @@ import { MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import trans from '../translations/changePasswordTranslation'
+import swal from 'sweetalert';
 var mongoose = require('mongoose');
 
 class ChangePassword extends React.Component {
@@ -34,10 +35,10 @@ class ChangePassword extends React.Component {
 			.then(function(response) {
 				console.log(response);
 				if (response.data.code === 200) {
-					alert('Password updated Succesfully');
+					swal('Password updated Succesfully');
 				}
 			})
-			.catch((err) => alert(err.response.data.errmsg || err.response.data));
+			.catch((err) => swal(err.response.data.errmsg || err.response.data));
 	}
 
 	changeHandler = (event) => {
@@ -108,7 +109,7 @@ class ChangePassword extends React.Component {
 								style={style}
 								disabled={!this.validatePassword()}
 								onClick={(event) => (
-									this.handleClick(event), alert('Password updated Successfully')
+									this.handleClick(event), swal('Password updated Successfully')
 								)}
 							/>
 						</div>

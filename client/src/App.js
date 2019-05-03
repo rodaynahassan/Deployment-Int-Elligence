@@ -42,6 +42,7 @@ import AttributeArray from './components/pages/AttributeArray';
 import InProgressInvestorCases from './components/pages/inProgressInvestorCases';
 import EditInvCompany from './components/pages/EditInvCompany';
 import EditLawyerCompany from './components/pages/editLawyerForms';
+// import.meta;
 class App extends Component {
 	constructor() {
 		super();

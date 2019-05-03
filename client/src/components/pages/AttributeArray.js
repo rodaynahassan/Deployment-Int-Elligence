@@ -5,6 +5,7 @@ import axios from 'axios';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
+import swal from 'sweetalert';
 import TextField from 'material-ui/TextField';
 import {
 	MDBRow,
@@ -244,10 +245,10 @@ class AttributeArray extends Component {
 		axios
 			.put(apiBaseUrl, payload2, { headers: { Authorization: localStorage.getItem('jwtToken') } })
 			.then(function(response) {
-				alert('The SSC Manager has been created successfully');
+				swal('The SSC Manager has been created successfully');
 			})
 			.catch((error) => {
-				alert(error.response.data.error.details['0'].message||error.response.data.msg || error.response.data.error || error.response.data);
+				swal(error.response.data.error.details['0'].message||error.response.data.msg || error.response.data.error || error.response.data);
 				console.log(error);
 			});
 	};

@@ -7,6 +7,8 @@ import Mongoose from 'mongoose';
 import { MDBProgress } from 'mdbreact';
 import { Button } from 'react-bootstrap';
 import trans from '../translations/inProgressInvestorTranslation';
+import swal from 'sweetalert';
+
 class InProgressInvestorCases extends Component {
 	state = {
 		certainFormType: [],
@@ -48,8 +50,9 @@ class InProgressInvestorCases extends Component {
 			})
 			.then((res) => {
 				//document.getElementById('Flip').flipOnClick = false;
-				alert('This case has been deleted successfully!');
-				document.location.href = '/investorInProgressform';
+				swal('This case has been deleted successfully!');
+				setTimeout("document.location.href = '/investorInProgressform';",3500);
+				// document.location.href = '/investorInProgressform';
 			})
 			.catch((err) => {
 				console.log(err);

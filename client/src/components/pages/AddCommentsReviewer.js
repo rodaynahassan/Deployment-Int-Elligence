@@ -5,7 +5,8 @@ import { Modal } from 'react-bootstrap';
 import '../../App.css';
 import { black } from 'material-ui/styles/colors';
 import { blue200 } from 'material-ui/styles/colors';
-const mongoose = require('mongoose')
+import swal from 'sweetalert';
+const mongoose = require('mongoose');
 
 
 
@@ -71,7 +72,7 @@ class AddCommentsReviewer extends Component{
       };
 
       handleEvent = () => {
-        alert("I was clicked");
+        swal("I was clicked");
       };
 
 
@@ -109,7 +110,7 @@ class AddCommentsReviewer extends Component{
                 value="Comment"
                 style={{width: "110px",backgroundColor:"#a3dbff",color:black}}   
                 disabled={!this.validateForm()}
-                onClick={() => (this.handleClick(this.props.formId) , alert('Comments added Succesfully'))}
+                onClick={() => (this.handleClick(this.props.formId) , swal('Comments added Succesfully'))}
                 >Comment</Button>
                 </Modal.Body>
                 <Modal.Footer>

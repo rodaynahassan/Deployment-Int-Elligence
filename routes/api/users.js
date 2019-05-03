@@ -65,7 +65,8 @@ router.get('/CertainAttributes', passport.authenticate('jwt', { session: false }
 		Email: searchUsers.email,
 		Password: searchUsers.password,
 		Telephone: searchUsers.telephone,
-		Fax: searchUsers.fax
+		Fax: searchUsers.fax,
+		FinancialBalance:searchUsers.financialBalance
 	});
 });
 

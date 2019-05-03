@@ -1,7 +1,6 @@
 import  React, { Component } from 'react';
 import axios from 'axios';
 import '../../App.css';
-// import ApprovedCompaniesFields from '../user/ApprovedCompaniesFields';
 import Table from 'react-bootstrap/Table'
 import Navbar from 'react-bootstrap/Navbar'
 import {Badge} from 'react-bootstrap'
@@ -33,12 +32,6 @@ class ApprovedCompanies extends Component {
          }
       })
     }
-      // tabRow(){
-      //  return (
-      //   this.state.approvedCompanies.map(function(approvedCompany,i){
-      //   return <ApprovedCompaniesFields approvedCompany={approvedCompany} key={i}/>})
-      //   )
-      // }
 
       printDocument() {
         const input = document.getElementById('divToPrint');

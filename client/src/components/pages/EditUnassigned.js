@@ -9,6 +9,7 @@ import TextField from 'material-ui/TextField';
 import { MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
+import swal from 'sweetalert';
 var mongoose = require('mongoose');
 
 class EditUnassigned extends React.Component {
@@ -74,10 +75,10 @@ class EditUnassigned extends React.Component {
 			.put(apiBaseUrl, payload, { headers: { Authorization: localStorage.getItem('jwtToken') } })
 			.then(function(response) {
 				console.log(response);
-				alert('The SPC form has been updated successfully');
+				swal('The SPC form has been updated successfully');
 			})
 			.catch((error) => {
-				alert(error.response.data.errmsg || error.response.data);
+				swal(error.response.data.errmsg || error.response.data);
 				console.log(error);
 			});
 	}

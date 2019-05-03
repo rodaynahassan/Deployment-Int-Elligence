@@ -6,6 +6,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import swal from 'sweetalert';
 import {
 	MDBRow,
 	MDBCol,
@@ -315,13 +316,13 @@ class CreateANewCompany extends Component {
 		axios
 			.post(apiBaseUrl, payload2, { headers: { Authorization: localStorage.getItem('jwtToken') } })
 			.then(function(response) {
-				alert('The Form has been created successfully');
+				swal('The Form has been created successfully');
 			})
 			.catch((error) => {
 				//console.log(error.response.data.error.details['0'].message)
 				
 			//	alert(error.response.data.error.details['0'].message)
-				alert(error.response.data.error.details['0'].message || error.response.data.error || error.response.data.errmsg||error.response.data);
+		alert(error.response.data.error.details['0'].message || error.response.data.error || error.response.data.errmsg||error.response.data);
 				//console.log(error);
 			});
 	};

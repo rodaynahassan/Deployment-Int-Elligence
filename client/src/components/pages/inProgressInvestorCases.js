@@ -141,7 +141,7 @@ class InProgressInvestorCases extends Component {
 								{Form.status === 'Reviewer accepted' ? (
 									<MDBProgress material value={95} color="dark" height="63px">
 										<h3 style={{ color: '#64b9e0', fontSize: '30px' }}>
-											{trans.reviewerA} <br /> 99%
+											{trans.reviewerA} <br /> Pay the fees Please! :)
 										</h3>
 									</MDBProgress>
 									

@@ -94,8 +94,26 @@ class ApprovedCompanies extends Component {
                     key !== "lawyerId" &&
                     key !== "reviewerId" &&
                     key !== "__v" &&
-                    key !== "reviewerComments"
+                    key !== "reviewerComments" &&
+                    key !== "lawyerComments" &&
+                    key !== "status" &&
+                    key !== "fees" &&
+                    key !== "investorNationality" 
+
                   ) {
+                    var now=key;
+                    var temp="";
+                    temp=temp+key.charAt(0).toUpperCase();
+                    for(var j=1;j<now.length;j++){
+                      if(now.charCodeAt(j)>=65 && now.charCodeAt(j)<=90){
+                        temp=temp+" "
+                        temp=temp+now.charAt(j)
+                      }
+                      else{
+                        temp=temp+now.charAt(j)
+                      }
+                      
+                    }
                     var constraints = Form[key];
                     if (Array.isArray(constraints)) {
                      if(!constraints["0"]) return
@@ -104,16 +122,36 @@ class ApprovedCompanies extends Component {
                         keys.push(att);
                          } 
                         }
+                        if (key==="creationDate"){
+                          var date=constraints.substring(0,10);
+                          return (
+                            <div>
+                              <div key={key}>
+                                <h3>
+                                  <i class="fas fa-circle" style={{fontSize:'0.5em'}}/> {temp} : 
+                                    <span style={{ textAlign: 'center' }} />{' '}
+                                    <span style={{ color: '#9ad1e7' }}> {date}{" "}</span>{' '}
+                                </h3>
+                              </div>
+                              
+                            </div>
+                          );
+
+                        }
+                        else{
                         return (
                           <div>
                             <div key={key}>
                               <h3>
-                                <i class="fas fa-circle" style={{fontSize:'0.5em'}}/> {key} : {constraints}{" "}
+                                <i class="fas fa-circle" style={{fontSize:'0.5em'}}/> {temp} : 
+                                  <span style={{ textAlign: 'center' }} />{' '}
+													        <span style={{ color: '#9ad1e7' }}> {constraints}{" "}</span>{' '}
                               </h3>
                             </div>
                             
                           </div>
                         );
+                      }
                       }})
                       }
                        </Card.Body>

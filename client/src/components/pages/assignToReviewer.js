@@ -108,18 +108,50 @@ class assignToReviewer extends Component {
 						<div>
 							{KEYS.map((key, index) => {
 								if (key !== '_id' && key !== 'formType' && key !== 'investorId' && key !== 'lawyerId') {
+									var now=key;
+									var temp="";
+									temp=temp+key.charAt(0).toUpperCase();
+									for(var j=1;j<now.length;j++){
+									  if(now.charCodeAt(j)>=65 && now.charCodeAt(j)<=90){
+										temp=temp+" "
+										temp=temp+now.charAt(j)
+									  }
+									  else{
+										temp=temp+now.charAt(j)
+									  }
+									  
+									}
 									var constraints = Form[key];
 									console.log(key, ':', constraints);
 									for (var i in constraints) {
 										if (Array.isArray(constraints)) return constraints.map((att, index) => {});
+										if (key==="creationDate"){
+											var date=constraints.substring(0,10);
+											console.log(date)
+											return (
+											  <div>
+												<div key={key}>
+												  <h5>
+													<i class="fas fa-circle" style={{fontSize:'13px'}}/> {temp} : 
+													  <span style={{ textAlign: 'center' }} />{' '}
+													  <span style={{ color: '#9ad1e7' }}> {date}{" "}</span>{' '}
+												  </h5>
+												</div>
+												
+											  </div>
+											);
+				  
+										  }
+										  else{
 										return (
 											<h5>
-												<i class="fas fa-circle" style={{ fontSize: '13px' }} /> {key} :{' '}
+												<i class="fas fa-circle" style={{ fontSize: '13px' }} /> {temp} :{' '}
 												<span style={{ textAlign: 'center' }} />{' '}
 												<span style={{ color: '#9ad1e7' }}>{constraints}</span>{' '}
 											</h5>
 										);
 									}
+								}
 								}
 							})}
 						</div>

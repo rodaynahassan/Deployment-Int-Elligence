@@ -9,7 +9,6 @@ import { MDBInput } from 'mdbreact';
 import { InputAdornment, withStyles } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import { RemoveRedEye } from '@material-ui/icons';
-
 const styles = (theme) => ({
 	eye: {
 		cursor: 'pointer'
@@ -134,7 +133,7 @@ class Login extends Component {
 										this.state.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) ? (
 											'is-valid'
 										) : (
-											'is-invalid'
+											'is-invalid' 
 										)
 									}
 									id="Form-email1"

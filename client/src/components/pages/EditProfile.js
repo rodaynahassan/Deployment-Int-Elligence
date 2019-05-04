@@ -10,7 +10,10 @@ import { MDBRow, MDBCol, MDBInput, MDBBtn, MDBSelect } from 'mdbreact';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import trans from '../translations/editProfileTranslation'
+import { Button } from 'react-bootstrap';
+import swal from 'sweetalert';
 var mongoose = require('mongoose');
+
 
 class EditProfile extends React.Component {
 	constructor(props) {
@@ -21,7 +24,7 @@ class EditProfile extends React.Component {
 			nationality: '',
 			identificationType: '',
 			identificationNumber: '',
-			birthdate: '',
+			birthdate: new Date(),
 			address: '',
 			email: '',
 			telephone: '',
@@ -80,10 +83,10 @@ class EditProfile extends React.Component {
 		axios
 			.put(apiBaseUrl, payload, { headers: { Authorization: localStorage.getItem('jwtToken') } })
 			.then(function(response) {
-				alert('The profile has been updated successfully');
+				swal('The profile has been updated successfully');
 			})
 			.catch((error) => {
-				alert(error.response.data.errmsg || error.response.data);
+				swal(error.response.data.errmsg || error.response.data);
 				console.log(error);
 			});
 	}
@@ -156,7 +159,7 @@ class EditProfile extends React.Component {
 						</MDBRow>
 						<br />
 
-						<MDBRow style={{ paddingLeft: '30px', justifyItems: 'center' }}>
+						<MDBRow style={{ paddingLeft: '30px', justifyItems: 'center' ,width:"310px"}}>
 							<MDBCol>
 								<div className="form-group">
 									<label htmlFor="gender">{trans.gender}</label>
@@ -175,7 +178,7 @@ class EditProfile extends React.Component {
 						</MDBRow>
 						<br />
 
-						<MDBRow style={{ paddingLeft: '30px', justifyItems: 'center' }}>
+						<MDBRow style={{ paddingLeft: '30px', justifyItems: 'center' ,width:"310px"}}>
 							<MDBCol>
 								<div className="form-group">
 									<label htmlFor="Nationality">{trans.nationality}</label>
@@ -194,33 +197,24 @@ class EditProfile extends React.Component {
 							</MDBCol>
 						</MDBRow>
 						<br />
-
-						<MDBRow style={{ paddingLeft: '30px', justifyItems: 'center' }}>
-							<MDBCol>
-								<MDBInput
-									value={this.state.identificationType}
+						<MDBRow style={{ paddingLeft: '30px', justifyItems: 'center' ,width:"250px"}}>
+						<MDBCol>
+							<div className="form-group">
+								<label htmlFor="identificationType">{trans.identificationType}</label>
+								<select
+									className="form-control"
+									id="exampleFormControlSelect1"
 									name="identificationType"
-									className={
-										this.state.identificationType.length <= 20 &&
-										this.state.identificationType.length >= 8 ? (
-											'is-valid'
-										) : (
-											'is-invalid'
-										)
-									}
 									onChange={this.changeHandler}
-									type="text"
-									id="materialFormRegisterNameEx"
-									label={trans.identificationType}
-									required
+									value={this.state.identificationType}
+									style={{width:"250px"}}
 								>
-									<div className="valid-feedback">{trans.validfeedback}</div>
-									<div className="invalid-feedback">
-										{trans.invalidfeedbackIdentificationType}
-									</div>
-								</MDBInput>
-							</MDBCol>
-						</MDBRow>
+									<option>National ID</option>
+									<option>Passport</option>
+								</select>
+							</div>
+						</MDBCol>
+					</MDBRow>
 						<br />
 
 						<MDBRow style={{ paddingLeft: '30px', justifyItems: 'center' }}>
@@ -252,18 +246,17 @@ class EditProfile extends React.Component {
 						<br />
 						<MDBRow style={{ paddingLeft: '30px', justifyItems: 'center' }}>
 							<MDBCol>
-								<MDBInput
-									value={this.state.birthdate}
-									name="birthdate"
-									className={this.state.birthdate.length > 0 ? 'is-valid' : 'is-valid'}
-									onChange={this.changeHandler}
-									type="text"
-									id="materialFormRegisterNameEx"
-									label={trans.birthdate}
-									required
-								>
-									<div className="valid-feedback">{trans.validfeedbackBirthdate}</div>
-								</MDBInput>
+							<MDBInput
+							label={trans.birthdate}
+							type="date"
+							class="material-icons prefix"
+							id="materialFormRegisterNameEx"
+							name="birthdate"
+							onChange={this.changeHandler}
+							value={this.state.birthdate}
+							style={{width:"250px"}}
+							required
+						/>
 							</MDBCol>
 						</MDBRow>
 						<br />
@@ -353,16 +346,19 @@ class EditProfile extends React.Component {
 							</MDBCol>
 						</MDBRow>
 
-						<div style={{ paddingLeft: '50%' }}>
-							<RaisedButton
+						<div >
+							<Button
+								className="btn-block btn-rounded z-depth-1a"
 								label={trans.submit}
-								primary={true}
-								style={style}
+								variant="omar"
+								style={{marginTop:"50px",marginLeft: "50px",marginRight:"2500px",width:"100px", height:"40px" ,backgroundColor:"#a3dbf1"}}
 								disabled={!this.validateForm()}
-								onClick={(event) => (
-									this.handleClick(event), alert('Your request to update has been submitted')
-								)}
-							/>
+								onClick={(event) => 
+									this.handleClick(event)
+								}
+							>
+							Submit
+							</Button>
 						</div>
 					</div>
 				</MuiThemeProvider>

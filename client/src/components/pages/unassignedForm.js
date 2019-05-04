@@ -5,6 +5,7 @@ import '../../App.scss';
 import { Button } from 'react-bootstrap';
 import 'mdbreact/dist/css/mdb.css';
 import Flippy, { FrontSide, BackSide } from 'react-flippy';
+import swal from 'sweetalert';
 import trans from '../translations/unassignedTranslation';
 const mongoose = require('mongoose');
 class unassignedForm extends Component {
@@ -18,8 +19,11 @@ class unassignedForm extends Component {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
 			.then((res) => {
-				if (Array.isArray(res.data.data)) {
+				if (Array.isArray(res.data.data)&&res.data.data.length>0) {
 					this.setState({ certainFormType: res.data.data });
+				}
+				else{
+					swal('There are no cases to pick right now!')
 				}
 			});
 	}
@@ -31,8 +35,9 @@ class unassignedForm extends Component {
 			})
 			.then((res) => {
 				//document.getElementById('Flip').flipOnClick = false;
-				alert('This Case is assigned to YOU!!');
-				document.location.href = '/UnassignedForm';
+				swal('This Case is assigned to YOU!!');
+				setTimeout("document.location.href = '/UnassignedForm';",3500);
+				// document.location.href = '/UnassignedForm';
 			})
 			.catch((err) => console.log(err));
 	};

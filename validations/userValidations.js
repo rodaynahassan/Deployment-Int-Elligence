@@ -105,7 +105,9 @@ module.exports = {
 			telephone: Joi.string().max(15).min(4),
 			fax: Joi.string().min(5).max(20),
 			investorType: Joi.string(),
-			financialBalance: Joi.number()
+			financialBalance: Joi.number(),
+			resetPasswordToken: Joi.string(),
+			resetPasswordExpires: Joi.date()
 		};
 
 		return Joi.validate(request, updateSchema);

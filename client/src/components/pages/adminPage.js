@@ -11,6 +11,8 @@ import { MDBRow, MDBCol } from 'mdbreact';
 import { Button, Container, ButtonGroup, ButtonToolbar } from 'react-bootstrap';
 import axios from 'axios';
 import { blue200,black } from 'material-ui/styles/colors';
+import { DiscFull } from '@material-ui/icons';
+
 
 class adminPage extends Component {
 	constructor(props) {
@@ -25,7 +27,7 @@ class adminPage extends Component {
 			nationality: 'Egyptian',
 			identificationType: 'National ID',
 			identificationNumber: '',
-			birthdate: '',
+			birthdate: new Date(),
 			address: '',
 			telephone: '',
 			fax: '',
@@ -111,7 +113,7 @@ class adminPage extends Component {
 					<MDBRow>
 						<MDBCol>
 							<div className="form-group">
-								<label htmlFor="userType">User Type</label>
+								<label htmlFor="userType">User Type (Required)</label>
 								<select
 									className="form-control"
 									id="exampleFormControlSelect1"
@@ -127,7 +129,7 @@ class adminPage extends Component {
 					</MDBRow>
 
 					<div className="form-group">
-						<label htmlFor="name">Name</label>
+						<label htmlFor="name">Name (Required)</label>
 						<input
 							type="text"
 							placeholder="Name"
@@ -146,7 +148,7 @@ class adminPage extends Component {
 					<MDBRow>
 						<MDBCol>
 							<div className="form-group">
-								<label htmlFor="gender">Gender</label>
+								<label htmlFor="gender">Gender (Required)</label>
 								<select
 									className="form-control"
 									id="exampleFormControlSelect1"
@@ -162,7 +164,7 @@ class adminPage extends Component {
 					</MDBRow>
 
 					<div className="form-group">
-						<label htmlFor="Nationality">Nationality</label>
+						<label htmlFor="Nationality">Nationality (Required)</label>
 						<select
 							className="form-control"
 							id="exampleFormControlSelect1"
@@ -177,7 +179,7 @@ class adminPage extends Component {
 					<MDBRow>
 						<MDBCol>
 							<div className="form-group">
-								<label htmlFor="identificationType">Identification Type</label>
+								<label htmlFor="identificationType">Identification Type (Required)</label>
 								<select
 									className="form-control"
 									id="exampleFormControlSelect1"
@@ -193,7 +195,7 @@ class adminPage extends Component {
 					</MDBRow>
 
 					<div className="form-group">
-						<label htmlFor="identificationNumber">Identification Number</label>
+						<label htmlFor="identificationNumber">Identification Number (Required)</label>
 						<input
 							type="text"
 							placeholder="identification Number"
@@ -211,23 +213,26 @@ class adminPage extends Component {
 					</div>
 
 					<div className="form-group">
-						<label htmlFor="birthdate">Birthdate</label>
+						<label htmlFor="birthdate">Birthdate (Required)</label>
+						<br/>
 						<input
-							type="text"
-							placeholder="Birthdate"
+							type="date"
 							className={classnames('form-control form-control-lg', {
 								'is-invalid': errors.birthdate
 							})}
+							class="material-icons prefix"
+							id="materialFormRegisterNameEx"
 							name="birthdate"
 							onChange={this.handleInputChange}
 							value={this.state.birthdate}
+							style={{width:"250px"}}
 							required
 						/>
 						{errors.birthdate && <div className="invalid-feedback">{errors.birthdate}</div>}
 					</div>
 
 					<div className="form-group">
-						<label htmlFor="address">Address</label>
+						<label htmlFor="address">Address (Required)</label>
 						<input
 							type="text"
 							placeholder="Address"
@@ -243,7 +248,7 @@ class adminPage extends Component {
 					</div>
 
 					<div className="form-group">
-						<label htmlFor="email">Email</label>
+						<label htmlFor="email">Email (Required)</label>
 						<input
 							type="email"
 							placeholder="Email"
@@ -259,7 +264,7 @@ class adminPage extends Component {
 					</div>
 
 					<div className="form-group">
-						<label htmlFor="password">Password</label>
+						<label htmlFor="password">Password (Required)</label>
 						<input
 							type="password"
 							placeholder="Password"
@@ -275,7 +280,7 @@ class adminPage extends Component {
 					</div>
 
 					<div className="form-group">
-						<label htmlFor="password_confirm">Confirm Password</label>
+						<label htmlFor="password_confirm">Confirm Password (Required)</label>
 						<input
 							type="password"
 							placeholder="Confirm Password"
@@ -291,7 +296,7 @@ class adminPage extends Component {
 					</div>
 
 					<div className="form-group">
-						<label htmlFor="telephone">Telephone</label>
+						<label htmlFor="telephone">Telephone (Not Required)</label>
 						<input
 							type="text"
 							placeholder="Telephone"
@@ -306,7 +311,7 @@ class adminPage extends Component {
 					</div>
 
 					<div className="form-group">
-						<label htmlFor="fax">Fax</label>
+						<label htmlFor="fax">Fax (Not Required)</label>
 						<input
 							type="text"
 							placeholder="Fax"

@@ -4,6 +4,7 @@ import '../../App.css';
 import Table from 'react-bootstrap/Table';
 import ShowP from '../user/showPI';
 import { Button } from 'react-bootstrap';
+import swal from 'sweetalert';
 
 class ShowProfileI extends Component {
 	constructor(props) {
@@ -20,7 +21,7 @@ class ShowProfileI extends Component {
 			.then((res) => {
 				this.setState({ userInfo: [ res.data.data ] });
 			})
-			.catch((err) => alert(err.response.data.errmsg || err.response.data));
+			.catch((err) => swal(err.response.data.errmsg || err.response.data));
 	};
 
 	tabRow() {

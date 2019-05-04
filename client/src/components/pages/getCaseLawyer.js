@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import '../../App.css';
-import Table from 'react-bootstrap/Table';
 import { Button, Container, ButtonGroup, ButtonToolbar } from 'react-bootstrap';
 import 'mdbreact/dist/css/mdb.css';
 import AddCommentsLawyer from './AddCommentsLawyer';
 import Cardd from '../form/Card';
-import GetAllUserForms from '../form/GetAllUserForms';
 import { Dropdown, Card } from 'react-bootstrap';
 import { MDBProgress } from 'mdbreact';
 import { blue200 } from 'material-ui/styles/colors';
-import trans from '../translations/getCaseLawyerTranslation'
+import trans from '../translations/getCaseLawyerTranslation';
+import swal from 'sweetalert';
 const mongoose = require('mongoose');
 var $ = require('jquery')(window);
 
@@ -39,13 +38,16 @@ class Companies extends Component {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
 			.then((res) => {
-				if (Array.isArray(res.data.data)) {
+				if (Array.isArray(res.data.data)&&res.data.data.length>0) {
 					this.setState({ companies: res.data.data });
+				}
+				else{
+					swal('You do not have any In Progress Cases yet!')
 				}
 				console.log(this.state.companies);
 			})
 			.catch((err) => {
-				alert('' + err);
+				swal('' + err);
 			});
 	}
 
@@ -57,8 +59,15 @@ class Companies extends Component {
 			})
 			.then((res) => {
 				this.setState({ companies: res.data.data });
-				alert('Cases have been sorted');
-				document.location.href = '/getCaseLawyer';
+				
+				// const r = swal.confirm("cases have been sorted?"); 
+				// if(r == true){ 
+
+				// 	document.location.href = '/getCaseLawyer';	
+				//  }
+
+				swal('Cases have been sorted')
+				setTimeout("document.location.href = '/getCaseLawyer';",3500);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -72,8 +81,8 @@ class Companies extends Component {
 			})
 			.then((res) => {
 				this.setState({ companies: res.data.data });
-				alert('Cases have been sorted');
-				document.location.href = '/getCaseLawyer';
+				swal('Cases have been sorted');
+				setTimeout("document.location.href = '/getCaseLawyer';",3500);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -87,11 +96,11 @@ class Companies extends Component {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
 			.then((res) => {
-				alert('The form was accepted succesfully');
-				document.location.href = '/getCaseLawyer';
+				swal('The form was accepted succesfully');
+				setTimeout("document.location.href = '/getCaseLawyer';",3500);
 			})
 			.catch((err)=>{
-				alert(err.response.data.msg|| err.response.data);
+				swal(err.response.data.msg|| err.response.data);
 				console.log(err.response);
 			})
 	};
@@ -103,11 +112,11 @@ class Companies extends Component {
 			headers: { Authorization: localStorage.getItem('jwtToken') }
 		})
 		.then((res) => {
-			alert('The fees was calculated succesfully');
-			document.location.href = '/getCaseLawyer';
+			swal('The fees was calculated succesfully');
+			setTimeout("document.location.href = '/getCaseLawyer';",3500);
 		})
 		.catch((err)=>{
-			alert(err.response.data.msg|| err.response.data);
+			swal(err.response.data.msg|| err.response.data);
 			console.log(err.response);
 		})
 	};
@@ -153,7 +162,8 @@ class Companies extends Component {
 														return (
 															<h5 style={{ paddingLeft: '5%' , fontSize:"15px"}}>
 																
-																{constraints[att]}
+																<span style={{ textAlign: 'center' }} />{' '}
+																<span style={{ color: '#9ad1e7' }}>{constraints[att]}</span>{' '}
 															</h5>
 														);
 													})}
@@ -170,7 +180,8 @@ class Companies extends Component {
 														return (
 															<h5 style={{ paddingLeft: '5%' }}>
 																
-																{constraints[att]}
+																<span style={{ textAlign: 'center' }} />{' '}
+																<span style={{ color: '#9ad1e7' }}>{constraints[att]}</span>{' '}
 															</h5>
 														);
 													})}
@@ -187,8 +198,9 @@ class Companies extends Component {
 													{keys.map((att, index) => {
 														return (
 															<h5 style={{ paddingLeft: '5%' }}>
-																<i class="fas fa-circle" /> {att} :
-																{constraints['0'][att]}
+																<i class="fas fa-circle" sstyle={{ fontSize: '0.5em' }}/> {att} :
+																<span style={{ textAlign: 'center' }} />{' '}
+																<span style={{ color: '#9ad1e7' }}>{constraints['0'][att]}</span>{' '}
 															</h5>
 														);
 													})}
@@ -202,7 +214,8 @@ class Companies extends Component {
 											<div key={key}>
 												<h3>
 													<i class="fas fa-circle" style={{ fontSize: '0.5em' }} /> {key} :{' '}
-													{constraints}{' '}
+													<span style={{ textAlign: 'center' }} />{' '}
+													<span style={{ color: '#9ad1e7' }}>{constraints}</span>{' '}
 												</h3>
 											</div>
 										</div>

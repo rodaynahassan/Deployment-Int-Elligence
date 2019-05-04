@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Page from 'react-page-loading';
 import { Provider } from "react-redux"; //new stuff
 import store from "./store"; //new stuff
 import { BrowserRouter as Router, Route } from "react-router-dom";
@@ -81,26 +82,26 @@ class App extends Component {
     else document.location.href = "/editspcform";
   };
 
-  render() {
-    var currentLocation = window.location.pathname;
-    return (
-      <body
-        style={{
-          position: "relative",
-          minHeight: "100vh"
-        }}
-      >
-        <Provider store={store}>
-          <div style={{ paddingBottom: "7rem" }}>
-            <Router>
-              <div>
-                <Route
-                  exact
-                  path="/"
-                  render={props => (
-                    <LandingBody {...props} lang={this.state.lang} />
-                  )}
-                />
+	render() {
+		var currentLocation = window.location.pathname;
+		return (
+			<div>
+				<Page loader={"bubble-spin"} color={"#A9A9A9"} size={12}>
+			<body
+				style={{
+					position: 'relative',
+					minHeight: '100vh'
+				}}
+			>
+				<Provider store={store}>
+					<div style={{ paddingBottom: '7rem' }}>
+						<Router>
+							<div>
+								<Route
+									exact
+									path="/"
+									render={(props) => <LandingBody {...props} lang={this.state.lang} />}
+								/>
 
                 <Route
                   exact
@@ -299,18 +300,20 @@ class App extends Component {
                 />
               </div>
 
-              {currentLocation === "/" ? (
-                <Side changelang={this.changelang} />
-              ) : (
-                <NewNavBar changelang={this.changelang} />
-              )}
-              {currentLocation === "/" ? null : <Footer />}
-            </Router>
-          </div>
-        </Provider>
-      </body>
-    );
-  }
+							{currentLocation === '/' ? (
+								<Side changelang={this.changelang} />
+							) : (
+								<NewNavBar changelang={this.changelang} />
+							)}
+							{currentLocation === '/' ? null : <Footer />}
+						</Router>
+					</div>
+				</Provider>
+			</body>
+			</Page>
+			</div>
+		);
+	}
 }
 
 export default App;

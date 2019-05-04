@@ -1,7 +1,6 @@
 import  React, { Component } from 'react';
 import axios from 'axios';
 import '../../App.css';
-// import ApprovedCompaniesFields from '../user/ApprovedCompaniesFields';
 import Table from 'react-bootstrap/Table'
 import Navbar from 'react-bootstrap/Navbar'
 import {Badge} from 'react-bootstrap'
@@ -16,6 +15,7 @@ import {MDBIcon } from "mdbreact";
 import {Button,Card} from"react-bootstrap"
 import egypt from '../../egypt.jpeg'
 import gafi from '../../gafi.jpeg'
+import swal from 'sweetalert';
 
    
 class ApprovedCompanies extends Component {
@@ -27,18 +27,14 @@ class ApprovedCompanies extends Component {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
       axios.get('/routes/api/userDynamicForms/getInvestorApprovedCompanies',{headers: { "Authorization": localStorage.getItem('jwtToken') }})
       .then(res => {
-        if(Array.isArray(res.data.data)){
+        if(Array.isArray(res.data.data)&& res.data.data.length>0){
           this.setState({approvedCompanies: res.data.data,sscManagers:[]})
-           
+         }
+         else{
+           swal('You do not have any Approved Companies yet!')
          }
       })
     }
-      // tabRow(){
-      //  return (
-      //   this.state.approvedCompanies.map(function(approvedCompany,i){
-      //   return <ApprovedCompaniesFields approvedCompany={approvedCompany} key={i}/>})
-      //   )
-      // }
 
       printDocument() {
         const input = document.getElementById('divToPrint');

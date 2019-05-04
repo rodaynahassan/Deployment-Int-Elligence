@@ -208,7 +208,7 @@ class Register extends React.Component {
 				<form>
 					<div className="form-group">
 						<MDBInput
-							label={trans.name}
+							label={trans.name+" (Required)"}
 							type="text"
 							className={classnames('form-control form-control-lg', {
 								'is-invalid': errors.Name
@@ -224,7 +224,7 @@ class Register extends React.Component {
 
 					<div className="form-group">
 						<MDBInput
-							label={trans.email}
+							label={trans.email+" (Required)"}
 							type="email"
 							className={classnames('form-control form-control-lg', {
 								'is-invalid': errors.Email
@@ -240,7 +240,7 @@ class Register extends React.Component {
 
 					<div className="form-group">
 						<MDBInput
-							label={trans.password}
+							label={trans.password+" (Required)"}
 							type="password"
 							className={classnames('form-control form-control-lg', { 'is-invalid': errors.Password })}
 							name="password"
@@ -255,7 +255,7 @@ class Register extends React.Component {
 
 					<div className="form-group">
 						<MDBInput
-							label={trans.confirmPassword}
+							label={trans.confirmPassword+" (Required)"}
 							type="password"
 							className={classnames('form-control form-control-lg', {
 								'is-invalid': errors.confirm_password
@@ -277,7 +277,7 @@ class Register extends React.Component {
 					<MDBRow>
 						<MDBCol>
 							<div className="form-group">
-								<label htmlFor="gender">{trans.gender}</label>
+								<label htmlFor="gender">{trans.gender+" (Required)"}</label>
 								<select
 									className="form-control"
 									id="exampleFormControlSelect1"
@@ -294,7 +294,7 @@ class Register extends React.Component {
 					</MDBRow>
 					<div className="form-group">
 						<MDBInput
-							label={trans.birthdate}
+							label={trans.birthdate+" (Required)"}
 							type="date"
 							class="material-icons prefix"
 							className={classnames('form-control form-control-lg', { 'is-invalid': errors.birthdate })}
@@ -308,7 +308,7 @@ class Register extends React.Component {
 					</div>
 
 					<div className="form-group">
-						<label htmlFor="Nationality">{trans.nationality}</label>
+						<label htmlFor="Nationality">{trans.nationality+" (Required)"}</label>
 						<select
 							className="form-control"
 							id="exampleFormControlSelect1"
@@ -324,7 +324,7 @@ class Register extends React.Component {
 					<MDBRow>
 						<MDBCol>
 							<div className="form-group">
-								<label htmlFor="identificationType">{trans.identificationType}</label>
+								<label htmlFor="identificationType">{trans.identificationType+" (Required)"}</label>
 								<select
 									className="form-control"
 									id="exampleFormControlSelect1"
@@ -342,7 +342,7 @@ class Register extends React.Component {
 
 					<div className="form-group">
 						<MDBInput
-							label={trans.identificationNumber}
+							label={trans.identificationNumber+" (Required)"}
 							type="text"
 							className={classnames('form-control form-control-lg', { 'is-invalid': errors.fax })}
 							name="identificationNumber"
@@ -356,7 +356,7 @@ class Register extends React.Component {
 					</div>
 					<div className="form-group">
 						<MDBInput
-							label={trans.address}
+							label={trans.address+" (Required)"}
 							type="text"
 							className={classnames('form-control form-control-lg', { 'is-invalid': errors.address })}
 							name="address"
@@ -369,7 +369,7 @@ class Register extends React.Component {
 
 					<div className="form-group">
 						<MDBInput
-							label={trans.telephone}
+							label={trans.telephone+" (Not Required)"}
 							type="text"
 							className={classnames('form-control form-control-lg', { 'is-invalid': errors.telephone })}
 							name="telephone"
@@ -381,7 +381,7 @@ class Register extends React.Component {
 
 					<div className="form-group">
 						<MDBInput
-							label={trans.fax}
+							label={trans.fax+" (Not Required)"}
 							type="text"
 							className={classnames('form-control form-control-lg', { 'is-invalid': errors.fax })}
 							name="fax"
@@ -394,7 +394,7 @@ class Register extends React.Component {
 					<MDBRow>
 						<MDBCol>
 							<div className="form-group">
-								<label htmlFor="investorType">{trans.investorType}</label>
+								<label htmlFor="investorType">{trans.investorType+" (Required)"}</label>
 								<select
 									className="form-control"
 									id="exampleFormControlSelect1"

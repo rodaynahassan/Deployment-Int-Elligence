@@ -6,6 +6,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import swal from 'sweetalert';
 import {
 	MDBRow,
 	MDBCol,
@@ -92,11 +93,11 @@ class SPCform extends Component{
        .then(function (response) {
          console.log(response);
          
-          alert('SPCForm Created Successfully') ;
+          swal('SPCForm Created Successfully') ;
 
        })
        .catch((error)=> {
-         alert(error.response.data.errmsg||error.response.data);
+         swal(error.response.data.errmsg||error.response.data);
          console.log(error.response)
        });
       }

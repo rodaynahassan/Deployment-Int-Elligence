@@ -5,6 +5,7 @@ import axios from 'axios';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
+import swal from 'sweetalert';
 import TextField from 'material-ui/TextField';
 import {
 	MDBRow,
@@ -79,13 +80,18 @@ class AttributeArray extends Component {
 				}
 				var constraints = formType[key];
 				constraints = constraints.split(',');
+				var now2=constraints[1]
+				if (now2==='required')
+				now2='Required'
+				else
+				now2='Not Required'
 				if (constraints[5] === 'dropdownlist') {
 					if (key === 'gender') {
 						return (
 							<div style={{ marginBottom: '60px' }}>
 								<MDBCol>
 									<div className="form-group">
-										<label htmlFor={key}>{temp}</label>
+										<label htmlFor={key}>{temp+" ("+now2+") "}</label>
 										<select
 											className="form-control"
 											id="exampleFormControlSelect1"
@@ -112,7 +118,7 @@ class AttributeArray extends Component {
 							<div style={{ marginBottom: '60px' }}>
 								<MDBCol>
 									<div className="form-group">
-										<label htmlFor={key}>{temp}</label>
+										<label htmlFor={key}>{temp+" ("+now2+") "}</label>
 										<select
 											className="form-control"
 											id="exampleFormControlSelect1"
@@ -136,7 +142,7 @@ class AttributeArray extends Component {
 							<div style={{ marginBottom: '60px' }}>
 								<MDBCol>
 									<div className="form-group">
-										<label htmlFor={key}>{temp}</label>
+										<label htmlFor={key}>{temp+" ("+now2+") "}</label>
 										<select
 											className="form-control"
 											id="exampleFormControlSelect1"
@@ -158,7 +164,7 @@ class AttributeArray extends Component {
 							<div style={{ marginBottom: '60px' }}>
 								<MDBCol>
 									<div className="form-group">
-										<label htmlFor={key}>{temp}</label>
+										<label htmlFor={key}>{temp+" ("+now2+") "}</label>
 										<select
 											className="form-control"
 											id="exampleFormControlSelect1"
@@ -181,7 +187,7 @@ class AttributeArray extends Component {
 							<div style={{ marginBottom: '60px' }}>
 								<MDBCol>
 									<div className="form-group">
-										<label htmlFor={key}>{temp}</label>
+										<label htmlFor={key}>{temp+" ("+now2+") "}</label>
 										<select
 											className="form-control"
 											id="exampleFormControlSelect1"
@@ -216,7 +222,7 @@ class AttributeArray extends Component {
 						<MDBRow style={{ paddingLeft: '30px', justifyItems: 'center',width:"250px" }}>
 						<MDBCol>
 						<MDBInput
-							label={temp}
+							label={temp+" ("+now2+") "}
 							type="date"
 							class="material-icons prefix"
 							id="materialFormRegisterNameEx"
@@ -236,7 +242,7 @@ class AttributeArray extends Component {
 							<MDBRow style={{ paddingLeft: '30px', justifyItems: 'center' }}>
 								<MDBCol>
 									<MDBInput
-										label={temp}
+										label={temp+" ("+now2+") "}
 										value={this.state[key]}
 										name={key}
 										onChange={this.changeHandler}
@@ -278,10 +284,15 @@ class AttributeArray extends Component {
 		axios
 			.put(apiBaseUrl, payload2, { headers: { Authorization: localStorage.getItem('jwtToken') } })
 			.then(function(response) {
-				alert('The SSC Manager has been created successfully');
+				swal({
+					title: "Good job!",
+					text: "The Array has been created successfully!",
+					icon: "success",
+					button: "Aww yess!",
+				  });
 			})
 			.catch((error) => {
-				alert(error.response.data.error.details['0'].message||error.response.data.msg || error.response.data.error || error.response.data);
+				swal(error.response.data.error.details['0'].message||error.response.data.msg || error.response.data.error || error.response.data);
 				console.log(error);
 			});
 	};

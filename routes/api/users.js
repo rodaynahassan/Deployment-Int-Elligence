@@ -66,7 +66,8 @@ router.get('/CertainAttributes', passport.authenticate('jwt', { session: false }
 		Email: searchUsers.email,
 		Password: searchUsers.password,
 		Telephone: searchUsers.telephone,
-		Fax: searchUsers.fax
+		Fax: searchUsers.fax,
+		FinancialBalance:searchUsers.financialBalance
 	});
 });
 
@@ -109,11 +110,9 @@ router.post('/register', async (req, res) => {
 	const newUser = await userController.registerInvestor(req.body);
 	if (newUser.error) return res.status(400).send(newUser);
 	if (newUser.userType === 'Investor') {
-		newUser.resetPasswordToken = null;
+		newUser.resetPasswordToken = "";
 		newUser.resetPasswordExpires = null;
-		newUser.financialBalance = 0;
 		returnedUser = await userController.update('_id', newUser._id, {
-			financialBalance: newUser.financialBalance,
 			resetPasswordToken: newUser.resetPasswordToken,
 			resetPasswordExpires: newUser.resetPasswordExpires
 		});
@@ -235,22 +234,39 @@ router.post('/changePassword', passport.authenticate('jwt', { session: false }),
 });
 
 //Paying fees
-router.put('/payingFees', passport.authenticate('jwt', { session: false }), async (req, res) => {
-	const userid = req.user.id;
+router.put('/payingFees',async (req, res) => {
+	const formId = req.body.id;
+	var form = await dynamicFormController.search('id',formId)
+    const userid = form.investorId
+	const user = await userController.search('_id', userid);
 	const amount = req.body.amount;
-	if (req.user.userType === 'Investor') {
-		const user = await userController.search('_id', userid);
-		const financialBalance = user.financialBalance - amount;
-		if (financialBalance < 0) {
-			return res.json({ msg: 'Amount greater than the balance' });
+	form = form.toJSON();
+	if(form.status ==='Reviewer accepted'){
+	if (user.userType === 'Investor') {
+		const fee = form.fees - amount;
+		if (fee < 0) {
+			return res.json({ msg: 'Amount greater than the required' });
 		} else {
 			const newfinancialBalance = user.financialBalance - amount;
+			if(newfinancialBalance < 0){
+				return res.json({ msg: 'Amount greater than the required' });
+			}
 			const newUser = await userController.update('_id', userid, { financialBalance: newfinancialBalance });
-			return res.json({ msg: 'Amount payed successfully', data: newUser });
+			form.fees = fee
+			if(form.fees === 0){
+				//await dynamicFormController.update('_id',formId,{ status:'Approved'})
+				form.status = 'Approved'
+			}
+			await dynamicFormController.update('_id',formId,form)
+			const newform = await dynamicFormController.search('id',formId)
+			return res.json({ msg: 'Amount payed successfully', data: newform,newUser});
 		}
 	} else {
-		return res.status(401).json({ msg: 'Non Authorized' });
+		return res.status(401).json({ msg: 'Non Authorized'});
 	}
+} else{
+	return res.json({ msg: 'This form is not fully reviewed' });
+}
 });
 
 router.post('/forgotPassword', async (req, res) => {

@@ -12,6 +12,7 @@ import MenuItem from 'material-ui/MenuItem';
 import trans from '../translations/changePasswordTranslation'
 import Button from '@material-ui/core/Button';
 import { RemoveRedEye } from '@material-ui/icons';
+import swal from 'sweetalert';
 var mongoose = require('mongoose');
 
 const styles = (theme) => ({
@@ -43,9 +44,9 @@ class ChangePassword extends React.Component {
 		axios
 			.post(apiBaseUrl, payload, { headers: { Authorization: localStorage.getItem('jwtToken') } })
 			.then(res => {
-				alert(res.data.msg)
+				swal(res.data.msg)
 			  })
-			.catch((err) => alert(err.response.data.errmsg || err.response.data));
+			  .catch((err) => swal(err.response.data.errmsg || err.response.data));
 	}
 
 	changeHandler = (event) => {

@@ -9,6 +9,7 @@ import TextField from 'material-ui/TextField';
 import { MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
+import swal from 'sweetalert';
 var mongoose = require('mongoose');
 
 class EditSPCForm extends React.Component {
@@ -49,7 +50,7 @@ class EditSPCForm extends React.Component {
 					equityCapital: response.data.data.equityCapital
 				});
 			})
-			.catch((err) => alert(err.response.data.errmsg || err.response.data));
+			.catch((err) => swal(err.response.data.errmsg || err.response.data));
 		axios.get('/routes/api/governorates/').then((res) => {
 			this.setState({ governorate: res.data.data });
 		});
@@ -72,10 +73,10 @@ class EditSPCForm extends React.Component {
 		axios
 			.put(apiBaseUrl, payload, { headers: { Authorization: localStorage.getItem('jwtToken') } })
 			.then(function(response) {
-				alert('The SPC form has been updated successfully');
+				swal('The SPC form has been updated successfully');
 			})
 			.catch((error) => {
-				alert(error.response.data.errmsg || error.response.data);
+				swal(error.response.data.errmsg || error.response.data);
 				console.log(error);
 			});
 	}

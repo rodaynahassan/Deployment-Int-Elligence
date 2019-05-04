@@ -16,6 +16,8 @@ import DropdownItem from 'react-bootstrap/DropdownItem';
 import Footer from "../layout/footer"
 import { Button } from "react-bootstrap"
 import { conditionalExpression } from '@babel/types';
+import { CommunicationSwapCalls } from 'material-ui/svg-icons';
+import swal from 'sweetalert';
 
 var mongoose = require('mongoose')
 
@@ -307,7 +309,12 @@ class EditInvCompany extends Component {
             axios.put(apiBaseUrl, payload2, { headers: { "Authorization": localStorage.getItem('jwtToken') } })
                 .then(function (response) {
 
-                    alert('The Form has been updated successfully');
+                    swal({
+                        title: "Good job!",
+                        text: "The Form has been updated successfully!",
+                        icon: "success",
+                        button: "Aww yess!",
+                      });
 
                 })
                 .catch((error) => {
@@ -324,8 +331,14 @@ class EditInvCompany extends Component {
                 <div style={{ paddingLeft: '60px', justifyItems: "center" }}>
                     <MuiThemeProvider>
                         {this.getAttributes()}
-                        <RaisedButton label="Submit" primary={true} style={style}
-                            onClick={(this.handleClick)} />
+                        <Button 
+                        className="btn-block btn-rounded z-depth-1a"
+                        variant="omar"
+                        style={{marginTop:"50px",marginLeft: "50px",marginRight:"2500px",width:"100px", height:"40px" ,backgroundColor:"#a3dbf1"}}
+                        onClick={(this.handleClick)}
+                        >
+                        Submit
+                        </Button>
                     </MuiThemeProvider>
 
                 </div>

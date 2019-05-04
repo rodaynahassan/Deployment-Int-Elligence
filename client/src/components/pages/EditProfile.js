@@ -11,6 +11,7 @@ import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import trans from '../translations/editProfileTranslation'
 import { Button } from 'react-bootstrap';
+import swal from 'sweetalert';
 var mongoose = require('mongoose');
 
 
@@ -82,10 +83,10 @@ class EditProfile extends React.Component {
 		axios
 			.put(apiBaseUrl, payload, { headers: { Authorization: localStorage.getItem('jwtToken') } })
 			.then(function(response) {
-				alert('The profile has been updated successfully');
+				swal('The profile has been updated successfully');
 			})
 			.catch((error) => {
-				alert(error.response.data.errmsg || error.response.data);
+				swal(error.response.data.errmsg || error.response.data);
 				console.log(error);
 			});
 	}
@@ -352,9 +353,9 @@ class EditProfile extends React.Component {
 								variant="omar"
 								style={{marginTop:"50px",marginLeft: "50px",marginRight:"2500px",width:"100px", height:"40px" ,backgroundColor:"#a3dbf1"}}
 								disabled={!this.validateForm()}
-								onClick={(event) => (
-									this.handleClick(event), alert('Your request to update has been submitted')
-								)}
+								onClick={(event) => 
+									this.handleClick(event)
+								}
 							>
 							Submit
 							</Button>

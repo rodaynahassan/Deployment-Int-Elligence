@@ -7,6 +7,7 @@ import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Button from '@material-ui/core/Button';
+import swal from 'sweetalert';
 import {
 	MDBRow,
 	MDBCol,
@@ -73,33 +74,6 @@ class CreateANewCompany extends Component {
 		for (var key in formType) {
 			KEYS.push(key);
 		}
-		// var trial=[]
-		// for (var i=0;i<KEYS.length;i++){
-		// 	var now=KEYS[i]
-		// 	console.log(now)
-		// 	var temp=""
-		// 	for(var j=0;j<now.length;j++){
-		// 		if(now.charCodeAt(j)>=65 && now.charCodeAt(j)<=90){
-		// 			temp=temp+" "
-		// 			temp=temp+now.charAt(j)
-		// 		}
-		// 		else{
-		// 			temp=temp+now.charAt(j)
-		// 		}
-				
-		// 	}
-		// 	console.log(temp)
-		// 	trial.push(temp)
-		// }
-		// var size=KEYS.length
-		// for(var k=0;k<size;k++){
-		// 	KEYS.pop()
-		// 	KEYS.push(trial.pop)
-		// }
-		// console.log(KEYS)
-		// console.log("ay 7aga")
-		// var s = 'Z';
-		// console.log(s.charCodeAt(0));
 		return KEYS.map((key, index) => {
 			if (key !== '_id' && key !== '__v') {
 				var now=key;
@@ -117,6 +91,11 @@ class CreateANewCompany extends Component {
 				}
 				var constraints = formType[key];
 				constraints = constraints.split(',');
+				var now2=constraints[1]
+				if (now2==='required')
+				now2='Required'
+				else
+				now2='Not Required'
 				//console.log(constraints)
 				if (constraints[0] === 'array') {
 					return (
@@ -131,10 +110,10 @@ class CreateANewCompany extends Component {
 							this.setState({ governorate: res.data.data });
 						});
 						return (
-							<div style={{ marginBottom: '60px' ,width:"280px"}}>
+							<div style={{ marginBottom: '60px' ,width:"300px"}}>
 								<MDBCol>
 									<div className="form-group">
-										<label htmlFor={key}>{temp}</label>
+										<label htmlFor={key}>{temp+" ("+now2+") "}</label>
 										<select
 											className="form-control"
 											id="exampleFormControlSelect1"
@@ -152,7 +131,7 @@ class CreateANewCompany extends Component {
 								</MDBCol>
 								<MDBCol>
 									<div className="form-group">
-										<label htmlFor="companyCity">Company City</label>
+										<label htmlFor="companyCity">Company City (Required)</label>
 										<select
 											className="form-control"
 											id="exampleFormControlSelect1"
@@ -175,10 +154,10 @@ class CreateANewCompany extends Component {
 							this.setState({ nationalities: res.data.data });
 						});
 						return (
-							<div style={{ marginBottom: '60px' ,width:"280px"}}>
+							<div style={{ marginBottom: '60px' ,width:"300px"}}>
 								<MDBCol>
 									<div className="form-group">
-										<label htmlFor={key}>{temp}</label>
+										<label htmlFor={key}>{temp+" ("+now2+") "}</label>
 										<select
 											className="form-control"
 											id="exampleFormControlSelect1"
@@ -199,10 +178,10 @@ class CreateANewCompany extends Component {
 					}
 					if (key === 'currency') {
 						return (
-							<div style={{ marginBottom: '60px',width:"280px" }}>
+							<div style={{ marginBottom: '60px',width:"300px" }}>
 								<MDBCol>
 									<div className="form-group">
-										<label htmlFor={key}>{temp}</label>
+										<label htmlFor={key}>{temp+" ("+now2+") "}</label>
 										<select
 											className="form-control"
 											id="exampleFormControlSelect1"
@@ -234,7 +213,7 @@ class CreateANewCompany extends Component {
 						<MDBRow style={{ paddingLeft: '30px', justifyItems: 'center',width:"250px" }}>
 						<MDBCol>
 						<MDBInput
-							label={temp}
+							label={temp+" ("+now2+") "}
 							type="date"
 							class="material-icons prefix"
 							id="materialFormRegisterNameEx"
@@ -254,14 +233,15 @@ class CreateANewCompany extends Component {
 							<MDBRow style={{ paddingLeft: '30px', justifyItems: 'center' }}>
 								<MDBCol>
 									<MDBInput
-										label={temp}
+										label={temp+" ("+now2+") "}
 										value={this.state[key]}
 										name={key}
 										onChange={this.changeHandler}
 										type="text"
 										id="materialFormRegisterNameEx"
 										required
-									/>
+									>
+									</MDBInput>
 								</MDBCol>
 							</MDBRow>
 						</div>
@@ -303,30 +283,6 @@ class CreateANewCompany extends Component {
 				</div>
 			);
 		});
-		// var formTypeArray = this.state.formTypeArray[keysArray]
-		// var KEYSARRAY = []
-		// for (var key in formTypeArray) {
-		//     KEYSARRAY.push(key)
-		// }
-		// KEYSARRAY.map((key, index) => {
-		//     return <div style={{ marginBottom: "60px" }}>
-		//         <MDBRow style={{ paddingLeft: '30px', justifyItems: "center" }}>
-		//             <MDBCol>
-		//                 <MDBInput
-		//                     label={key}
-		//                     value={this.state[key]}
-		//                     name={key}
-		//                     onChange={this.changeHandler}
-		//                     type="text"
-		//                     id="materialFormRegisterNameEx"
-		//                     required
-		//                 >
-		//                 </MDBInput>
-		//             </MDBCol>
-		//         </MDBRow>
-		//     </div>
-
-		// })
 	};
 
 	handleClick = (error) => {
@@ -348,13 +304,18 @@ class CreateANewCompany extends Component {
 		axios
 			.post(apiBaseUrl, payload2, { headers: { Authorization: localStorage.getItem('jwtToken') } })
 			.then(function(response) {
-				alert('The Form has been created successfully');
+				swal({
+					title: "Good job!",
+					text: "The Form has been created successfully!",
+					icon: "success",
+					button: "Aww yess!",
+				  });
 			})
 			.catch((error) => {
 				//console.log(error.response.data.error.details['0'].message)
 				
 			//	alert(error.response.data.error.details['0'].message)
-				alert(error.response.data.error.details['0'].message || error.response.data.error || error.response.data.errmsg||error.response.data);
+		alert(error.response.data.error.details['0'].message || error.response.data.error || error.response.data.errmsg||error.response.data);
 				//console.log(error);
 			});
 	};

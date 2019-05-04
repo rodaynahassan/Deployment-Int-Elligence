@@ -215,7 +215,8 @@ class Companies extends Component {
                     variant="omar"
                     style={{ width: '120px', height: '65px',backgroundColor:"#a3dbf1" }}  
                     onClick={() => (this.accept(Form._id),swal("The form was accepted succesfully"),
-                    document.location.href = '/GetReviewer')}
+                    setTimeout("document.location.href = '/GetReviewer';",3500)
+                    )}
                     >
                     <h6>
                       <i

@@ -57,7 +57,9 @@ class NewFormType extends Component {
       var payload = this.state.payload;
       payload.formType = this.state.formType;
       this.setState({ atts: true, payload: payload });
-    } else swal("Please provide a Form Type Name");
+    } else {
+      swal("Please provide a Form Type Name");
+        }
   };
 
   handleClick2 = error => {
@@ -91,6 +93,7 @@ class NewFormType extends Component {
           if (!parseInt(this.state.max)) {
             swal("Please provide a number in the maximum field");
             return;
+            
           }
         constraints = constraints + this.state.min + ",";
       } else constraints = constraints + ",,";
@@ -138,7 +141,7 @@ class NewFormType extends Component {
 					button: "Aww yess!",
 				  });
         //swal("Form Type created successfully");
-        document.location.href = "/createNewFormType";
+        setTimeout("document.location.href = '/createNewFormType';",3500)
       })
       .catch(err => {
         swal(err);

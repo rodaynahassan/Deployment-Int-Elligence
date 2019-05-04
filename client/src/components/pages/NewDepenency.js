@@ -192,7 +192,8 @@ class NewDependency extends Component {
 					button: "Aww yess!",
 				  });
         //swal("Form Type Array created successfully");
-        document.location.href = "/createNewDependency";
+        setTimeout("document.location.href = '/createNewDependency';",3500)
+       // document.location.href = "/createNewDependency";
       })
       .catch(err => {
         console.log(err.response.data);

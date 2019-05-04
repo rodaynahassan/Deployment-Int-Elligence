@@ -321,7 +321,10 @@ class CreateANewCompany extends Component {
 				//console.log(error.response.data.error.details['0'].message)
 				
 			//	alert(error.response.data.error.details['0'].message)
+			if(error.response.data.error.details)
 				alert(error.response.data.error.details['0'].message || error.response.data.error || error.response.data.errmsg||error.response.data);
+				else
+				alert(error.response.data.errmsg||error.response.data.error||error.response.data)
 				//console.log(error);
 			});
 	};

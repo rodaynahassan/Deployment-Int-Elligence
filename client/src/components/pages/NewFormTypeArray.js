@@ -5,6 +5,7 @@ import axios from "axios";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import AppBar from "material-ui/AppBar";
 import RaisedButton from "material-ui/RaisedButton";
+import swal from 'sweetalert';
 import TextField from "material-ui/TextField";
 import {
   MDBRow,
@@ -55,18 +56,18 @@ class NewFormTypeArray extends Component {
       var payload = this.state.payload;
       payload.formTypeArray = this.state.formTypeArray;
       this.setState({ atts: true, payload: payload });
-    } else alert("Please provide a Form Type Name");
+    } else swal("Please provide a Form Type Name");
   };
 
   handleClick2 = error => {
     error.preventDefault();
     if (this.state.attributeName === "")
-      alert("Please Provide an Attribute Name");
+      swal("Please Provide an Attribute Name");
     if (
       this.state.type === "" ||
       this.state.type === "Please Provide an Input Type"
     ) {
-      alert("Please provide a valid input type");
+      swal("Please provide a valid input type");
       return;
     }
 
@@ -78,13 +79,13 @@ class NewFormTypeArray extends Component {
     if (this.state.type === "string" || this.state.type === "number") {
       if (this.state.min !== "")
         if (!parseInt(this.state.min)) {
-          alert("Please provide a number in the minimum field");
+          swal("Please provide a number in the minimum field");
           return;
         }
       constraints = constraints + this.state.min + ",";
       if (this.state.max !== "")
         if (!parseInt(this.state.max)) {
-          alert("Please provide a number in the maximum field");
+          swal("Please provide a number in the maximum field");
           return;
         }
       constraints = constraints + this.state.min + ",";
@@ -95,7 +96,13 @@ class NewFormTypeArray extends Component {
     var payload = this.state.payload;
     payload[this.state.attributeName] = constraints;
     this.setState({ payload: payload });
-    alert("Attribute Added Successfully");
+    swal({
+      title: "Good job!",
+      text: "Attribute Added successfully!",
+      icon: "success",
+      button: "Aww yess!",
+      });
+    //swal("Attribute Added Successfully");
   };
 
   handleClick3 = () => {
@@ -118,12 +125,18 @@ class NewFormTypeArray extends Component {
         headers: { Authorization: localStorage.getItem("jwtToken") }
       })
       .then(res => {
-        alert("Form Type Array created successfully");
+        swal({
+					title: "Good job!",
+					text: "Form Type Array created successfully!",
+					icon: "success",
+					button: "Aww yess!",
+				  });
+        //swal("Form Type Array created successfully");
         document.location.href = "/createNewFormTypeArray";
       })
       .catch(err => {
           console.log(err.response.data)
-        alert(err.response.data.error);
+        swal(err.response.data.error);
       });
   };
 

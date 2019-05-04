@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 import axios from "axios";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import AppBar from "material-ui/AppBar";
+import swal from'sweetalert';
 import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
 import {
@@ -19,7 +20,6 @@ import {
 import DropDownMenu from "material-ui/DropDownMenu";
 import MenuItem from "material-ui/MenuItem";
 import trans from "../translations/spcTranslation";
-//import {Dropdown} from 'react-bootstrap';
 import { Dropdown } from "semantic-ui-react";
 import DropdownItem from "react-bootstrap/DropdownItem";
 import Footer from "../layout/footer";
@@ -60,7 +60,7 @@ class NewDependency extends Component {
         this.setState({ forms: res.data.data });
       })
       .catch(err => {
-        alert(err);
+        swal(err);
       });
   };
 
@@ -73,7 +73,7 @@ class NewDependency extends Component {
       var payload = this.state.payload;
       payload.formType = this.state.formType;
       this.setState({ atts: true, payload: payload });
-    } else alert("Please provide a Form Type");
+    } else swal("Please provide a Form Type");
   };
 
   handleClick2 = error => {
@@ -82,14 +82,14 @@ class NewDependency extends Component {
       this.state.att === "" ||
       this.state.att === "Please Provide an Attribute"
     ) {
-      alert("Please Provide an Attribute");
+      swal("Please Provide an Attribute");
       return;
     }
     if (
       this.state.dependAtt === "" ||
       this.state.dependAtt === "Please Provide an Attribute to depend on"
     ) {
-      alert("Please provide a depending Attribute");
+      swal("Please provide a depending Attribute");
       return;
     }
     var formType = this.state.formType;
@@ -111,35 +111,35 @@ class NewDependency extends Component {
     var dependAttType = consts[0]
 
     if(this.state.is===""){
-        alert("Please provide a value for depending Attribute")
+        swal("Please provide a value for depending Attribute")
         return
     }
     if(this.state.is!=="" && dependAttType==='number'){
         if(!parseInt(this.state.is)) {
-            alert("Please provida a number in the value of depending attribute")
+            swal("Please provida a number in the value of depending attribute")
             return
         }
     }
     if (this.state.min !== "")
     if (!parseInt(this.state.min)) {
-      alert("Please provide a number in the minimum field");
+      swal("Please provide a number in the minimum field");
       return;
     }
     if (this.state.max !== "")
     if (!parseInt(this.state.max)) {
-      alert("Please provide a number in the maximum field");
+      swal("Please provide a number in the maximum field");
       return;
     }
 
     if(this.state.value!=="" && attType==='number'){
         if(!parseInt(this.state.value)) {
-            alert("Please provida a number in the exact value field")
+            swal("Please provida a number in the exact value field")
             return
         }
     }
     if (this.state.length !== "")
     if (!parseInt(this.state.length)) {
-      alert("Please provide a number in the length field");
+      swal("Please provide a number in the length field");
       return;
     }
 
@@ -156,7 +156,13 @@ class NewDependency extends Component {
     var payload = this.state.payload;
     payload[this.state.att] = constraints;
     this.setState({ payload: payload });
-    alert("Attribute Added Successfully");
+    // swal({
+    //   title: "Good job!",
+    //   text: "Attribute Added Successfully",
+    //   icon: "success",
+    //   button: "Aww yess!",
+    //   });
+     swal("Attribute Added Successfully");
   };
 
   handleClick3 = () => {
@@ -179,12 +185,18 @@ class NewDependency extends Component {
         headers: { Authorization: localStorage.getItem("jwtToken") }
       })
       .then(res => {
-        alert("Form Type Array created successfully");
+        swal({
+					title: "Good job!",
+					text: "Form Type Array created successfully",
+					icon: "success",
+					button: "Aww yess!",
+				  });
+        //swal("Form Type Array created successfully");
         document.location.href = "/createNewDependency";
       })
       .catch(err => {
         console.log(err.response.data);
-        alert(err.response.data.error);
+        swal(err.response.data.error);
       });
   };
 

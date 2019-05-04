@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import swal from 'sweetalert'
 import AppBar from "material-ui/AppBar";
 import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
@@ -56,18 +57,18 @@ class NewFormType extends Component {
       var payload = this.state.payload;
       payload.formType = this.state.formType;
       this.setState({ atts: true, payload: payload });
-    } else alert("Please provide a Form Type Name");
+    } else swal("Please provide a Form Type Name");
   };
 
   handleClick2 = error => {
     error.preventDefault();
     if (this.state.attributeName === "")
-      alert("Please Provide an Attribute Name");
+      swal("Please Provide an Attribute Name");
     if (
       this.state.type === "" ||
       this.state.type === "Please Provide an Input Type"
     ) {
-      alert("Please provide a valid input type");
+      swal("Please provide a valid input type");
       return;
     }
 
@@ -82,13 +83,13 @@ class NewFormType extends Component {
       if (this.state.type === "string" || this.state.type === "number") {
         if (this.state.min !== "")
           if (!parseInt(this.state.min)) {
-            alert("Please provide a number in the minimum field");
+            swal("Please provide a number in the minimum field");
             return;
           }
         constraints = constraints + this.state.min + ",";
         if (this.state.max !== "")
           if (!parseInt(this.state.max)) {
-            alert("Please provide a number in the maximum field");
+            swal("Please provide a number in the maximum field");
             return;
           }
         constraints = constraints + this.state.min + ",";
@@ -100,7 +101,13 @@ class NewFormType extends Component {
     var payload = this.state.payload;
     payload[this.state.attributeName] = constraints;
     this.setState({ payload: payload });
-    alert("Attribute Added Successfully");
+    // swal({
+    //   title: "Good job!",
+    //   text: "Attribute Added successfully!",
+    //   icon: "success",
+    //   button: "Aww yess!",
+    //   });
+   swal("Attribute Added Successfully");
   };
 
   handleClick3 = () => {
@@ -124,11 +131,17 @@ class NewFormType extends Component {
         headers: { Authorization: localStorage.getItem("jwtToken") }
       })
       .then(res => {
-        alert("Form Type created successfully");
+        swal({
+					title: "Good job!",
+					text: "Form Type created successfully!",
+					icon: "success",
+					button: "Aww yess!",
+				  });
+        //swal("Form Type created successfully");
         document.location.href = "/createNewFormType";
       })
       .catch(err => {
-        alert(err);
+        swal(err);
       });
   };
 

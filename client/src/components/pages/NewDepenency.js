@@ -465,7 +465,7 @@ class NewDependency extends Component {
             primary={true}
             onClick={this.handleClick4}
             className="text-center mb-3"
-            style={{ width: '120px', height: '55px',backgroundColor:"#a3dbf1" }}
+            style={{ width: '140px', height: '55px',backgroundColor:"#a3dbf1" }}
             variant="omar"
           >
           Submit Dependencies

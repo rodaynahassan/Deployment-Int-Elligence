@@ -287,7 +287,7 @@ class NewDependency extends Component {
         <MuiThemeProvider>
           <MDBCol>
             <div className="form-group">
-              <label htmlFor="Type of Input">Form Type</label>
+              <label htmlFor="Type of Input"><h3>Form Type</h3></label>
               <select
                 className="form-control"
                 id="exampleFormControlSelect1"
@@ -301,11 +301,16 @@ class NewDependency extends Component {
               </select>
             </div>
           </MDBCol>
-          <RaisedButton
+          <Button
+            className="text-center mb-3"
             label="Add Attributes"
             primary={true}
             onClick={this.handleClick1}
-          />
+            style={{marginLeft:"20px", width: '120px', height: '55px',backgroundColor:"#a3dbf1" }}
+            variant="omar"
+          >
+          Add Attributes
+          </Button>
         </MuiThemeProvider>
       </div>
     );
@@ -358,7 +363,7 @@ class NewDependency extends Component {
 
           <MDBCol>
             <div className="form-group">
-              <label htmlFor="Type of Input">Attribute</label>
+              <label htmlFor="Type of Input"><h4>Attribute</h4></label>
               <select
                 className="form-control"
                 id="exampleFormControlSelect1"
@@ -375,7 +380,7 @@ class NewDependency extends Component {
 
           <MDBCol>
             <div className="form-group">
-              <label htmlFor="Type of Input">Depending Attribute</label>
+              <label htmlFor="Type of Input"><h4>Depending Attribute</h4></label>
               <select
                 className="form-control"
                 id="exampleFormControlSelect1"
@@ -435,21 +440,36 @@ class NewDependency extends Component {
             </MDBCol>
           </MDBRow>
 
-          <RaisedButton
+          <Button
             label="Save Attribute"
             primary={true}
             onClick={this.handleClick2}
-          />
-          <RaisedButton
+            className="text-center mb-3"
+            style={{ width: '120px', height: '55px',backgroundColor:"#a3dbf1" }}
+            variant="omar"
+          >
+          Save Attribute
+          </Button>
+          <Button
             label="Next Attribute"
             primary={true}
             onClick={this.handleClick3}
-          />
-          <RaisedButton
+            className="text-center mb-3"
+            style={{ width: '120px', height: '55px',backgroundColor:"#a3dbf1" }}
+            variant="omar"
+          >
+          Next Attribute
+          </Button>
+          <Button
             label="Submit Dependencies"
             primary={true}
             onClick={this.handleClick4}
-          />
+            className="text-center mb-3"
+            style={{ width: '120px', height: '55px',backgroundColor:"#a3dbf1" }}
+            variant="omar"
+          >
+          Submit Dependencies
+          </Button>
         </MuiThemeProvider>
       </div>
     );

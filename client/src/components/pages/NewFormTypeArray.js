@@ -170,7 +170,7 @@ class NewFormTypeArray extends Component {
         <br />
         <MuiThemeProvider>
           <div style={{ marginBottom: "60px" }}>
-            <MDBRow style={{ paddingLeft: "30px", justifyItems: "center" }}>
+            <MDBRow style={{ justifyItems: "center" }}>
               <MDBCol>
                 <MDBInput
                   label="Form Type Array"
@@ -180,14 +180,20 @@ class NewFormTypeArray extends Component {
                   type="text"
                   id="materialFormRegisterNameEx"
                   required
+                  style = {{width:"700px"}}
                 />
               </MDBCol>
             </MDBRow>
-            <RaisedButton
+            <Button
               label="Add Attributes"
               primary={true}
               onClick={this.handleClick1}
-            />
+              className="text-center mb-3"
+              style={{ width: '120px', height: '55px',backgroundColor:"#a3dbf1" }}
+              variant="omar"
+            >
+            Add Attributes
+            </Button>
           </div>
         </MuiThemeProvider>
       </div>
@@ -231,7 +237,7 @@ class NewFormTypeArray extends Component {
     var notdate = (
       <MDBCol>
         <div className="form-group">
-          <label htmlFor="Type of Input">Type of Front End Input</label>
+          <label htmlFor="Type of Input"><h4>Type of Front End Input</h4></label>
           <select
             className="form-control"
             id="exampleFormControlSelect1"
@@ -273,7 +279,7 @@ class NewFormTypeArray extends Component {
           </MDBRow>
           <MDBCol>
             <div className="form-group">
-              <label htmlFor="Type of Input">Type of Input</label>
+              <label htmlFor="Type of Input"><h4>Type of Input</h4></label>
               <select
                 className="form-control"
                 id="exampleFormControlSelect1"
@@ -294,7 +300,7 @@ class NewFormTypeArray extends Component {
 
           <MDBCol>
             <div className="form-group">
-              <label htmlFor="Type of Input">Required</label>
+              <label htmlFor="Type of Input"><h4>Required</h4></label>
               <select
                 className="form-control"
                 id="exampleFormControlSelect1"
@@ -316,7 +322,7 @@ class NewFormTypeArray extends Component {
 
           <MDBCol>
             <div className="form-group">
-              <label htmlFor="Type of Input">Unique</label>
+              <label htmlFor="Type of Input"><h4>Unique</h4></label>
               <select
                 className="form-control"
                 id="exampleFormControlSelect1"
@@ -332,21 +338,36 @@ class NewFormTypeArray extends Component {
           </MDBCol>
 
           {this.state.type === "date" ? null : notdate}
-          <RaisedButton
+          <Button
             label="Save Attribute"
             primary={true}
             onClick={this.handleClick2}
-          />
-          <RaisedButton
+            className="text-center mb-3"
+            style={{ width: '120px', height: '55px',backgroundColor:"#a3dbf1" }}
+            variant="omar"
+          >
+          Save Attribute
+          </Button>
+          <Button
             label="Next Attribute"
             primary={true}
             onClick={this.handleClick3}
-          />
-          <RaisedButton
+            className="text-center mb-3"
+            style={{ width: '120px', height: '55px',backgroundColor:"#a3dbf1" }}
+            variant="omar"
+          >
+          Next Attribute
+          </Button>
+          <Button
             label="Submit Form Type"
             primary={true}
             onClick={this.handleClick4}
-          />
+            className="text-center mb-3"
+            style={{ width: '120px', height: '55px',backgroundColor:"#a3dbf1" }}
+            variant="omar"
+          >
+          Submit Form Type
+          </Button>
         </MuiThemeProvider>
       </div>
     );

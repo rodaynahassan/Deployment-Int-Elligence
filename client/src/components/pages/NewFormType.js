@@ -168,7 +168,7 @@ class NewFormType extends Component {
         <br />
         <MuiThemeProvider>
           <div style={{ marginBottom: "60px" }}>
-            <MDBRow style={{ paddingLeft: "30px", justifyItems: "center" }}>
+            <MDBRow style={{  justifyItems: "center" }}>
               <MDBCol>
                 <MDBInput
                   label="Form Type"
@@ -178,14 +178,20 @@ class NewFormType extends Component {
                   type="text"
                   id="materialFormRegisterNameEx"
                   required
+                  style = {{width:"700px"}}
                 />
               </MDBCol>
             </MDBRow>
-            <RaisedButton
+            <Button
+              className="text-center mb-3"
+              variant="omar"
               label="Add Attributes"
               primary={true}
               onClick={this.handleClick1}
-            />
+              style={{ width: '160px', height: '55px',backgroundColor:"#a3dbf1" }}
+            >
+            Add Attributes
+            </Button>
           </div>
         </MuiThemeProvider>
       </div>
@@ -243,7 +249,7 @@ class NewFormType extends Component {
     var notdate = (
       <MDBCol>
         <div className="form-group">
-          <label htmlFor="Type of Input">Type of Front End Input</label>
+          <label htmlFor="Type of Input"><h4>Type of Front End Input</h4></label>
           <select
             className="form-control"
             id="exampleFormControlSelect1"
@@ -286,7 +292,7 @@ class NewFormType extends Component {
 
           <MDBCol>
             <div className="form-group">
-              <label htmlFor="Type of Input">Type of Input</label>
+              <label htmlFor="Type of Input"><h4>Type of Input</h4></label>
               <select
                 className="form-control"
                 id="exampleFormControlSelect1"
@@ -295,7 +301,7 @@ class NewFormType extends Component {
                 value={this.state.type}
                 style={{ width: "300px" }}
               >
-                <option>Please Provide an Input Type</option>
+                <option><h4>Please Provide an Input Type</h4></option>
                 <option>string</option>
                 <option>number</option>
                 <option>date</option>
@@ -312,7 +318,7 @@ class NewFormType extends Component {
 
           <MDBCol>
             <div className="form-group">
-              <label htmlFor="Type of Input">Required</label>
+              <label htmlFor="Type of Input"><h4>Required</h4></label>
               <select
                 className="form-control"
                 id="exampleFormControlSelect1"
@@ -334,7 +340,7 @@ class NewFormType extends Component {
 
           <MDBCol>
             <div className="form-group">
-              <label htmlFor="Type of Input">Unique</label>
+              <label htmlFor="Type of Input"><h4>Unique</h4></label>
               <select
                 className="form-control"
                 id="exampleFormControlSelect1"
@@ -351,21 +357,36 @@ class NewFormType extends Component {
 
           {this.state.type === "date" ? null : notdate}
           {this.state.type === "array" ? array : null}
-          <RaisedButton
+          <Button
+            className="text-center mb-3"
             label="Save Attribute"
             primary={true}
             onClick={this.handleClick2}
-          />
-          <RaisedButton
+            style={{ width: '120px', height: '55px',backgroundColor:"#a3dbf1" }}
+            variant="omar"
+          >
+          Save Attribute
+          </Button>
+          <Button
             label="Next Attribute"
             primary={true}
             onClick={this.handleClick3}
-          />
-          <RaisedButton
+            className="text-center mb-3"
+            style={{ width: '120px', height: '55px',backgroundColor:"#a3dbf1" }}
+            variant="omar"
+          >
+          Next Attribute
+          </Button>
+          <Button
+            className="text-center mb-3"
             label="Submit Form Type"
             primary={true}
             onClick={this.handleClick4}
-          />
+            style={{ width: '120px', height: '55px',backgroundColor:"#a3dbf1" }}
+            variant="omar"
+          >
+          Submit Form Type 
+          </Button>
         </MuiThemeProvider>
       </div>
     );

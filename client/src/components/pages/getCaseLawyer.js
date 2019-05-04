@@ -76,7 +76,7 @@ class Companies extends Component {
 	sortByCreationDate = () => {
 		axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
 		axios
-			.get('/routes/api/userDynamicForms/t', {
+			.get('/routes/api/userDynamicForms/SpecificformsSortedByformDate', {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
 			.then((res) => {

@@ -13,7 +13,10 @@ import { Button } from "react-bootstrap";
 import html2canvas from "html2canvas";
 import styled, { css } from "styled-components";
 import trans from "../translations/searchCompanyTranslation";
-import Autocomplete from "Autocomplete";
+import Select  from "react-select";
+import {components} from "react-select"
+import options from "react-select"
+import search from '../../back.jpg';
 
 //import { Dropdown } from 'semantic-ui-react';
 import axios from "axios";
@@ -24,7 +27,7 @@ class MyCompany extends Component {
   state = {
     companyName: "",
     companies: [],
-    viewedComp: []
+    viewedComp: [] ,
   };
 
   componentDidMount = () => {
@@ -36,10 +39,17 @@ class MyCompany extends Component {
         this.setState({
           companies: res.data.data
         });
+        {
+          this.state.companies.map((nat,index) =>{
+            var o = {label:nat.companyName,value:index}
+            this.state.viewedComp.push(o)
+          }
+          );
+        }
+        // console.log(this.state.companies)
+        console.log(this.state.viewedComp);
       });
   };
-
-  //do you mean get all forms?
 
   tabRow() {
     return this.state.companies.map(function(company, i) {
@@ -55,29 +65,28 @@ class MyCompany extends Component {
     this.setState({ [event.target.name]: { value: event.target.value } });
   };
 
-  handleClick(event) {
-    axios.defaults.headers.common["Authorization"] =
-      "Bearer " + localStorage.getItem("jwtToken");
-    var apiBaseUrl = "/routes/api/admins/getByCompanyName/";
-
-    axios
-      .get(apiBaseUrl + this.state.companyName.value, {
-        headers: { Authorization: localStorage.getItem("jwtToken") }
-      })
-      .then(res => {
-        this.setState({ viewedComp: res.data.data });
-      });
+  handleClick=(opt)=> {
+    this.setState({value:opt.label})
   }
 
   getAttributes = () => {
-    return this.state.viewedComp.map((Form, index) => {
+    var Form;
+    console.log(this.state.companies)
+      for(let i=0;i<this.state.companies.length;i++){
+        if(this.state.companies[i].companyName===this.state.value)
+        Form = this.state.companies[i]
+      }
+      console.log(Form)
+      console.log("hi")
       var KEYS = [];
       // console.log(Form)
       for (var key in Form) {
         KEYS.push(key);
       }
+      if(Form)
       return (
-        <Card>
+        // <div style={{marginRight:"100px"}}>
+        <Card >
           <Card.Body>
             {KEYS.map((key, index) => {
               if (
@@ -87,7 +96,7 @@ class MyCompany extends Component {
                 key !== "investorId" &&
                 key !== "lawyerId" &&
                 key !== "reviewerId" &&
-                key !== "__v"
+                key !== "__v" 
               ) {
                 var constraints = Form[key];
                 if (Array.isArray(constraints)) {
@@ -114,50 +123,60 @@ class MyCompany extends Component {
             })}
           </Card.Body>
         </Card>
+        //</div>
       );
-    });
   };
+  
 
   render() {
     trans.setLanguage(this.props.lang);
-    return (
-      // <div style={{paddingLeft:"60px"}}>
-      <div>
-        <MDBCol>
-          <MDBRow style={{ paddingLeft: "41%", paddingTop: "5%" }}>
-            <MDBInput
-              icon="search"
-              label={trans.label}
-              value={this.state.companyName.value}
-              name="companyName"
-              onChange={this.changeHandler}
-              type="text"
-              id="materialFormRegisterNameEx"
-              required
-            />
-          </MDBRow>
-        </MDBCol>
-        <div style={{ paddingLeft: "44%", paddingBottom: "70px" }}>
-          <Button
-            variant="omar"
-            style={{
-              width: "100px",
-              height: "40px",
-              backgroundColor: "#a3dbf1"
-            }}
-            onClick={event => this.handleClick(event)}
-            type="submit"
-          >
-            {trans.search}
-          </Button>
-        </div>
-        <br />
-        <div>{this.getAttributes()}\ </div>
-        
-        <Autocomplete suggestions={this.state.companies} />
-      </div>
+    const { Option } = components;
+     const IconOption = (props) => (
+    <Option {...props}>
+      <i class="fas fa-building"></i> 
+      {props.data.label}
+    </Option>
+);
+// var n = (
+// <div style={{paddingTop :"110px" ,fontSize:"1.7em"}}>
+//          <i class="fas fa-search" ></i>
+//          </div>
+// )
+  return (
+    
+    <div >
+    
+      <div >
+      <section style={{paddingRight:"100px", display:"flex", justifyContent: 'center',width:"100%" ,height:"700px", backgroundImage:"url("+search+")",backgroundRepeat:"no-repeat",backgroundSize:"100% 100%",alignItems:"center"}}>
 
+      <div >
       
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+
+        <div className="app" >
+
+          <div className="container" style={{width:"400px" ,marginLeft:"120px" }}>
+           <Select options={this.state.viewedComp} onChange={this.handleClick} 
+            components={{Option: IconOption }}  selected={options} > 
+           </Select>
+           <br />
+           
+           <div style={{paddingRiht:"100px",width:"800px" }}>{this.getAttributes()} </div>
+           
+          </div>
+        </div>
+        
+        
+      </div>
+      </section>
+      </div>
+      </div>
     );
   }
 }

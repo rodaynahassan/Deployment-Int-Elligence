@@ -36,7 +36,7 @@ import ForgotPassword from './containers/ForgotPassword';
 import ResetPassword from './containers/ResetPassword';
 import About from './components/pages/about';
 import ApprovedCompanies from './components/pages/ApprovedCompanies';
-import companyPDF from './components/pages/companyPdf';
+import CompanyPDF from './components/pages/companyPdf';
 import CreateANewCompany from './components/pages/CreateANewCompany';
 import AttributeArray from './components/pages/AttributeArray';
 import InProgressInvestorCases from './components/pages/inProgressInvestorCases';
@@ -187,7 +187,7 @@ class App extends Component {
 								<Route
 									exact
 									path="/companyPdf"
-									render={(props) => <companyPDF {...props} lang={this.state.lang} />}
+									render={(props) => <CompanyPDF {...props} lang={this.state.lang} />}
 								/>
 
 								<Route

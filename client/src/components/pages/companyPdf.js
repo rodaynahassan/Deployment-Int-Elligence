@@ -11,7 +11,7 @@ import { MDBRow, MDBCol, MDBInput, MDBBtn, MDBIcon } from "mdbreact";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import styled, { css } from "styled-components";
-import { Button} from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import egypt from "../../egypt.jpeg";
 import gafi from "../../gafi.jpeg";
 
@@ -26,6 +26,21 @@ class PDF extends Component {
     companies: [],
     viewedComp: []
   };
+
+  componentDidMount() {
+    axios.defaults.headers.common["Authorization"] =
+      "Bearer " + localStorage.getItem("jwtToken");
+    axios
+      .get("/routes/api/userDynamicForms/getInvestorApprovedCompanies", {
+        headers: { Authorization: localStorage.getItem("jwtToken") }
+      })
+      .then(res => {
+        if (Array.isArray(res.data.data)) {
+          this.setState({ companies: res.data.data, sscManagers: [] });
+        }
+      });
+    console.log(localStorage.getItem("PDFcomp"));
+  }
 
   changeHandler = event => {
     this.setState({ [event.target.name]: { value: event.target.value } });
@@ -68,29 +83,23 @@ class PDF extends Component {
   }
 
   getAttributes = () => {
-      var compname = localStorage.getItem('PDFcomp')
-    axios.defaults.headers.common["Authorization"] =
-      "Bearer " + localStorage.getItem("jwtToken");
-    var apiBaseUrl = "/routes/api/userDynamicForms/getByCompanyName/";
+    var Form;
+    console.log(this.state.companies);
+    for (let i = 0; i < this.state.companies.length; i++) {
+      if (
+        this.state.companies[i].companyName === localStorage.getItem("PDFcomp")
+      )
+        Form = this.state.companies[i];
+    }
+    console.log(localStorage.getItem("PDFcomp"));
+    // console.log(this.state.viewedComp);
 
-    axios
-      .get(apiBaseUrl + localStorage.getItem('PDFcomp'), {
-        headers: { Authorization: localStorage.getItem("jwtToken") }
-      })
-      .then(res => {
-        this.setState({ viewedComp: res.data.data });
-        
-        
-      });
-      console.log(localStorage.getItem('PDFcomp'))
-      console.log(this.state.viewedComp);
-
-    return this.state.viewedComp.map((Form, index) => {
-      var KEYS = [];
-      // console.log(Form)
-      for (var key in Form) {
-        KEYS.push(key);
-      }
+    var KEYS = [];
+    // console.log(Form)
+    for (var key in Form) {
+      KEYS.push(key);
+    }
+    if (Form)
       return (
         <Card>
           <Card.Body>
@@ -127,60 +136,68 @@ class PDF extends Component {
                 );
               }
             })}
-             <MuiThemeProvider>
-              <Button
-                label="Save As PDF"
-                variant="dark"
-                size="sm"
-                width="60px"
-                height="2px"
-                style={{ marginTop: "100px", width: "120px", height: "50px" }}
-                onClick={this.printDocument}
-              >
-                <h6 style={{ fontSize: "15px" }}> Save As PDF</h6>
-                <i
-                  class="far fa-file-pdf"
-                  style={{ fontSize: "1.6em", left: "7%", color: "light blue" }}
-                />
-              </Button>
-            </MuiThemeProvider>
           </Card.Body>
         </Card>
       );
-    });
   };
 
   render() {
     return (
-      // <div style={{paddingLeft:"60px"}}>
+      
       <div>
-        {/* <MDBCol>
-          <MDBRow style={{ paddingLeft: "41%", paddingTop: "5%" }}>
-            <MDBInput
-              icon="search"
-              label="Search For A Company"
-              value={this.state.companyName.value}
-              name="companyName"
-              onChange={this.changeHandler}
-              type="text"
-              id="materialFormRegisterNameEx"
-              required
-            />
-          </MDBRow>
-        </MDBCol>
-
-        <div style={{ paddingLeft: "45%" }}>
-          <MuiThemeProvider>
-            <RaisedButton
-              label="Search"
-              primary={true}
-              style={style}
-              onClick={event => this.handleClick(event)}
-            />
-          </MuiThemeProvider>
+        
+        <h1 style={{paddingLeft:"540px",marginTop:"100px",}}>SAVE YOUR DOCUMENT</h1>
+        <Button
+          
+          label="Save As PDF"
+          variant="omar"
+          size="sm"
+          width="60px"
+          height="8px"
+          style={{
+            marginTop: "100px",
+            width: "120px",
+            height: "70px",
+            backgroundColor: "#a3dbf1",
+            marginLeft:"680px"
+            
+          }}
+          onClick={this.printDocument}
+        >
+          <i
+            class="far fa-file-pdf"
+            style={{ fontSize: "1.6em", left: "2%", color: "light blue" }}
+          />
+          <h5 style={{ fontSize: "15px" }}> Save As PDF</h5>{" "}
+        </Button>
+        
+        
+        <div>
+          <div style={{ paddingLeft: "44%" }} />
+          <div
+            id="divToPrint"
+            className="mt4"
+            {...css({
+              backgroundColor: "#f5f5f5",
+              width: "210mm",
+              minHeight: "297mm",
+              marginLeft: "auto",
+              marginRight: "auto"
+            })}
+          >
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            {this.getAttributes()}
+          </div>
         </div>
-        <br /> */}
-        <div>{this.getAttributes()}</div>
       </div>
     );
   }

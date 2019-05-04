@@ -11,12 +11,13 @@ import { MDBRow, MDBCol, MDBInput, MDBBtn, MDBIcon } from "mdbreact";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import styled, { css } from "styled-components";
-import { Button} from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import egypt from "../../egypt.jpeg";
 import gafi from "../../gafi.jpeg";
 
 //import { Dropdown } from 'semantic-ui-react';
 import axios from "axios";
+import { blue200 } from "material-ui/styles/colors";
 
 var mongoose = require("mongoose");
 
@@ -26,6 +27,21 @@ class PDF extends Component {
     companies: [],
     viewedComp: []
   };
+
+  componentDidMount() {
+    axios.defaults.headers.common["Authorization"] =
+      "Bearer " + localStorage.getItem("jwtToken");
+    axios
+      .get("/routes/api/userDynamicForms/getInvestorApprovedCompanies", {
+        headers: { Authorization: localStorage.getItem("jwtToken") }
+      })
+      .then(res => {
+        if (Array.isArray(res.data.data)) {
+          this.setState({ companies: res.data.data, sscManagers: [] });
+        }
+      });
+    console.log(localStorage.getItem("PDFcomp"));
+  }
 
   changeHandler = event => {
     this.setState({ [event.target.name]: { value: event.target.value } });
@@ -68,29 +84,23 @@ class PDF extends Component {
   }
 
   getAttributes = () => {
-      var compname = localStorage.getItem('PDFcomp')
-    axios.defaults.headers.common["Authorization"] =
-      "Bearer " + localStorage.getItem("jwtToken");
-    var apiBaseUrl = "/routes/api/userDynamicForms/getByCompanyName/";
+    var Form;
+    console.log(this.state.companies);
+    for (let i = 0; i < this.state.companies.length; i++) {
+      if (
+        this.state.companies[i].companyName === localStorage.getItem("PDFcomp")
+      )
+        Form = this.state.companies[i];
+    }
+    console.log(localStorage.getItem("PDFcomp"));
+    // console.log(this.state.viewedComp);
 
-    axios
-      .get(apiBaseUrl + localStorage.getItem('PDFcomp'), {
-        headers: { Authorization: localStorage.getItem("jwtToken") }
-      })
-      .then(res => {
-        this.setState({ viewedComp: res.data.data });
-        
-        
-      });
-      console.log(localStorage.getItem('PDFcomp'))
-      console.log(this.state.viewedComp);
-
-    return this.state.viewedComp.map((Form, index) => {
-      var KEYS = [];
-      // console.log(Form)
-      for (var key in Form) {
-        KEYS.push(key);
-      }
+    var KEYS = [];
+    // console.log(Form)
+    for (var key in Form) {
+      KEYS.push(key);
+    }
+    if (Form)
       return (
         <Card>
           <Card.Body>
@@ -102,8 +112,26 @@ class PDF extends Component {
                 key !== "investorId" &&
                 key !== "lawyerId" &&
                 key !== "reviewerId" &&
-                key !== "__v"
+                key !== "__v" &&
+                key !== "reviewerComments" &&
+                key !== "lawyerComments" &&
+                key !== "status" &&
+                key !== "fees" &&
+                key !== "investorNationality" 
               ) {
+                var now=key;
+                var temp="";
+                temp=temp+key.charAt(0).toUpperCase();
+                for(var j=1;j<now.length;j++){
+                  if(now.charCodeAt(j)>=65 && now.charCodeAt(j)<=90){
+                    temp=temp+" "
+                    temp=temp+now.charAt(j)
+                  }
+                  else{
+                    temp=temp+now.charAt(j)
+                  }
+                  
+                }
                 var constraints = Form[key];
                 if (Array.isArray(constraints)) {
                   if (!constraints["0"]) return;
@@ -112,75 +140,100 @@ class PDF extends Component {
                     keys.push(att);
                   }
                 }
+                if (key==="creationDate"){
+                  var date=constraints.substring(0,10);
+                  return (
+                    <div>
+                      <div key={key}>
+                        <h3>
+                          <i class="fas fa-circle" style={{fontSize:'0.5em'}}/> {temp} : 
+                            <span style={{ textAlign: 'center' }} />{' '}
+                            <span style={{ color: '#9ad1e7' }}> {date}{" "}</span>{' '}
+                        </h3>
+                      </div>
+                      
+                    </div>
+                  );
+
+                }
+                else{
                 return (
                   <div>
                     <div key={key}>
                       <h3>
-                        <i
-                          class="fas fa-circle"
-                          style={{ fontSize: "0.5em" }}
-                        />{" "}
-                        {key} : {constraints}{" "}
+                        <i class="fas fa-circle" style={{fontSize:'0.5em'}}/> {temp} : 
+                          <span style={{ textAlign: 'center' }} />{' '}
+                          <span style={{ color: '#9ad1e7' }}> {constraints}{" "}</span>{' '}
                       </h3>
                     </div>
+                    
                   </div>
                 );
               }
+              }
             })}
-             <MuiThemeProvider>
-              <Button
-                label="Save As PDF"
-                variant="dark"
-                size="sm"
-                width="60px"
-                height="2px"
-                style={{ marginTop: "100px", width: "120px", height: "50px" }}
-                onClick={this.printDocument}
-              >
-                <h6 style={{ fontSize: "15px" }}> Save As PDF</h6>
-                <i
-                  class="far fa-file-pdf"
-                  style={{ fontSize: "1.6em", left: "7%", color: "light blue" }}
-                />
-              </Button>
-            </MuiThemeProvider>
           </Card.Body>
         </Card>
       );
-    });
   };
 
   render() {
     return (
-      // <div style={{paddingLeft:"60px"}}>
+      
       <div>
-        {/* <MDBCol>
-          <MDBRow style={{ paddingLeft: "41%", paddingTop: "5%" }}>
-            <MDBInput
-              icon="search"
-              label="Search For A Company"
-              value={this.state.companyName.value}
-              name="companyName"
-              onChange={this.changeHandler}
-              type="text"
-              id="materialFormRegisterNameEx"
-              required
-            />
-          </MDBRow>
-        </MDBCol>
-
-        <div style={{ paddingLeft: "45%" }}>
-          <MuiThemeProvider>
-            <RaisedButton
-              label="Search"
-              primary={true}
-              style={style}
-              onClick={event => this.handleClick(event)}
-            />
-          </MuiThemeProvider>
+        
+        <h1 style={{paddingLeft:"540px",marginTop:"100px",color:blue200}}>SAVE YOUR DOCUMENT</h1>
+        <Button
+          
+          label="Save As PDF"
+          variant="omar"
+          size="sm"
+          width="60px"
+          height="8px"
+          style={{
+            marginTop: "100px",
+            width: "120px",
+            height: "70px",
+            backgroundColor: "#a3dbf1",
+            marginLeft:"680px"
+            
+          }}
+          onClick={this.printDocument}
+        >
+          <i
+            class="far fa-file-pdf"
+            style={{ fontSize: "1.6em", left: "2%", color: "light blue" }}
+          />
+          <h5 style={{ fontSize: "15px" }}> Save As PDF</h5>{" "}
+        </Button>
+        
+        
+        <div>
+          <div style={{ paddingLeft: "44%" }} />
+          <div
+            id="divToPrint"
+            className="mt4"
+            {...css({
+              backgroundColor: "#f5f5f5",
+              width: "210mm",
+              minHeight: "297mm",
+              marginLeft: "auto",
+              marginRight: "auto"
+            })}
+          >
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            {this.getAttributes()}
+          </div>
         </div>
-        <br /> */}
-        <div>{this.getAttributes()}</div>
       </div>
     );
   }

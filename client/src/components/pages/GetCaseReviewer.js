@@ -42,6 +42,8 @@ class Companies extends Component {
 			})
 			.then((response) => {
         console.log("hello")
+        swal("Accepted")
+        setTimeout("document.location.href = '/GetReviewer';",3500);
 			})
 			.catch((err)=>{
         swal(err.response.data.msg|| err.response.data);
@@ -65,6 +67,8 @@ class Companies extends Component {
       )
       .then(res => {
         console.log('Reject')
+        swal("rejected")
+        setTimeout("document.location.href = '/GetReviewer';",3500);
       });
   };
 
@@ -210,8 +214,9 @@ class Companies extends Component {
                   <Button
                     variant="omar"
                     style={{ width: '120px', height: '65px',backgroundColor:"#a3dbf1" }}  
-                    onClick={() => (this.accept(Form._id),alert("The form was accepted succesfully"),
-                    document.location.href = '/GetReviewer')}
+                    onClick={() => (this.accept(Form._id),swal("The form was accepted succesfully"),
+                    setTimeout("document.location.href = '/GetReviewer';",3500)
+                    )}
                     >
                     <h6>
                       <i
@@ -225,7 +230,7 @@ class Companies extends Component {
                   <Button
                     variant="omar"
                     style={{ width: '120px', height: '65px',backgroundColor:"#a3dbf1" }}  
-                    onClick={() => (this.reject(Form._id),alert("Form rejected Succesfully"),
+                    onClick={() => (this.reject(Form._id),swal("Form rejected Succesfully"),
                     document.location.href = "/GetReviewer")}
                   >
                     <h6>

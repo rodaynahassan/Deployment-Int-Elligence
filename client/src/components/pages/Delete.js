@@ -5,6 +5,7 @@ import '../../App.css';
 import swal from 'sweetalert';
 import axios from 'axios';
 import Mongoose from 'mongoose';
+import trans from '../translations/DeleteTrans';
 
 class Delete extends Component
 {
@@ -44,7 +45,7 @@ class Delete extends Component
 
             <Modal.Header closeButton >
                 <Modal.Title id="contained-modal-title-vcenter" style={{color:'#64b9e0'}}>
-                Are you sure you want to delete this form?
+               {trans.Delete}
                 </Modal.Title>
                 </Modal.Header>
                 <Modal.Footer>
@@ -58,11 +59,11 @@ class Delete extends Component
 											
 										>
 											<h3 style={{ color: '#64b9e0', fontSize: '15px' }}>
-												Delete<br />
+												{trans.deleteB}<br />
 												{/* <i class="fas fa-trash" /> */}
 											</h3>
 										</Button>
-                <Button variant='dark' onClick={this.props.onHide} ><h3 style={{ color: '#64b9e0', fontSize: '15px' }} >Cancel</h3></Button>
+                <Button variant='dark' onClick={this.props.onHide} ><h3 style={{ color: '#64b9e0', fontSize: '15px' }} >{trans.Cancel}</h3></Button>
                 </Modal.Footer>
             </Modal>
            </div>

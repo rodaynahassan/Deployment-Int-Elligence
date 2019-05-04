@@ -11,6 +11,7 @@ const governorates = require('./routes/api/governorates');
 const dynamicForms = require('./routes/api/dynamicForms');
 const userDynamicForms = require('./routes/api/userDynamicForms');
 const formTypes = require('./routes/api/formTypes');
+const dependencies = require('./routes/api/dependencies')
 
 const app = express();
 //const morgan = require('morgan');
@@ -40,7 +41,7 @@ app.use('/routes/api/admins', admins);
 app.use('/routes/api/externalentities', externalentities);
 app.use('/routes/api/nationalities', nationalities);
 app.use('/routes/api/governorates', governorates);
-
+app.use('/routes/api/dependencies', dependencies);
 app.use('/routes/api/dynamicForms', dynamicForms);
 app.use('/routes/api/fakeServer', fakeServer);
 app.use('/routes/api/userDynamicForms', userDynamicForms);

@@ -117,20 +117,12 @@ class EditProfile extends React.Component {
 	render() {
 		trans.setLanguage(this.props.lang);
 		return (
-			<div style={{ paddingLeft: '60px', justifyItems: 'center' }}>
-				<div
-					style={{
-						backgroundColor: '#123456',
-						textAlign: 'center',
-						fontSize: '50px',
-						color: 'white',
-						width: '100%'
-					}}
-				>
-					{trans.title}
-				</div>
+	
 				<MuiThemeProvider>
 					<div>
+						<br />
+						<br />
+						<br />
 						<br />
 						<MDBRow style={{ paddingLeft: '30px', justifyItems: 'center' }}>
 							<MDBCol>
@@ -362,7 +354,7 @@ class EditProfile extends React.Component {
 						</div>
 					</div>
 				</MuiThemeProvider>
-			</div>
+			
 		);
 	}
 }

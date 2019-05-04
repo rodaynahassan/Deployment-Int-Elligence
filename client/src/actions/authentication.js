@@ -3,6 +3,8 @@ import axios from 'axios';
 import { GET_ERRORS, SET_CURRENT_USER } from './types';
 import setAuthToken from '../setAuthToken';
 import jwt_decode from 'jwt-decode';
+import swal from 'sweetalert';
+
 
 export const registerUser = (user) => (dispatch) => {
 	axios
@@ -10,10 +12,16 @@ export const registerUser = (user) => (dispatch) => {
 		//.then(res => history.push('/login'))
 		//.catch(err => console.log(err))
 		.then(function(response) {
-			alert("You have registered successfully. Congratulations :)! ")
+			swal({
+				title: "Good job!",
+				text: "The Account has been created successfully!",
+				icon: "success",
+				button: "Aww yess!",
+			  });
+		
 		})
 		.catch((err) => {
-			alert(err.response.data.error|| err.response.data);
+			swal(err.response.data.error|| err.response.data);
 			console.log(err.response);
 		});
 		
@@ -27,9 +35,14 @@ export const registerLR = (user) => (dispatch) => {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
 			.then(res => {
-				alert('the account has been created')
+				swal({
+					title: "Good job!",
+					text: "The Account has been created successfully!",
+					icon: "success",
+					button: "Aww yess!",
+				  });
 			  })
-			.catch((err) => alert(err.response.data.errmsg || err.response.data));
+			.catch((err) => swal(err.response.data.errmsg || err.response.data));
 	}
 
 	if (user.userType === 'Reviewer') {
@@ -38,10 +51,15 @@ export const registerLR = (user) => (dispatch) => {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
 			.then(res => {
-				alert('the account has been created')
+				swal({
+					title: "Good job!",
+					text: "The Account has been created successfully!",
+					icon: "success",
+					button: "Aww yess!",
+				  });
 			  })
 			.catch((err) => {
-				alert(err.response.data.errmsg || err.response.data);
+				swal(err.response.data.errmsg || err.response.data);
 				console.log(err.response);
 			});
 	}
@@ -78,7 +96,9 @@ export const loginUser = (user) => (dispatch) => {
 			(err) => {
 				console.log(err);
 				localStorage.setItem('isLoggedIn', false);
-				alert('Wrong email or password');
+				swal("Wrong Email or Password!");
+
+				// alert('wrong password');
 				return err;
 			}
 			// {

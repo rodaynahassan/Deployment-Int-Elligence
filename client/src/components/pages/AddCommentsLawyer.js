@@ -6,8 +6,8 @@ import '../../App.css';
 import GetAllUserForms from '../form/GetAllUserForms'
 import { black } from 'material-ui/styles/colors';
 import { blue200 } from 'material-ui/styles/colors';
-const mongoose = require('mongoose')
-
+import swal from 'sweetalert';
+const mongoose = require('mongoose');
 
 
 class AddCommentsLawyer extends Component{
@@ -104,7 +104,7 @@ class AddCommentsLawyer extends Component{
                 variant="omar"
                 value="Add Comment"
                 style={{width: "110px",backgroundColor:"#a3dbff",color:black}}
-                onClick={() => (this.handleClick(this.props.formId), alert('Comments added Succesfully'))}
+                onClick={() => (this.handleClick(this.props.formId), swal('Comments added Succesfully'))}
                 disabled={!this.validateForm()}
                 >Comment</Button>
                 </Modal.Body>

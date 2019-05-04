@@ -16,6 +16,7 @@ import DropdownItem from 'react-bootstrap/DropdownItem';
 import Footer from "../layout/footer"
 import { Button } from "react-bootstrap"
 import { conditionalExpression } from '@babel/types';
+import swal from 'sweetalert';
 
 var mongoose = require('mongoose')
 
@@ -307,7 +308,12 @@ class editLawyerForms extends Component {
             axios.put(apiBaseUrl, payload2, { headers: { "Authorization": localStorage.getItem('jwtToken') } })
                 .then(function (response) {
 
-                    alert('The Form has been updated successfully');
+                    swal({
+                        title: "Good job!",
+                        text: "The Form has been updated successfully!",
+                        icon: "success",
+                        button: "Aww yess!",
+                      });
 
                 })
                 .catch((error) => {

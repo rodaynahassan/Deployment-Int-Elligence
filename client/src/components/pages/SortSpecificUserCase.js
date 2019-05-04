@@ -4,6 +4,7 @@ import GetSpecificUserCase from '../form/GetSpecificUserCase';
 import Table from 'react-bootstrap/Table';
 import { Button } from 'react-bootstrap';
 import 'mdbreact/dist/css/mdb.css';
+import swal from 'sweetalert';
 
 export default class SortSpecificUserCase extends React.Component {
 	constructor(props) {
@@ -20,9 +21,9 @@ export default class SortSpecificUserCase extends React.Component {
 			})
 			.then((res) => {
 				this.setState({ forms: res.data.data });
-				alert('Cases have been sorted');
+				swal('Cases have been sorted');
 			})
-			.catch((err) => alert(err.response.data.errmsg || err.response.data));
+			.catch((err) => swal(err.response.data.errmsg || err.response.data));
 	};
 
 	tabRow() {

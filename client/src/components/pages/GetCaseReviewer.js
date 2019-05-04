@@ -4,13 +4,12 @@ import "../../App.css";
 import { Button, Container ,ButtonGroup,ButtonToolbar,Card} from "react-bootstrap";
 import "mdbreact/dist/css/mdb.css";
 import { MDBProgress } from 'mdbreact'
-import AddCommentsReviewer from '../pages/AddCommentsReviewer'
-import CardReviewer from "../form/CardReviewer";
-import GetAllReviewerForms from "../form/GetAllReviewerForms";
+import AddCommentsReviewer from '../pages/AddCommentsReviewer';
 import { Dropdown } from "react-bootstrap";
 import { blue200 } from "material-ui/styles/colors";
-import trans from '../translations/getReviewerTranslation'
-const mongoose = require('mongoose')
+import trans from '../translations/getReviewerTranslation';
+import swal from'sweetalert';
+const mongoose = require('mongoose');
 var $ = require("jquery")(window);
 
 class Companies extends Component {
@@ -27,31 +26,14 @@ class Companies extends Component {
         { headers: { Authorization: localStorage.getItem("jwtToken") } }
       )
       .then(res => {
-        if (Array.isArray(res.data.data)) {
+        if (Array.isArray(res.data.data)&&res.data.data.length>0) {
           this.setState({ companies: res.data.data });
+        }
+        else{
+          swal('You do not have any In Progress Cases yet!')
         }
       });
   }
-
-  // accept = (formId) => {
-  //   console.log("hi");
-  //   axios.defaults.headers.common["Authorization"] = localStorage.getItem(
-  //     "jwtToken"
-  //   );
-  //   axios
-  //     .put(
-  //       "/routes/api/userDynamicForms/accept/" +
-  //         mongoose.Types.ObjectId(formId),
-  //       { headers: { Authorization: localStorage.getItem("jwtToken") } })
-  //     .then((res) => {
-  //       alert("The form was accepted succesfully");
-  //       document.location.href = '/GetReviewer';
-  //     })
-  //     .catch((err)=>{
-	// 			alert(err.response.data.msg|| err.response.data);
-	// 			console.log(err.response);
-	// 		})
-  // };
 	accept = (formId) => {
 		axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
 		axios
@@ -60,9 +42,12 @@ class Companies extends Component {
 			})
 			.then((response) => {
         console.log("hello")
+        swal("Accepted")
+        setTimeout("document.location.href = '/GetReviewer';",3500);
 			})
 			.catch((err)=>{
-				alert(err.response.data.msg|| err.response.data);
+        swal(err.response.data.msg|| err.response.data);
+        
 				console.log(err.response);
 			})
 	};
@@ -82,6 +67,8 @@ class Companies extends Component {
       )
       .then(res => {
         console.log('Reject')
+        swal("rejected")
+        setTimeout("document.location.href = '/GetReviewer';",3500);
       });
   };
 
@@ -98,44 +85,13 @@ class Companies extends Component {
       )
       .then(res => {
         this.setState({ companies: res.data.data });
-        alert("Cases have been sorted");
-        document.location.href = "/GetReviewer";
+        swal("Cases have been sorted");
+        setTimeout("document.location.href = '/GetReviewer';",3500);
       })
       .catch(err => {
         console.log(err);
       });
   };
-  // sortByCreationDate = () => {
-  //   axios.defaults.headers.common["Authorization"] = localStorage.getItem(
-  //     "jwtToken"
-  //   );
-  //   axios
-  //     .get(
-  //       "/routes/api/userDynamicForms/SpecificformsSortedByformDate",
-  //       { headers: { Authorization: localStorage.getItem("jwtToken") } }
-  //     )
-  //     .then(res => {
-  //       this.setState({ companies: res.data.data });
-  //       alert("Cases have been sorted");
-  //       document.location.href = "/GetReviewer";
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  // };
-	// sort = () => {
-	// 	axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
-	// 	axios
-	// 		.get('/routes/api/users/SpecificFormSortedByFormId', {
-	// 			headers: { Authorization: localStorage.getItem('jwtToken') }
-	// 		})
-	// 		.then((res) => {
-	// 			this.setState({ forms: res.data.data });
-  //       alert('Cases have been sorted');
-  //       document.location.href = "/GetReviewer";
-	// 		})
-	// 		.catch((err) => alert(err.response.data.errmsg || err.response.data));
-	// };
 	sortByCreationDate = () => {
 		axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
 		axios
@@ -144,16 +100,11 @@ class Companies extends Component {
 			})
 			.then((res) => {
 				this.setState({ companies: res.data.data });
-        alert('Cases have been sorted');
-        document.location.href = "/GetReviewer";
+        swal('Cases have been sorted');
+        setTimeout("document.location.href = '/GetReviewer';",3500);
 			})
 			.catch((err) => alert(err.response.data.errmsg || err.response.data));
 	};
-	// tabRow = () => {
-	// 	return this.state.companies.map((company, i) => {
-	// 		return <CardReviewer company={company} key={i} />;
-	// 	});
-	// };
   getAttributes = () => {
     let modalClose = () => this.setState({ modalShow: false });
     return this.state.companies.map((Form, index) => {
@@ -195,8 +146,8 @@ class Companies extends Component {
                           {keys.map((att, index) => {
                             return (
                               <h5 style={{ paddingLeft: "5%" }}>
-                                
-                                {constraints[att]}
+                                <span style={{ textAlign: 'center' }} />{' '}
+																<span style={{ color: '#9ad1e7' }}>{constraints[att]}</span>{' '}
                               </h5>
                             );
                           })}
@@ -213,8 +164,8 @@ class Companies extends Component {
                           {keys.map((att, index) => {
                             return (
                               <h5 style={{ paddingLeft: "5%" }}>
-                                
-                                {constraints[att]}
+                               <span style={{ textAlign: 'center' }} />{' '}
+																<span style={{ color: '#9ad1e7' }}>{constraints[att]}</span>{' '}
                               </h5>
                             );
                           })}
@@ -232,7 +183,8 @@ class Companies extends Component {
                             return (
                               <h5 style={{ paddingLeft: "5%" }}>
                                 <i class="fas fa-cicle" /> {att} :
-                                {constraints["0"][att]}
+                                <span style={{ textAlign: 'center' }} />{' '}
+																<span style={{ color: '#9ad1e7' }}>{constraints['0'][att]}</span>{' '}
                               </h5>
                             );
                           })}
@@ -249,7 +201,8 @@ class Companies extends Component {
                             class="fas fa-circle"
                             style={{ fontSize: "0.5em" }}
                           />{" "}
-                          {key} : {constraints}{" "}
+                          {key} : <span style={{ textAlign: 'center' }} />{' '}
+													        <span style={{ color: '#9ad1e7' }}>{constraints}</span>{' '}
                         </h3>
                       </div>
                     </div>
@@ -261,8 +214,9 @@ class Companies extends Component {
                   <Button
                     variant="omar"
                     style={{ width: '120px', height: '65px',backgroundColor:"#a3dbf1" }}  
-                    onClick={() => (this.accept(Form._id),alert("The form was accepted succesfully"),
-                    document.location.href = '/GetReviewer')}
+                    onClick={() => (this.accept(Form._id),swal("The form was accepted succesfully"),
+                    setTimeout("document.location.href = '/GetReviewer';",3500)
+                    )}
                     >
                     <h6>
                       <i
@@ -276,7 +230,7 @@ class Companies extends Component {
                   <Button
                     variant="omar"
                     style={{ width: '120px', height: '65px',backgroundColor:"#a3dbf1" }}  
-                    onClick={() => (this.reject(Form._id),alert("Form rejected Succesfully"),
+                    onClick={() => (this.reject(Form._id),swal("Form rejected Succesfully"),
                     document.location.href = "/GetReviewer")}
                   >
                     <h6>

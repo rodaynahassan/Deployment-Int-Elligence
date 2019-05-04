@@ -1,21 +1,21 @@
-import React, { Component } from "react";
-import axios from "axios";
-import "../../App.css";
-// import ApprovedCompaniesFields from '../user/ApprovedCompaniesFields';
-import Table from "react-bootstrap/Table";
-import Navbar from "react-bootstrap/Navbar";
-import { Badge } from "react-bootstrap";
-import trans from "../translations/approvedTranslation";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
-import styled, { css } from "styled-components";
-import style from "material-ui/RaisedButton";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import RaisedButton from "material-ui/RaisedButton";
-import { MDBIcon } from "mdbreact";
-import { Button, Card } from "react-bootstrap";
-import egypt from "../../egypt.jpeg";
-import gafi from "../../gafi.jpeg";
+import  React, { Component } from 'react';
+import axios from 'axios';
+import '../../App.css';
+import Table from 'react-bootstrap/Table'
+import Navbar from 'react-bootstrap/Navbar'
+import {Badge} from 'react-bootstrap'
+import trans from '../translations/approvedTranslation'
+import jsPDF from 'jspdf'
+import html2canvas from 'html2canvas'
+import styled, { css } from 'styled-components'
+import style from 'material-ui/RaisedButton';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import RaisedButton from 'material-ui/RaisedButton';
+import {MDBIcon } from "mdbreact";
+import {Button,Card} from"react-bootstrap"
+import egypt from '../../egypt.jpeg'
+import gafi from '../../gafi.jpeg'
+import swal from 'sweetalert';
 
 class ApprovedCompanies extends Component {
   state = {

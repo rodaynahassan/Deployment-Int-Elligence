@@ -9,6 +9,7 @@ import TextField from 'material-ui/TextField';
 import { MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
+import swal from 'sweetalert';
 var mongoose = require('mongoose');
 
 class UpdateSSCForm extends React.Component {
@@ -61,7 +62,7 @@ class UpdateSSCForm extends React.Component {
 					reviewerComments: response.data.data.reviewerComments
 				});
 			})
-			.catch((err) => alert(err.response.data.errmsg || err.response.data));
+			.catch((err) => swal(err.response.data.errmsg || err.response.data));
 		axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
 		axios
 			.get('/routes/api/forms/getSpecificform/' + mongoose.Types.ObjectId(this.props.formId._id), {
@@ -88,7 +89,7 @@ class UpdateSSCForm extends React.Component {
 					SSCManagers: test
 				});
 			})
-			.catch((err) => alert(err.response.data.errmsg || err.response.data));
+			.catch((err) => swal(err.response.data.errmsg || err.response.data));
 	}
 
 	changeHandler2 = (event) => {
@@ -122,10 +123,10 @@ class UpdateSSCForm extends React.Component {
 			.then(function(response) {
 				console.log(response);
 				if (response.data.code === 200) {
-					alert('SSCForm Updated Succesfully');
+					swal('SSCForm Updated Succesfully');
 				}
 			})
-			.catch((err) => alert(err.response.data.errmsg || err.response.data));
+			.catch((err) => swal(err.response.data.errmsg || err.response.data));
 	}
 
 	changeHandler = (event) => {
@@ -560,7 +561,7 @@ class UpdateSSCForm extends React.Component {
 							label="Submit"
 							primary={true}
 							style={style}
-							onClick={(event) => (this.handleClick(event), alert('SSCForm Updated Succesfully'))}
+							onClick={(event) => (this.handleClick(event), swal('SSCForm Updated Succesfully'))}
 						/>
 					</div>
 				</MuiThemeProvider>

@@ -10,34 +10,43 @@ import { MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import trans from '../translations/changePasswordTranslation'
+import Button from '@material-ui/core/Button';
+import { RemoveRedEye } from '@material-ui/icons';
+import swal from 'sweetalert';
 var mongoose = require('mongoose');
+
+const styles = (theme) => ({
+	eye: {
+		cursor: 'pointer'
+	}
+});
 
 class ChangePassword extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			oldPassword:{ value: '', valid: false },
 			newPassword: { value: '', valid: false },
 			confirmPassword: { value: '', valid: false }
 		};
 	}
 
 	handleClick(event) {
+
 		axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
 		var apiBaseUrl = '/routes/api/users/changePassword';
 		var payload = {
+			oldPassword: this.state.oldPassword.value,
 			newPassword: this.state.newPassword.value,
 			confirmPassword: this.state.confirmPassword.value
 		};
 
 		axios
 			.post(apiBaseUrl, payload, { headers: { Authorization: localStorage.getItem('jwtToken') } })
-			.then(function(response) {
-				console.log(response);
-				if (response.data.code === 200) {
-					alert('Password updated Succesfully');
-				}
-			})
-			.catch((err) => alert(err.response.data.errmsg || err.response.data));
+			.then(res => {
+				swal(res.data.msg)
+			  })
+			  .catch((err) => swal(err.response.data.errmsg || err.response.data));
 	}
 
 	changeHandler = (event) => {
@@ -72,6 +81,22 @@ class ChangePassword extends React.Component {
 						<MDBRow>
 							<MDBCol>
 								<MDBInput
+									label={trans.labelOld}
+									value={this.state.oldPassword.value}
+									name="oldPassword"
+									onChange={this.changeHandler}
+									type="password"
+									id="materialFormRegisterNameEx"
+									style={{width:"300px"}}
+									required
+								>
+								</MDBInput>
+							</MDBCol>
+						</MDBRow>
+						<br />
+						<MDBRow>
+							<MDBCol>
+								<MDBInput
 									label={trans.labelNew}
 									value={this.state.newPassword.value}
 									className={this.state.newPassword.valid ? 'is-valid' : 'is-invalid'}
@@ -79,6 +104,7 @@ class ChangePassword extends React.Component {
 									onChange={this.changeHandler}
 									type="password"
 									id="materialFormRegisterNameEx"
+									style={{width:"300px"}}
 									required
 								>
 									<div className="valid-feedback">
@@ -97,20 +123,23 @@ class ChangePassword extends React.Component {
 									onChange={this.changeHandler}
 									type="password"
 									id="materialFormRegisterNameEx"
+									style={{width:"300px"}}
 									required
 								/>
 							</MDBCol>
 						</MDBRow>
-						<div style={{ paddingLeft: '50%' }}>
-							<RaisedButton
+						<div >
+							<Button
 								label={trans.labelSubmit}
-								primary={true}
-								style={style}
+								className="btn-block btn-rounded z-depth-1a"
+								variant="omar"
+								style={{marginTop:"50px",marginLeft: "50px",marginRight:"2500px",width:"100px", height:"40px" ,backgroundColor:"#a3dbf1"}}
 								disabled={!this.validatePassword()}
-								onClick={(event) => (
-									this.handleClick(event), alert('Password updated Successfully')
-								)}
-							/>
+								onClick={(event) => 
+								this.handleClick(event)}
+							>
+							{trans.labelSubmit}
+							</Button>
 						</div>
 					</div>
 				</MuiThemeProvider>

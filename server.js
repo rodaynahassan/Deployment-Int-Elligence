@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
 const users = require('./routes/api/users');
+
 const admins = require('./routes/api/admins');
 const fakeServer = require('./routes/api/fakeServer');
 const externalentities = require('./routes/api/externalentities');
@@ -11,6 +12,7 @@ const governorates = require('./routes/api/governorates');
 const dynamicForms = require('./routes/api/dynamicForms');
 const userDynamicForms = require('./routes/api/userDynamicForms');
 const formTypes = require('./routes/api/formTypes');
+const userVerify = require('./routes/api/userVerify');
 
 const app = express();
 //const morgan = require('morgan');
@@ -36,6 +38,7 @@ app.use(cors());
 
 // Direct routes to appropriate files
 app.use('/routes/api/users', users);
+
 app.use('/routes/api/admins', admins);
 app.use('/routes/api/externalentities', externalentities);
 app.use('/routes/api/nationalities', nationalities);
@@ -45,6 +48,7 @@ app.use('/routes/api/dynamicForms', dynamicForms);
 app.use('/routes/api/fakeServer', fakeServer);
 app.use('/routes/api/userDynamicForms', userDynamicForms);
 app.use('/routes/api/formTypes', formTypes);
+app.use('/routes/api/userVerify', userVerify);
 
 app.use(function(req, res, next) {
 	res.header('Access-Control-Allow-Origin', '*');

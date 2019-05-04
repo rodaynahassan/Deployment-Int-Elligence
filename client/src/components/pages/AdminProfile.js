@@ -9,7 +9,7 @@ import { Button } from 'mdbreact';
 import { red100 } from 'material-ui/styles/colors';
 import { blue100 } from 'material-ui/styles/colors';
 import { blue200 } from 'material-ui/styles/colors';
-import trans from '../translations/adminProfileTranslation'
+import trans from '../translations/adminProfileTranslation';
 class AdminProfile extends Component {
 	constructor(props) {
 		super(props);
@@ -62,7 +62,12 @@ class AdminProfile extends Component {
 								<div class="container">
 									<div
 										class="jumbotron"
-										style={{ width: '500px', height: '130px', paddingTop: '10px' ,backgroundColor:"#a3dbf1" }}
+										style={{
+											width: '500px',
+											height: '130px',
+											paddingTop: '10px',
+											backgroundColor: '#a3dbf1'
+										}}
 									>
 										<h3>
 											{' '}
@@ -95,7 +100,8 @@ class AdminProfile extends Component {
 										<div class="row">
 											<div class="col-md-6">
 												<label>
-													<i class="fas fa-venus-mars" style={{ color: blue200 }} /> {trans.gender}
+													<i class="fas fa-venus-mars" style={{ color: blue200 }} />{' '}
+													{trans.gender}
 												</label>
 											</div>
 											<div class="col-md-6">
@@ -163,7 +169,8 @@ class AdminProfile extends Component {
 										<div class="row">
 											<div class="col-md-6">
 												<label>
-													<i class="fas fa-phone" style={{ color: blue200 }} /> {trans.telephone}
+													<i class="fas fa-phone" style={{ color: blue200 }} />{' '}
+													{trans.telephone}
 												</label>
 											</div>
 											<div class="col-md-6">
@@ -173,7 +180,8 @@ class AdminProfile extends Component {
 										<div class="row">
 											<div class="col-md-6">
 												<label>
-													<i class="fas fa-fax" style={{ color: blue200 }} />{trans.fax}
+													<i class="fas fa-fax" style={{ color: blue200 }} />
+													{trans.fax}
 												</label>
 											</div>
 											<div class="col-md-6">

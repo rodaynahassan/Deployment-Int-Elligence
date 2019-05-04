@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const moment = require('moment');
 
 const User = new Schema({
 	userType: { type: String, enum: [ 'Reviewer', 'Lawyer', 'Investor' ] },
@@ -18,7 +19,9 @@ const User = new Schema({
 	investorType: { type: String },
 	financialBalance: { type: Number },
 	resetPasswordToken: { type: String },
-	resetPasswordExpires: { type: Date }
+	resetPasswordExpires: { type: Date },
+	verifyToken: { type: String },
+	expire_at: { type: Date, default: Date.now, expires: '60m' }
 });
 
 module.exports = user = mongoose.model('users', User);

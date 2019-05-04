@@ -111,10 +111,12 @@ router.post('/register', async (req, res) => {
 		newUser.resetPasswordToken = null;
 		newUser.resetPasswordExpires = null;
 		newUser.financialBalance = 0;
+		newUser.verifyToken = null;
 		returnedUser = await userController.update('_id', newUser._id, {
 			financialBalance: newUser.financialBalance,
 			resetPasswordToken: newUser.resetPasswordToken,
-			resetPasswordExpires: newUser.resetPasswordExpires
+			resetPasswordExpires: newUser.resetPasswordExpires,
+			verifyToken: newUser.verifyToken
 		});
 		return res.json({
 			msg: 'Account was created successfully',
@@ -270,24 +272,6 @@ router.post('/forgotPassword', async (req, res) => {
 		var updatedUser = await User.findOneAndUpdate(mail, t);
 
 		var updatedUser2 = await User.findOneAndUpdate(mail, d);
-
-		// .then((res) => {
-		// 	console.log('sssjjjjjjsss');
-		// 	return res;
-		// })
-		// .catch((error) => {
-		// 	return { error: error };
-		// });
-
-		//var x = await userController.update('email', email, t);
-		//var x = await userController.update('resetPasswordToken', email, token);
-
-		//var y = await userController.update('resetPasswordExpires', email, Date.now() + 360000);
-
-		// user.update({
-		//   resetPasswordToken: token,
-		//   resetPasswordExpires: Date.now() + 360000,
-		// });
 
 		const transporter = nodemailer.createTransport({
 			service: 'gmail',

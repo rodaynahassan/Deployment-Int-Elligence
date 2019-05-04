@@ -10,13 +10,22 @@ export const registerUser = (user) => (dispatch) => {
 		//.then(res => history.push('/login'))
 		//.catch(err => console.log(err))
 		.then(function(response) {
-			alert("You have registered successfully. Congratulations :)! ")
+			localStorage.setItem('isVerified', 'false');
+			axios
+				.post('/routes/api/userVerify/verifyEmail', user)
+				.then(function(response) {
+					alert('verification email sent!');
+				})
+				.catch((err) => {
+					alert(err.response.data.error || err.response.data);
+				});
+
+			alert('You have registered successfully. Congratulations :)! check your email for verification link');
 		})
 		.catch((err) => {
-			alert(err.response.data.error|| err.response.data);
+			alert(err.response.data.error || err.response.data);
 			console.log(err.response);
 		});
-		
 };
 
 export const registerLR = (user) => (dispatch) => {
@@ -26,9 +35,9 @@ export const registerLR = (user) => (dispatch) => {
 			.post('/routes/api/admins/registerL', user, {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
-			.then(res => {
-				alert('the account has been created')
-			  })
+			.then((res) => {
+				alert('the account has been created');
+			})
 			.catch((err) => alert(err.response.data.errmsg || err.response.data));
 	}
 
@@ -37,9 +46,9 @@ export const registerLR = (user) => (dispatch) => {
 			.post('/routes/api/admins/registerR', user, {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
-			.then(res => {
-				alert('the account has been created')
-			  })
+			.then((res) => {
+				alert('the account has been created');
+			})
 			.catch((err) => {
 				alert(err.response.data.errmsg || err.response.data);
 				console.log(err.response);
@@ -48,46 +57,50 @@ export const registerLR = (user) => (dispatch) => {
 };
 
 export const loginUser = (user) => (dispatch) => {
-	axios
-		.post('/routes/api/users/login', user)
-		.then((res) => {
-			const { token } = res.data;
-			localStorage.setItem('jwtToken', token);
-			const { type } = res.data;
-			localStorage.setItem('type', type);
-			localStorage.setItem('isLoggedIn', true);
-			setAuthToken(token);
-			const decoded = jwt_decode(token);
-			dispatch(setCurrentUser(decoded));
-			console.log(res.data);
+	if (localStorage.getItem('isVerified') === 'true') {
+		axios
+			.post('/routes/api/users/login', user)
+			.then((res) => {
+				const { token } = res.data;
+				localStorage.setItem('jwtToken', token);
+				const { type } = res.data;
+				localStorage.setItem('type', type);
+				localStorage.setItem('isLoggedIn', true);
+				setAuthToken(token);
+				const decoded = jwt_decode(token);
+				dispatch(setCurrentUser(decoded));
+				console.log(res.data);
 
-			console.log(localStorage.getItem('isLoggedIn'));
-			if (localStorage.getItem('isLoggedIn') === 'true') {
-				// this.props.history.replace('/profile')
-				// this.props.history.go(1)
-				if (
-					localStorage.getItem('type') === 'Investor' ||
-					localStorage.getItem('type') === 'Lawyer' ||
-					localStorage.getItem('type') === 'Reviewer'
-				)
-					document.location.href = '/profile';
-				else document.location.href = '/adminprofile';
-			}
-		})
-		.catch(
-			(err) => {
-				console.log(err);
-				localStorage.setItem('isLoggedIn', false);
-				alert('Wrong email or password');
-				return err;
-			}
-			// {
-			// dispatch({
-			//     type: GET_ERRORS,
-			//     payload: err.response.data
-			// });
-			//}
-		);
+				console.log(localStorage.getItem('isLoggedIn'));
+				if (localStorage.getItem('isLoggedIn') === 'true') {
+					// this.props.history.replace('/profile')
+					// this.props.history.go(1)
+					if (
+						localStorage.getItem('type') === 'Investor' ||
+						localStorage.getItem('type') === 'Lawyer' ||
+						localStorage.getItem('type') === 'Reviewer'
+					)
+						document.location.href = '/profile';
+					else document.location.href = '/adminprofile';
+				}
+			})
+			.catch(
+				(err) => {
+					console.log(err);
+					localStorage.setItem('isLoggedIn', false);
+					alert('Wrong email or password');
+					return err;
+				}
+				// {
+				// dispatch({
+				//     type: GET_ERRORS,
+				//     payload: err.response.data
+				// });
+				//}
+			);
+	} else {
+		alert('Not verified!');
+	}
 };
 
 export const setCurrentUser = (decoded) => {

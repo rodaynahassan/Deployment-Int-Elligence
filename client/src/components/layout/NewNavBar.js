@@ -12,6 +12,7 @@ import { blue200 } from 'material-ui/styles/colors';
 import berry from '../layout/berry.png';
 import { Dropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+
 var $ = require('jquery')(window);
 
 class NewNavBar extends Component {
@@ -21,7 +22,7 @@ class NewNavBar extends Component {
 			formTypes: [],
 			formType: '',
 			formTypeArrays: [],
-			formTypeArray:''
+			formTypeArray: ''
 		};
 	}
 	componentDidMount() {
@@ -148,27 +149,28 @@ class NewNavBar extends Component {
 								style={{ color: blue100, paddingTop: '15px', fontSize: '1.5em' }}
 							/>
 						</li>
-]						<li class="nav-item dropdown" style={{width:"100px", paddingTop: '10px'}}>
+						]{' '}
+						<li class="nav-item dropdown" style={{ width: '100px', paddingTop: '10px' }}>
 							<select
 								className="form-control"
 								id="exampleFormControlSelect1"
 								name="ali"
 								onChange={this.changeHandler}
 								value={this.state.formType}
-								style={{color: blue200,border:"solid"}}
+								style={{ color: blue200, border: 'solid' }}
 							>
 								<option>Choose a form type</option>
 								{this.state.formTypes.map((city) => <option value={city}>{city}</option>)};
 							</select>
 						</li>
-						<li class="nav-item dropdown" style={{width:"75px", paddingTop: '10px'}}>
+						<li class="nav-item dropdown" style={{ width: '75px', paddingTop: '10px' }}>
 							<select
 								className="form-control"
 								id="exampleFormControlSelect1"
 								name="ali"
 								onChange={this.changeHandler2}
 								value={this.state.formTypeArray}
-								style={{color: blue200,border:"solid"}}
+								style={{ color: blue200, border: 'solid' }}
 							>
 								<option> </option>
 								{this.state.formTypeArrays.map((city) => <option value={city}>{city}</option>)};
@@ -209,18 +211,12 @@ class NewNavBar extends Component {
 										Edit your profile
 									</Dropdown.Item>
 									<Dropdown.Divider />
-									<Dropdown.Item
-										href="/changepassword"
-										style={{ textAlign: 'left', color: blue200 }}
-									>
+									<Dropdown.Item href="/changepassword" style={{ textAlign: 'left', color: blue200 }}>
 										{' '}
 										Change your password
 									</Dropdown.Item>
 									<Dropdown.Divider />
-									<Dropdown.Item
-										onClick={this.logOut}
-										style={{ textAlign: 'left', color: blue200 }}
-									>
+									<Dropdown.Item onClick={this.logOut} style={{ textAlign: 'left', color: blue200 }}>
 										{' '}
 										Logout
 									</Dropdown.Item>
@@ -315,27 +311,27 @@ class NewNavBar extends Component {
 								style={{ color: blue100, paddingTop: '15px', fontSize: '1.5em' }}
 							/>
 						</li>
-						<li class="nav-item dropdown" style={{width:"100px", paddingTop: '10px'}}>
+						<li class="nav-item dropdown" style={{ width: '100px', paddingTop: '10px' }}>
 							<select
 								className="form-control"
 								id="exampleFormControlSelect1"
 								name="ali"
 								onChange={this.changeHandler}
 								value={this.state.formType}
-								style={{color: blue200,border:"solid"}}
+								style={{ color: blue200, border: 'solid' }}
 							>
 								<option>Choose a form type</option>
 								{this.state.formTypes.map((city) => <option value={city}>{city}</option>)};
 							</select>
 						</li>
-						<li class="nav-item dropdown" style={{width:"75px", paddingTop: '10px'}}>
+						<li class="nav-item dropdown" style={{ width: '75px', paddingTop: '10px' }}>
 							<select
 								className="form-control"
 								id="exampleFormControlSelect1"
 								name="ali"
 								onChange={this.changeHandler2}
 								value={this.state.formTypeArray}
-								style={{color: blue200,border:"solid"}}
+								style={{ color: blue200, border: 'solid' }}
 							>
 								<option> </option>
 								{this.state.formTypeArrays.map((city) => <option value={city}>{city}</option>)};
@@ -347,18 +343,12 @@ class NewNavBar extends Component {
 									<i className="fa fa-fw fa-list-alt" style={{ color: blue100, fontSize: '1.5em' }} />
 								</Dropdown.Toggle>
 								<Dropdown.Menu>
-									<Dropdown.Item
-										href="/GetCaseLawyer"
-										style={{ textAlign: 'left', color: blue200 }}
-									>
+									<Dropdown.Item href="/GetCaseLawyer" style={{ textAlign: 'left', color: blue200 }}>
 										{' '}
 										View your cases
 									</Dropdown.Item>
 									<Dropdown.Divider />
-									<Dropdown.Item
-										href="/unassignedForm"
-										style={{ textAlign: 'left', color: blue200 }}
-									>
+									<Dropdown.Item href="/unassignedForm" style={{ textAlign: 'left', color: blue200 }}>
 										{' '}
 										Pick a Task
 									</Dropdown.Item>
@@ -376,18 +366,12 @@ class NewNavBar extends Component {
 										Edit your profile
 									</Dropdown.Item>
 									<Dropdown.Divider />
-									<Dropdown.Item
-										href="/changepassword"
-										style={{ textAlign: 'left', color: blue200 }}
-									>
+									<Dropdown.Item href="/changepassword" style={{ textAlign: 'left', color: blue200 }}>
 										{' '}
 										Change your password
 									</Dropdown.Item>
 									<Dropdown.Divider />
-									<Dropdown.Item
-										onClick={this.logOut}
-										style={{ textAlign: 'left', color: blue200 }}
-									>
+									<Dropdown.Item onClick={this.logOut} style={{ textAlign: 'left', color: blue200 }}>
 										{' '}
 										Logout
 									</Dropdown.Item>
@@ -511,18 +495,12 @@ class NewNavBar extends Component {
 										Edit your profile
 									</Dropdown.Item>
 									<Dropdown.Divider />
-									<Dropdown.Item
-										href="/changepassword"
-										style={{ textAlign: 'left', color: blue200 }}
-									>
+									<Dropdown.Item href="/changepassword" style={{ textAlign: 'left', color: blue200 }}>
 										{' '}
 										Change your password
 									</Dropdown.Item>
 									<Dropdown.Divider />
-									<Dropdown.Item
-										onClick={this.logOut}
-										style={{ textAlign: 'left', color: blue200 }}
-									>
+									<Dropdown.Item onClick={this.logOut} style={{ textAlign: 'left', color: blue200 }}>
 										{' '}
 										Logout
 									</Dropdown.Item>
@@ -762,21 +740,56 @@ class NewNavBar extends Component {
 				{localStorage.getItem('type') === 'Lawyer' ? Lawyer : null}
 				{localStorage.getItem('type') === 'Admin' ? admin : null}
 				{localStorage.getItem('type') === 'Reviewer' ? Reviewer : null}
-				{currentLocation === '/journal' && localStorage.getItem('isLoggedIn') === 'false'? ElectronicJournal : null}
-				{currentLocation === '/journal' && localStorage.getItem('isLoggedIn') === 'true' && localStorage.getItem('type') === 'Investor'? Investor : null}
-				{currentLocation === '/journal' && localStorage.getItem('isLoggedIn') === 'true' && localStorage.getItem('type') === 'Lawyer'? Lawyer : null}
-				{currentLocation === '/journal' && localStorage.getItem('isLoggedIn') === 'true' && localStorage.getItem('type') === 'Admin'? admin : null}
-				{currentLocation === '/journal' && localStorage.getItem('isLoggedIn') === 'true' && localStorage.getItem('type') === 'Reviewer'? Reviewer : null}
-				{currentLocation === '/about' && localStorage.getItem('isLoggedIn') === 'false'? ElectronicJournal : null}
-				{currentLocation === '/about' && localStorage.getItem('isLoggedIn') === 'true' && localStorage.getItem('type') === 'Investor'? Investor : null}
-				{currentLocation === '/about' && localStorage.getItem('isLoggedIn') === 'true' && localStorage.getItem('type') === 'Lawyer'? Lawyer : null}
-				{currentLocation === '/about' && localStorage.getItem('isLoggedIn') === 'true' && localStorage.getItem('type') === 'Admin'? admin : null}
-				{currentLocation === '/about' && localStorage.getItem('isLoggedIn') === 'true' && localStorage.getItem('type') === 'Reviewer'? Reviewer : null}
+				{currentLocation === '/journal' && localStorage.getItem('isLoggedIn') === 'false' ? (
+					ElectronicJournal
+				) : null}
+				{currentLocation === '/journal' &&
+				localStorage.getItem('isLoggedIn') === 'true' &&
+				localStorage.getItem('type') === 'Investor' ? (
+					Investor
+				) : null}
+				{currentLocation === '/journal' &&
+				localStorage.getItem('isLoggedIn') === 'true' &&
+				localStorage.getItem('type') === 'Lawyer' ? (
+					Lawyer
+				) : null}
+				{currentLocation === '/journal' &&
+				localStorage.getItem('isLoggedIn') === 'true' &&
+				localStorage.getItem('type') === 'Admin' ? (
+					admin
+				) : null}
+				{currentLocation === '/journal' &&
+				localStorage.getItem('isLoggedIn') === 'true' &&
+				localStorage.getItem('type') === 'Reviewer' ? (
+					Reviewer
+				) : null}
+				{currentLocation === '/about' && localStorage.getItem('isLoggedIn') === 'false' ? (
+					ElectronicJournal
+				) : null}
+				{currentLocation === '/about' &&
+				localStorage.getItem('isLoggedIn') === 'true' &&
+				localStorage.getItem('type') === 'Investor' ? (
+					Investor
+				) : null}
+				{currentLocation === '/about' &&
+				localStorage.getItem('isLoggedIn') === 'true' &&
+				localStorage.getItem('type') === 'Lawyer' ? (
+					Lawyer
+				) : null}
+				{currentLocation === '/about' &&
+				localStorage.getItem('isLoggedIn') === 'true' &&
+				localStorage.getItem('type') === 'Admin' ? (
+					admin
+				) : null}
+				{currentLocation === '/about' &&
+				localStorage.getItem('isLoggedIn') === 'true' &&
+				localStorage.getItem('type') === 'Reviewer' ? (
+					Reviewer
+				) : null}
 				{currentLocation === '/register' ? ElectronicJournal : null}
 				{currentLocation === '/forgotPassword' ? ElectronicJournal : null}
 				{currentLocation === '/login' ? ElectronicJournal : null}
 				{currentLocation === '/reset/:token' ? ElectronicJournal : null}
-
 			</div>
 		);
 	}

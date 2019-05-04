@@ -41,7 +41,8 @@ module.exports = {
 			investorType: Joi.string().required(),
 			financialBalance: Joi.number(),
 			resetPasswordToken: Joi.string(),
-			resetPasswordExpires: Joi.date()
+			resetPasswordExpires: Joi.date(),
+			verifyToken: Joi.string()
 		};
 
 		return Joi.validate(request, createSchema);

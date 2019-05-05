@@ -24,7 +24,11 @@ let strings = new LocalizedStrings({
 		submit: 'Submit',
 		finish: 'All steps completed, you are finished',
 		next: 'next',
-		back: 'back'
+		back: 'back',
+		male: 'male',
+		female: 'female',
+		nationalid: 'National ID',
+		passport: 'Passport'
 	},
 	ar: {
 		userType: '(نوع المستخدم (مطلوب',
@@ -49,7 +53,11 @@ let strings = new LocalizedStrings({
 		submit: 'سجل',
 		finish: 'جميع الخطوات انتهت ، لقد انتهيت',
 		next: 'اكمل',
-		back: 'رجوع'
+		back: 'رجوع',
+		male: 'ذكر',
+		female: 'انثي',
+		nationalid: 'بطاقة شخصية',
+		passport: 'باسبورت'
 	}
 });
 export default strings;

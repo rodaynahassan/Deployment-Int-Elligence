@@ -13,12 +13,6 @@ import swal from 'sweetalert';
 const mongoose = require('mongoose');
 var $ = require('jquery')(window);
 
-// tabRow(){
-//   return this.state.companies.map(function(company,i){
-//       return <GetAllUserForms company={company} key={i} />;
-//   });
-// }
-
 class Companies extends Component {
 	state = {
 		companies: [],

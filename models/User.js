@@ -21,7 +21,8 @@ const User = new Schema({
 	resetPasswordToken: { type: String },
 	resetPasswordExpires: { type: Date },
 	verifyToken: { type: String },
-	expire_at: { type: Date, default: Date.now, expires: '60m' }
+	expire_at: { type: Date, default: Date.now, expires: '60m' },
+	isVerified: { type: Boolean }
 });
 
 module.exports = user = mongoose.model('users', User);

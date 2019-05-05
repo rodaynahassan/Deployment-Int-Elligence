@@ -107,7 +107,8 @@ router.put('/updateVerify', async (req, res) => {
 			// expire_at: { expires: 10000 },
 			// $set: { 'expires_at.default': undefined },
 			$unset: { expire_at: 1, multi: true },
-			verifyToken: null
+			verifyToken: null,
+			isVerified: true
 		};
 
 		var x = await User.findByIdAndUpdate(userid, body);

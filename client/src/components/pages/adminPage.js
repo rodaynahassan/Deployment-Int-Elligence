@@ -11,6 +11,7 @@ import { MDBRow, MDBCol } from 'mdbreact';
 import { Button, Container, ButtonGroup, ButtonToolbar } from 'react-bootstrap';
 import axios from 'axios';
 import { blue200, black } from 'material-ui/styles/colors';
+import { DiscFull } from '@material-ui/icons';
 import trans from '../translations/registerAdminTranslation';
 
 class adminPage extends Component {
@@ -26,7 +27,7 @@ class adminPage extends Component {
 			nationality: 'Egyptian',
 			identificationType: 'National ID',
 			identificationNumber: '',
-			birthdate: '',
+			birthdate: new Date(),
 			address: '',
 			telephone: '',
 			fax: '',
@@ -219,9 +220,12 @@ class adminPage extends Component {
 							className={classnames('form-control form-control-lg', {
 								'is-invalid': errors.birthdate
 							})}
+							class="material-icons prefix"
+							id="materialFormRegisterNameEx"
 							name="birthdate"
 							onChange={this.handleInputChange}
 							value={this.state.birthdate}
+							style={{ width: '250px' }}
 							required
 						/>
 						{errors.birthdate && <div className="invalid-feedback">{errors.birthdate}</div>}

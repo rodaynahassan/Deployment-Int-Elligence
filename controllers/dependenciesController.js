@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
-const FormType = require("../models/FormType");
+const Dependencies = require("../models/Dependencies");
 
 exports.search = async (att, value) => {
   if (!att) {
-    return await FormType.find()
+    return await Dependencies.find()
       .then(res => {
         return res;
       })
@@ -12,7 +12,7 @@ exports.search = async (att, value) => {
       });
   }
   if (att === "_id") {
-    return await FormType.findById(value)
+    return await Dependencies.findById(value)
       .then(res => {
         return res;
       })
@@ -21,7 +21,7 @@ exports.search = async (att, value) => {
       });
   }
   if (att == "formType") {
-    return await FormType.find({ formType: value })
+    return await Dependencies.find({ formType: value })
       .then(res => {
         return res;
       })
@@ -29,19 +29,11 @@ exports.search = async (att, value) => {
         return { error: err };
       });
   }
-  if (att == "formTypeArray") {
-    return await FormType.find({ formTypeArray: value })
-      .then(res => {
-        return res;
-      })
-      .catch(err => {
-        return { error: err };
-      });
-  }
+  
 };
 
 exports.create = async body => {
-  return await FormType.create(body)
+  return await Dependencies.create(body)
     .then(res => {
       return res;
     })
@@ -55,11 +47,11 @@ exports.update = async (att, value, body) => {
     return { error: "Can't update form, provide a value to update with" };
   }
   if (att === "_id") {
-    var formType = await FormType.findByIdAndUpdate(value, body).catch(err => {
+    var dependencies = await Dependencies.findByIdAndUpdate(value, body).catch(err => {
       return { error: err };
     });
-    if (formType.error) return formType;
-    return await FormType.findById(value)
+    if (dependencies.error) return dependencies;
+    return await Dependencies.findById(value)
       .then(res => {
         return res;
       })
@@ -68,11 +60,11 @@ exports.update = async (att, value, body) => {
       });
   }
   if( att === "formType"){
-    var formType = await FormType.updateMany({formType:value}, body).catch(err => {
+    var dependencies = await Dependencies.updateMany({formType:value}, body).catch(err => {
         return { error: err };
       });
-      if (formType.error) return formType;
-      return await FormType.find({formType:value})
+      if (dependencies.error) return dependencies;
+      return await Dependencies.find({formType:value})
         .then(res => {
           return res;
         })
@@ -80,11 +72,11 @@ exports.update = async (att, value, body) => {
           return { error: err };
         });
   }
-  var formType = await FormType.updateMany({[att]:value}, body).catch(err => {
+  var dependencies = await Dependencies.updateMany({[att]:value}, body).catch(err => {
     return { error: err };
   });
-  if (formType.error) return formType;
-  return await FormType.find({[att]:value})
+  if (dependencies.error) return dependencies;
+  return await Dependencies.find({[att]:value})
     .then(res => {
       return res;
     })
@@ -98,7 +90,7 @@ exports.remove = async (att,value)=>{
         return {error: "Can't be deleted , Please provide an attribute to delete with"}
       }
       if (att === "_id") {
-        return await FormType.findByIdAndDelete(value)
+        return await Dependencies.findByIdAndDelete(value)
           .then(res => {
             return res;
           })
@@ -107,7 +99,7 @@ exports.remove = async (att,value)=>{
           });
       }
       if (att == "formType") {
-        return await FormType.deleteMany({ formType: value })
+        return await Dependencies.deleteMany({ formType: value })
           .then(res => {
             return res;
           })

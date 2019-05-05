@@ -14,6 +14,7 @@ class AdminProfile extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			userType:'',
 			adminName: '',
 			adminGender: '',
 			adminNationality: '',
@@ -33,6 +34,7 @@ class AdminProfile extends Component {
 			})
 			.then((response) => {
 				this.setState({
+					userType:response.data.UserType,
 					adminName: response.data.Username,
 					adminGender: response.data.Gender,
 					adminNationality: response.data.Nationality,
@@ -78,6 +80,10 @@ class AdminProfile extends Component {
 											{' '}
 											<i className="fas fa-at" style={{ color: blue200 }} />{' '}
 											{this.state.adminEmail}
+										</h4>
+										<h4>
+											{' '}
+											<i className="fas fa-briefcase" style={{ color: blue200 }} /> Admin
 										</h4>
 									</div>
 								</div>

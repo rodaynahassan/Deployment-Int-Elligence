@@ -8,6 +8,7 @@ let strings = new LocalizedStrings({
        lawyerR:"Lawyer Rejected",
        lawyerA:"Lawyer Accepted",
        reviewerP:"In Progress Reviewer",
+       reviewerA:"Reviewer Accepted",
        approved:"Approved",
         edit:"Edit Form",
         delete:"Delete Form"
@@ -19,6 +20,7 @@ let strings = new LocalizedStrings({
        lawyerR:"المحامي رفضها",
        lawyerA:"المحامي وافق عليها",
        reviewerP:"المتابع يعمل عليها",
+       reviewerA:"المتابع قد وافق",
        approved:"تم الموافقة",
         edit:"تعديل",
         delete:"حذف"

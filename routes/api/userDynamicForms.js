@@ -320,7 +320,7 @@ router.put(
         form.status === "In progress Reviewer" &&
         form.reviewerId.equals(req.user.id)
       ) {
-        form.status = "Approved";
+        form.status = "Reviewer accepted";
         const returnedForm = await dynamicFormController.update(
           "_id",
           formid,
@@ -328,13 +328,13 @@ router.put(
         );
         if (returnedForm.error)
           return res.status(400).json({ error: form.error });
-        const investor = await userController.search("_id".form.investor_id);
+        const investor = await userController.search('_id',returnedForm.investorId);
         if(investor!==null){
         if (investor.error)
           return res.status(400).json({ error: investor.error });
         const updatedFinancialBalance = form.fees + investor.financialBalance;
         const returnedInvestor = await userController.update(
-          "_id",
+          '_id',
           investor._id,
           { financialBalance: updatedFinancialBalance }
         );

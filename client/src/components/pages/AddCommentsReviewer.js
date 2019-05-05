@@ -5,7 +5,9 @@ import { Modal } from 'react-bootstrap';
 import '../../App.css';
 import { black } from 'material-ui/styles/colors';
 import { blue200 } from 'material-ui/styles/colors';
-const mongoose = require('mongoose')
+import swal from 'sweetalert';
+import trans from '../translations/addCommentsReviewerTranslation'
+const mongoose = require('mongoose');
 
 
 
@@ -59,7 +61,8 @@ class AddCommentsReviewer extends Component{
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
         axios.put(apiBaseUrl, payload, {headers: { "Authorization": localStorage.getItem('jwtToken') }})
        .then(function (response) {
-         console.log(response);
+        swal('Comments added Succesfully')
+        setTimeout("document.location.href = '/GetReviewer';",3500);
        })
        .catch(function (error) {
          console.log(error);
@@ -71,7 +74,7 @@ class AddCommentsReviewer extends Component{
       };
 
       handleEvent = () => {
-        alert("I was clicked");
+        swal("I was clicked");
       };
 
 
@@ -97,23 +100,23 @@ class AddCommentsReviewer extends Component{
 
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter"style={{color:blue200}}>
-                Add a Comment 
+                {trans.comment} 
                 </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                 {/* <h4>Centered Modal</h4> */}
-                <input type="text" placeholder="Enter Your Comment" style={{width: "775px" , height:"100px"}} onChange={ this.changeHandler} />
+                <input type="text" placeholder={trans.commentPlace} style={{width: "775px" , height:"100px"}} onChange={ this.changeHandler} />
                 <Button
                 className="btn-block btn-rounded z-depth-1a"
                 variant="omar"
                 value="Comment"
                 style={{width: "110px",backgroundColor:"#a3dbff",color:black}}   
                 disabled={!this.validateForm()}
-                onClick={() => (this.handleClick(this.props.formId) , alert('Comments added Succesfully'))}
-                >Comment</Button>
+                onClick={() => this.handleClick(this.props.formId)}
+                >{trans.commentB}</Button>
                 </Modal.Body>
                 <Modal.Footer>
-                <Button variant='red' onClick={this.props.onHide}>Close</Button>
+                <Button variant='red' onClick={this.props.onHide}>{trans.closeB}</Button>
                 </Modal.Footer>
             </Modal>
 

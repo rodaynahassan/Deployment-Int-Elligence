@@ -74,17 +74,60 @@ class Companies extends Component {
 					>
 						<div>
 							{KEYS.map((key, index) => {
-								if (key !== '_id' && key !== 'formType' && key !== 'investorId' && key !== 'lawyerId' && key !== 'reviewerId') {
+								if (
+									  key !== '_id' &&
+									  key !== 'formType' && 
+									  key !== 'investorId' && 
+									  key !== 'lawyerId' && 
+									  key !== 'reviewerId'&& 
+									  key !== 'investorNationality'&&
+									  key !== 'reviewerComments' &&
+									  key !== 'lawyerComments' &&
+									  key !== "status" &&
+									  key !== "fees"
+									  )
+									{
+										var now=key;
+										var temp="";
+										temp=temp+key.charAt(0).toUpperCase();
+										for(var j=1;j<now.length;j++){
+										if(now.charCodeAt(j)>=65 && now.charCodeAt(j)<=90){
+											temp=temp+" "
+											temp=temp+now.charAt(j)
+										}
+										else{
+											temp=temp+now.charAt(j)
+										}
+										
+										}
 									var constraints = Form[key];
 									for (var i in constraints) {
 										if (Array.isArray(constraints)) return constraints.map((att, index) => {});
+										if (key==="creationDate"){
+											var date=constraints.substring(0,10);
+											return (
+											  <div>
+												<div key={key}>
+												  <h5>
+													<i class="fas fa-circle" style={{fontSize: '0.5em'}}/> {temp} : 
+													  <span style={{ textAlign: 'center' }} />{' '}
+													  <span style={{ color: '#9ad1e7' }}> {date}{" "}</span>{' '}
+												  </h5>
+												</div>
+												
+											  </div>
+											);
+				  
+										  }
+										  else{
 										return (
 											<h5>
-												<i class="fas fa-circle" style={{ fontSize: '13px' }} /> {key} :{' '}
+												<i class="fas fa-circle" style={{ fontSize: '0.5em' }} /> {temp} :{' '}
 												<span style={{ textAlign: 'center' }} />{' '}
 												<span style={{ color: '#9ad1e7' }}>{constraints}</span>{' '}
 											</h5>
 										);
+										  }
 									}
 								}
 							})}
@@ -110,7 +153,7 @@ class Companies extends Component {
 						justifyContent: 'flex-end'
 					}}
 				>
-					<h2 style={{ marginTop: '30px', paddingTop: '50px', fontSize: '50px' }}>{trans.title}</h2>
+					<h2 style={{ marginTop: '30px', paddingTop: '50px', fontSize: '1.5em' }}>{trans.title}</h2>
 				</div>
 				<div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'right', justifyContent: 'right' }}>
 					{this.getAttributes()}

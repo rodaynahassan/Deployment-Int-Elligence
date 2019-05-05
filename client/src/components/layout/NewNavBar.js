@@ -586,6 +586,38 @@ class NewNavBar extends Component {
 								style={{ color: blue100, paddingTop: '15px', fontSize: '1.5em' }}
 							/>
 						</li>
+						<li class="nav-item" color="white">
+							<a
+								class="nav-link"
+								className="fa fa-fw fa-list-alt"
+								href="/createNewFormType"
+								title="Create a new form type"
+								style={{ color: blue100, paddingTop: '17px', fontSize: '1.5em' }}
+							/>
+						</li>
+						
+						<li class="nav-item" color="white">
+						<i className="fas fa-list-ol" 
+						style={{ color: blue100,  paddingTop: '20px',fontSize: '1.5em' }}>
+							<a
+								class="nav-link"
+								href="/createNewFormTypeArray"
+								title="Create a new form type array"
+								//style={{ color: blue100, paddingTop: '15px', fontSize: '1.5em' }}
+							/>
+							</i>
+						</li>
+						<li class="nav-item" color="white">
+						<i className="fas fa-layer-group" 
+						style={{ color: blue100,  paddingTop: '20px',fontSize: '1.5em' }}>
+							<a
+								class="nav-link"
+								href="/createNewDependency"
+								title="Create a new dependency"
+								// style={{ color: blue100, paddingTop: '15px', fontSize: '1.5em' }}
+							/>
+							</i>
+						</li>
 						<li class="nav-item dropdown">
 							<Dropdown>
 								<Dropdown.Toggle title="Language" variant="omar" id="dropdown-basic">

@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import '../../App.css';
-import Table from 'react-bootstrap/Table';
 import { Button, Container, ButtonGroup, ButtonToolbar } from 'react-bootstrap';
 import 'mdbreact/dist/css/mdb.css';
 import AddCommentsLawyer from './AddCommentsLawyer';
 import Cardd from '../form/Card';
-import GetAllUserForms from '../form/GetAllUserForms';
 import { Dropdown, Card } from 'react-bootstrap';
 import { MDBProgress } from 'mdbreact';
 import { blue200 } from 'material-ui/styles/colors';
-import trans from '../translations/getCaseLawyerTranslation'
+import trans from '../translations/getCaseLawyerTranslation';
+import swal from 'sweetalert';
 const mongoose = require('mongoose');
 var $ = require('jquery')(window);
 
@@ -39,13 +38,16 @@ class Companies extends Component {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
 			.then((res) => {
-				if (Array.isArray(res.data.data)) {
+				if (Array.isArray(res.data.data)&&res.data.data.length>0) {
 					this.setState({ companies: res.data.data });
+				}
+				else{
+					swal('You do not have any In Progress Cases yet!')
 				}
 				console.log(this.state.companies);
 			})
 			.catch((err) => {
-				alert('' + err);
+				swal('' + err);
 			});
 	}
 
@@ -57,8 +59,15 @@ class Companies extends Component {
 			})
 			.then((res) => {
 				this.setState({ companies: res.data.data });
-				alert('Cases have been sorted');
-				document.location.href = '/getCaseLawyer';
+				
+				// const r = swal.confirm("cases have been sorted?"); 
+				// if(r == true){ 
+
+				// 	document.location.href = '/getCaseLawyer';	
+				//  }
+
+				swal('Cases have been sorted')
+				setTimeout("document.location.href = '/getCaseLawyer';",3500);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -67,13 +76,13 @@ class Companies extends Component {
 	sortByCreationDate = () => {
 		axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
 		axios
-			.get('/routes/api/userDynamicForms/t', {
+			.get('/routes/api/userDynamicForms/SpecificformsSortedByformDate', {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
 			.then((res) => {
 				this.setState({ companies: res.data.data });
-				alert('Cases have been sorted');
-				document.location.href = '/getCaseLawyer';
+				swal('Cases have been sorted');
+				setTimeout("document.location.href = '/getCaseLawyer';",3500);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -87,11 +96,11 @@ class Companies extends Component {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
 			.then((res) => {
-				alert('The form was accepted succesfully');
-				document.location.href = '/getCaseLawyer';
+				swal('The form was accepted succesfully');
+				setTimeout("document.location.href = '/getCaseLawyer';",3500);
 			})
 			.catch((err)=>{
-				alert(err.response.data.msg|| err.response.data);
+				swal(err.response.data.msg|| err.response.data);
 				console.log(err.response);
 			})
 	};
@@ -103,11 +112,11 @@ class Companies extends Component {
 			headers: { Authorization: localStorage.getItem('jwtToken') }
 		})
 		.then((res) => {
-			alert('The fees was calculated succesfully');
-			document.location.href = '/getCaseLawyer';
+			swal('The fees was calculated succesfully');
+			setTimeout("document.location.href = '/getCaseLawyer';",3500);
 		})
 		.catch((err)=>{
-			alert(err.response.data.msg|| err.response.data);
+			swal(err.response.data.msg|| err.response.data);
 			console.log(err.response);
 		})
 	};
@@ -134,6 +143,19 @@ class Companies extends Component {
 									key !== 'reviewerId' &&
 									key !== '__v'
 								) {
+									var now=key;
+									var temp="";
+									temp=temp+key.charAt(0).toUpperCase();
+									for(var j=1;j<now.length;j++){
+									  if(now.charCodeAt(j)>=65 && now.charCodeAt(j)<=90){
+										temp=temp+" "
+										temp=temp+now.charAt(j)
+									  }
+									  else{
+										temp=temp+now.charAt(j)
+									  }
+									  
+									}
 									var constraints = Form[key];
 									if (Array.isArray(constraints)) {
 										if (!constraints['0']) return;
@@ -147,13 +169,14 @@ class Companies extends Component {
 												<div>
 													{' '}
 													<h3>
-														<i class="fas fa-genderless" />{trans.commentsL}
+														<i class="fas fa-circle" style={{fontSize:"15px"}} />{trans.commentsL}
 													</h3>
 													{keys.map((att, index) => {
 														return (
 															<h5 style={{ paddingLeft: '5%' , fontSize:"15px"}}>
 																
-																{constraints[att]}
+																<span style={{ textAlign: 'center' }} />{' '}
+																<span style={{ color: '#9ad1e7' }}>{constraints[att]}</span>{' '}
 															</h5>
 														);
 													})}
@@ -170,7 +193,8 @@ class Companies extends Component {
 														return (
 															<h5 style={{ paddingLeft: '5%' }}>
 																
-																{constraints[att]}
+																<span style={{ textAlign: 'center' }} />{' '}
+																<span style={{ color: '#9ad1e7' }}>{constraints[att]}</span>{' '}
 															</h5>
 														);
 													})}
@@ -187,8 +211,9 @@ class Companies extends Component {
 													{keys.map((att, index) => {
 														return (
 															<h5 style={{ paddingLeft: '5%' }}>
-																<i class="fas fa-circle" /> {att} :
-																{constraints['0'][att]}
+																<i class="fas fa-circle" sstyle={{ fontSize: '0.5em' }}/> {att} :
+																<span style={{ textAlign: 'center' }} />{' '}
+																<span style={{ color: '#9ad1e7' }}>{constraints['0'][att]}</span>{' '}
 															</h5>
 														);
 													})}
@@ -196,18 +221,38 @@ class Companies extends Component {
 											);
 										}
 									}
+									if (key==="creationDate"){
+										var date=constraints.substring(0,10);
+										console.log(date)
+										return (
+										  <div>
+											<div key={key}>
+											  <h3>
+												<i class="fas fa-circle" style={{fontSize:'0.5em'}}/> {temp} : 
+												  <span style={{ textAlign: 'center' }} />{' '}
+												  <span style={{ color: '#9ad1e7' }}> {date}{" "}</span>{' '}
+											  </h3>
+											</div>
+											
+										  </div>
+										);
+			  
+									  }
+									  else{
 
 									return (
 										<div>
 											<div key={key}>
 												<h3>
-													<i class="fas fa-circle" style={{ fontSize: '0.5em' }} /> {key} :{' '}
-													{constraints}{' '}
+													<i class="fas fa-circle" style={{ fontSize: '0.5em' }} /> {temp} :{' '}
+													<span style={{ textAlign: 'center' }} />{' '}
+													<span style={{ color: '#9ad1e7' }}>{constraints}</span>{' '}
 												</h3>
 											</div>
 										</div>
 									);
 								}
+							}
 							})}
 							{/* <MDBProgress  material value={35} color="dark" height="35px">
                <h3> In progress Lawyer </h3>

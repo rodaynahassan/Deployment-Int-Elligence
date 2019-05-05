@@ -12,6 +12,7 @@ import { red100 } from 'material-ui/styles/colors';
 import { blue100 } from 'material-ui/styles/colors';
 import berry from '../components/layout/berry.png';
 import { Dropdown } from 'react-bootstrap';
+import swal from 'sweetalert';
 
 import {
 	LinkButtons,
@@ -90,7 +91,8 @@ export default class Verify extends Component {
 		axios
 			.put('/routes/api/userVerify/updateVerify', {
 				name: this.state.name,
-				verifyToken: this.props.match.params.token
+				verifyToken: this.props.match.params.token,
+				isVerified: true
 			})
 			.then((response) => {
 				console.log(response.data);
@@ -100,7 +102,14 @@ export default class Verify extends Component {
 						error: false
 					});
 
-					localStorage.setItem('isVerified', 'true');
+					swal({
+						title: 'Good job!',
+						text: 'The Account has been verified you can login now!',
+						icon: 'success',
+						button: 'Aww yess!'
+					});
+
+					//localStorage.setItem('isVerified', 'true');
 				} else {
 					this.setState({
 						updated: false,

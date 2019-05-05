@@ -15,25 +15,24 @@ export const registerUser = (user) => (dispatch) => {
 			axios
 				.post('/routes/api/userVerify/verifyEmail', user)
 				.then(function(response) {
-					alert('verification email sent!');
+					swal({
+						title: 'Good job!',
+						text:
+							'The Account has been created successfully! A verification email has been sent to you. Please check your email to verify the account!',
+						icon: 'success',
+						button: 'Aww yess!'
+					});
 				})
 				.catch((err) => {
-					alert(err.response.data.error || err.response.data);
+					swal(err.response.data.error || err.response.data);
 				});
 
 			// alert('You have registered successfully. Congratulations :)! check your email for verification link');
-			swal({
-				title: 'Good job!',
-				text: 'The Account has been created successfully!',
-				icon: 'success',
-				button: 'Aww yess!'
-			});
 		})
 		.catch((err) => {
 			// alert(err.response.data.error || err.response.data);
 			swal(err.response.data.error || err.response.data);
-
-			console.log(err.response);
+			//console.log(err.response);
 		});
 };
 

@@ -371,7 +371,7 @@ class Register extends React.Component {
 
 					<div className="form-group">
 						<MDBInput
-							label={trans.telephone + ' (Not Required)'}
+							label={trans.telephone}
 							type="text"
 							className={classnames('form-control form-control-lg', { 'is-invalid': errors.telephone })}
 							name="telephone"
@@ -383,7 +383,7 @@ class Register extends React.Component {
 
 					<div className="form-group">
 						<MDBInput
-							label={trans.fax + ' (Not Required)'}
+							label={trans.fax}
 							type="text"
 							className={classnames('form-control form-control-lg', { 'is-invalid': errors.fax })}
 							name="fax"

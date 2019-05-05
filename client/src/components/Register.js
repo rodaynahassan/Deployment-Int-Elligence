@@ -288,8 +288,8 @@ class Register extends React.Component {
 									value={this.state.gender}
 									style={{ width: '250px' }}
 								>
-									<option>Male</option>
-									<option>Female</option>
+									<option>{trans.male}</option>
+									<option>{trans.female}</option>
 								</select>
 							</div>
 						</MDBCol>
@@ -335,8 +335,8 @@ class Register extends React.Component {
 									value={this.state.identificationType}
 									style={{ width: '250px' }}
 								>
-									<option>National ID</option>
-									<option>Passport</option>
+									<option>{trans.nationalid}</option>
+									<option>{trans.passport}</option>
 								</select>
 							</div>
 						</MDBCol>

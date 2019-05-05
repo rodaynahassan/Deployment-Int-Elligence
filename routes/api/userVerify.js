@@ -50,7 +50,7 @@ router.post('/verifyEmail', async (req, res) => {
 	const mailOptions = {
 		from: 'resetpass.summerge@gmail.com',
 		to: email, // `${email}`,
-		subject: 'Link To Reset Password',
+		subject: 'Link To Verify Account',
 		text:
 			'You are receiving this because you (or someone else) have requested to create an account.\n\n' +
 			'Please click on the following link, or paste this into your browser to complete the process within one hour of receiving it:\n\n' +

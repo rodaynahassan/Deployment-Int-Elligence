@@ -149,7 +149,11 @@ router.post('/login', async (req, res) => {
 				}
 			}
 		}
-		if (user.isVerified === true) {
+		if (
+			(user.isVerified === true && user.userType === 'Investor') ||
+			user.userType === 'Lawyer' ||
+			user.userType === 'Reviewer'
+		) {
 			const doesItMatch = await bcrypt.compareSync(password, user.password);
 			if (doesItMatch) {
 				const payload = {

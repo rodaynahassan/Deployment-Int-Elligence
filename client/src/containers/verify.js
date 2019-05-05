@@ -102,12 +102,7 @@ export default class Verify extends Component {
 						error: false
 					});
 
-					swal({
-						title: 'Good job!',
-						text: 'The Account has been verified you can login now!',
-						icon: 'success',
-						button: 'Aww yess!'
-					});
+					alert('Your Account has been verified');
 
 					//localStorage.setItem('isVerified', 'true');
 				} else {

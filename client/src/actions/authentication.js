@@ -32,6 +32,7 @@ export const registerUser = (user) => (dispatch) => {
 		.catch((err) => {
 			// alert(err.response.data.error || err.response.data);
 			swal(err.response.data.error || err.response.data);
+
 			console.log(err.response);
 		});
 };

@@ -5,7 +5,7 @@ import Flippy, { FrontSide, BackSide } from 'react-flippy';
 import 'mdbreact/dist/css/mdb.css';
 import Mongoose from 'mongoose';
 import { MDBProgress } from 'mdbreact';
-import { Button ,ButtonToolbar} from 'react-bootstrap';
+import { Button, ButtonToolbar } from 'react-bootstrap';
 import trans from '../translations/inProgressInvestorTranslation';
 import swal from 'sweetalert';
 import Delete from './Delete';
@@ -13,7 +13,7 @@ import { fromRenderProps } from 'recompose';
 class InProgressInvestorCases extends Component {
 	state = {
 		certainFormType: [],
-		isFlipped: true ,
+		isFlipped: true,
 		modalShow: false
 	};
 	componentDidMount() {
@@ -24,11 +24,10 @@ class InProgressInvestorCases extends Component {
 			})
 			.then((res) => {
 				console.log(res);
-				if (Array.isArray(res.data.data)&& res.data.data.length>0) {
+				if (Array.isArray(res.data.data) && res.data.data.length > 0) {
 					this.setState({ certainFormType: res.data.data });
-				}
-				else{
-					swal('You do not have any In Progress Companies yet!')
+				} else {
+					swal('You do not have any In Progress Companies yet!');
 				}
 			})
 			.catch((err) => console.log(err));
@@ -47,7 +46,7 @@ class InProgressInvestorCases extends Component {
 				console.log(err);
 			});
 	};
-	
+
 	redirectEdit(formId, formType) {
 		console.log(formType);
 		localStorage.setItem('formId', formId);
@@ -70,8 +69,6 @@ class InProgressInvestorCases extends Component {
 					ref={(r) => (this.flippy = r)}
 					style={{ width: '100%', height: '970px' }}
 				>
-				
-				
 					<FrontSide
 						style={{
 							borderStyle: 'solid',
@@ -91,12 +88,12 @@ class InProgressInvestorCases extends Component {
 							<i
 								class="fas fa-angle-double-left"
 								title="click to view details"
-								style={{ paddingRight: '650px' , paddingBottom:"100px"}}
+								style={{ paddingRight: '650px', paddingBottom: '100px' }}
 							/>
 							<i
 								class="fas fa-angle-double-right"
 								title="click to view details"
-								style={{ paddingLeft: '650px', paddingBottom:"100px" }}
+								style={{ paddingLeft: '650px', paddingBottom: '100px' }}
 							/>
 							<br />
 							<br />
@@ -117,7 +114,6 @@ class InProgressInvestorCases extends Component {
 								) : null}
 								{Form.status === 'Lawyer rejected' ? (
 									<MDBProgress material value={55} color="dark" height="63px">
-									
 										<h3 style={{ color: '#64b9e0', fontSize: '30px' }}>
 											{trans.lawyerR} <br /> 55%
 										</h3>
@@ -125,7 +121,6 @@ class InProgressInvestorCases extends Component {
 								) : null}
 								{Form.status === 'Lawyer accepted' ? (
 									<MDBProgress material value={75} color="dark" height="63px">
-									
 										<h3 style={{ color: '#64b9e0', fontSize: '30px' }}>
 											{trans.lawyerA} <br /> 75%
 										</h3>
@@ -144,8 +139,6 @@ class InProgressInvestorCases extends Component {
 											{trans.reviewerA} <br /> Pay the fees Please! :)
 										</h3>
 									</MDBProgress>
-									
-									
 								) : null}
 								{Form.status === 'Approved' ? (
 									<MDBProgress material value={65} color="dark" height="63px">
@@ -161,11 +154,12 @@ class InProgressInvestorCases extends Component {
 											class="btn btn-info"
 										>
 											<h3 style={{ color: '#64b9e0', fontSize: '15px' }}>
-												{trans.edit}<br />
+												{trans.edit}
+												<br />
 												<i class="fas fa-edit" />
 											</h3>
 										</Button>
-										
+
 										<Button
 											variant="dark"
 											type="button"
@@ -176,16 +170,12 @@ class InProgressInvestorCases extends Component {
 											// )}
 										>
 											<h3 style={{ color: '#64b9e0', fontSize: '15px' }}>
-												{trans.delete}<br />
+												{trans.delete}
+												<br />
 												<i class="fas fa-trash" />
 											</h3>
 										</Button>
-										<Delete
-											show={this.state.modalShow}
-											onHide={modalClose}
-											formId={Form._id}
-										/>
-										
+										<Delete show={this.state.modalShow} onHide={modalClose} formId={Form._id} />
 									</div>
 								) : null}
 								{Form.status === 'Lawyer rejected' ? (
@@ -197,11 +187,12 @@ class InProgressInvestorCases extends Component {
 											class="btn btn-info"
 										>
 											<h3 style={{ color: '#64b9e0', fontSize: '15px' }}>
-												{trans.edit}<br />
+												{trans.edit}
+												<br />
 												<i class="fas fa-edit" />
 											</h3>
 										</Button>
-										</div>
+									</div>
 								) : null}
 							</div>
 						</div>
@@ -214,9 +205,8 @@ class InProgressInvestorCases extends Component {
 							paddingLeft: '60px'
 						}}
 					>
-
-					<div>
-						{KEYS.map((key, index) => {
+						<div>
+							{KEYS.map((key, index) => {
 								if (
 									key !== '_proto' &&
 									key !== '_id' &&
@@ -226,18 +216,16 @@ class InProgressInvestorCases extends Component {
 									key !== 'reviewerId' &&
 									key !== '__v'
 								) {
-									var now=key;
-									var temp="";
-									temp=temp+key.charAt(0).toUpperCase();
-									for(var j=1;j<now.length;j++){
-									  if(now.charCodeAt(j)>=65 && now.charCodeAt(j)<=90){
-										temp=temp+" "
-										temp=temp+now.charAt(j)
-									  }
-									  else{
-										temp=temp+now.charAt(j)
-									  }
-									  
+									var now = key;
+									var temp = '';
+									temp = temp + key.charAt(0).toUpperCase();
+									for (var j = 1; j < now.length; j++) {
+										if (now.charCodeAt(j) >= 65 && now.charCodeAt(j) <= 90) {
+											temp = temp + ' ';
+											temp = temp + now.charAt(j);
+										} else {
+											temp = temp + now.charAt(j);
+										}
 									}
 									var constraints = Form[key];
 									if (Array.isArray(constraints)) {
@@ -250,12 +238,12 @@ class InProgressInvestorCases extends Component {
 											return (
 												<div>
 													{' '}
-													<h3 >
+													<h3>
 														<i class="fas fa-genderless" />Lawyer Comments
 													</h3>
 													{keys.map((att, index) => {
 														return (
-															<h5 style={{ paddingLeft: '5%', fontSize:"15px" }}>
+															<h5 style={{ paddingLeft: '5%', fontSize: '15px' }}>
 																{/* <i class="fas fa-circle" /> */}
 																<span style={{ textAlign: 'center' }} />{' '}
 																<span style={{ color: '#9ad1e7' }}>{constraints[att]}</span>{' '}
@@ -273,7 +261,7 @@ class InProgressInvestorCases extends Component {
 													</h3>
 													{keys.map((att, index) => {
 														return (
-															<h5 style={{ paddingLeft: '5%', fontSize:"15px" }}>
+															<h5 style={{ paddingLeft: '5%', fontSize: '15px' }}>
 																{/* <i class="fas fa-circle" /> */}
 																<span style={{ textAlign: 'center' }} />{' '}
 																<span style={{ color: '#9ad1e7' }}>{constraints[att]}</span>{' '}
@@ -282,9 +270,7 @@ class InProgressInvestorCases extends Component {
 													})}
 												</div>
 											);
-										} 
-										
-										else {
+										} else {
 											return (
 												<div>
 													{' '}
@@ -294,10 +280,13 @@ class InProgressInvestorCases extends Component {
 													</h3>
 													{keys.map((att, index) => {
 														return (
-															<h5 style={{ paddingLeft: '5%'  }}>
-																<i class="fas fa-circle" style={{ fontSize: '0.5em' }} /> {att} :
+															<h5 style={{ paddingLeft: '5%' }}>
+																<i class="fas fa-circle" style={{ fontSize: '0.5em' }} />{' '}
+																{att} :
 																<span style={{ textAlign: 'center' }} />{' '}
-																<span style={{ color: '#9ad1e7' }}>{constraints['0'][att]}</span>{' '}
+																<span style={{ color: '#9ad1e7' }}>
+																	{constraints['0'][att]}
+																</span>{' '}
 															</h5>
 														);
 													})}
@@ -305,36 +294,34 @@ class InProgressInvestorCases extends Component {
 											);
 										}
 									}
-									if (key==="creationDate"){
-										var date=constraints.substring(0,10);
-										console.log(date)
+									if (key === 'creationDate') {
+										var date = constraints.substring(0, 10);
+										console.log(date);
 										return (
-										  <div>
-											<div key={key}>
-											  <h3>
-												<i class="fas fa-circle" style={{fontSize:'0.5em'}}/> {temp} : 
-												  <span style={{ textAlign: 'center' }} />{' '}
-												  <span style={{ color: '#9ad1e7' }}> {date}{" "}</span>{' '}
-											  </h3>
+											<div>
+												<div key={key}>
+													<h3>
+														<i class="fas fa-circle" style={{ fontSize: '0.5em' }} /> {temp}{' '}
+														:
+														<span style={{ textAlign: 'center' }} />{' '}
+														<span style={{ color: '#9ad1e7' }}> {date} </span>{' '}
+													</h3>
+												</div>
 											</div>
-											
-										  </div>
 										);
-			  
-									  }
-									  else{
-									return (
-										<div>
-											<div key={key}>
-												<h3>
-													<i class="fas fa-circle" style={{ fontSize: '0.5em' }} /> {temp} :{' '}
-													<span style={{ textAlign: 'center' }} />{' '}
-													<span style={{ color: '#9ad1e7' }}>{constraints}</span>{' '}
-												</h3>
+									} else {
+										return (
+											<div>
+												<div key={key}>
+													<h3>
+														<i class="fas fa-circle" style={{ fontSize: '0.5em' }} /> {temp}{' '}
+														: <span style={{ textAlign: 'center' }} />{' '}
+														<span style={{ color: '#9ad1e7' }}>{constraints}</span>{' '}
+													</h3>
+												</div>
 											</div>
-										</div>
-									);
-									  }
+										);
+									}
 								}
 							})}
 							{/* {KEYS.map((key, index) => {
@@ -410,7 +397,7 @@ class InProgressInvestorCases extends Component {
 						justifyContent: 'flex-end'
 					}}
 				>
-					<h2 style={{ marginTop: '30px', paddingTop: '50px', fontSize: '50px'}}>{trans.title}</h2>
+					<h2 style={{ marginTop: '30px', paddingTop: '50px', fontSize: '50px' }}>{trans.title}</h2>
 				</div>
 				<div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'right', justifyContent: 'right' }}>
 					{this.getAttributes()}

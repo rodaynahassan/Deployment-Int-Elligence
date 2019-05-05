@@ -54,8 +54,8 @@ router.post('/verifyEmail', async (req, res) => {
 		text:
 			'You are receiving this because you (or someone else) have requested to create an account.\n\n' +
 			'Please click on the following link, or paste this into your browser to complete the process within one hour of receiving it:\n\n' +
-			`http://localhost:3000/verify/${token}\n\n` +
-			// `http://intelligence-summerge.herokuapp.com/reset/${token}\n\n` +
+			//`http://localhost:3000/verify/${token}\n\n` +
+			`http://intelligence-summerge.herokuapp.com/verify/${token}\n\n` +
 			//`/routes/api/users/reset/${token}\n\n` +
 			'If you did not request this, please ignore this email.\n'
 	};

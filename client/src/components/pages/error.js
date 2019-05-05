@@ -21,7 +21,8 @@ class ErrorPage extends Component {
 				<div className="stars">
 					<div className="central-body">
 						<img className="image-404" src="http://salehriaz.com/404Page/img/404.svg" width="300px" />
-						<a href="http://localhost:3000" className="btn-go-home" target="_blank">
+						{/* <a href="http://localhost:3000" className="btn-go-home" target="_blank"> */}
+						<a href="http://intelligence-summerge.herokuapp.com" className="btn-go-home" target="_blank">
 							GO BACK HOME
 						</a>
 					</div>

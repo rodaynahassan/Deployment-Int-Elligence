@@ -7,12 +7,14 @@ import { withRouter } from 'react-router-dom';
 import { registerLR } from '../../actions/authentication';
 import classnames from 'classnames';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { MDBRow, MDBCol } from 'mdbreact';
+import { MDBRow, MDBCol, MDBInput } from 'mdbreact';
 import { Button, Container, ButtonGroup, ButtonToolbar } from 'react-bootstrap';
 import axios from 'axios';
 import { blue200, black } from 'material-ui/styles/colors';
 import { DiscFull } from '@material-ui/icons';
 import trans from '../translations/registerAdminTranslation';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 class adminPage extends Component {
 	constructor(props) {
@@ -213,10 +215,10 @@ class adminPage extends Component {
 					</div>
 
 					<div className="form-group">
-						<label htmlFor="birthdate">{trans.birthdate}</label>
-						<input
-							type="text"
-							placeholder={trans.birthdateplace}
+					<br/>
+						<MDBInput
+							label={trans.birthdate}
+							type="date"
 							className={classnames('form-control form-control-lg', {
 								'is-invalid': errors.birthdate
 							})}
@@ -225,7 +227,6 @@ class adminPage extends Component {
 							name="birthdate"
 							onChange={this.handleInputChange}
 							value={this.state.birthdate}
-							style={{ width: '250px' }}
 							required
 						/>
 						{errors.birthdate && <div className="invalid-feedback">{errors.birthdate}</div>}

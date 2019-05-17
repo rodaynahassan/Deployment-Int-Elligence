@@ -15,7 +15,7 @@ const userVerify = require('./routes/api/userVerify');
 
 const app = express();
 
-// DB Confi
+// DB Config
 const db = require('./config/keys').mongoURI;
 
 // Connect to mongo

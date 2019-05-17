@@ -49,8 +49,8 @@ import verify from './containers/verify';
 import NewFormType from './components/pages/NewFormType';
 import NewFormTypeArray from './components/pages/NewFormTypeArray';
 import NewDependency from './components/pages/NewDepenency';
-import unassignedForm from './components/pages/unassignedForm';
-import companyPDF from './components/pages/companyPdf';
+import UnassignedForm from './components/pages/unassignedForm';
+import CompanyPDF from './components/pages/companyPdf';
 
 class App extends Component {
 	constructor() {
@@ -186,7 +186,7 @@ class App extends Component {
 												render={(props) =>
 													localStorage.getItem('isLoggedIn') === 'true' &&
 													localStorage.getItem('type') === 'Lawyer' ? (
-														<unassignedForm {...props} lang={this.state.lang} />
+														<UnassignedForm {...props} lang={this.state.lang} />
 													) : (
 														<Route component={unauthorized} />
 													)}
@@ -252,7 +252,7 @@ class App extends Component {
 												render={(props) =>
 													localStorage.getItem('isLoggedIn') === 'true' &&
 													localStorage.getItem('type') === 'Investor' ? (
-														<companyPDF {...props} lang={this.state.lang} />
+														<CompanyPDF {...props} lang={this.state.lang} />
 													) : (
 														<Route component={unauthorized} />
 													)}

@@ -105,8 +105,8 @@ class Companies extends Component {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
 			.then((res) => {
-				swal('The fees was calculated succesfully');
-				setTimeout("document.location.href = '/getCaseLawyer';", 3500);
+				alert('The fees was calculated succesfully, please refresh the page');
+				//setTimeout("document.location.href = '/getCaseLawyer';", 3500);
 			})
 			.catch((err) => {
 				swal(err.response.data.msg || err.response.data);

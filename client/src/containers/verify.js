@@ -102,7 +102,7 @@ export default class Verify extends Component {
 					});
 
 					alert('Your Account has been verified');
-					window.location = '/login';
+					//window.location = '/login';
 
 					//localStorage.setItem('isVerified', 'true');
 				} else {

@@ -101,7 +101,7 @@ class Companies extends Component {
 		console.log('hi');
 		axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
 		axios
-			.put('/routes/api/userDynamicForms/calculatingFees/' + mongoose.Types.ObjectId(formId), {
+			.put('/routes/api/userDynamicForms/CalculatingFees/' + mongoose.Types.ObjectId(formId), {
 				headers: { Authorization: localStorage.getItem('jwtToken') }
 			})
 			.then((res) => {

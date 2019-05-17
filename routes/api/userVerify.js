@@ -92,7 +92,6 @@ router.get('/verify/:token', async (req, res) => {
 
 router.put('/updateVerify', async (req, res) => {
 	const user = await User.findOne(
-		// { name: req.body.name },
 		{ verifyToken: req.body.verifyToken }
 		//{ resetPasswordExpires: { /*[Op.gt]*/ $gt: Date.now() } }
 	);

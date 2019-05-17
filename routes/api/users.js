@@ -361,7 +361,7 @@ router.put('/updatePasswordViaEmail', async (req, res) => {
 	const salt = await bcrypt.genSalt(10);
 
 	const user = await User.findOne(
-		{ name: req.body.name },
+		//{ name: req.body.name },
 		{ resetPasswordToken: req.body.resetPasswordToken }
 		//{ resetPasswordExpires: { /*[Op.gt]*/ $gt: Date.now() } }
 	);

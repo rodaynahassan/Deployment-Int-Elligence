@@ -43,7 +43,6 @@ export default class Verify extends Component {
 			password: '',
 			updated: false,
 			isLoading: true,
-			error: false,
 			showNullError: false
 		};
 	}
@@ -102,21 +101,21 @@ export default class Verify extends Component {
 						error: false
 					});
 
-					//alert('Your Account has been verified');
+					alert('Your Account has been verified');
 					window.location = '/login';
 
 					//localStorage.setItem('isVerified', 'true');
 				} else {
 					this.setState({
-						updated: false,
-						error: true
+						updated: false
+						//error: true
 					});
 				}
 			})
 			.catch((err) => alert(err.response.data.errmsg || err.response.data));
 	};
 	render() {
-		const { password, error, isLoading, updated, showNullError } = this.state;
+		const { password, isLoading, updated, showNullError } = this.state;
 
 		return (
 			<div>

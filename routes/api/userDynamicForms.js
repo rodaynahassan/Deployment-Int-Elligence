@@ -224,7 +224,7 @@ router.put(
   async (req, res) => {
     if (req.user.userType === "Lawyer") {
       var equation = await axios.get(
-        "http://localhost:5000/routes/api/fakeServer/ReturningEquation"
+        "http://localhost:${process.env.PORT}/routes/api/fakeServer/ReturningEquation"
       );
       //console.log(equation);
       const formid = req.params.formId;

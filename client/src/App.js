@@ -26,7 +26,6 @@ import Home from './components/Home';
 import DropdownTrial from './components/form/DropdownNationalities';
 import DropdownCities from './components/form/DropdownCities';
 import DropdownGovernorates from './components/form/DropdownGovernorates';
-import UnassignedForm from './components/pages/unassignedForm';
 import AssignToReviewer from './components/pages/assignToReviewer';
 import GetCaseReviewer from './components/pages/GetCaseReviewer';
 import EditProfile from './components/pages/EditProfile';
